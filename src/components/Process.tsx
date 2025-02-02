@@ -8,7 +8,6 @@ const Process = () => {
       title: "Kostenfreies Erstgespräch",
       description:
         "In einem kurzen, unverbindlichen Gespräch klären wir, ob wir zusammenpassen und wie wir Ihnen weiterhelfen können.",
-      image: "/lovable-uploads/photo-1486312338219-ce68d2c6f44d",
     },
     {
       number: "2",
@@ -16,7 +15,6 @@ const Process = () => {
       title: "Anforderungsanalyse",
       description:
         "Nach dem Erstgespräch erarbeiten wir eine detaillierte technische Spezifikation Ihrer Lösung. Wir dokumentieren alle Anforderungen und Schnittstellen für die passgenaue Umsetzung.",
-      image: "/lovable-uploads/photo-1487058792275-0ad4aaf24ca7",
     },
     {
       number: "3",
@@ -24,7 +22,6 @@ const Process = () => {
       title: "Angebotserstellung",
       description:
         "Auf Basis der Analyse erhalten Sie ein maßgeschneidertes Angebot, das genau auf Ihre Bedürfnisse abgestimmt ist.",
-      image: "/lovable-uploads/photo-1485827404703-89b55fcc595e",
     },
     {
       number: "4",
@@ -32,7 +29,6 @@ const Process = () => {
       title: "Umsetzung der Lösung",
       description:
         "Nach Freigabe beginnen wir mit der Umsetzung. Je nach Umfang ist Ihre Lösung innerhalb von 1 bis 6 Wochen vollständig auf Ihrem System integriert.",
-      image: "/lovable-uploads/photo-1581091226825-a6a2a5aee158",
     },
   ];
 
@@ -46,33 +42,26 @@ const Process = () => {
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-2xl mx-auto">
           {steps.map((step, index) => {
             const Icon = step.icon;
             const isLast = index === steps.length - 1;
             
             return (
               <div key={index} className="relative">
-                <div className="flex items-start gap-8 bg-[#1a1f35] rounded-xl p-8 relative z-10 group hover:bg-[#252b45] transition-colors">
+                <div className="flex items-start gap-6 bg-[#1a1f35] rounded-xl p-6 relative z-10 group hover:bg-[#252b45] transition-colors">
                   <div className="flex-shrink-0">
                     <div className="bg-[#2a3149] p-4 rounded-lg">
-                      <Icon className="w-8 h-8 text-primary" />
+                      <Icon className="w-6 h-6 text-primary" />
                     </div>
                   </div>
-                  <div className="flex-grow">
-                    <h3 className="text-2xl font-semibold text-white mb-3">
+                  <div>
+                    <h3 className="text-xl font-semibold text-white mb-2">
                       {step.title}
                     </h3>
-                    <p className="text-gray-400 leading-relaxed mb-4">
+                    <p className="text-gray-400 leading-relaxed">
                       {step.description}
                     </p>
-                    <div className="w-full h-48 overflow-hidden rounded-lg">
-                      <img
-                        src={step.image}
-                        alt={step.title}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                      />
-                    </div>
                   </div>
                 </div>
                 {!isLast && (
