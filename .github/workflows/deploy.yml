@@ -1,1 +1,23 @@
+name: 🚀 Deploy to IONOS via SFTP
 
+on:
+  push:
+    branches:
+      - main  # Falls dein Haupt-Branch anders heißt, ändere "main"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Repository auschecken
+        uses: actions/checkout@v3
+
+      - name: 📂 Upload per SFTP zu IONOS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ access-5017105000.webspace-host.com }}
+          username: ${{ a357118 }}
+          password: ${{ 9cG-AW4dY-u-fz2 }}
+          source: "./*"
+          target: "/"
+          strip_components: 1
