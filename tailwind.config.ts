@@ -26,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#6B46C1", // Geändertes Pink zu einem eleganten Violett
+          DEFAULT: "#FF0099",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#4A5568", // Dunkleres, eleganteres Sekundärblau
+          DEFAULT: "#6B46C1",
           foreground: "#FFFFFF",
         },
       },
