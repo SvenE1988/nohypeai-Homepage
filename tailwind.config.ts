@@ -38,7 +38,7 @@ export default {
         sans: ["Inter", "sans-serif"],
       },
       backgroundImage: {
-        "gradient-dark": "linear-gradient(135deg, #000000 0%, #1a1f35 50%, #2d1f35 100%)",
+        "gradient-dark": "linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%)",
         "gradient-glow": "radial-gradient(circle at top right, rgba(107, 70, 193, 0.2) 0%, transparent 60%)",
         "accent-glow": "radial-gradient(circle at bottom left, rgba(255, 0, 153, 0.1) 0%, transparent 40%)",
       },
