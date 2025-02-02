@@ -7,6 +7,7 @@ import Process from "../components/Process";
 import Projects from "../components/Projects";
 import Testimonials from "../components/Testimonials";
 import About from "../components/About";
+import SavingsCalculator from "../components/SavingsCalculator";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <Partners />
       <Services />
       <Benefits />
+      <SavingsCalculator />
       <Process />
       <Projects />
       <About />
