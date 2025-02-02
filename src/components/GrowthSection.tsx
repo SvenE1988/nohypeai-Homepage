@@ -59,12 +59,12 @@ const GrowthSection = () => {
               <div className="grid grid-cols-3 gap-4">
                 <FeatureCard title="Automatisierte Lead-Recherche & Anreicherung" />
                 <FeatureCard title="Automatisierte Lead-Qualifizierung & Bewertung" />
-                <FeatureCard title="Inbound Terminvereinbarung & Chatbots" />
+                <FeatureCard title="Inbound Terminvereinbarung" />
                 <FeatureCard title="Inbound Sprach-Agenten" />
                 <FeatureCard title="Inbound Antwort-Agenten" />
                 <FeatureCard title="Personalisierte Lead-Pflege" />
                 <FeatureCard title="Automatisierte Angebotserstellung" />
-                <FeatureCard title="Onboarding-Automatisierungssysteme" />
+                <FeatureCard title="Onboarding Automatisierung" />
                 <FeatureCard title="Individuelle Projekte" />
               </div>
             </div>
@@ -123,7 +123,7 @@ const GrowthSection = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <FeatureCard title="Social Media Content Systeme" />
-                <FeatureCard title="Markengerechte Fine-tuned Content KI-Modelle" />
+                <FeatureCard title="Markengerechte Content KI-Modelle" />
                 <FeatureCard title="Content-Verwertungssysteme" />
                 <FeatureCard title="KI Lead Magnet Automatisierung" />
                 <FeatureCard title="LinkedIn Content & Outreach Systeme" />
@@ -150,7 +150,7 @@ const FeatureCard = ({ title }: { title: string }) => {
   return (
     <Button
       variant="ghost"
-      className="h-32 w-full bg-black/40 hover:bg-black/60"
+      className="h-32 w-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/20 hover:to-secondary/20 border border-gray-800 hover:border-primary/50 transition-all duration-300"
       neon={true}
     >
       <p className="text-sm font-medium text-white">{title}</p>
