@@ -1,5 +1,11 @@
 import { Badge } from "./ui/badge";
-import { Card, CardContent } from "./ui/card";
+import { Card } from "./ui/card";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "./ui/accordion";
 
 interface Project {
   year: string;
@@ -78,53 +84,60 @@ const Projects = () => {
         <h2 className="text-4xl font-bold text-white text-center mb-16">
           Erfolgsgeschichten unserer Kunden
         </h2>
-        <div className="space-y-6">
-          {projects.map((project, index) => (
-            <Card
-              key={index}
-              className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden"
-            >
-              <CardContent className="p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div className="space-y-6">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary">
+        <div className="space-y-4">
+          <Accordion type="single" collapsible className="w-full">
+            {projects.map((project, index) => (
+              <AccordionItem key={index} value={`item-${index}`}>
+                <Card className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden">
+                  <AccordionTrigger className="px-8 py-6 hover:no-underline">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left w-full">
+                      <div className="w-12 h-12 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
                         {project.year}
                       </div>
-                      <div className="text-gray-400">{project.industry}</div>
+                      <div className="flex flex-col gap-2">
+                        <div className="text-gray-400">{project.industry}</div>
+                        <h3 className="text-2xl font-semibold text-primary">
+                          {project.title}
+                        </h3>
+                      </div>
                     </div>
-                    <h3 className="text-2xl font-semibold text-primary">
-                      {project.title}
-                    </h3>
-                    <div className="text-gray-400">
-                      <h4 className="font-medium mb-2">Overview:</h4>
-                      <p className="leading-relaxed">{project.overview}</p>
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <div className="px-8 pb-8 pt-2">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div className="space-y-6">
+                          <div className="text-gray-400">
+                            <h4 className="font-medium mb-2">Overview:</h4>
+                            <p className="leading-relaxed">{project.overview}</p>
+                          </div>
+                        </div>
+                        <div className="space-y-6">
+                          <div className="space-y-4">
+                            <h4 className="font-medium text-white">Challenge:</h4>
+                            <p className="text-gray-400 leading-relaxed">
+                              {project.challenge}
+                            </p>
+                          </div>
+                          <div className="space-y-4">
+                            <h4 className="font-medium text-white">Solution:</h4>
+                            <p className="text-gray-400 leading-relaxed">
+                              {project.solution}
+                            </p>
+                          </div>
+                          <div className="space-y-4">
+                            <h4 className="font-medium text-white">Result:</h4>
+                            <p className="text-gray-400 leading-relaxed">
+                              {project.result}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="space-y-6">
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-white">Challenge:</h4>
-                      <p className="text-gray-400 leading-relaxed">
-                        {project.challenge}
-                      </p>
-                    </div>
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-white">Solution:</h4>
-                      <p className="text-gray-400 leading-relaxed">
-                        {project.solution}
-                      </p>
-                    </div>
-                    <div className="space-y-4">
-                      <h4 className="font-medium text-white">Result:</h4>
-                      <p className="text-gray-400 leading-relaxed">
-                        {project.result}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </AccordionContent>
+                </Card>
+              </AccordionItem>
+            ))}
+          </Accordion>
         </div>
       </div>
     </section>
