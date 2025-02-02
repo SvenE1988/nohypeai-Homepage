@@ -117,17 +117,6 @@ const SavingsCalculator = () => {
             </div>
           </CardContent>
         </Card>
-
-        <div className="text-center mt-8 md:mt-12">
-          <Button 
-            variant="secondary"
-            size="lg"
-            className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6"
-          >
-            Jetzt Beratungstermin sichern
-            <ArrowRight className="ml-2" />
-          </Button>
-        </div>
       </div>
     </section>
   );

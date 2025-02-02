@@ -24,16 +24,9 @@ const Benefits = () => {
   ];
 
   return (
-    <section id="vorteile" className="py-20 bg-gradient-dark">
+    <section className="py-12 bg-gradient-dark">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col items-center mb-16">
-          <span className="text-primary mb-4">Vorteile</span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Das Ergebnis unserer Zusammenarbeit
-          </h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => {
             const Icon = benefit.icon;
             return (
