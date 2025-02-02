@@ -1,27 +1,22 @@
-import { Cpu, MessageSquare, Mic, PieChart } from "lucide-react";
+import { Zap, LockKeyhole, PlayCircle } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
 const Services = () => {
   const services = [
     {
-      icon: MessageSquare,
-      title: "KI Chatbots & Assistenten",
-      description: "Intelligente Chatbots, die Ihren Kommunikationsstil perfekt nachahmen und rund um die Uhr für Ihre Kunden da sind",
+      icon: Zap,
+      title: "Blitzschnelle Umsetzung",
+      description: "Erhalten Sie fertige Projekte in Wochen statt Monaten.",
     },
     {
-      icon: Cpu,
-      title: "Prozessautomatisierung",
-      description: "Automatisieren Sie repetitive Aufgaben wie E-Mail-Management, Datenanalyse und Content-Erstellung mit modernster KI-Technologie",
+      icon: LockKeyhole,
+      title: "Festpreis-Garantie",
+      description: "Keine bösen Überraschungen. Sie zahlen genau den vereinbarten Preis.",
     },
     {
-      icon: PieChart,
-      title: "Strategische KI-Beratung",
-      description: "Entwickeln Sie mit uns Ihre individuelle KI-Strategie. Wir begleiten Sie von der Konzeption bis zur erfolgreichen Implementierung",
-    },
-    {
-      icon: Mic,
-      title: "KI Voice Solutions",
-      description: "Revolutionieren Sie Ihre Telefonie mit KI-gestützten Sprachassistenten - natürlich klingend und hocheffizient im Kundenkontakt",
+      icon: PlayCircle,
+      title: "Flexibel und skalierbar",
+      description: "Skalieren Sie nach Bedarf hoch oder runter und pausieren Sie jederzeit. Keine versteckten Bindungen.",
     },
   ];
 
@@ -31,15 +26,15 @@ const Services = () => {
         <h2 className="text-4xl font-bold text-white text-center mb-16">
           Innovative KI-Lösungen für Ihren Erfolg
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card key={index} className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden">
+            <Card key={index} className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden group hover:border-primary/50 transition-all duration-300">
               <CardContent className="p-8">
-                <div className="flex flex-col gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-[#1A1F35] flex items-center justify-center">
-                    <service.icon className="w-6 h-6 text-[#6B7CFF]" />
+                <div className="flex flex-col items-center text-center gap-6">
+                  <div className="w-20 h-20 rounded-full bg-[#1A1F35] flex items-center justify-center group-hover:bg-[#2A2F45] transition-all duration-300">
+                    <service.icon className="w-10 h-10 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold text-white">
+                  <h3 className="text-2xl font-semibold text-white">
                     {service.title}
                   </h3>
                   <p className="text-gray-400 leading-relaxed">
