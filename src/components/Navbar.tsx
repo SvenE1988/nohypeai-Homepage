@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, BookOpen } from "lucide-react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Dienstleistungen", href: "#" },
+    { name: "Partner", href: "#" },
+    { name: "Innovative KI-Lösungen", href: "#" },
     { name: "Projekte", href: "#" },
-    { name: "Testimonials", href: "#" },
-    { name: "Prozess", href: "#" },
     { name: "Vorteile", href: "#" },
+    { name: "Einsparungen", href: "#" },
+    { name: "Prozess", href: "#" },
     { name: "Über Uns", href: "#" },
-    { name: "Blog", href: "#" },
+    { name: "Testimonials", href: "#" },
+    { name: "Blog", href: "#", icon: BookOpen },
   ];
 
   return (
@@ -28,9 +30,10 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white transition-colors"
+                className="text-gray-300 hover:text-white transition-colors flex items-center gap-2"
               >
                 {item.name}
+                {item.icon && <item.icon className="w-4 h-4" />}
               </a>
             ))}
             <a
@@ -57,9 +60,10 @@ const Navbar = () => {
               <a
                 key={item.name}
                 href={item.href}
-                className="block text-gray-300 hover:text-white py-2"
+                className="block text-gray-300 hover:text-white py-2 flex items-center gap-2"
               >
                 {item.name}
+                {item.icon && <item.icon className="w-4 h-4" />}
               </a>
             ))}
             <a
