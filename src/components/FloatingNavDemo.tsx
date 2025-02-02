@@ -1,41 +1,23 @@
 import React from "react";
 import { FloatingNav } from "@/components/ui/floating-navbar";
-import { BookOpen } from "lucide-react";
+import { Home, User, MessageSquare } from "lucide-react";
 
 export function FloatingNavDemo() {
   const navItems = [
     {
-      name: "Partner",
-      link: "#partner",
+      name: "Home",
+      link: "/",
+      icon: <Home className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
     {
-      name: "Projekte",
-      link: "#projekte",
+      name: "About",
+      link: "/about",
+      icon: <User className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
     {
-      name: "Vorteile",
-      link: "#vorteile",
-    },
-    {
-      name: "Einsparungen",
-      link: "#einsparungen",
-    },
-    {
-      name: "Prozess",
-      link: "#prozess",
-    },
-    {
-      name: "Über Uns",
-      link: "#ueber-uns",
-    },
-    {
-      name: "Testimonials",
-      link: "#testimonials",
-    },
-    {
-      name: "Blog",
-      link: "#blog",
-      icon: <BookOpen className="h-4 w-4" />,
+      name: "Contact",
+      link: "/contact",
+      icon: <MessageSquare className="h-4 w-4 text-neutral-500 dark:text-white" />,
     },
   ];
 
