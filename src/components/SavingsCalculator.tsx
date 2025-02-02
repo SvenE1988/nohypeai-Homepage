@@ -40,12 +40,12 @@ const SavingsCalculator = () => {
         </h2>
         
         <Card className="max-w-5xl mx-auto bg-black/40 backdrop-blur-sm border-gray-800">
-          <CardContent className="p-8">
-            <div className="grid md:grid-cols-2 gap-12">
+          <CardContent className="p-4 md:p-8">
+            <div className="grid md:grid-cols-2 gap-8">
               {/* Left column - Input area */}
-              <div className="space-y-8">
+              <div className="space-y-6 md:space-y-8">
                 <div className="space-y-4">
-                  <label className="text-lg text-gray-200">
+                  <label className="text-base md:text-lg text-gray-200">
                     Erwartete eingesparte Stunden pro Woche:
                   </label>
                   <Slider
@@ -55,13 +55,13 @@ const SavingsCalculator = () => {
                     step={1}
                     className="py-4"
                   />
-                  <span className="text-3xl font-semibold text-white block">
+                  <span className="text-2xl md:text-3xl font-semibold text-white block">
                     {hours[0]} Stunden
                   </span>
                 </div>
 
                 <div className="space-y-4">
-                  <label className="text-lg text-gray-200">
+                  <label className="text-base md:text-lg text-gray-200">
                     Kosten pro Arbeitsstunde (€):
                   </label>
                   <Slider
@@ -71,43 +71,43 @@ const SavingsCalculator = () => {
                     step={5}
                     className="py-4"
                   />
-                  <span className="text-3xl font-semibold text-white block">
+                  <span className="text-2xl md:text-3xl font-semibold text-white block">
                     {rate[0]} €
                   </span>
                 </div>
               </div>
 
               {/* Right column - Results area */}
-              <div className="space-y-6 p-6 bg-white/5 rounded-xl">
-                <h3 className="text-xl text-gray-200 mb-6">
+              <div className="space-y-4 md:space-y-6 p-4 md:p-6 bg-white/5 rounded-xl">
+                <h3 className="text-lg md:text-xl text-gray-200 mb-4 md:mb-6">
                   Ihre potentiellen Einsparungen:
                 </h3>
                 
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-black/20 rounded-lg">
-                    <span className="text-gray-300">Wöchentlich:</span>
-                    <span className="text-2xl font-bold text-primary">
+                <div className="space-y-3 md:space-y-4">
+                  <div className="flex items-center justify-between p-3 md:p-4 bg-black/20 rounded-lg">
+                    <span className="text-sm md:text-base text-gray-300">Wöchentlich:</span>
+                    <span className="text-xl md:text-2xl font-bold text-primary">
                       {savings.weekly.toLocaleString()} €
                     </span>
                   </div>
                   
-                  <div className="flex items-center justify-between p-4 bg-black/20 rounded-lg">
-                    <span className="text-gray-300">Monatlich:</span>
-                    <span className="text-2xl font-bold text-primary">
+                  <div className="flex items-center justify-between p-3 md:p-4 bg-black/20 rounded-lg">
+                    <span className="text-sm md:text-base text-gray-300">Monatlich:</span>
+                    <span className="text-xl md:text-2xl font-bold text-primary">
                       {savings.monthly.toLocaleString()} €
                     </span>
                   </div>
                   
-                  <div className="flex items-center justify-between p-4 bg-black/20 rounded-lg">
-                    <span className="text-gray-300">Jährlich:</span>
-                    <span className="text-3xl font-bold text-primary">
+                  <div className="flex items-center justify-between p-3 md:p-4 bg-black/20 rounded-lg">
+                    <span className="text-sm md:text-base text-gray-300">Jährlich:</span>
+                    <span className="text-2xl md:text-3xl font-bold text-primary">
                       {savings.yearly.toLocaleString()} €
                     </span>
                   </div>
                 </div>
 
                 <Button 
-                  className="w-full mt-6 text-lg py-6"
+                  className="w-full mt-4 md:mt-6 text-base md:text-lg py-4 md:py-6"
                   variant="default"
                 >
                   Kostenloses Erstgespräch vereinbaren
@@ -118,11 +118,11 @@ const SavingsCalculator = () => {
           </CardContent>
         </Card>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-8 md:mt-12">
           <Button 
             variant="secondary"
             size="lg"
-            className="text-lg px-8 py-6"
+            className="text-base md:text-lg px-6 md:px-8 py-4 md:py-6"
           >
             Jetzt Beratungstermin sichern
             <ArrowRight className="ml-2" />

@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -11,6 +12,7 @@ function NavHeader() {
   });
   
   const [activeSection, setActiveSection] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,24 +33,63 @@ function NavHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  return (
-    <ul
-      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center shadow-lg"
-      onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
-      style={{ position: 'fixed' }}
-    >
-      <Tab setPosition={setPosition} href="#partnerprojekte" isActive={activeSection === "partnerprojekte"}>Partner</Tab>
-      <Tab setPosition={setPosition} href="#projekte" isActive={activeSection === "projekte"}>Projekte</Tab>
-      <Tab setPosition={setPosition} href="#vorteile" isActive={activeSection === "vorteile"}>Vorteile</Tab>
-      <Tab setPosition={setPosition} href="#prozess" isActive={activeSection === "prozess"}>Prozess</Tab>
-      <Tab setPosition={setPosition} href="#ueber" isActive={activeSection === "ueber"}>Über</Tab>
-      <Tab setPosition={setPosition} href="#testimonials" isActive={activeSection === "testimonials"}>Testimonials</Tab>
-      <Tab setPosition={setPosition} href="#blog" isActive={activeSection === "blog"}>Blog</Tab>
-      <Tab setPosition={setPosition} href="/pricing">Preis</Tab>
-      <Tab setPosition={setPosition} href="#kontakt" isAction>Termin</Tab>
+  const navItems = [
+    { href: "#vorteile", label: "Vorteile" },
+    { href: "#einsparungen", label: "Einsparungen" },
+    { href: "#prozess", label: "Prozess" },
+    { href: "/pricing", label: "Preis" },
+    { href: "#blog", label: "Blog" },
+  ];
 
-      <Cursor position={position} />
-    </ul>
+  return (
+    <>
+      {/* Mobile Menu Button */}
+      <button
+        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        <div className="w-6 h-5 relative flex flex-col justify-between">
+          <span className={`w-full h-0.5 bg-white transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+          <span className={`w-full h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
+          <span className={`w-full h-0.5 bg-white transform transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+        </div>
+      </button>
+
+      {/* Mobile Menu */}
+      <div className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-lg transform transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex flex-col items-center justify-center h-full space-y-8">
+          {navItems.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              className="text-xl text-white hover:text-primary transition-colors"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {item.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {/* Desktop Menu */}
+      <ul
+        className="relative mx-auto hidden md:flex w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center shadow-lg"
+        onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
+        style={{ position: 'fixed' }}
+      >
+        {navItems.map((item) => (
+          <Tab 
+            key={item.label}
+            setPosition={setPosition} 
+            href={item.href} 
+            isActive={activeSection === item.href.replace('#', '')}
+          >
+            {item.label}
+          </Tab>
+        ))}
+        <Cursor position={position} />
+      </ul>
+    </>
   );
 }
 
@@ -81,7 +122,7 @@ const Tab = ({
     >
       <a
         href={href}
-        className={`relative z-10 block cursor-pointer px-2 py-1 text-[11px] uppercase text-white mix-blend-difference transition-all duration-300 md:px-3 md:py-2 md:text-sm ${
+        className={`relative z-10 block cursor-pointer px-3 py-2 text-sm uppercase text-white mix-blend-difference transition-all duration-300 ${
           isAction ? "font-medium" : ""
         } ${isActive ? "text-primary font-semibold" : ""}`}
       >
@@ -95,7 +136,7 @@ const Cursor = ({ position }: { position: any }) => {
   return (
     <motion.li
       animate={position}
-      className="absolute z-0 h-7 rounded-full bg-white/10 md:h-12"
+      className="absolute z-0 h-8 rounded-full bg-white/10 md:h-10"
     />
   );
 };
