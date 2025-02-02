@@ -3,7 +3,7 @@ name: 🚀 Deploy to IONOS via SFTP
 on:
   push:
     branches:
-      - main  # Falls dein Haupt Branch anders heißt, ändere "main"
+      - main  # Falls dein Haupt-Branch anders heißt, ändere "main"
 
 jobs:
   deploy:
@@ -15,9 +15,9 @@ jobs:
       - name: 📂 Upload per SFTP zu IONOS
         uses: appleboy/scp-action@master
         with:
-          host: ${{ access-5017105000.webspace-host.com }}
-          username: ${{ a357118 }}
-          password: ${{ 9cG-AW4dY-u-fz2 }}
+          host: ${{ secrets.SFTP_SERVER }}       # 👈 Holt den SFTP-Server aus GitHub Secrets
+          username: ${{ secrets.SFTP_USERNAME }} # 👈 Holt den Benutzernamen aus GitHub Secrets
+          password: ${{ secrets.SFTP_PASSWORD }} # 👈 Holt das Passwort aus GitHub Secrets
           source: "./*"
           target: "/"
           strip_components: 1
