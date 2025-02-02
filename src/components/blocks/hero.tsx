@@ -11,7 +11,7 @@ interface HeroProps {
   gradient?: boolean
   blur?: boolean
   title: string
-  subtitle?: string
+  subtitle?: React.ReactNode  // Geändert von string zu React.ReactNode
   actions?: {
     label: string
     href: string
@@ -129,14 +129,14 @@ const Hero = React.forwardRef<HTMLElement, HeroProps>(
               {title}
             </h1>
             {subtitle && (
-              <p
+              <div
                 className={cn(
                   "text-xl text-muted-foreground",
                   subtitleClassName,
                 )}
               >
                 {subtitle}
-              </p>
+              </div>
             )}
             {actions && actions.length > 0 && (
               <div className={cn("flex gap-4", actionsClassName)}>
