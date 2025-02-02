@@ -6,9 +6,9 @@ const GrowthSection = () => {
     <section className="py-24 px-4 bg-white">
       <div className="max-w-6xl mx-auto">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-12">
-          Drive Growth
+          Steigern Sie Ihr Wachstum
           <br />
-          Without Adding Staff
+          Ohne Zusätzliches Personal
         </h2>
 
         <Tabs defaultValue="inbound" className="w-full">
@@ -17,13 +17,13 @@ const GrowthSection = () => {
               value="inbound"
               className="rounded-full data-[state=active]:bg-black data-[state=active]:text-white"
             >
-              Inbound Sales
+              Eingehende Verkäufe
             </TabsTrigger>
             <TabsTrigger
               value="outbound"
               className="rounded-full data-[state=active]:bg-black data-[state=active]:text-white"
             >
-              Outbound Sales
+              Ausgehende Verkäufe
             </TabsTrigger>
             <TabsTrigger
               value="content"
@@ -36,34 +36,34 @@ const GrowthSection = () => {
           <TabsContent value="inbound" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">AI Inbound Sales Automations</h3>
+                <h3 className="text-3xl font-bold">KI-gestützte Inbound-Verkaufsautomatisierung</h3>
                 <p className="text-gray-600 text-lg">
-                  AI Solutions for better lead flow, 24/7 responsiveness, faster qualification, and a focused sales team.
+                  KI-Lösungen für besseren Lead-Flow, 24/7 Erreichbarkeit, schnellere Qualifizierung und ein fokussiertes Verkaufsteam.
                 </p>
                 <div className="space-y-4">
                   <BenefitItem>
-                    <strong>Increase Lead Conversion:</strong> Research, Qualify, and score leads on autopilot.
+                    <strong>Lead-Konvertierung steigern:</strong> Recherchieren, qualifizieren und bewerten Sie Leads automatisch.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>Save Time and Resources:</strong> Automate repetitive tasks, so your team focuses on closing deals.
+                    <strong>Zeit und Ressourcen sparen:</strong> Automatisieren Sie wiederkehrende Aufgaben, damit sich Ihr Team auf Abschlüsse konzentrieren kann.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>Improve Customer Experience:</strong> Immediate & personalized responses across all inbound channels.
+                    <strong>Kundenerlebnis verbessern:</strong> Sofortige & personalisierte Antworten über alle eingehenden Kanäle.
                   </BenefitItem>
                 </div>
               </div>
 
               <div className="bg-[#E5F6FF] p-8 rounded-3xl">
                 <div className="grid grid-cols-3 gap-4">
-                  <FeatureCard title="Automated Lead Research & Enrichment" />
-                  <FeatureCard title="Automated Lead Qualification & Scoring" />
-                  <FeatureCard title="Inbound Appointment Setters & Chatbots" />
-                  <FeatureCard title="Inbound Voice Agents" />
-                  <FeatureCard title="Inbound Responder Agents" />
-                  <FeatureCard title="Personalized Lead Nurturing" />
-                  <FeatureCard title="Automated Proposal Generation" />
-                  <FeatureCard title="Onboarding automation Systems" />
-                  <FeatureCard title="Custom Projects" />
+                  <FeatureCard title="Automatisierte Lead-Recherche & Anreicherung" />
+                  <FeatureCard title="Automatisierte Lead-Qualifizierung & Bewertung" />
+                  <FeatureCard title="Inbound Terminvereinbarung & Chatbots" />
+                  <FeatureCard title="Inbound Sprach-Agenten" />
+                  <FeatureCard title="Inbound Antwort-Agenten" />
+                  <FeatureCard title="Personalisierte Lead-Pflege" />
+                  <FeatureCard title="Automatisierte Angebotserstellung" />
+                  <FeatureCard title="Onboarding-Automatisierungssysteme" />
+                  <FeatureCard title="Individuelle Projekte" />
                 </div>
               </div>
             </div>
@@ -72,31 +72,31 @@ const GrowthSection = () => {
           <TabsContent value="outbound" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">AI Outbound Sales Solutions</h3>
+                <h3 className="text-3xl font-bold">KI-gestützte Outbound-Verkaufslösungen</h3>
                 <p className="text-gray-600 text-lg">
-                  AI solutions for lead generation, enrichment & personalized multi-channel outreach.
+                  KI-Lösungen für Lead-Generierung, Anreicherung & personalisierte Multi-Kanal-Kontaktaufnahme.
                 </p>
                 <div className="space-y-4">
                   <BenefitItem>
-                    <strong>Enhance Lead Generation:</strong> AI scraping systems to add new lead sources to your business
+                    <strong>Lead-Generierung verbessern:</strong> KI-Scraping-Systeme zur Erschließung neuer Lead-Quellen für Ihr Unternehmen.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>AI Lead Enrichment:</strong> Automatically research, qualify potential prospects
+                    <strong>KI-Lead-Anreicherung:</strong> Automatische Recherche und Qualifizierung potenzieller Interessenten.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>Multi-channel Personalized Outreach:</strong> Personalized outreach across email, LinkedIn, and Voice to reach more leads.
+                    <strong>Personalisierte Multi-Kanal-Kontaktaufnahme:</strong> Personalisierte Ansprache über E-Mail, LinkedIn und Telefon, um mehr Leads zu erreichen.
                   </BenefitItem>
                 </div>
               </div>
 
               <div className="bg-[#B8E6F3] p-8 rounded-3xl">
                 <div className="grid grid-cols-2 gap-4">
-                  <FeatureCard title="Lead Scraping Automations" />
-                  <FeatureCard title="Outbound Email System Setup" />
-                  <FeatureCard title="Personalized Outreach Automation" />
-                  <FeatureCard title="LinkedIn Outreach Systems" />
-                  <FeatureCard title="Outbound Voice Agents" />
-                  <FeatureCard title="Custom Projects" />
+                  <FeatureCard title="Lead-Scraping Automatisierung" />
+                  <FeatureCard title="Outbound E-Mail-System Einrichtung" />
+                  <FeatureCard title="Personalisierte Kontaktaufnahme-Automatisierung" />
+                  <FeatureCard title="LinkedIn Outreach Systeme" />
+                  <FeatureCard title="Outbound Sprach-Agenten" />
+                  <FeatureCard title="Individuelle Projekte" />
                 </div>
               </div>
             </div>
@@ -105,31 +105,31 @@ const GrowthSection = () => {
           <TabsContent value="content" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">AI Content & Marketing Systems</h3>
+                <h3 className="text-3xl font-bold">KI Content & Marketing Systeme</h3>
                 <p className="text-gray-600 text-lg">
-                  AI solutions for consistent social media posting, persona-aligned content creation, and efficient multi-channel repurposing.
+                  KI-Lösungen für konsistente Social-Media-Beiträge, persona-orientierte Content-Erstellung und effiziente Multi-Kanal-Verwertung.
                 </p>
                 <div className="space-y-4">
                   <BenefitItem>
-                    <strong>Human-in-the Loop Content Systems:</strong> Give every team member a personal content system to stay consistent.
+                    <strong>Human-in-the-Loop Content-Systeme:</strong> Geben Sie jedem Teammitglied ein persönliches Content-System für konsistente Ergebnisse.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>Repurpose Effectively:</strong> Create AI Systems to take full advantage of existing content.
+                    <strong>Effektive Mehrfachverwertung:</strong> Erstellen Sie KI-Systeme, um bestehende Inhalte optimal zu nutzen.
                   </BenefitItem>
                   <BenefitItem>
-                    <strong>Convert Post Engagers into Deals:</strong> Leverage Content engagers into deals with social media scraping & personalized outreach.
+                    <strong>Post-Interaktionen in Abschlüsse umwandeln:</strong> Nutzen Sie Content-Interaktionen durch Social-Media-Scraping & personalisierte Kontaktaufnahme für Abschlüsse.
                   </BenefitItem>
                 </div>
               </div>
 
               <div className="bg-[#E2F5E2] p-8 rounded-3xl">
                 <div className="grid grid-cols-2 gap-4">
-                  <FeatureCard title="Social Media Content Systems" />
-                  <FeatureCard title="Brand-Aligned Fine-tuned Content LLM's" />
-                  <FeatureCard title="Content Repurposing Systems" />
-                  <FeatureCard title="AI Lead Magnet Automations" />
-                  <FeatureCard title="LinkedIn Content & Outreach Systems" />
-                  <FeatureCard title="Custom Projects" />
+                  <FeatureCard title="Social Media Content Systeme" />
+                  <FeatureCard title="Markengerechte Fine-tuned Content KI-Modelle" />
+                  <FeatureCard title="Content-Verwertungssysteme" />
+                  <FeatureCard title="KI Lead Magnet Automatisierung" />
+                  <FeatureCard title="LinkedIn Content & Outreach Systeme" />
+                  <FeatureCard title="Individuelle Projekte" />
                 </div>
               </div>
             </div>
