@@ -18,7 +18,7 @@ const SavingsCalculator = () => {
   }, [hours, rate]);
 
   return (
-    <section className="w-full py-24 bg-gradient-to-b from-black/90 to-black/50">
+    <section id="einsparungen" className="w-full py-24 bg-gradient-to-b from-black/90 to-black/50">
       <div className="container mx-auto px-4">
         <Card className="max-w-2xl mx-auto bg-black/40 backdrop-blur-sm border-gray-800">
           <CardContent className="p-8">

@@ -6,7 +6,7 @@ export function FloatingNavDemo() {
   const navItems = [
     {
       name: "Partner",
-      link: "#partner",
+      link: "#partnerprojekte",
     },
     {
       name: "Projekte",

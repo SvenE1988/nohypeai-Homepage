@@ -20,7 +20,7 @@ const About = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-dark">
+    <section id="ueber-uns" className="py-20 bg-gradient-dark">
       <div className="container mx-auto px-4">
         <span className="text-primary mb-4 block text-center">Über Uns</span>
         
