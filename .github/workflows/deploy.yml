@@ -19,5 +19,5 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }} # 👈 Holt den Benutzernamen aus GitHub Secrets
           password: ${{ secrets.SFTP_PASSWORD }} # 👈 Holt das Passwort aus GitHub Secrets
           source: "./*"
-          target: "/"
+          target: "/website/"
           strip_components: 1
