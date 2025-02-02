@@ -78,28 +78,34 @@ const GrowthSection = () => {
               <FeatureCard 
                 title="Lead-Scraping Systeme" 
                 benefit="300% mehr qualifizierte Leads durch KI-gestützte Recherche"
+                description="Automatisierte Lead-Generierung"
               />
               <FeatureCard 
                 title="Outbound E-Mail-System" 
                 benefit="5x höhere Antwortrate durch personalisierte Kampagnen"
+                description="Personalisierte E-Mail-Kampagnen"
               />
               <FeatureCard 
                 title="LinkedIn Outreach" 
                 benefit="8x mehr Conversions durch automatisierte LinkedIn-Strategien"
+                description="Automatisierte LinkedIn-Kommunikation"
               />
             </div>
             <div className="grid grid-cols-3 gap-8">
               <FeatureCard 
                 title="Multi-Kanal-Outreach" 
                 benefit="250% mehr Touchpoints pro Lead"
+                description="Kanalübergreifende Kommunikation"
               />
               <FeatureCard 
                 title="Outbound Sprach-Agenten" 
                 benefit="4x mehr erfolgreiche Erstkontakte"
+                description="KI-gestützte Erstkontakte"
               />
               <FeatureCard 
                 title="Performance Tracking" 
                 benefit="100% Transparenz über alle Outbound-Aktivitäten"
+                description="Umfassendes Performance-Monitoring"
               />
             </div>
           </TabsContent>
@@ -109,28 +115,34 @@ const GrowthSection = () => {
               <FeatureCard 
                 title="Social Media Content" 
                 benefit="70% Zeitersparnis bei Content-Erstellung"
+                description="Effiziente Content-Produktion"
               />
               <FeatureCard 
                 title="Markengerechte Content KI" 
                 benefit="100% markenkonformer Content in Sekunden"
+                description="KI-gestützte Markenanpassung"
               />
               <FeatureCard 
                 title="Content-Verwertung" 
                 benefit="5x mehr Content aus bestehenden Materialien"
+                description="Optimierte Content-Nutzung"
               />
             </div>
             <div className="grid grid-cols-3 gap-8">
               <FeatureCard 
                 title="KI Lead Magnete" 
                 benefit="3x mehr Lead-Generierung durch KI-optimierte Inhalte"
+                description="KI-optimierte Lead-Generierung"
               />
               <FeatureCard 
                 title="LinkedIn Content" 
                 benefit="400% mehr organische Reichweite"
+                description="LinkedIn Content-Optimierung"
               />
               <FeatureCard 
                 title="Content Performance" 
                 benefit="90% bessere Content-Performance durch KI-Optimierung"
+                description="KI-gestützte Performance-Analyse"
               />
             </div>
           </TabsContent>
