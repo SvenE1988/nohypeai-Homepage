@@ -8,11 +8,13 @@ import Projects from "../components/Projects";
 import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
+import { FloatingNavDemo } from "../components/FloatingNavDemo";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <Navbar />
+      <FloatingNavDemo />
       <Hero />
       <Partners />
       <Services />
