@@ -1,7 +1,13 @@
-import { Mail, Linkedin, Instagram } from "lucide-react";
+import { Mail, Linkedin, Instagram, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
+import { motion } from "framer-motion";
 
 const AIFirstSection = () => {
+  const scrollToNextSection = () => {
+    const nextSection = document.querySelector('section:nth-of-type(2)');
+    nextSection?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="min-h-screen flex items-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
@@ -26,15 +32,30 @@ const AIFirstSection = () => {
           </div>
 
           <div className="flex gap-6 pt-4">
-            <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-              <Instagram size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-              <Linkedin size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-              <Mail size={24} />
-            </a>
+            <motion.a 
+              href="#" 
+              className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Instagram size={32} />
+            </motion.a>
+            <motion.a 
+              href="#" 
+              className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Linkedin size={32} />
+            </motion.a>
+            <motion.a 
+              href="#" 
+              className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Mail size={32} />
+            </motion.a>
           </div>
         </div>
 
@@ -44,12 +65,22 @@ const AIFirstSection = () => {
               src="/lovable-uploads/d7917218-9503-4336-a432-e9aa9a629d40.png" 
               alt="KI Experte" 
               className="w-full h-auto rounded-2xl"
+              loading="lazy"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
           </div>
           <div className="absolute -z-10 inset-0 blur-3xl opacity-30 bg-gradient-to-r from-primary to-secondary"></div>
         </div>
       </div>
+
+      <motion.div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+        animate={{ y: [0, 10, 0] }}
+        transition={{ duration: 2, repeat: Infinity }}
+        onClick={scrollToNextSection}
+      >
+        <ChevronDown size={32} className="text-white/50 hover:text-white transition-colors" />
+      </motion.div>
     </section>
   );
 };
