@@ -37,32 +37,38 @@ const GrowthSection = () => {
           </TabsList>
 
           <TabsContent value="inbound" className="mt-12">
-            <div className="grid grid-cols-3 gap-8 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="Lead-Recherche & Anreicherung" 
                 benefit="Automatische Identifizierung und Qualifizierung von Leads mit 90% Zeitersparnis"
+                description="Intelligente Lead-Qualifizierung"
               />
               <FeatureCard 
                 title="Inbound Terminvereinbarung" 
                 benefit="24/7 automatische Terminvereinbarung mit 80% weniger Aufwand"
+                description="Effiziente Terminkoordination"
               />
               <FeatureCard 
                 title="Inbound Sprach-Agenten" 
                 benefit="Sofortige Kundenantworten mit 95% Kundenzufriedenheit"
+                description="KI-gestützte Kommunikation"
               />
             </div>
-            <div className="grid grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
               <FeatureCard 
                 title="Personalisierte Lead-Pflege" 
                 benefit="40% höhere Conversion durch automatisierte Nachverfolgung"
+                description="Intelligentes Lead Nurturing"
               />
               <FeatureCard 
                 title="Onboarding Automatisierung" 
                 benefit="60% schnelleres Onboarding neuer Kunden"
+                description="Nahtlose Kundenintegration"
               />
               <FeatureCard 
                 title="Angebotserstellung" 
                 benefit="75% Zeitersparnis bei der Angebotserstellung"
+                description="Automatisierte Angebotsprozesse"
               />
             </div>
           </TabsContent>
@@ -137,30 +143,46 @@ const GrowthSection = () => {
 interface FeatureCardProps {
   title: string;
   benefit: string;
+  description: string;
 }
 
-const FeatureCard = ({ title, benefit }: FeatureCardProps) => {
+const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
   return (
-    <div className="relative w-full h-48 perspective">
+    <div className="relative w-full h-48 perspective group">
       <motion.div
-        className="w-full h-full"
+        className="w-full h-full absolute preserve-3d"
         initial={false}
+        animate={{ rotateY: 0 }}
         whileHover={{ rotateY: 180 }}
         transition={{ duration: 0.6 }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ 
+          transformStyle: "preserve-3d",
+        }}
       >
-        <div className="absolute w-full h-full">
+        {/* Front side */}
+        <div 
+          className="absolute w-full h-full backface-hidden"
+          style={{ backfaceVisibility: "hidden" }}
+        >
           <Button
             variant="ghost"
             className="h-full w-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/20 hover:to-secondary/20 border border-gray-800 hover:border-primary/50 transition-all duration-300"
             neon={true}
           >
-            <p className="text-lg font-medium text-white">{title}</p>
+            <div className="flex flex-col gap-2">
+              <p className="text-lg font-medium text-white">{title}</p>
+              <p className="text-sm text-gray-400">{description}</p>
+            </div>
           </Button>
         </div>
+        
+        {/* Back side */}
         <div 
-          className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center"
-          style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
+          className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center backface-hidden"
+          style={{ 
+            transform: "rotateY(180deg)",
+            backfaceVisibility: "hidden"
+          }}
         >
           <p className="text-white text-center font-medium">{benefit}</p>
         </div>
