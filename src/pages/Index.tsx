@@ -7,12 +7,12 @@ import Projects from "../components/Projects";
 import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
-import { FloatingNavDemo } from "../components/FloatingNavDemo";
+import NavHeader from "../components/blocks/nav-header";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
-      <FloatingNavDemo />
+      <NavHeader />
       <Hero />
       <Partners />
       <Services />
