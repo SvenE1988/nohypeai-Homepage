@@ -3,7 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Home } from "lucide-react";
+import { Home, Menu, X } from "lucide-react";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -47,10 +47,10 @@ function NavHeader() {
   };
 
   const handleNavigation = (item: any, e: React.MouseEvent) => {
+    e.preventDefault();
+    
     if (location.pathname !== '/' && !item.href.startsWith('/')) {
-      e.preventDefault();
       navigate('/');
-      // Warten auf Navigation, dann scrollen
       setTimeout(() => {
         const element = document.querySelector(item.href);
         if (element) {
@@ -58,18 +58,22 @@ function NavHeader() {
         }
       }, 100);
     } else if (item.href.startsWith('#') && location.pathname === '/') {
-      e.preventDefault();
       const element = document.querySelector(item.href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+    } else if (item.href === '/') {
+      scrollToTop();
+    } else {
+      navigate(item.href);
     }
+    
     setIsMobileMenuOpen(false);
   };
 
   const navItems = [
     { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
-    { href: "#vorteile", label: "Vorteile" },
+    { href: "#benefits", label: "Vorteile" },
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
     { href: "/pricing", label: "Preis" },
@@ -83,32 +87,38 @@ function NavHeader() {
         className="fixed top-4 right-4 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
-        <div className="w-6 h-5 relative flex flex-col justify-between">
-          <span className={`w-full h-0.5 bg-white transform transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-          <span className={`w-full h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'opacity-0' : ''}`} />
-          <span className={`w-full h-0.5 bg-white transform transition-all duration-300 ${isMobileMenuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
-        </div>
+        {isMobileMenuOpen ? (
+          <X className="w-6 h-6 text-white" />
+        ) : (
+          <Menu className="w-6 h-6 text-white" />
+        )}
       </button>
 
       {/* Mobile Menu */}
-      <div className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-lg transform transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+      <motion.div 
+        initial={false}
+        animate={{
+          x: isMobileMenuOpen ? "0%" : "100%",
+        }}
+        className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg md:hidden"
+      >
         <div className="flex flex-col items-center justify-center h-full space-y-8">
           {navItems.map((item) => (
-            <Link
+            <a
               key={item.label}
-              to={item.href}
+              href={item.href}
               className="text-xl text-white hover:text-primary transition-colors flex items-center gap-2"
               onClick={(e) => handleNavigation(item, e)}
             >
               {item.icon}
               {item.label}
-            </Link>
+            </a>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Desktop Menu */}
-      <ul
+      <motion.ul
         className="relative mx-auto hidden md:flex w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center shadow-lg"
         onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
         style={{ position: 'fixed' }}
@@ -128,7 +138,7 @@ function NavHeader() {
           </Tab>
         ))}
         <Cursor position={position} />
-      </ul>
+      </motion.ul>
     </>
   );
 }
