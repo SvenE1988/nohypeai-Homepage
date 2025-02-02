@@ -33,36 +33,12 @@
   }
 
   body {
-    @apply bg-black text-foreground font-sans min-h-screen;
-    background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
-    background-attachment: fixed;
+    @apply bg-[#030303] text-foreground font-sans min-h-screen;
   }
 
-  /* Global overlay for glow effect */
-  .glow-overlay {
-    @apply pointer-events-none fixed inset-0;
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
-      radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
-  }
-
-  /* Section styling */
   section {
     @apply relative;
     background: transparent !important;
-  }
-
-  /* Additional glow effect for sections */
-  section::before {
-    content: '';
-    @apply absolute inset-0 pointer-events-none opacity-50;
-    background: 
-      radial-gradient(circle at 15% 50%, rgba(107, 70, 193, 0.08) 0%, transparent 60%),
-      radial-gradient(circle at 85% 50%, rgba(255, 0, 153, 0.08) 0%, transparent 60%);
-  }
-
-  .perspective {
-    perspective: 2000px;
   }
 
   .preserve-3d {
@@ -87,7 +63,7 @@
   right: 0;
   height: 100vh;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
-    radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
+    radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 70%),
+    radial-gradient(circle at 80% 80%, rgba(244, 63, 94, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
