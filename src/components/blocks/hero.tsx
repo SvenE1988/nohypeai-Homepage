@@ -11,7 +11,7 @@ interface HeroProps {
   gradient?: boolean
   blur?: boolean
   title: string
-  subtitle?: React.ReactNode  // Geändert von string zu React.ReactNode
+  subtitle?: React.ReactNode
   actions?: {
     label: string
     href: string
