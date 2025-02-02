@@ -44,6 +44,10 @@
       radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
       radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
   }
+
+  .perspective {
+    perspective: 1000px;
+  }
 }
 
 #root {

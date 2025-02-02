@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
-import { Check } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
 
 const GrowthSection = () => {
@@ -15,7 +15,7 @@ const GrowthSection = () => {
         </h2>
 
         <Tabs defaultValue="inbound" className="w-full">
-          <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-3 bg-[#1A1F35] p-1 rounded-full">
+          <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-3 bg-[#1A1F35] p-1 rounded-full mb-12">
             <TabsTrigger
               value="inbound"
               className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
@@ -37,98 +37,95 @@ const GrowthSection = () => {
           </TabsList>
 
           <TabsContent value="inbound" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-8">
-                <h3 className="text-3xl font-bold text-white">KI-gestützte Inbound-Verkaufsautomatisierung</h3>
-                <p className="text-gray-300 text-lg">
-                  KI-Lösungen für besseren Lead-Flow, 24/7 Erreichbarkeit, schnellere Qualifizierung und ein fokussiertes Verkaufsteam.
-                </p>
-                <div className="space-y-4">
-                  <BenefitItem>
-                    <strong>Lead-Konvertierung steigern:</strong> Recherchieren, qualifizieren und bewerten Sie Leads automatisch.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>Zeit und Ressourcen sparen:</strong> Automatisieren Sie wiederkehrende Aufgaben, damit sich Ihr Team auf Abschlüsse konzentrieren kann.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>Kundenerlebnis verbessern:</strong> Sofortige & personalisierte Antworten über alle eingehenden Kanäle.
-                  </BenefitItem>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-3 gap-4">
-                <FeatureCard title="Automatisierte Lead-Recherche & Anreicherung" />
-                <FeatureCard title="Automatisierte Lead-Qualifizierung & Bewertung" />
-                <FeatureCard title="Inbound Terminvereinbarung" />
-                <FeatureCard title="Inbound Sprach-Agenten" />
-                <FeatureCard title="Inbound Antwort-Agenten" />
-                <FeatureCard title="Personalisierte Lead-Pflege" />
-                <FeatureCard title="Automatisierte Angebotserstellung" />
-                <FeatureCard title="Onboarding Automatisierung" />
-                <FeatureCard title="Individuelle Projekte" />
-              </div>
+            <div className="grid grid-cols-3 gap-8 mb-8">
+              <FeatureCard 
+                title="Lead-Recherche & Anreicherung" 
+                benefit="Automatische Identifizierung und Qualifizierung von Leads mit 90% Zeitersparnis"
+              />
+              <FeatureCard 
+                title="Inbound Terminvereinbarung" 
+                benefit="24/7 automatische Terminvereinbarung mit 80% weniger Aufwand"
+              />
+              <FeatureCard 
+                title="Inbound Sprach-Agenten" 
+                benefit="Sofortige Kundenantworten mit 95% Kundenzufriedenheit"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-8">
+              <FeatureCard 
+                title="Personalisierte Lead-Pflege" 
+                benefit="40% höhere Conversion durch automatisierte Nachverfolgung"
+              />
+              <FeatureCard 
+                title="Onboarding Automatisierung" 
+                benefit="60% schnelleres Onboarding neuer Kunden"
+              />
+              <FeatureCard 
+                title="Angebotserstellung" 
+                benefit="75% Zeitersparnis bei der Angebotserstellung"
+              />
             </div>
           </TabsContent>
 
           <TabsContent value="outbound" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-8">
-                <h3 className="text-3xl font-bold text-white">KI-gestützte Outbound-Verkaufslösungen</h3>
-                <p className="text-gray-300 text-lg">
-                  KI-Lösungen für Lead-Generierung, Anreicherung & personalisierte Multi-Kanal-Kontaktaufnahme.
-                </p>
-                <div className="space-y-4">
-                  <BenefitItem>
-                    <strong>Lead-Generierung verbessern:</strong> KI-Scraping-Systeme zur Erschließung neuer Lead-Quellen für Ihr Unternehmen.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>KI-Lead-Anreicherung:</strong> Automatische Recherche und Qualifizierung potenzieller Interessenten.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>Personalisierte Multi-Kanal-Kontaktaufnahme:</strong> Personalisierte Ansprache über E-Mail, LinkedIn und Telefon, um mehr Leads zu erreichen.
-                  </BenefitItem>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <FeatureCard title="Lead-Scraping Automatisierung" />
-                <FeatureCard title="Outbound E-Mail-System Einrichtung" />
-                <FeatureCard title="Personalisierte Kontaktaufnahme-Automatisierung" />
-                <FeatureCard title="LinkedIn Outreach Systeme" />
-                <FeatureCard title="Outbound Sprach-Agenten" />
-                <FeatureCard title="Individuelle Projekte" />
-              </div>
+            <div className="grid grid-cols-3 gap-8 mb-8">
+              <FeatureCard 
+                title="Lead-Scraping Systeme" 
+                benefit="300% mehr qualifizierte Leads durch KI-gestützte Recherche"
+              />
+              <FeatureCard 
+                title="Outbound E-Mail-System" 
+                benefit="5x höhere Antwortrate durch personalisierte Kampagnen"
+              />
+              <FeatureCard 
+                title="LinkedIn Outreach" 
+                benefit="8x mehr Conversions durch automatisierte LinkedIn-Strategien"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-8">
+              <FeatureCard 
+                title="Multi-Kanal-Outreach" 
+                benefit="250% mehr Touchpoints pro Lead"
+              />
+              <FeatureCard 
+                title="Outbound Sprach-Agenten" 
+                benefit="4x mehr erfolgreiche Erstkontakte"
+              />
+              <FeatureCard 
+                title="Performance Tracking" 
+                benefit="100% Transparenz über alle Outbound-Aktivitäten"
+              />
             </div>
           </TabsContent>
 
           <TabsContent value="content" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-start">
-              <div className="space-y-8">
-                <h3 className="text-3xl font-bold text-white">KI Content & Marketing Systeme</h3>
-                <p className="text-gray-300 text-lg">
-                  KI-Lösungen für konsistente Social-Media-Beiträge, persona-orientierte Content-Erstellung und effiziente Multi-Kanal-Verwertung.
-                </p>
-                <div className="space-y-4">
-                  <BenefitItem>
-                    <strong>Human-in-the-Loop Content-Systeme:</strong> Geben Sie jedem Teammitglied ein persönliches Content-System für konsistente Ergebnisse.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>Effektive Mehrfachverwertung:</strong> Erstellen Sie KI-Systeme, um bestehende Inhalte optimal zu nutzen.
-                  </BenefitItem>
-                  <BenefitItem>
-                    <strong>Post-Interaktionen in Abschlüsse umwandeln:</strong> Nutzen Sie Content-Interaktionen durch Social-Media-Scraping & personalisierte Kontaktaufnahme für Abschlüsse.
-                  </BenefitItem>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <FeatureCard title="Social Media Content Systeme" />
-                <FeatureCard title="Markengerechte Content KI-Modelle" />
-                <FeatureCard title="Content-Verwertungssysteme" />
-                <FeatureCard title="KI Lead Magnet Automatisierung" />
-                <FeatureCard title="LinkedIn Content & Outreach Systeme" />
-                <FeatureCard title="Individuelle Projekte" />
-              </div>
+            <div className="grid grid-cols-3 gap-8 mb-8">
+              <FeatureCard 
+                title="Social Media Content" 
+                benefit="70% Zeitersparnis bei Content-Erstellung"
+              />
+              <FeatureCard 
+                title="Markengerechte Content KI" 
+                benefit="100% markenkonformer Content in Sekunden"
+              />
+              <FeatureCard 
+                title="Content-Verwertung" 
+                benefit="5x mehr Content aus bestehenden Materialien"
+              />
+            </div>
+            <div className="grid grid-cols-3 gap-8">
+              <FeatureCard 
+                title="KI Lead Magnete" 
+                benefit="3x mehr Lead-Generierung durch KI-optimierte Inhalte"
+              />
+              <FeatureCard 
+                title="LinkedIn Content" 
+                benefit="400% mehr organische Reichweite"
+              />
+              <FeatureCard 
+                title="Content Performance" 
+                benefit="90% bessere Content-Performance durch KI-Optimierung"
+              />
             </div>
           </TabsContent>
         </Tabs>
@@ -137,24 +134,38 @@ const GrowthSection = () => {
   );
 };
 
-const BenefitItem = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="flex gap-3">
-      <Check className="w-6 h-6 text-primary flex-shrink-0" />
-      <p className="text-gray-400">{children}</p>
-    </div>
-  );
-};
+interface FeatureCardProps {
+  title: string;
+  benefit: string;
+}
 
-const FeatureCard = ({ title }: { title: string }) => {
+const FeatureCard = ({ title, benefit }: FeatureCardProps) => {
   return (
-    <Button
-      variant="ghost"
-      className="h-32 w-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/20 hover:to-secondary/20 border border-gray-800 hover:border-primary/50 transition-all duration-300"
-      neon={true}
-    >
-      <p className="text-sm font-medium text-white">{title}</p>
-    </Button>
+    <div className="relative w-full h-48 perspective">
+      <motion.div
+        className="w-full h-full"
+        initial={false}
+        whileHover={{ rotateY: 180 }}
+        transition={{ duration: 0.6 }}
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        <div className="absolute w-full h-full">
+          <Button
+            variant="ghost"
+            className="h-full w-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/20 hover:to-secondary/20 border border-gray-800 hover:border-primary/50 transition-all duration-300"
+            neon={true}
+          >
+            <p className="text-lg font-medium text-white">{title}</p>
+          </Button>
+        </div>
+        <div 
+          className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center"
+          style={{ transform: "rotateY(180deg)", backfaceVisibility: "hidden" }}
+        >
+          <p className="text-white text-center font-medium">{benefit}</p>
+        </div>
+      </motion.div>
+    </div>
   );
 };
 
