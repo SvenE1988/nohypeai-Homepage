@@ -1,6 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Check } from "lucide-react";
-import { Button } from "@/components/ui/moving-border";
+import { Button } from "@/components/ui/neon-button";
 
 const GrowthSection = () => {
   return (
@@ -149,9 +149,9 @@ const BenefitItem = ({ children }: { children: React.ReactNode }) => {
 const FeatureCard = ({ title }: { title: string }) => {
   return (
     <Button
-      as="div"
-      className="h-32 bg-black/40"
-      containerClassName="h-32"
+      variant="ghost"
+      className="h-32 w-full bg-black/40 hover:bg-black/60"
+      neon={true}
     >
       <p className="text-sm font-medium text-white">{title}</p>
     </Button>
