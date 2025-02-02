@@ -10,17 +10,22 @@ interface FeatureCardProps {
 const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
   return (
     <motion.div 
-      className="relative w-full h-48 group perspective cursor-pointer"
+      className="relative w-full h-48 group"
+      initial={false}
       whileHover={{ rotateY: 180 }}
-      transition={{ duration: 0.6 }}
-      style={{ transformStyle: "preserve-3d" }}
+      transition={{ duration: 0.4, ease: "easeInOut" }}
+      style={{ 
+        transformStyle: "preserve-3d",
+        perspective: "1000px"
+      }}
     >
       {/* Front of card */}
       <div 
-        className="absolute w-full h-full backface-hidden"
+        className="absolute w-full h-full"
         style={{ 
           backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden"
+          WebkitBackfaceVisibility: "hidden",
+          transform: "rotateY(0deg)"
         }}
       >
         <Button
@@ -37,11 +42,11 @@ const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
       
       {/* Back of card */}
       <div 
-        className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center backface-hidden"
+        className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center"
         style={{ 
-          transform: "rotateY(180deg)",
           backfaceVisibility: "hidden",
-          WebkitBackfaceVisibility: "hidden"
+          WebkitBackfaceVisibility: "hidden",
+          transform: "rotateY(180deg)"
         }}
       >
         <p className="text-white text-center font-medium">{benefit}</p>

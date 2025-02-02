@@ -13,19 +13,19 @@ const GrowthSection = () => {
           </span>
         </h2>
 
-        <Tabs defaultValue="inbound" className="w-full">
+        <Tabs defaultValue="sprachassistent" className="w-full">
           <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-3 bg-[#1A1F35] p-1 rounded-full mb-12">
             <TabsTrigger
-              value="inbound"
+              value="sprachassistent"
               className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
             >
-              Eingehende Verkäufe
+              Sprachassistent
             </TabsTrigger>
             <TabsTrigger
-              value="outbound"
+              value="ablaufoptimierung"
               className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
             >
-              Ausgehende Verkäufe
+              Ablaufoptimierung
             </TabsTrigger>
             <TabsTrigger
               value="content"
@@ -35,42 +35,72 @@ const GrowthSection = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="inbound" className="mt-12">
+          <TabsContent value="sprachassistent" className="mt-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
-                title="Lead-Recherche & Anreicherung" 
-                description="Intelligente Lead-Qualifizierung"
-                benefit="Automatische Identifizierung und Qualifizierung von Leads mit 90% Zeitersparnis"
+                title="KI-Kundenservice" 
+                description="24/7 Verfügbarkeit für Kundenanfragen"
+                benefit="90% schnellere Reaktionszeiten & konstant hohe Servicequalität"
               />
               <FeatureCard 
-                title="Inbound Terminvereinbarung" 
-                description="Effiziente Terminkoordination"
-                benefit="24/7 automatische Terminvereinbarung mit 80% weniger Aufwand"
+                title="Intelligente Terminplanung" 
+                description="Automatische Kalenderverwaltung"
+                benefit="80% Zeitersparnis bei der Terminkoordination"
               />
               <FeatureCard 
-                title="Inbound Sprach-Agenten" 
-                description="KI-gestützte Kommunikation"
-                benefit="Sofortige Kundenantworten mit 95% Kundenzufriedenheit"
+                title="Verkaufsgespräche" 
+                description="KI-gestützte Verkaufsunterstützung"
+                benefit="40% höhere Abschlussquote durch optimierte Gesprächsführung"
+              />
+              <FeatureCard 
+                title="Lead-Qualifizierung" 
+                description="Automatische Bewertung von Anfragen"
+                benefit="60% effizientere Leadbearbeitung & höhere Conversion"
+              />
+              <FeatureCard 
+                title="Nachverfolgung" 
+                description="Automatisierte Follow-ups"
+                benefit="75% mehr erfolgreiche Nachfassaktionen"
+              />
+              <FeatureCard 
+                title="Bedarfsanalyse" 
+                description="KI-gestützte Kundenbedürfnisermittlung"
+                benefit="50% präzisere Angebotserstellung"
               />
             </div>
           </TabsContent>
 
-          <TabsContent value="outbound" className="mt-12">
+          <TabsContent value="ablaufoptimierung" className="mt-12">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
-                title="Outbound Lead-Generierung" 
-                description="Automatisierte Lead-Gewinnung"
-                benefit="Identifizierung von qualifizierten Leads mit KI-gestützter Analyse"
+                title="Angebotserstellung" 
+                description="Automatisierte Dokumentenerstellung"
+                benefit="70% schnellere Angebotserstellung mit höherer Qualität"
               />
               <FeatureCard 
-                title="Outbound Kampagnen" 
-                description="Personalisierte Kommunikation"
-                benefit="Automatisierte, personalisierte Kampagnen mit 60% höherer Conversion"
+                title="Rechnungsmanagement" 
+                description="Automatische Rechnungsverarbeitung"
+                benefit="85% Zeitersparnis im Rechnungswesen"
               />
               <FeatureCard 
-                title="Sales Intelligence" 
-                description="Datengesteuerte Verkaufsstrategie"
-                benefit="Echtzeitanalysen und Verkaufsprognosen für bessere Entscheidungen"
+                title="Dokumentenmanagement" 
+                description="Intelligente Dokumentenorganisation"
+                benefit="90% weniger Suchzeit für wichtige Unterlagen"
+              />
+              <FeatureCard 
+                title="E-Mail-Management" 
+                description="KI-basierte E-Mail-Sortierung"
+                benefit="60% effizientere E-Mail-Bearbeitung"
+              />
+              <FeatureCard 
+                title="Projektmanagement" 
+                description="Automatisierte Projektverfolgung"
+                benefit="45% bessere Projektübersicht & Termineinhaltung"
+              />
+              <FeatureCard 
+                title="Qualitätssicherung" 
+                description="KI-gestützte Dokumentenprüfung"
+                benefit="95% weniger Fehler in wichtigen Dokumenten"
               />
             </div>
           </TabsContent>
@@ -79,18 +109,33 @@ const GrowthSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="Content Erstellung" 
-                description="KI-gestützte Inhaltsproduktion"
-                benefit="Automatische Erstellung von SEO-optimiertem Content in Minuten"
+                description="KI-gestützte Texterstellung"
+                benefit="80% schnellere Erstellung von SEO-optimierten Inhalten"
               />
               <FeatureCard 
-                title="Social Media Management" 
-                description="Automatisierte Präsenz"
-                benefit="Intelligente Planung und Veröffentlichung von Social Media Content"
+                title="Social Media" 
+                description="Automatisierte Beitragsplanung"
+                benefit="65% mehr Engagement durch optimale Posting-Zeiten"
               />
               <FeatureCard 
-                title="Performance Marketing" 
-                description="Optimierte Werbekampagnen"
-                benefit="KI-gesteuerte Kampagnenoptimierung für maximalen ROI"
+                title="Newsletter" 
+                description="Personalisierte E-Mail-Kampagnen"
+                benefit="50% höhere Öffnungsraten durch KI-Optimierung"
+              />
+              <FeatureCard 
+                title="SEO-Optimierung" 
+                description="KI-basierte Keyword-Analyse"
+                benefit="70% bessere Suchmaschinenplatzierungen"
+              />
+              <FeatureCard 
+                title="Content-Strategie" 
+                description="Datengesteuerte Themenplanung"
+                benefit="55% höhere Content-Performance"
+              />
+              <FeatureCard 
+                title="Marketing-Automation" 
+                description="Automatisierte Kampagnen"
+                benefit="40% höhere Conversion durch personalisierte Ansprache"
               />
             </div>
           </TabsContent>
