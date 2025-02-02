@@ -10,14 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Repository auschecken
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4.2.2
 
       - name: 📂 Upload per SFTP zu IONOS
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.SFTP_SERVER }}       # z.B. access-5017105000.webspace-host.com
-          username: ${{ secrets.SFTP_USERNAME }}   # z.B. a744476
+          host: ${{ secrets.SFTP_SERVER }}
+          username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           source: "./*"
-          target: "/" # Ziel: Webverzeichnis, das live ist (bei deinem SFTP-Zugang entspricht "/" dem /htdocs/)
+          target: "/"
           strip_components: 1
+          debug: true
