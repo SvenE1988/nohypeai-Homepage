@@ -33,7 +33,7 @@ const testimonials: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <section className="py-20 bg-black">
+    <section id="testimonials" className="py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center mb-12">
           <span className="text-primary mb-4">Testimonials</span>

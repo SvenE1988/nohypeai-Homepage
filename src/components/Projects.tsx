@@ -74,7 +74,7 @@ const Projects = () => {
   ];
 
   return (
-    <section className="w-full bg-black py-24">
+    <section id="projekte" className="w-full bg-black py-24">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-2 mb-6">
           <Badge variant="outline" className="text-primary border-primary">

@@ -20,7 +20,7 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-20 bg-gradient-dark">
+    <section id="vorteile" className="py-20 bg-gradient-dark">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center mb-16">
           <span className="text-primary mb-4">Vorteile</span>

@@ -37,6 +37,11 @@ export function FloatingNavDemo() {
       link: "#blog",
       icon: <BookOpen className="h-4 w-4" />,
     },
+    {
+      name: "Termin vereinbaren",
+      link: "#kontakt",
+      isAction: true,
+    },
   ];
 
   return (
