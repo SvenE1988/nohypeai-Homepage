@@ -46,36 +46,40 @@ const Process = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+        <div className="max-w-3xl mx-auto">
           {steps.map((step, index) => {
             const Icon = step.icon;
+            const isLast = index === steps.length - 1;
+            
             return (
-              <div
-                key={index}
-                className="bg-[#1a1f35] rounded-xl p-8 relative group hover:bg-[#252b45] transition-colors"
-              >
-                <div className="flex flex-col gap-6">
-                  <div className="flex items-start gap-4">
-                    <div className="bg-[#2a3149] p-3 rounded-lg">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-3">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-400 leading-relaxed">
-                        {step.description}
-                      </p>
+              <div key={index} className="relative">
+                <div className="flex items-start gap-8 bg-[#1a1f35] rounded-xl p-8 relative z-10 group hover:bg-[#252b45] transition-colors">
+                  <div className="flex-shrink-0">
+                    <div className="bg-[#2a3149] p-4 rounded-lg">
+                      <Icon className="w-8 h-8 text-primary" />
                     </div>
                   </div>
-                  <div className="w-full h-48 overflow-hidden rounded-lg">
-                    <img
-                      src={step.image}
-                      alt={step.title}
-                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                  <div className="flex-grow">
+                    <h3 className="text-2xl font-semibold text-white mb-3">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-400 leading-relaxed mb-4">
+                      {step.description}
+                    </p>
+                    <div className="w-full h-48 overflow-hidden rounded-lg">
+                      <img
+                        src={step.image}
+                        alt={step.title}
+                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    </div>
                   </div>
                 </div>
+                {!isLast && (
+                  <div className="w-0.5 h-8 bg-primary mx-auto my-2 relative z-0">
+                    <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-3 h-3 bg-primary rotate-45" />
+                  </div>
+                )}
               </div>
             );
           })}
