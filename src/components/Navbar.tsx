@@ -12,6 +12,7 @@ const Navbar = () => {
     { name: "Über Uns", href: "#ueber-uns" },
     { name: "Testimonials", href: "#testimonials" },
     { name: "Blog", href: "#blog", icon: BookOpen },
+    { name: "Preis", href: "/pricing" }, // Neuer Preis-Button
   ];
 
   return (
