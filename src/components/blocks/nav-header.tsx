@@ -13,7 +13,7 @@ function NavHeader() {
 
   return (
     <ul
-      className="relative mx-auto flex w-fit rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50"
+      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50"
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       <Tab setPosition={setPosition} href="#partnerprojekte">Partner</Tab>
@@ -61,7 +61,7 @@ const Tab = ({
     >
       <a
         href={href}
-        className={`relative z-10 block cursor-pointer px-3 py-1.5 text-xs uppercase text-white mix-blend-difference md:px-5 md:py-3 md:text-base ${
+        className={`relative z-10 block cursor-pointer px-2 py-1 text-[11px] uppercase text-white mix-blend-difference md:px-3 md:py-2 md:text-sm ${
           isAction ? "font-medium" : ""
         }`}
       >
