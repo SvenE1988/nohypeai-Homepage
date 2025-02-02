@@ -19,5 +19,5 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}   # z.B. a744476
           password: ${{ secrets.SFTP_PASSWORD }}
           source: "./*"
-          target: "/htdocs/"  # Ziel: Webverzeichnis, das live ist
+          target: "/" # Ziel: Webverzeichnis, das live ist
           strip_components: 1
