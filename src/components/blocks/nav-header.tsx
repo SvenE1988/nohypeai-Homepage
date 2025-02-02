@@ -2,6 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
+import { BookOpen } from "lucide-react";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -21,6 +22,10 @@ function NavHeader() {
       <Tab setPosition={setPosition} href="#prozess">Prozess</Tab>
       <Tab setPosition={setPosition} href="#ueber-uns">Über Uns</Tab>
       <Tab setPosition={setPosition} href="#testimonials">Testimonials</Tab>
+      <Tab setPosition={setPosition} href="#blog">
+        Blog
+        <BookOpen className="inline ml-2 w-4 h-4" />
+      </Tab>
       <Tab setPosition={setPosition} href="#kontakt" isAction>Termin vereinbaren</Tab>
 
       <Cursor position={position} />
