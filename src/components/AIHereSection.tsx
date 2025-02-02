@@ -1,4 +1,4 @@
-import { Brain, RocketLaunch, ShieldCheck } from "lucide-react";
+import { Brain, Rocket, ShieldCheck } from "lucide-react";
 import { Button } from "./ui/button";
 
 const AIHereSection = () => {
@@ -30,7 +30,7 @@ const AIHereSection = () => {
 
           <div className="bg-black/30 p-8 rounded-2xl border border-gray-800 hover:border-primary/50 transition-colors">
             <div className="bg-gradient-to-br from-primary to-secondary w-12 h-12 rounded-xl flex items-center justify-center mb-6">
-              <RocketLaunch className="text-white" size={24} />
+              <Rocket className="text-white" size={24} />
             </div>
             <h3 className="text-2xl font-bold mb-4">Schnelle Umsetzung</h3>
             <p className="text-gray-400">
