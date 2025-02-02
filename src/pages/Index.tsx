@@ -8,12 +8,14 @@ import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
+import AIFirstSection from "../components/AIFirstSection";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
       <Hero />
+      <AIFirstSection />
       <Partners />
       <Services />
       <Projects />
