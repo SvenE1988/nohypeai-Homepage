@@ -4,24 +4,24 @@ import { Card, CardContent } from "./ui/card";
 const Services = () => {
   const services = [
     {
-      icon: Cpu,
-      title: "Workflow Automatisierung",
-      description: "Egal ob E-Mails, Leads Qualifikation oder Content Creation – wir automatisieren Ihre Aufgaben komplett mit KI",
-    },
-    {
       icon: MessageSquare,
-      title: "GPT Development",
-      description: "Keine alten 0815-Chatbots mehr. Wir entwickeln smarte Bots, die Ihren Schreibstil übernemen und 24/7 verfügbar sind",
+      title: "KI Chatbots & Assistenten",
+      description: "Intelligente Chatbots, die Ihren Kommunikationsstil perfekt nachahmen und rund um die Uhr für Ihre Kunden da sind",
     },
     {
-      icon: Mic,
-      title: "KI Voice Agents",
-      description: "Mit modernster Technologie erstellen wir Voice-Assistenten, die menschlich klingen und 24/7 ans Telefon gehen, oder automatisch anrufen",
+      icon: Cpu,
+      title: "Prozessautomatisierung",
+      description: "Automatisieren Sie repetitive Aufgaben wie E-Mail-Management, Datenanalyse und Content-Erstellung mit modernster KI-Technologie",
     },
     {
       icon: PieChart,
-      title: "KI Beratung",
-      description: "Unsicher, wie Sie KI optimal nutzen können? Wir begleiten Sie und Ihr Unternehmen individuell – mit flexiblen Betreuungsoptionen für Sie und Ihr Team",
+      title: "Strategische KI-Beratung",
+      description: "Entwickeln Sie mit uns Ihre individuelle KI-Strategie. Wir begleiten Sie von der Konzeption bis zur erfolgreichen Implementierung",
+    },
+    {
+      icon: Mic,
+      title: "KI Voice Solutions",
+      description: "Revolutionieren Sie Ihre Telefonie mit KI-gestützten Sprachassistenten - natürlich klingend und hocheffizient im Kundenkontakt",
     },
   ];
 
@@ -29,7 +29,7 @@ const Services = () => {
     <section className="w-full bg-black py-24">
       <div className="container mx-auto px-4">
         <h2 className="text-4xl font-bold text-white text-center mb-16">
-          KI-Lösungen für Ihr Business
+          Innovative KI-Lösungen für Ihren Erfolg
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {services.map((service, index) => (
