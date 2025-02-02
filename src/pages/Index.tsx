@@ -11,6 +11,7 @@ import NavHeader from "../components/blocks/nav-header";
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
 import GrowthSection from "../components/GrowthSection";
+import TechStack from "../components/TechStack";
 
 const Index = () => {
   return (
@@ -20,6 +21,7 @@ const Index = () => {
       <AIFirstSection />
       <AIHereSection />
       <GrowthSection />
+      <TechStack />
       <Partners />
       <Services />
       <Projects />
