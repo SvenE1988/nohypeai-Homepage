@@ -160,21 +160,22 @@ interface FeatureCardProps {
 
 const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
   return (
-    <div className="relative w-full h-48 perspective group">
+    <div className="relative w-full h-48 group perspective">
       <motion.div
-        className="w-full h-full absolute preserve-3d"
+        className="w-full h-full absolute preserve-3d transition-all duration-500 ease-out"
         initial={false}
-        animate={{ rotateY: 0 }}
-        whileHover={{ rotateY: 180 }}
-        transition={{ duration: 0.6 }}
         style={{ 
           transformStyle: "preserve-3d",
         }}
+        whileHover={{ rotateY: 180 }}
       >
         {/* Front side */}
         <div 
           className="absolute w-full h-full backface-hidden"
-          style={{ backfaceVisibility: "hidden" }}
+          style={{ 
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden"
+          }}
         >
           <Button
             variant="ghost"
@@ -193,7 +194,8 @@ const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
           className="absolute w-full h-full bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 rounded-xl p-6 flex items-center justify-center backface-hidden"
           style={{ 
             transform: "rotateY(180deg)",
-            backfaceVisibility: "hidden"
+            backfaceVisibility: "hidden",
+            WebkitBackfaceVisibility: "hidden"
           }}
         >
           <p className="text-white text-center font-medium">{benefit}</p>
