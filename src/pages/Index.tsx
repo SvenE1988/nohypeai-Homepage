@@ -21,6 +21,7 @@ const Index = () => {
       <SavingsCalculator />
       <Process />
       <About />
+      <Testimonials />
     </main>
   );
 };
