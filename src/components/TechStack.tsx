@@ -6,8 +6,8 @@ const TechStack = () => {
   const categories = [
     { name: 'KI-Agenten', icon: <Bot className="w-5 h-5" /> },
     { name: 'KI-Automatisierungen', icon: <Cpu className="w-5 h-5" /> },
-    { name: 'KI-Sprachagenten', icon: <Mic2 className="w-5 h-5" /> },
-    { name: 'KI-Chatbots', icon: <MessageSquare className="w-5 h-5" /> },
+    { name: 'Eingehender Anruf', icon: <Mic2 className="w-5 h-5" /> },
+    { name: 'Ausgehender Anruf', icon: <MessageSquare className="w-5 h-5" /> },
   ];
 
   return (
@@ -24,10 +24,10 @@ const TechStack = () => {
 
           <div className="space-y-8">
             <div className="space-y-4">
-              <h2 className="text-4xl font-bold text-white">Mein Tech Stack</h2>
+              <h2 className="text-4xl font-bold text-white">Unser Tech Stack</h2>
               <p className="text-gray-300 text-lg">
-                Finden Sie sich im KI-Dschungel zurecht. Mit tausenden von KI-Softwares und Tools helfe ich Ihnen dabei, 
-                den richtigen Tech Stack für Ihre Bedürfnisse und Ihr Unternehmen zu finden.
+                Wir helfen dir, dich im KI-Dschungel zurechtzufinden. Mit tausenden von KI-Softwares und Tools unterstützen wir dich dabei, 
+                den richtigen Tech Stack für deine Bedürfnisse und dein Unternehmen zu finden.
               </p>
             </div>
 
@@ -41,7 +41,7 @@ const TechStack = () => {
             </div>
 
             <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-xl">
-              Arbeiten Sie mit mir
+              Arbeite mit uns
             </Button>
           </div>
         </div>

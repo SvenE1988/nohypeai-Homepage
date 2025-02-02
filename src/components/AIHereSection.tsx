@@ -7,9 +7,9 @@ const AIHereSection = () => {
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="text-5xl md:text-6xl font-bold mb-6 text-white">
-            KI ist hier - und ich helfe dir{" "}
+            KI ist hier - und wir helfen dir{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-              voraus zu bleiben
+              am Ball zu bleiben
             </span>
           </h2>
           <p className="text-xl text-gray-400">
@@ -24,7 +24,7 @@ const AIHereSection = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-white">KI-Strategie & Roadmap Design</h3>
             <p className="text-gray-400">
-              Ich helfe dir, umsetzbare Pläne für eine nachhaltige und langfristige KI-Implementierung zu erstellen.
+              Wir helfen dir, umsetzbare Pläne für eine nachhaltige und langfristige KI-Implementierung zu erstellen.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ const AIHereSection = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-white">Wachstumsorientierte KI-Lösungen</h3>
             <p className="text-gray-400">
-              Ich spezialisiere mich auf KI-Lösungen, die Marketing- und Vertriebsprozesse skalieren.
+              Wir spezialisieren uns auf KI-Lösungen, die Marketing- und Vertriebsprozesse skalieren.
             </p>
           </div>
 
@@ -44,7 +44,7 @@ const AIHereSection = () => {
             </div>
             <h3 className="text-2xl font-bold mb-4 text-white">Praktische KI-Implementierung</h3>
             <p className="text-gray-400">
-              Ich implementiere KI-Lösungen, die in großen Umgebungen getestet und skalierbar sind.
+              Wir implementieren KI-Lösungen, die in großen Umgebungen getestet und skalierbar sind.
             </p>
           </div>
         </div>

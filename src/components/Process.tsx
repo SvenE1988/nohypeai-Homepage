@@ -5,9 +5,9 @@ const Process = () => {
     {
       number: "1",
       icon: MessageSquare,
-      title: "Persönliches Kennenlernen",
+      title: "Persönliches Kennenlernen (20 Minuten)",
       description:
-        "In einem entspannten Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihr Unternehmen voranbringen kann.",
+        "In einem entspannten 20-minütigen Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihr Unternehmen voranbringen kann.",
     },
     {
       number: "2",

@@ -1,11 +1,12 @@
 import NavHeader from "../components/blocks/nav-header";
 import { Check } from "lucide-react";
+import SavingsCalculator from "../components/SavingsCalculator";
 
 const Pricing = () => {
   const tiers = [
     {
       name: "Starter",
-      price: "999€",
+      price: "ab 999€",
       description: "Perfekt für kleine Unternehmen",
       features: [
         "Basis Website-Entwicklung",
@@ -17,7 +18,7 @@ const Pricing = () => {
     },
     {
       name: "Professional",
-      price: "2.499€",
+      price: "ab 2.499€",
       description: "Ideal für wachsende Unternehmen",
       features: [
         "Alles aus Starter",
@@ -54,7 +55,7 @@ const Pricing = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-7xl mx-auto mb-20">
           {tiers.map((tier) => (
             <div
               key={tier.name}
@@ -76,6 +77,18 @@ const Pricing = () => {
               </button>
             </div>
           ))}
+        </div>
+
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Berechnen Sie Ihre Einsparungen</h2>
+            <p className="text-gray-400">
+              Entdecken Sie, wie viel Zeit und Geld Sie mit unseren KI-Lösungen sparen können. 
+              Unsere Kunden berichten von signifikanten Kosteneinsparungen durch effizientere Prozesse 
+              und automatisierte Arbeitsabläufe.
+            </p>
+          </div>
+          <SavingsCalculator />
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Mail, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Mail, Linkedin, Instagram } from "lucide-react";
 import { Button } from "./ui/button";
 
 const AIFirstSection = () => {
@@ -7,7 +7,7 @@ const AIFirstSection = () => {
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-            Werde ein <br />
+            Werden Sie ein <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
               KI-First
             </span>{" "}
@@ -16,24 +16,18 @@ const AIFirstSection = () => {
           </h2>
           
           <p className="text-xl text-gray-300">
-            Ich helfe wachsenden Unternehmen KI zu implementieren und zu skalieren - ohne zusätzliches Personal einzustellen.
+            Wir helfen wachsenden Unternehmen KI zu implementieren und zu skalieren - ohne zusätzliches Personal einzustellen.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <Button size="lg" className="bg-black hover:bg-black/80 text-white border-2 border-primary">
               Jetzt durchstarten
             </Button>
-            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
-              Community beitreten
-            </Button>
           </div>
 
           <div className="flex gap-6 pt-4">
             <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-              <Youtube size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-primary transition-colors">
-              <Twitter size={24} />
+              <Instagram size={24} />
             </a>
             <a href="#" className="text-gray-400 hover:text-primary transition-colors">
               <Linkedin size={24} />
