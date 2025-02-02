@@ -5,31 +5,31 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Partner", href: "#" },
-    { name: "Projekte", href: "#" },
-    { name: "Vorteile", href: "#" },
-    { name: "Einsparungen", href: "#" },
-    { name: "Prozess", href: "#" },
-    { name: "Über Uns", href: "#" },
-    { name: "Testimonials", href: "#" },
-    { name: "Blog", href: "#", icon: BookOpen },
+    { name: "Partner", href: "#partner" },
+    { name: "Projekte", href: "#projekte" },
+    { name: "Vorteile", href: "#vorteile" },
+    { name: "Einsparungen", href: "#einsparungen" },
+    { name: "Prozess", href: "#prozess" },
+    { name: "Über Uns", href: "#ueber-uns" },
+    { name: "Testimonials", href: "#testimonials" },
+    { name: "Blog", href: "#blog", icon: BookOpen },
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-transparent py-4">
+    <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center h-16">
           <a href="/" className="text-white text-2xl font-bold">
             F2x
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-300 hover:text-white transition-colors flex items-center gap-2"
+                className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
               >
                 {item.name}
                 {item.icon && <item.icon className="w-4 h-4" />}
@@ -37,7 +37,7 @@ const Navbar = () => {
             ))}
             <a
               href="#kontakt"
-              className="bg-transparent border border-white text-white px-6 py-2 rounded-full hover:bg-white hover:text-black transition-colors"
+              className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-full text-sm transition-colors"
             >
               Kontakt
             </a>
@@ -46,7 +46,8 @@ const Navbar = () => {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-white"
+            className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition-colors"
+            aria-label="Toggle menu"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -54,23 +55,27 @@ const Navbar = () => {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden absolute top-16 left-0 right-0 bg-black bg-opacity-95 p-4">
-            {navItems.map((item) => (
+          <div className="md:hidden absolute top-16 left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-white/10">
+            <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.name}
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                </a>
+              ))}
               <a
-                key={item.name}
-                href={item.href}
-                className="block text-gray-300 hover:text-white py-2 flex items-center gap-2"
+                href="#kontakt"
+                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-full text-center transition-colors"
+                onClick={() => setIsOpen(false)}
               >
-                {item.name}
-                {item.icon && <item.icon className="w-4 h-4" />}
+                Kontakt
               </a>
-            ))}
-            <a
-              href="#kontakt"
-              className="block text-white py-2 mt-2 text-center border border-white rounded-full"
-            >
-              Kontakt
-            </a>
+            </div>
           </div>
         )}
       </div>
