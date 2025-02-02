@@ -5,10 +5,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navItems = [
-    { name: "Partner", href: "#partner" },
+    { name: "Partner", href: "#partnerprojekte" },
     { name: "Projekte", href: "#projekte" },
     { name: "Vorteile", href: "#vorteile" },
-    { name: "Einsparungen", href: "#einsparungen" },
     { name: "Prozess", href: "#prozess" },
     { name: "Über Uns", href: "#ueber-uns" },
     { name: "Testimonials", href: "#testimonials" },
@@ -37,9 +36,10 @@ const Navbar = () => {
             ))}
             <a
               href="#kontakt"
-              className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-full text-sm transition-colors"
+              className="border text-sm font-medium relative border-neutral-200 text-white px-4 py-2 rounded-full hover:bg-white/10 transition-colors"
             >
-              Kontakt
+              <span>Termin vereinbaren</span>
+              <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
             </a>
           </div>
 
@@ -70,10 +70,11 @@ const Navbar = () => {
               ))}
               <a
                 href="#kontakt"
-                className="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-full text-center transition-colors"
+                className="border text-sm font-medium relative border-neutral-200 text-white px-4 py-2 rounded-full hover:bg-white/10 transition-colors text-center"
                 onClick={() => setIsOpen(false)}
               >
-                Kontakt
+                <span>Termin vereinbaren</span>
+                <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
               </a>
             </div>
           </div>

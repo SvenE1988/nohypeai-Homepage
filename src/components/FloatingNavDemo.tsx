@@ -17,10 +17,6 @@ export function FloatingNavDemo() {
       link: "#vorteile",
     },
     {
-      name: "Einsparungen",
-      link: "#einsparungen",
-    },
-    {
       name: "Prozess",
       link: "#prozess",
     },
