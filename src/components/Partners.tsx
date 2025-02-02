@@ -1,10 +1,9 @@
 const Partners = () => {
   return (
-    <section id="partnerprojekte" className="w-full bg-black/90 py-16">
+    <section id="partnerprojekte" className="w-full bg-black py-16">
       <div className="container mx-auto px-4">
-        <h3 className="text-gray-300 text-center mb-12 text-lg font-normal">Unsere Partner</h3>
+        <h3 className="text-gray-400 text-center mb-12 text-lg font-normal">Unsere Partner</h3>
         <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 max-w-7xl mx-auto">
-          {/* Partner Logos */}
           {[1, 2, 3, 4, 5, 6].map((index) => (
             <div key={index} className="group relative flex items-center justify-center min-w-[140px] md:min-w-[160px]">
               <div className="relative w-full aspect-[3/1]">
