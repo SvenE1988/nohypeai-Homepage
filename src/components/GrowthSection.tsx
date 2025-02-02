@@ -69,15 +69,69 @@ const GrowthSection = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="outbound">
-            <div className="h-96 flex items-center justify-center text-gray-500">
-              Outbound Sales Inhalt folgt...
+          <TabsContent value="outbound" className="mt-12">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <h3 className="text-3xl font-bold">AI Outbound Sales Solutions</h3>
+                <p className="text-gray-600 text-lg">
+                  AI solutions for lead generation, enrichment & personalized multi-channel outreach.
+                </p>
+                <div className="space-y-4">
+                  <BenefitItem>
+                    <strong>Enhance Lead Generation:</strong> AI scraping systems to add new lead sources to your business
+                  </BenefitItem>
+                  <BenefitItem>
+                    <strong>AI Lead Enrichment:</strong> Automatically research, qualify potential prospects
+                  </BenefitItem>
+                  <BenefitItem>
+                    <strong>Multi-channel Personalized Outreach:</strong> Personalized outreach across email, LinkedIn, and Voice to reach more leads.
+                  </BenefitItem>
+                </div>
+              </div>
+
+              <div className="bg-[#B8E6F3] p-8 rounded-3xl">
+                <div className="grid grid-cols-2 gap-4">
+                  <FeatureCard title="Lead Scraping Automations" />
+                  <FeatureCard title="Outbound Email System Setup" />
+                  <FeatureCard title="Personalized Outreach Automation" />
+                  <FeatureCard title="LinkedIn Outreach Systems" />
+                  <FeatureCard title="Outbound Voice Agents" />
+                  <FeatureCard title="Custom Projects" />
+                </div>
+              </div>
             </div>
           </TabsContent>
 
-          <TabsContent value="content">
-            <div className="h-96 flex items-center justify-center text-gray-500">
-              Content & Marketing Inhalt folgt...
+          <TabsContent value="content" className="mt-12">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="space-y-8">
+                <h3 className="text-3xl font-bold">AI Content & Marketing Systems</h3>
+                <p className="text-gray-600 text-lg">
+                  AI solutions for consistent social media posting, persona-aligned content creation, and efficient multi-channel repurposing.
+                </p>
+                <div className="space-y-4">
+                  <BenefitItem>
+                    <strong>Human-in-the Loop Content Systems:</strong> Give every team member a personal content system to stay consistent.
+                  </BenefitItem>
+                  <BenefitItem>
+                    <strong>Repurpose Effectively:</strong> Create AI Systems to take full advantage of existing content.
+                  </BenefitItem>
+                  <BenefitItem>
+                    <strong>Convert Post Engagers into Deals:</strong> Leverage Content engagers into deals with social media scraping & personalized outreach.
+                  </BenefitItem>
+                </div>
+              </div>
+
+              <div className="bg-[#E2F5E2] p-8 rounded-3xl">
+                <div className="grid grid-cols-2 gap-4">
+                  <FeatureCard title="Social Media Content Systems" />
+                  <FeatureCard title="Brand-Aligned Fine-tuned Content LLM's" />
+                  <FeatureCard title="Content Repurposing Systems" />
+                  <FeatureCard title="AI Lead Magnet Automations" />
+                  <FeatureCard title="LinkedIn Content & Outreach Systems" />
+                  <FeatureCard title="Custom Projects" />
+                </div>
+              </div>
             </div>
           </TabsContent>
         </Tabs>
