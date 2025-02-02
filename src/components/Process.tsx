@@ -1,31 +1,31 @@
-import { Square1, Square2, Square3, Square4 } from "lucide-react";
+import { MessageSquare, ClipboardList, FileText, Cog } from "lucide-react";
 
 const Process = () => {
   const steps = [
     {
       number: "1",
-      icon: Square1,
+      icon: MessageSquare,
       title: "Kostenfreies Erstgespräch",
       description:
         "In einem kurzen, unverbindlichen Gespräch klären wir, ob wir zusammenpassen und wie wir Ihnen weiterhelfen können.",
     },
     {
       number: "2",
-      icon: Square2,
+      icon: ClipboardList,
       title: "Anforderungsanalyse",
       description:
         "Nach dem Erstgespräch erarbeiten wir eine detaillierte technische Spezifikation Ihrer Lösung. Wir dokumentieren alle Anforderungen und Schnittstellen für die passgenaue Umsetzung.",
     },
     {
       number: "3",
-      icon: Square3,
+      icon: FileText,
       title: "Angebotserstellung",
       description:
         "Auf Basis der Analyse erhalten Sie ein maßgeschneidertes Angebot, das genau auf Ihre Bedürfnisse abgestimmt ist.",
     },
     {
       number: "4",
-      icon: Square4,
+      icon: Cog,
       title: "Umsetzung der Lösung",
       description:
         "Nach Freigabe beginnen wir mit der Umsetzung. Je nach Umfang ist Ihre Lösung innerhalb von 1 bis 6 Wochen vollständig auf Ihrem System integriert.",
