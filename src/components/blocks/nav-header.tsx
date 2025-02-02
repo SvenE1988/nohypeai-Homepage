@@ -2,7 +2,6 @@
 
 import React, { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { BookOpen } from "lucide-react";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -13,20 +12,17 @@ function NavHeader() {
 
   return (
     <ul
-      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50"
+      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center"
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
     >
       <Tab setPosition={setPosition} href="#partnerprojekte">Partner</Tab>
       <Tab setPosition={setPosition} href="#projekte">Projekte</Tab>
       <Tab setPosition={setPosition} href="#vorteile">Vorteile</Tab>
       <Tab setPosition={setPosition} href="#prozess">Prozess</Tab>
-      <Tab setPosition={setPosition} href="#ueber-uns">Über Uns</Tab>
+      <Tab setPosition={setPosition} href="#ueber">Über</Tab>
       <Tab setPosition={setPosition} href="#testimonials">Testimonials</Tab>
-      <Tab setPosition={setPosition} href="#blog">
-        Blog
-        <BookOpen className="inline ml-2 w-4 h-4" />
-      </Tab>
-      <Tab setPosition={setPosition} href="#kontakt" isAction>Termin vereinbaren</Tab>
+      <Tab setPosition={setPosition} href="#blog">Blog</Tab>
+      <Tab setPosition={setPosition} href="#kontakt" isAction>Termin</Tab>
 
       <Cursor position={position} />
     </ul>
