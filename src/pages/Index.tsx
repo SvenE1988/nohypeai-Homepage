@@ -11,7 +11,7 @@ import NavHeader from "../components/blocks/nav-header";
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-black">
+    <main className="relative min-h-screen bg-black">
       <NavHeader />
       <Hero />
       <Partners />
