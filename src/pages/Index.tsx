@@ -1,6 +1,4 @@
 import Hero from "../components/Hero";
-import Partners from "../components/Partners";
-import Services from "../components/Services";
 import Benefits from "../components/Benefits";
 import Process from "../components/Process";
 import Projects from "../components/Projects";
@@ -22,8 +20,6 @@ const Index = () => {
       <AIHereSection />
       <GrowthSection />
       <TechStack />
-      <Partners />
-      <Services />
       <Projects />
       <Benefits />
       <SavingsCalculator />

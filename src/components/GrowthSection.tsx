@@ -38,8 +38,8 @@ const GrowthSection = () => {
           <TabsContent value="inbound" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">KI-gestützte Inbound-Verkaufsautomatisierung</h3>
-                <p className="text-gray-600 text-lg">
+                <h3 className="text-3xl font-bold text-white">KI-gestützte Inbound-Verkaufsautomatisierung</h3>
+                <p className="text-gray-300 text-lg">
                   KI-Lösungen für besseren Lead-Flow, 24/7 Erreichbarkeit, schnellere Qualifizierung und ein fokussiertes Verkaufsteam.
                 </p>
                 <div className="space-y-4">
@@ -74,8 +74,8 @@ const GrowthSection = () => {
           <TabsContent value="outbound" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">KI-gestützte Outbound-Verkaufslösungen</h3>
-                <p className="text-gray-600 text-lg">
+                <h3 className="text-3xl font-bold text-white">KI-gestützte Outbound-Verkaufslösungen</h3>
+                <p className="text-gray-300 text-lg">
                   KI-Lösungen für Lead-Generierung, Anreicherung & personalisierte Multi-Kanal-Kontaktaufnahme.
                 </p>
                 <div className="space-y-4">
@@ -107,8 +107,8 @@ const GrowthSection = () => {
           <TabsContent value="content" className="mt-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div className="space-y-8">
-                <h3 className="text-3xl font-bold">KI Content & Marketing Systeme</h3>
-                <p className="text-gray-600 text-lg">
+                <h3 className="text-3xl font-bold text-white">KI Content & Marketing Systeme</h3>
+                <p className="text-gray-300 text-lg">
                   KI-Lösungen für konsistente Social-Media-Beiträge, persona-orientierte Content-Erstellung und effiziente Multi-Kanal-Verwertung.
                 </p>
                 <div className="space-y-4">
