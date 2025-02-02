@@ -2,7 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -13,6 +13,7 @@ function NavHeader() {
   
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,13 +34,35 @@ function NavHeader() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const navItems = [
+    { href: "/", label: "Start", action: scrollToTop },
     { href: "#vorteile", label: "Vorteile" },
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
     { href: "/pricing", label: "Preis" },
     { href: "#blog", label: "Blog" },
   ];
+
+  const handleNavigation = (item: any, e: React.MouseEvent) => {
+    if (item.action) {
+      e.preventDefault();
+      item.action();
+    } else if (item.href.startsWith('#')) {
+      e.preventDefault();
+      const element = document.querySelector(item.href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else if (item.href === '/' && window.location.pathname === '/') {
+      e.preventDefault();
+      scrollToTop();
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -63,7 +86,7 @@ function NavHeader() {
               key={item.label}
               href={item.href}
               className="text-xl text-white hover:text-primary transition-colors"
-              onClick={() => setIsMobileMenuOpen(false)}
+              onClick={(e) => handleNavigation(item, e)}
             >
               {item.label}
             </a>
@@ -83,6 +106,7 @@ function NavHeader() {
             setPosition={setPosition} 
             href={item.href} 
             isActive={activeSection === item.href.replace('#', '')}
+            onClick={(e) => handleNavigation(item, e)}
           >
             {item.label}
           </Tab>
@@ -99,12 +123,14 @@ const Tab = ({
   href,
   isAction,
   isActive,
+  onClick,
 }: {
   children: React.ReactNode;
   setPosition: any;
   href: string;
   isAction?: boolean;
   isActive?: boolean;
+  onClick?: (e: React.MouseEvent) => void;
 }) => {
   const ref = useRef<HTMLLIElement>(null);
   return (
@@ -122,7 +148,8 @@ const Tab = ({
     >
       <a
         href={href}
-        className={`relative z-10 block cursor-pointer px-3 py-2 text-sm uppercase text-white mix-blend-difference transition-all duration-300 ${
+        onClick={onClick}
+        className={`relative z-10 block cursor-pointer px-3 py-2 text-sm uppercase text-white mix-blend-difference transition-all duration-300 hover:text-primary ${
           isAction ? "font-medium" : ""
         } ${isActive ? "text-primary font-semibold" : ""}`}
       >
