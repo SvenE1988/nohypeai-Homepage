@@ -34,11 +34,11 @@
 
   body {
     @apply bg-black text-foreground font-sans min-h-screen;
-    background: linear-gradient(135deg, #000000 0%, #1a1f35 50%, #2d1f35 100%);
+    background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     background-attachment: fixed;
   }
 
-  /* Globaler Overlay für den Gloweffekt */
+  /* Global overlay for glow effect */
   .glow-overlay {
     @apply pointer-events-none fixed inset-0;
     background: 
@@ -46,13 +46,13 @@
       radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
   }
 
-  /* Einheitlicher Sektionshintergrund */
+  /* Section styling */
   section {
     @apply relative;
-    background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
+    background: transparent;
   }
 
-  /* Zusätzlicher Gloweffekt für Sektionen */
+  /* Additional glow effect for sections */
   section::before {
     content: '';
     @apply absolute inset-0 pointer-events-none;

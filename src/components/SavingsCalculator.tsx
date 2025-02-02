@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { CalendarDays, Calculator, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const SavingsCalculator = () => {
   const [hours, setHours] = useState([20]);
@@ -42,7 +42,7 @@ const SavingsCalculator = () => {
         <Card className="max-w-5xl mx-auto bg-black/40 backdrop-blur-sm border-gray-800">
           <CardContent className="p-8">
             <div className="grid md:grid-cols-2 gap-12">
-              {/* Linke Spalte - Eingabebereich */}
+              {/* Left column - Input area */}
               <div className="space-y-8">
                 <div className="space-y-4">
                   <label className="text-lg text-gray-200">
@@ -77,7 +77,7 @@ const SavingsCalculator = () => {
                 </div>
               </div>
 
-              {/* Rechte Spalte - Ergebnisbereich */}
+              {/* Right column - Results area */}
               <div className="space-y-6 p-6 bg-white/5 rounded-xl">
                 <h3 className="text-xl text-gray-200 mb-6">
                   Ihre potentiellen Einsparungen:
