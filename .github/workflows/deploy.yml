@@ -3,7 +3,7 @@ name: 🚀 Deploy to IONOS via SFTP
 on:
   push:
     branches:
-      - main  # Falls dein Haupt Branch anders heißt, ändere "main"
+      - main  # Falls fdein Haupt Branch anders heißt, ändere "main"
 
 jobs:
   deploy:
