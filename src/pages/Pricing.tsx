@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import NavHeader from "../components/blocks/nav-header";
 import { Check } from "lucide-react";
 
 const Pricing = () => {
@@ -45,7 +45,7 @@ const Pricing = () => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <Navbar />
+      <NavHeader />
       <div className="container mx-auto px-4 pt-24 pb-16">
         <div className="text-center mb-16">
           <h1 className="text-4xl font-bold mb-4">Unsere Preise</h1>
