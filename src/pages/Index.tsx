@@ -10,6 +10,7 @@ import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
+import GrowthSection from "../components/GrowthSection";
 
 const Index = () => {
   return (
@@ -18,6 +19,7 @@ const Index = () => {
       <Hero />
       <AIFirstSection />
       <AIHereSection />
+      <GrowthSection />
       <Partners />
       <Services />
       <Projects />
