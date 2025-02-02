@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Menu, X, BookOpen } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,27 +13,39 @@ const Navbar = () => {
     { name: "Über Uns", href: "#ueber-uns" },
     { name: "Testimonials", href: "#testimonials" },
     { name: "Blog", href: "#blog", icon: BookOpen },
+    { name: "Preise", href: "/pricing" },
   ];
 
   return (
     <nav className="fixed w-full z-50 bg-black/80 backdrop-blur-sm border-b border-white/10">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
-          <a href="/" className="text-white text-2xl font-bold">
+          <Link to="/" className="text-white text-2xl font-bold">
             F2x
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
-              >
-                {item.name}
-                {item.icon && <item.icon className="w-4 h-4" />}
-              </a>
+              item.href.startsWith('#') ? (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
+                >
+                  {item.name}
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                </a>
+              ) : (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-sm text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
+                >
+                  {item.name}
+                  {item.icon && <item.icon className="w-4 h-4" />}
+                </Link>
+              )
             ))}
             <a
               href="#kontakt"
@@ -58,15 +71,27 @@ const Navbar = () => {
           <div className="md:hidden absolute top-16 left-0 right-0 bg-black/95 backdrop-blur-sm border-b border-white/10">
             <div className="container mx-auto px-4 py-4 flex flex-col space-y-4">
               {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {item.name}
-                  {item.icon && <item.icon className="w-4 h-4" />}
-                </a>
+                item.href.startsWith('#') ? (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                    {item.icon && <item.icon className="w-4 h-4" />}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-gray-300 hover:text-white transition-colors flex items-center gap-2 py-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {item.name}
+                    {item.icon && <item.icon className="w-4 h-4" />}
+                  </Link>
+                )
               ))}
               <a
                 href="#kontakt"
