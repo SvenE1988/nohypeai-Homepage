@@ -15,29 +15,55 @@ const Projects = () => {
   const projects: Project[] = [
     {
       year: "2024",
-      industry: "Versicherungsbranche",
-      title: "KI Email Automatisierung",
+      industry: "Erneuerbare Energien",
+      title: "KI-gestützte Lead-Qualifizierung",
       overview:
-        "In diesem Erfahrungsbericht zeigen wir, wie ein Versicherungsmakler seinen Arbeitsalltag revolutionierte, indem er eine KI-basierte E-Mail-Automatisierung einführte. Durch den Einsatz eines Systems, das E-Mails automatisch analysiert, priorisiert und Antworten erstellt, konnte der Makler seine Effizienz steigern, seinen Kundenservice verbessern und sich auf das Wesentliche konzentrieren.",
+        "Revolutionierung der Lead-Qualifizierung im Photovoltaik- und Wärmepumpenbereich durch KI-gesteuerte Sprachkommunikation. Mit über 500 Stunden Sprechzeit und spezifischem Finetuning erreichten wir eine beispiellose Effizienz in der Kundenvorqualifizierung.",
       challenge:
-        "Manuelles Bearbeiten von E-Mails führte zu langen Bearbeitungszeiten, unübersichtlichen Prioritäten und einem eingeschränkten Fokus auf Kundenberatung.",
+        "Manuelle Lead-Qualifizierung band wertvolle Vertriebsressourcen und führte zu langen Reaktionszeiten, wodurch potenzielle Kunden verloren gingen.",
       solution:
-        "Implementierung einer KI-gestützten E-Mail-Automatisierung, die eingehende Nachrichten priorisiert, Antworten vorbereitet und tägliche Berichte über den Posteingang erstellt.",
+        "Implementierung eines KI-gestützten Sprachsystems, das eingehende und ausgehende Gespräche automatisch führt, qualifiziert und priorisiert - rund um die Uhr verfügbar.",
       result:
-        "Bearbeitungszeiten wurden um 80% reduziert, die Übersichtlichkeit der E-Mails verbessert und der Versicherungsmakler konnte sich wieder verstärkt auf seine Kunden konzentrieren – mit zusätzlicher Freizeit am Ende des Tages.",
+        "Reaktionszeit auf neue Leads von Stunden auf Minuten reduziert, Qualifizierungsrate um 300% gesteigert und Vertriebsteam kann sich auf hochwertige, vorqualifizierte Leads konzentrieren.",
     },
     {
       year: "2024",
-      industry: "Handwerksbranche",
-      title: "Voice AI Lead Vorqualifizierung",
+      industry: "Vertrieb & Marketing",
+      title: "Automatisierte Angebotserstellung",
       overview:
-        "In diesem Erfahrungsbericht zeigen wir, wie ein Handwerksunternehmen seine Lead-Qualifizierung revolutionierte, indem es einen KI-gestützten Outbound Caller einsetzte. Das System kontaktierte neue Leads unmittelbar nach ihrer Anmeldung über ein Kontaktformular oder eine Meta-Ad, führte strukturierte Gespräche, qualifizierte die Leads anhand gezielter Fragen und übermittelte die Ergebnisse samt Ranking per E-Mail an den Geschäftsführer.",
+        "Transformation des Angebotsprozesses durch vollautomatische Erstellung komplexer Angebote. Was früher 20 Minuten manuelle Arbeit erforderte, geschieht nun in unter einer Minute - bei gleichzeitig höherer Präzision.",
       challenge:
-        "Manuelle Nachverfolgung von Leads führte zu Verzögerungen, einer ungleichen Priorisierung und verpassten Chancen, potenzielle Kunden schnell zu erreichen und für sich zu gewinnen.",
+        "Zeitaufwändige manuelle Angebotserstellung führte zu Verzögerungen im Verkaufsprozess und band wichtige Personalressourcen.",
       solution:
-        "Implementierung eines KI-gestützten Outbound Callers, der Leads automatisch kurz nach ihrer Anmeldung kontaktiert, Fragen zur Qualifizierung stellt, die Ergebnisse rankt und den Geschäftsführer in Echtzeit per E-Mail benachrichtigt.",
+        "Entwicklung einer KI-gestützten Automatisierungslösung, die alle relevanten Daten analysiert und daraus maßgeschneiderte Angebote erstellt.",
       result:
-        "Die Zeit bis zur ersten Kontaktaufnahme wurde um 90% reduziert, die Lead-Qualität erheblich gesteigert und der Geschäftsführer konnte sich auf die besten und vielversprechendsten Anfragen konzentrieren.",
+        "95% Zeitersparnis bei der Angebotserstellung, signifikant reduzierte Fehlerquote und deutlich schnellere Reaktionszeiten im Vertriebsprozess.",
+    },
+    {
+      year: "2024",
+      industry: "Finanzdienstleistungen",
+      title: "Automatisierte Baufinanzierung",
+      overview:
+        "Digitalisierung und Automatisierung des Baufinanzierungsprozesses, wodurch die Bearbeitungszeit pro Kunde von 90 Minuten auf nur 15 Minuten reduziert wurde - bei gleichzeitiger Steigerung der Genauigkeit.",
+      challenge:
+        "Komplexe manuelle Prozesse in der Baufinanzierung führten zu langen Bearbeitungszeiten und hohem Personalaufwand.",
+      solution:
+        "Integration einer KI-gestützten Prozessautomatisierung, die 90% der Finanzierungsstrecke selbstständig abwickelt und wichtige Entscheidungen vorbereitet.",
+      result:
+        "83% Zeitersparnis pro Kunde, höhere Kundenzufriedenheit durch schnellere Bearbeitung und signifikante Kosteneinsparungen im Prozess.",
+    },
+    {
+      year: "2024",
+      industry: "Versicherungswesen",
+      title: "Intelligente Schadensfallbearbeitung",
+      overview:
+        "Entwicklung einer KI-gestützten Lösung zur automatischen Schadensfallbearbeitung, die den gesamten Prozess von der Erstmeldung bis zur Auszahlung revolutioniert.",
+      challenge:
+        "Traditionelle Schadensfallbearbeitung war zeitaufwändig, fehleranfällig und führte oft zu Kundenunzufriedenheit durch lange Bearbeitungszeiten.",
+      solution:
+        "Implementation einer KI-Plattform, die Schadensmeldungen automatisch kategorisiert, bewertet und den Großteil der Fälle selbstständig abwickelt.",
+      result:
+        "Bearbeitungszeit um 75% reduziert, Kundenzufriedenheit um 60% gesteigert und deutliche Kosteneinsparungen bei gleichzeitiger Qualitätsverbesserung.",
     },
   ];
 
@@ -50,7 +76,7 @@ const Projects = () => {
           </Badge>
         </div>
         <h2 className="text-4xl font-bold text-white text-center mb-16">
-          Ausschnitte unserer Arbeit
+          Erfolgsgeschichten unserer Kunden
         </h2>
         <div className="space-y-6">
           {projects.map((project, index) => (
