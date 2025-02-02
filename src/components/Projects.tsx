@@ -60,16 +60,16 @@ const Projects = () => {
     },
     {
       year: "2024",
-      industry: "Versicherungswesen",
-      title: "Intelligente Schadensfallbearbeitung",
+      industry: "Gesundheitswesen",
+      title: "Digitale Rezeptanforderung",
       overview:
-        "Entwicklung einer KI-gestützten Lösung zur automatischen Schadensfallbearbeitung, die den gesamten Prozess von der Erstmeldung bis zur Auszahlung revolutioniert.",
+        "Transformation der Rezeptanforderung in einer Arztpraxis durch KI-gestützte Sprachverarbeitung. Die bisherige manuelle Abarbeitung von Sprachnachrichten wurde durch ein intelligentes System ersetzt, das Anfragen automatisch verarbeitet und strukturiert.",
       challenge:
-        "Traditionelle Schadensfallbearbeitung war zeitaufwändig, fehleranfällig und führte oft zu Kundenunzufriedenheit durch lange Bearbeitungszeiten.",
+        "Zeitaufwändiges manuelles Abhören eines Anrufbeantworters für Rezeptanfragen, was zu hoher Arbeitsbelastung des Praxispersonals und möglichen Verzögerungen führte.",
       solution:
-        "Implementation einer KI-Plattform, die Schadensmeldungen automatisch kategorisiert, bewertet und den Großteil der Fälle selbstständig abwickelt.",
+        "Implementation eines KI-Sprachbots, der Patientenanfragen automatisch entgegennimmt, analysiert und in einer übersichtlichen digitalen Form für das Praxisteam aufbereitet.",
       result:
-        "Bearbeitungszeit um 75% reduziert, Kundenzufriedenheit um 60% gesteigert und deutliche Kosteneinsparungen bei gleichzeitiger Qualitätsverbesserung.",
+        "Signifikante Entlastung des Praxispersonals, schnellere Bearbeitung von Rezeptanfragen und höhere Patientenzufriedenheit durch effizientere Prozesse.",
     },
   ];
 
