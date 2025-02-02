@@ -39,18 +39,58 @@ const GrowthSection = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="Lead-Recherche & Anreicherung" 
-                benefit="Automatische Identifizierung und Qualifizierung von Leads mit 90% Zeitersparnis"
                 description="Intelligente Lead-Qualifizierung"
+                benefit="Automatische Identifizierung und Qualifizierung von Leads mit 90% Zeitersparnis"
               />
               <FeatureCard 
                 title="Inbound Terminvereinbarung" 
-                benefit="24/7 automatische Terminvereinbarung mit 80% weniger Aufwand"
                 description="Effiziente Terminkoordination"
+                benefit="24/7 automatische Terminvereinbarung mit 80% weniger Aufwand"
               />
               <FeatureCard 
                 title="Inbound Sprach-Agenten" 
-                benefit="Sofortige Kundenantworten mit 95% Kundenzufriedenheit"
                 description="KI-gestützte Kommunikation"
+                benefit="Sofortige Kundenantworten mit 95% Kundenzufriedenheit"
+              />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="outbound" className="mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <FeatureCard 
+                title="Outbound Lead-Generierung" 
+                description="Automatisierte Lead-Gewinnung"
+                benefit="Identifizierung von qualifizierten Leads mit KI-gestützter Analyse"
+              />
+              <FeatureCard 
+                title="Outbound Kampagnen" 
+                description="Personalisierte Kommunikation"
+                benefit="Automatisierte, personalisierte Kampagnen mit 60% höherer Conversion"
+              />
+              <FeatureCard 
+                title="Sales Intelligence" 
+                description="Datengesteuerte Verkaufsstrategie"
+                benefit="Echtzeitanalysen und Verkaufsprognosen für bessere Entscheidungen"
+              />
+            </div>
+          </TabsContent>
+
+          <TabsContent value="content" className="mt-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <FeatureCard 
+                title="Content Erstellung" 
+                description="KI-gestützte Inhaltsproduktion"
+                benefit="Automatische Erstellung von SEO-optimiertem Content in Minuten"
+              />
+              <FeatureCard 
+                title="Social Media Management" 
+                description="Automatisierte Präsenz"
+                benefit="Intelligente Planung und Veröffentlichung von Social Media Content"
+              />
+              <FeatureCard 
+                title="Performance Marketing" 
+                description="Optimierte Werbekampagnen"
+                benefit="KI-gesteuerte Kampagnenoptimierung für maximalen ROI"
               />
             </div>
           </TabsContent>
