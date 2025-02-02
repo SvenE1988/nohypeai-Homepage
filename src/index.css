@@ -91,3 +91,24 @@
     radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
   pointer-events: none;
 }
+
+/* Cookie consent backdrop styles */
+[data-dialog-overlay="true"] {
+  @apply fixed inset-0 bg-black/40 backdrop-blur-sm z-50;
+}
+
+/* Cookie consent animation */
+[data-dialog-content] {
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 100%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
