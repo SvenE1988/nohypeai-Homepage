@@ -8,7 +8,6 @@ import Testimonials from "../components/Testimonials";
 import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
-import TechStack from "../components/TechStack";
 import FAQ from "../components/FAQ";
 
 const Index = () => {
@@ -16,15 +15,13 @@ const Index = () => {
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
+      <Benefits />
       <AIHereSection />
       <GrowthSection />
-      <TechStack />
-      <Projects />
-      <Benefits />
       <SavingsCalculator />
+      <Projects />
       <Process />
       <About />
-      <Testimonials />
       <FAQ />
     </main>
   );
