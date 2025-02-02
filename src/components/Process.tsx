@@ -5,30 +5,30 @@ const Process = () => {
     {
       number: "1",
       icon: MessageSquare,
-      title: "Kostenfreies Erstgespräch",
+      title: "Persönliches Kennenlernen",
       description:
-        "In einem kurzen, unverbindlichen Gespräch klären wir, ob wir zusammenpassen und wie wir Ihnen weiterhelfen können.",
+        "In einem entspannten Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihr Unternehmen voranbringen kann.",
     },
     {
       number: "2",
       icon: ClipboardList,
-      title: "Anforderungsanalyse",
+      title: "Strategische Planung",
       description:
-        "Nach dem Erstgespräch erarbeiten wir eine detaillierte technische Spezifikation Ihrer Lösung. Wir dokumentieren alle Anforderungen und Schnittstellen für die passgenaue Umsetzung.",
+        "Wir entwickeln einen maßgeschneiderten Plan für Ihr Projekt. Dabei berücksichtigen wir Ihre Ziele, technischen Anforderungen und gewünschten Zeitrahmen.",
     },
     {
       number: "3",
       icon: FileText,
-      title: "Angebotserstellung",
+      title: "Individuelles Konzept",
       description:
-        "Auf Basis der Analyse erhalten Sie ein maßgeschneidertes Angebot, das genau auf Ihre Bedürfnisse abgestimmt ist.",
+        "Sie erhalten ein detailliertes Konzept mit transparenter Kostenaufstellung und klarem Zeitplan. Alle Projektphasen werden verständlich dargestellt.",
     },
     {
       number: "4",
       icon: Cog,
-      title: "Umsetzung der Lösung",
+      title: "Agile Realisierung",
       description:
-        "Nach Freigabe beginnen wir mit der Umsetzung. Je nach Umfang ist Ihre Lösung innerhalb von 1 bis 6 Wochen vollständig auf Ihrem System integriert.",
+        "Mit modernsten Technologien setzen wir Ihr Projekt um. Durch regelmäßige Updates bleiben Sie stets im Bild und können direkt Feedback geben.",
     },
   ];
 
@@ -36,9 +36,9 @@ const Process = () => {
     <section className="py-20 bg-black">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center mb-16">
-          <span className="text-primary mb-4">Prozess</span>
+          <span className="text-primary mb-4">Der Weg zum Erfolg</span>
           <h2 className="text-4xl md:text-5xl font-bold text-white text-center mb-4">
-            Strukturiert. Transparent. Zielorientiert.
+            Gemeinsam. Effizient. Zukunftsweisend.
           </h2>
         </div>
 
