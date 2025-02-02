@@ -9,6 +9,7 @@ import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import AIFirstSection from "../components/AIFirstSection";
+import AIHereSection from "../components/AIHereSection";
 
 const Index = () => {
   return (
@@ -16,6 +17,7 @@ const Index = () => {
       <NavHeader />
       <Hero />
       <AIFirstSection />
+      <AIHereSection />
       <Partners />
       <Services />
       <Projects />
