@@ -3,27 +3,6 @@ import { Button } from './ui/button';
 import { Bot, Cpu, MessageSquare, Mic2 } from 'lucide-react';
 
 const TechStack = () => {
-  const tools = [
-    { name: 'make', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'Relevance AI', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'n8n', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'zapier', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'Airtable', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'clay', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'supabase', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'HubSpot', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'instantly', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'WhatsApp', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'Smartlead.ai', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'OpenAI', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'Claude', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'VAPI', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'slack', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'PhantomBuster', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'Apollo.io', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-    { name: 'sendspark', logo: '/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png' },
-  ];
-
   const categories = [
     { name: 'KI-Agenten', icon: <Bot className="w-5 h-5" /> },
     { name: 'KI-Automatisierungen', icon: <Cpu className="w-5 h-5" /> },
@@ -36,23 +15,12 @@ const TechStack = () => {
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           {/* Linke Seite - Logos */}
-          <div className="grid grid-cols-3 gap-4">
-            {tools.map((tool, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl p-4 shadow-lg transform hover:scale-105 transition-transform duration-200"
-                style={{ aspectRatio: '3/1' }}
-              >
-                <img
-                  src={tool.logo}
-                  alt={tool.name}
-                  className="w-full h-full object-contain"
-                  style={{ 
-                    clipPath: `inset(${(index * 100) / 18}% ${(index % 3) * 33.33}% ${100 - ((index + 1) * 100) / 18}% ${100 - ((index % 3 + 1) * 33.33)}%)` 
-                  }}
-                />
-              </div>
-            ))}
+          <div className="w-full">
+            <img
+              src="/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png"
+              alt="Tech Stack Logos"
+              className="w-full h-auto rounded-xl shadow-lg"
+            />
           </div>
 
           {/* Rechte Seite - Text und Kategorien */}
