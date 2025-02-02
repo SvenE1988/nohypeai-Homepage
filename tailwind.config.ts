@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { addVariablesForColors } from "./src/lib/addVariablesForColors";
 
 export default {
   darkMode: ["class"],
@@ -25,11 +26,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "#FF0099", // Pink Akzentfarbe von Amplifi
+          DEFAULT: "#FF0099",
           foreground: "#FFFFFF",
         },
         secondary: {
-          DEFAULT: "#6B46C1", // Lila Ton für Verläufe
+          DEFAULT: "#6B46C1",
           foreground: "#FFFFFF",
         },
       },
@@ -43,5 +44,5 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
 } satisfies Config;

@@ -1,5 +1,6 @@
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Check } from "lucide-react";
+import { Button } from "@/components/ui/moving-border";
 
 const GrowthSection = () => {
   return (
@@ -36,7 +37,7 @@ const GrowthSection = () => {
           </TabsList>
 
           <TabsContent value="inbound" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <h3 className="text-3xl font-bold text-white">KI-gestützte Inbound-Verkaufsautomatisierung</h3>
                 <p className="text-gray-300 text-lg">
@@ -55,24 +56,22 @@ const GrowthSection = () => {
                 </div>
               </div>
 
-              <div className="bg-[#E5F6FF] p-8 rounded-3xl">
-                <div className="grid grid-cols-3 gap-4">
-                  <FeatureCard title="Automatisierte Lead-Recherche & Anreicherung" />
-                  <FeatureCard title="Automatisierte Lead-Qualifizierung & Bewertung" />
-                  <FeatureCard title="Inbound Terminvereinbarung & Chatbots" />
-                  <FeatureCard title="Inbound Sprach-Agenten" />
-                  <FeatureCard title="Inbound Antwort-Agenten" />
-                  <FeatureCard title="Personalisierte Lead-Pflege" />
-                  <FeatureCard title="Automatisierte Angebotserstellung" />
-                  <FeatureCard title="Onboarding-Automatisierungssysteme" />
-                  <FeatureCard title="Individuelle Projekte" />
-                </div>
+              <div className="grid grid-cols-3 gap-4">
+                <FeatureCard title="Automatisierte Lead-Recherche & Anreicherung" />
+                <FeatureCard title="Automatisierte Lead-Qualifizierung & Bewertung" />
+                <FeatureCard title="Inbound Terminvereinbarung & Chatbots" />
+                <FeatureCard title="Inbound Sprach-Agenten" />
+                <FeatureCard title="Inbound Antwort-Agenten" />
+                <FeatureCard title="Personalisierte Lead-Pflege" />
+                <FeatureCard title="Automatisierte Angebotserstellung" />
+                <FeatureCard title="Onboarding-Automatisierungssysteme" />
+                <FeatureCard title="Individuelle Projekte" />
               </div>
             </div>
           </TabsContent>
 
           <TabsContent value="outbound" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <h3 className="text-3xl font-bold text-white">KI-gestützte Outbound-Verkaufslösungen</h3>
                 <p className="text-gray-300 text-lg">
@@ -91,21 +90,19 @@ const GrowthSection = () => {
                 </div>
               </div>
 
-              <div className="bg-[#B8E6F3] p-8 rounded-3xl">
-                <div className="grid grid-cols-2 gap-4">
-                  <FeatureCard title="Lead-Scraping Automatisierung" />
-                  <FeatureCard title="Outbound E-Mail-System Einrichtung" />
-                  <FeatureCard title="Personalisierte Kontaktaufnahme-Automatisierung" />
-                  <FeatureCard title="LinkedIn Outreach Systeme" />
-                  <FeatureCard title="Outbound Sprach-Agenten" />
-                  <FeatureCard title="Individuelle Projekte" />
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                <FeatureCard title="Lead-Scraping Automatisierung" />
+                <FeatureCard title="Outbound E-Mail-System Einrichtung" />
+                <FeatureCard title="Personalisierte Kontaktaufnahme-Automatisierung" />
+                <FeatureCard title="LinkedIn Outreach Systeme" />
+                <FeatureCard title="Outbound Sprach-Agenten" />
+                <FeatureCard title="Individuelle Projekte" />
               </div>
             </div>
           </TabsContent>
 
           <TabsContent value="content" className="mt-12">
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               <div className="space-y-8">
                 <h3 className="text-3xl font-bold text-white">KI Content & Marketing Systeme</h3>
                 <p className="text-gray-300 text-lg">
@@ -124,15 +121,13 @@ const GrowthSection = () => {
                 </div>
               </div>
 
-              <div className="bg-[#E2F5E2] p-8 rounded-3xl">
-                <div className="grid grid-cols-2 gap-4">
-                  <FeatureCard title="Social Media Content Systeme" />
-                  <FeatureCard title="Markengerechte Fine-tuned Content KI-Modelle" />
-                  <FeatureCard title="Content-Verwertungssysteme" />
-                  <FeatureCard title="KI Lead Magnet Automatisierung" />
-                  <FeatureCard title="LinkedIn Content & Outreach Systeme" />
-                  <FeatureCard title="Individuelle Projekte" />
-                </div>
+              <div className="grid grid-cols-2 gap-4">
+                <FeatureCard title="Social Media Content Systeme" />
+                <FeatureCard title="Markengerechte Fine-tuned Content KI-Modelle" />
+                <FeatureCard title="Content-Verwertungssysteme" />
+                <FeatureCard title="KI Lead Magnet Automatisierung" />
+                <FeatureCard title="LinkedIn Content & Outreach Systeme" />
+                <FeatureCard title="Individuelle Projekte" />
               </div>
             </div>
           </TabsContent>
@@ -146,16 +141,20 @@ const BenefitItem = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="flex gap-3">
       <Check className="w-6 h-6 text-primary flex-shrink-0" />
-      <p className="text-gray-600">{children}</p>
+      <p className="text-gray-400">{children}</p>
     </div>
   );
 };
 
 const FeatureCard = ({ title }: { title: string }) => {
   return (
-    <div className="bg-white p-4 rounded-xl shadow-sm">
-      <p className="text-sm font-medium text-center">{title}</p>
-    </div>
+    <Button
+      as="div"
+      className="h-32 bg-black/40"
+      containerClassName="h-32"
+    >
+      <p className="text-sm font-medium text-white">{title}</p>
+    </Button>
   );
 };
 
