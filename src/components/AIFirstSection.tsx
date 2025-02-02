@@ -15,7 +15,10 @@ const AIFirstSection = () => {
       <div className="absolute bottom-12 left-0 right-0 z-20">
         <div className="container mx-auto px-4">
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-white/[0.03] hover:bg-white/[0.08] border-2 border-white/[0.08] text-white">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white border-none shadow-lg hover:shadow-xl transition-all duration-300"
+            >
               Jetzt durchstarten
             </Button>
           </div>
