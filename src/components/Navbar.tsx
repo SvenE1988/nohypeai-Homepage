@@ -6,7 +6,6 @@ const Navbar = () => {
 
   const navItems = [
     { name: "Partner", href: "#" },
-    { name: "Innovative KI-Lösungen", href: "#" },
     { name: "Projekte", href: "#" },
     { name: "Vorteile", href: "#" },
     { name: "Einsparungen", href: "#" },
