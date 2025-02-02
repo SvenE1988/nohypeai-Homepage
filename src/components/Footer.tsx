@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LegalDialog from "./legal/LegalDialog";
+import ContactDialog from "./ContactDialog";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,6 +12,8 @@ const Footer = () => {
     isOpen: false,
     type: "impressum",
   });
+  
+  const [contactDialogOpen, setContactDialogOpen] = useState(false);
   
   return (
     <footer className="bg-black/80 border-t border-gray-800 mt-20">
@@ -57,6 +60,14 @@ const Footer = () => {
               <li className="text-gray-400">
                 Tel: +49 (0) 123 456789
               </li>
+              <li>
+                <button
+                  onClick={() => setContactDialogOpen(true)}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
+                  Kontaktformular
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -65,14 +76,9 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Service</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/faq" className="text-gray-400 hover:text-primary transition-colors">
+                <a href="#faq" className="text-gray-400 hover:text-primary transition-colors">
                   FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/kontakt" className="text-gray-400 hover:text-primary transition-colors">
-                  Kontaktformular
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
@@ -109,6 +115,11 @@ const Footer = () => {
         isOpen={legalDialog.isOpen}
         onClose={() => setLegalDialog({ ...legalDialog, isOpen: false })}
         type={legalDialog.type}
+      />
+      
+      <ContactDialog 
+        open={contactDialogOpen} 
+        onOpenChange={setContactDialogOpen}
       />
     </footer>
   );
