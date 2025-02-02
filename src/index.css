@@ -49,13 +49,13 @@
   /* Section styling */
   section {
     @apply relative;
-    background: transparent;
+    background: transparent !important;
   }
 
   /* Additional glow effect for sections */
   section::before {
     content: '';
-    @apply absolute inset-0 pointer-events-none;
+    @apply absolute inset-0 pointer-events-none opacity-50;
     background: 
       radial-gradient(circle at 15% 50%, rgba(107, 70, 193, 0.08) 0%, transparent 60%),
       radial-gradient(circle at 85% 50%, rgba(255, 0, 153, 0.08) 0%, transparent 60%);
