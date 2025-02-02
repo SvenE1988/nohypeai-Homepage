@@ -9,13 +9,21 @@ const Hero = () => {
           <span className="text-sm">DSGVO konform!</span>
         </div>
         
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 max-w-5xl mx-auto leading-tight">
-          Individuelle KI-Lösungen für mehr Zeit und weniger Kosten
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8 max-w-5xl mx-auto leading-tight bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+          Wachse schneller mit KI-Agenten
         </h1>
         
-        <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-3xl mx-auto">
-          Intelligente Automatisierungen für Ihr Unternehmen
-        </p>
+        <div className="grid gap-6 max-w-3xl mx-auto mb-12">
+          <div className="text-xl md:text-2xl text-gray-300">
+            <span className="text-primary font-semibold">Mehr Profit?</span> Wir bringen dich nach vorn.
+          </div>
+          <div className="text-xl md:text-2xl text-gray-300">
+            <span className="text-primary font-semibold">Höhere Effizienz?</span> Wir machen es möglich.
+          </div>
+          <div className="text-xl md:text-2xl text-gray-300">
+            <span className="text-primary font-semibold">Dein Business?</span> Wir heben es auf das nächste Level.
+          </div>
+        </div>
         
         <div className="flex flex-col md:flex-row gap-4 justify-center">
           <a
