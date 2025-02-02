@@ -9,6 +9,7 @@ import About from "../components/About";
 import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import FAQ from "../components/FAQ";
+import Footer from "../components/Footer";
 
 const Index = () => {
   return (
@@ -23,6 +24,7 @@ const Index = () => {
       <Process />
       <About />
       <FAQ />
+      <Footer />
     </main>
   );
 };

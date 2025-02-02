@@ -1,6 +1,7 @@
 import NavHeader from "../components/blocks/nav-header";
 import { Check } from "lucide-react";
 import SavingsCalculator from "../components/SavingsCalculator";
+import Footer from "../components/Footer";
 
 const Pricing = () => {
   const tiers = [
@@ -91,6 +92,7 @@ const Pricing = () => {
           <SavingsCalculator />
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

@@ -1,8 +1,9 @@
-"use client"; 
+"use client";
 
 import React, { useRef, useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Home } from "lucide-react";
 
 function NavHeader() {
   const [position, setPosition] = useState({
@@ -13,10 +14,13 @@ function NavHeader() {
   
   const [activeSection, setActiveSection] = useState("");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
+      if (location.pathname !== '/') return;
+      
       const sections = document.querySelectorAll('section[id]');
       const scrollPosition = window.scrollY + 100;
 
@@ -32,37 +36,45 @@ function NavHeader() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location]);
 
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const handleNavigation = (item: any, e: React.MouseEvent) => {
+    if (location.pathname !== '/' && !item.href.startsWith('/')) {
+      e.preventDefault();
+      navigate('/');
+      // Warten auf Navigation, dann scrollen
+      setTimeout(() => {
+        const element = document.querySelector(item.href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else if (item.href.startsWith('#') && location.pathname === '/') {
+      e.preventDefault();
+      const element = document.querySelector(item.href);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+    setIsMobileMenuOpen(false);
   };
 
   const navItems = [
-    { href: "/", label: "Start", action: scrollToTop },
+    { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
     { href: "#vorteile", label: "Vorteile" },
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
     { href: "/pricing", label: "Preis" },
     { href: "#blog", label: "Blog" },
   ];
-
-  const handleNavigation = (item: any, e: React.MouseEvent) => {
-    if (item.action) {
-      e.preventDefault();
-      item.action();
-    } else if (item.href.startsWith('#')) {
-      e.preventDefault();
-      const element = document.querySelector(item.href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else if (item.href === '/' && window.location.pathname === '/') {
-      e.preventDefault();
-      scrollToTop();
-    }
-    setIsMobileMenuOpen(false);
-  };
 
   return (
     <>
@@ -82,14 +94,15 @@ function NavHeader() {
       <div className={`fixed inset-0 z-40 bg-black/95 backdrop-blur-lg transform transition-transform duration-300 md:hidden ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
         <div className="flex flex-col items-center justify-center h-full space-y-8">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.label}
-              href={item.href}
-              className="text-xl text-white hover:text-primary transition-colors"
+              to={item.href}
+              className="text-xl text-white hover:text-primary transition-colors flex items-center gap-2"
               onClick={(e) => handleNavigation(item, e)}
             >
+              {item.icon}
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>
@@ -105,10 +118,13 @@ function NavHeader() {
             key={item.label}
             setPosition={setPosition} 
             href={item.href} 
-            isActive={activeSection === item.href.replace('#', '')}
+            isActive={activeSection === item.href.replace('#', '') || (item.href === '/' && location.pathname === '/')}
             onClick={(e) => handleNavigation(item, e)}
           >
-            {item.label}
+            <span className="flex items-center gap-2">
+              {item.icon}
+              {item.label}
+            </span>
           </Tab>
         ))}
         <Cursor position={position} />

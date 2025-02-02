@@ -32,13 +32,13 @@ const SavingsCalculator = () => {
   }, [hours, rate]);
 
   return (
-    <section id="einsparungen" className="w-full py-24">
+    <section id="einsparungen" className="w-full py-12 md:py-24">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="text-4xl md:text-5xl font-bold text-center mb-12 text-white"
+          className="text-3xl md:text-5xl font-bold text-center mb-12 text-white"
         >
           Berechnen Sie Ihre{" "}
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
@@ -134,11 +134,11 @@ const SavingsCalculator = () => {
 
                 <Link to="/pricing" className="block w-full">
                   <Button 
-                    className="w-full mt-4 md:mt-6 text-base md:text-lg py-6 px-8 bg-primary hover:bg-primary/90 transition-all duration-300"
+                    className="w-full mt-4 md:mt-6 text-base md:text-lg py-6 bg-primary hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2 whitespace-nowrap"
                     variant="default"
                   >
-                    <span className="truncate">Kostenloses Erstgespräch vereinbaren</span>
-                    <ArrowRight className="ml-2 h-5 w-5" />
+                    Kostenloses Erstgespräch vereinbaren
+                    <ArrowRight className="h-5 w-5" />
                   </Button>
                 </Link>
               </motion.div>
