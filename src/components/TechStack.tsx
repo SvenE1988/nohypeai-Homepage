@@ -14,7 +14,6 @@ const TechStack = () => {
     <section className="w-full py-24 bg-gradient-to-b from-black to-gray-900">
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Linke Seite - Logos */}
           <div className="w-full">
             <img
               src="/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png"
@@ -23,7 +22,6 @@ const TechStack = () => {
             />
           </div>
 
-          {/* Rechte Seite - Text und Kategorien */}
           <div className="space-y-8">
             <div className="space-y-4">
               <h2 className="text-4xl font-bold text-white">Mein Tech Stack</h2>
