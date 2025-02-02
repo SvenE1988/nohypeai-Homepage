@@ -12,8 +12,9 @@ function NavHeader() {
 
   return (
     <ul
-      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center"
+      className="relative mx-auto flex w-3/4 rounded-full border-2 border-white/20 bg-black/50 backdrop-blur-sm p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center"
       onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
+      style={{ position: 'fixed' }}
     >
       <Tab setPosition={setPosition} href="#partnerprojekte">Partner</Tab>
       <Tab setPosition={setPosition} href="#projekte">Projekte</Tab>
