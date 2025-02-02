@@ -23,6 +23,7 @@ function NavHeader() {
       <Tab setPosition={setPosition} href="#ueber">Über</Tab>
       <Tab setPosition={setPosition} href="#testimonials">Testimonials</Tab>
       <Tab setPosition={setPosition} href="#blog">Blog</Tab>
+      <Tab setPosition={setPosition} href="/pricing">Preis</Tab>
       <Tab setPosition={setPosition} href="#kontakt" isAction>Termin</Tab>
 
       <Cursor position={position} />
