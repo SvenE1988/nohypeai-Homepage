@@ -35,7 +35,11 @@ const GrowthSection = () => {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="sprachassistent" className="mt-12">
+          <TabsContent value="sprachassistent" className="mt-8">
+            <p className="text-lg text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+              Stellen Sie sich vor, Ihr Unternehmen hätte einen virtuellen Assistenten, der rund um die Uhr Kundenanfragen beantwortet, 
+              Termine koordiniert und Verkaufsgespräche führt - ohne Ermüdung, ohne Urlaub und mit konstant hoher Qualität.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="KI-Kundenservice" 
@@ -70,7 +74,11 @@ const GrowthSection = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="ablaufoptimierung" className="mt-12">
+          <TabsContent value="ablaufoptimierung" className="mt-8">
+            <p className="text-lg text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+              Stellen Sie sich vor, Ihre Büroprozesse laufen vollautomatisch - von der Angebotserstellung bis zur Rechnungsstellung. 
+              Keine verlorenen Dokumente mehr, keine Verzögerungen, keine Fehler. Ihre Mitarbeiter können sich auf das Wesentliche konzentrieren.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="Angebotserstellung" 
@@ -105,7 +113,11 @@ const GrowthSection = () => {
             </div>
           </TabsContent>
 
-          <TabsContent value="content" className="mt-12">
+          <TabsContent value="content" className="mt-8">
+            <p className="text-lg text-gray-300 text-center mb-12 max-w-3xl mx-auto">
+              Stellen Sie sich vor, Ihr Content-Marketing läuft wie ein gut geöltes Uhrwerk - mit KI-optimierten Texten, 
+              perfekt getimten Social Media Posts und personalisierten Newsletter-Kampagnen, die Ihre Zielgruppe begeistern.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <FeatureCard 
                 title="Content Erstellung" 
