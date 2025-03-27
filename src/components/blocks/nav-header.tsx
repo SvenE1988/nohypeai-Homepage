@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -76,6 +77,7 @@ function NavHeader() {
     { href: "#benefits", label: "Vorteile" },
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
+    { href: "#ueber-uns", label: "Über Uns" },
     { href: "/pricing", label: "Preis" },
     { href: "#blog", label: "Blog" },
   ];
