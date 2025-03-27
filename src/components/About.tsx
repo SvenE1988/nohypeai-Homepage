@@ -1,3 +1,4 @@
+
 import { Avatar } from "./ui/avatar";
 import { Linkedin, Youtube } from "lucide-react";
 
@@ -6,14 +7,7 @@ const About = () => {
     {
       name: "Niklas",
       role: "Gründer & Inhaber",
-      image: "/placeholder.svg",
-      linkedin: "#",
-      youtube: "#"
-    },
-    {
-      name: "Benedikt",
-      role: "Gründer & Inhaber",
-      image: "/placeholder.svg",
+      image: "/lovable-uploads/53242408-166e-4bd6-89db-0295c8e032ca.png",
       linkedin: "#",
       youtube: "#"
     }
@@ -24,9 +18,9 @@ const About = () => {
       <div className="container mx-auto px-4">
         <span className="text-primary mb-4 block text-center">Über Uns</span>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-16">
+        <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto mb-16">
           {team.map((member, index) => (
-            <div key={index} className="bg-[#0D0F1A] rounded-2xl p-6">
+            <div key={index} className="bg-[#0D0F1A] rounded-2xl p-6 mx-auto max-w-md">
               <Avatar className="w-full h-[300px] rounded-xl mb-6">
                 <img
                   src={member.image}
