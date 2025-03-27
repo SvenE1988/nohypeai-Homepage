@@ -36,6 +36,7 @@ function NavHeader() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check when component mounts
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location]);
 
@@ -50,7 +51,15 @@ function NavHeader() {
   const handleNavigation = (item: any, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (location.pathname !== '/' && !item.href.startsWith('/')) {
+    // Für Blog direkt zur Blog-Seite navigieren
+    if (item.href === "/blog") {
+      navigate("/blog");
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    
+    if (location.pathname !== '/' && item.href.startsWith('#')) {
+      // Von einer anderen Seite zur Hauptseite und dann zum Anker scrollen
       navigate('/');
       setTimeout(() => {
         const element = document.querySelector(item.href);
@@ -59,13 +68,16 @@ function NavHeader() {
         }
       }, 100);
     } else if (item.href.startsWith('#') && location.pathname === '/') {
+      // Auf der Hauptseite zum Anker scrollen
       const element = document.querySelector(item.href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (item.href === '/') {
+      // Zum Seitenanfang scrollen oder zur Startseite navigieren
       scrollToTop();
     } else {
+      // Zu einer anderen Seite navigieren
       navigate(item.href);
     }
     
@@ -79,7 +91,7 @@ function NavHeader() {
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
     { href: "/pricing", label: "Preis" },
-    { href: "#blog", label: "Blog" },
+    { href: "/blog", label: "Blog" }, // Geändert zu /blog statt #blog
   ];
 
   return (
@@ -130,7 +142,12 @@ function NavHeader() {
             key={item.label}
             setPosition={setPosition} 
             href={item.href} 
-            isActive={activeSection === item.href.replace('#', '') || (item.href === '/' && location.pathname === '/')}
+            isActive={
+              (activeSection === item.href.replace('#', '') && item.href.startsWith('#')) || 
+              (item.href === '/' && location.pathname === '/') ||
+              (item.href === '/blog' && location.pathname === '/blog') ||
+              (item.href === '/pricing' && location.pathname === '/pricing')
+            }
             onClick={(e) => handleNavigation(item, e)}
           >
             <span className="flex items-center gap-2">

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -39,8 +40,8 @@ const CookieConsent = () => {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[500px] mb-4 bg-black/95 border border-white/20 shadow-xl backdrop-blur-md">
-        <DialogHeader>
+      <DialogContent className="fixed bottom-0 left-0 right-0 mx-auto max-w-[500px] mb-4 p-6 bg-black/95 border border-white/20 shadow-xl backdrop-blur-lg rounded-xl">
+        <DialogHeader className="mb-2">
           <DialogTitle className="text-xl font-semibold text-white">Cookie-Einstellungen</DialogTitle>
           <DialogDescription className="text-gray-300 mt-2">
             Wir verwenden Cookies, um Ihre Erfahrung auf unserer Website zu verbessern. 
@@ -50,7 +51,7 @@ const CookieConsent = () => {
         
         <div className="space-y-6 py-4">
           <div className="flex items-center justify-between space-x-4">
-            <div>
+            <div className="flex-1">
               <Label className="text-white font-medium">Notwendige Cookies</Label>
               <p className="text-sm text-gray-400 mt-1">
                 Diese Cookies sind für die Grundfunktionen der Website erforderlich und können nicht deaktiviert werden.
@@ -64,7 +65,7 @@ const CookieConsent = () => {
           </div>
 
           <div className="flex items-center justify-between space-x-4">
-            <div>
+            <div className="flex-1">
               <Label className="text-white font-medium">Analyse Cookies</Label>
               <p className="text-sm text-gray-400 mt-1">
                 Diese Cookies helfen uns zu verstehen, wie Besucher mit der Website interagieren.
@@ -78,7 +79,7 @@ const CookieConsent = () => {
           </div>
         </div>
 
-        <div className="flex justify-end space-x-4 mt-6">
+        <div className="flex justify-between space-x-4 mt-6">
           <Button
             variant="outline"
             onClick={handleReject}

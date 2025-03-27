@@ -5,7 +5,7 @@ import { Linkedin, Youtube } from "lucide-react";
 const About = () => {
   const team = [
     {
-      name: "Niklas",
+      name: "Sven",
       role: "Gründer & Inhaber",
       image: "/lovable-uploads/53242408-166e-4bd6-89db-0295c8e032ca.png",
       linkedin: "#",
