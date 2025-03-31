@@ -2,12 +2,16 @@
 import { Calendar, Tag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { BlogPost } from "@/data/blogData";
+import { Link } from "react-router-dom";
+import { createSlug } from "@/pages/BlogPost";
 
 interface BlogCardProps {
   post: BlogPost;
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
+  const slug = createSlug(post.title);
+  
   return (
     <article className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-white/10 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
       <div className="mb-4 flex items-center gap-2">
@@ -36,10 +40,13 @@ const BlogCard = ({ post }: BlogCardProps) => {
         ))}
       </div>
       
-      <button className="text-primary hover:text-white transition-colors self-start mt-auto group flex items-center">
+      <Link 
+        to={`/blog/${slug}`}
+        className="text-primary hover:text-white transition-colors self-start mt-auto group flex items-center"
+      >
         Weiterlesen
         <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
-      </button>
+      </Link>
     </article>
   );
 };
