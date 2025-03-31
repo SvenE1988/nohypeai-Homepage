@@ -1,3 +1,4 @@
+
 import { Mail, Linkedin, Instagram, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
@@ -57,7 +58,7 @@ const AIFirstSection = () => {
 
         <div className="relative">
           <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-            <img src="/lovable-uploads/d7917218-9503-4336-a432-e9aa9a629d40.png" alt="KI Experte" className="w-full h-auto rounded-2xl" loading="lazy" />
+            <img src="/lovable-uploads/81cc09d1-ba8d-4f1e-84ac-87a56ce8a5de.png" alt="KI-Wachstumsprozess mit Analyse, Daten, Training und Optimierung" className="w-full h-auto rounded-2xl" loading="lazy" />
             
           </div>
           <div className="absolute -z-10 inset-0 blur-3xl opacity-30 bg-gradient-to-r from-primary to-secondary"></div>
