@@ -3,8 +3,6 @@ import { Mail, Linkedin, Instagram, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 
-// Removing the OptimizationChart component definition since we'll use an image instead
-
 const AIFirstSection = () => {
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('section:nth-of-type(2)');
@@ -57,23 +55,15 @@ const AIFirstSection = () => {
           </div>
         </div>
 
-        <div className="relative">
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8
-        }} className="relative rounded-2xl overflow-hidden shadow-2xl">
-            <img 
-              src="/public/lovable-uploads/a9daac6a-208d-46dc-9aa0-db9287c1b2e8.png" 
-              alt="KI Optimierungsprozess: Analyse, Daten, Training, Optimierung" 
-              className="w-full h-full object-cover min-h-[400px]"
-            />
-          </motion.div>
-          <div className="absolute -z-10 inset-0 blur-3xl opacity-30 bg-gradient-to-r from-primary to-secondary"></div>
+        <div className="flex justify-end items-center">
+          <motion.img 
+            src="/public/lovable-uploads/a9daac6a-208d-46dc-9aa0-db9287c1b2e8.png" 
+            alt="KI Optimierungsprozess Visualisierung" 
+            className="max-w-full h-auto object-contain"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          />
         </div>
       </div>
 
