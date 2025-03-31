@@ -41,8 +41,9 @@ export const parseDate = (dateStr: string): Date => {
 
 /**
  * Sorts blog posts by date (newest first)
+ * Generic type T allows for sorting any object that has a date property
  */
-export const sortPostsByDate = (posts: Array<{date: string}>) => {
+export const sortPostsByDate = <T extends {date: string}>(posts: T[]): T[] => {
   return [...posts].sort((a, b) => {
     const dateA = parseDate(a.date);
     const dateB = parseDate(b.date);
