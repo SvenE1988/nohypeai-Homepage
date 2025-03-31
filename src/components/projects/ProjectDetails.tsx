@@ -2,7 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Project } from "./types";
-import { X } from "lucide-react";
+import { X, Calendar } from "lucide-react";
 
 interface ProjectDetailsProps {
   project: Project;
@@ -31,8 +31,9 @@ const ProjectDetails = ({ project, isOpen, onClose }: ProjectDetailsProps) => {
       >
         <div className="flex justify-between items-start mb-6">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
-              {project.year}
+            <div className="flex items-center gap-2 text-primary border border-primary p-2 rounded-lg bg-[#1A1F35]/50">
+              <Calendar size={16} />
+              <span>{project.year}</span>
             </div>
             <div>
               <div className="text-gray-400 text-sm">{project.industry}</div>

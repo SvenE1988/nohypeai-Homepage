@@ -3,55 +3,55 @@ import { Project } from "./types";
 
 export const projectsData: Project[] = [
   {
-    year: "2024",
-    industry: "Erneuerbare Energien",
-    title: "KI-gestützte Lead-Qualifizierung",
+    year: "Sep 2024",
+    industry: "Case Study",
+    title: "Dynamische Chatbots für eine bessere Kundeninteraktion",
     overview:
-      "Revolutionierung der Lead-Qualifizierung im Photovoltaik- und Wärmepumpenbereich durch KI-gesteuerte Sprachkommunikation. Mit über 500 Stunden Sprechzeit und spezifischem Finetuning erreichten wir eine beispiellose Effizienz in der Kundenvorqualifizierung.",
+      "Wie dynamische Chatbots Kundenerlebnisse optimieren und interne Prozesse effizienter gestalten. Ein Erfolgsbeispiel von Purainvest.",
     challenge:
-      "Manuelle Lead-Qualifizierung band wertvolle Vertriebsressourcen und führte zu langen Reaktionszeiten, wodurch potenzielle Kunden verloren gingen.",
+      "Kundenanfragen erforderten manuelle Bearbeitung und lange Reaktionszeiten, was zu verminderter Kundenzufriedenheit führte.",
     solution:
-      "Implementierung eines KI-gestützten Sprachsystems, das eingehende und ausgehende Gespräche automatisch führt, qualifiziert und priorisiert - rund um die Uhr verfügbar.",
+      "Implementation eines KI-gestützten Chatbot-Systems, das Kundenanfragen automatisch beantwortet und bei Bedarf an Mitarbeiter eskaliert.",
     result:
-      "Reaktionszeit auf neue Leads von Stunden auf Minuten reduziert, Qualifizierungsrate um 300% gesteigert und Vertriebsteam kann sich auf hochwertige, vorqualifizierte Leads konzentrieren.",
+      "Reaktionszeit von Stunden auf Sekunden reduziert, 24/7 Verfügbarkeit und signifikante Entlastung des Serviceteams.",
   },
   {
-    year: "2024",
-    industry: "Vertrieb & Marketing",
-    title: "Automatisierte Angebotserstellung",
+    year: "Nov 2024",
+    industry: "Case Study",
+    title: "Integration von Beraterrechnern für effiziente Immobilienfinanzierung",
     overview:
-      "Transformation des Angebotsprozesses durch vollautomatische Erstellung komplexer Angebote. Was früher 20 Minuten manuelle Arbeit erforderte, geschieht nun in unter einer Minute - bei gleichzeitig höherer Präzision.",
+      "Automatisierte Kundenrechner erleichtern Prozesse und steigern die Zufriedenheit bei der Immobilienfinanzierung. Purainvest-Fallstudie.",
     challenge:
-      "Zeitaufwändige manuelle Angebotserstellung führte zu Verzögerungen im Verkaufsprozess und band wichtige Personalressourcen.",
+      "Komplexe Finanzierungsberechnungen banden wertvolle Beratungszeit und führten zu Verzögerungen im Entscheidungsprozess.",
     solution:
-      "Entwicklung einer KI-gestützten Automatisierungslösung, die alle relevanten Daten analysiert und daraus maßgeschneiderte Angebote erstellt.",
+      "Entwicklung und Integration dynamischer Beraterrechner, die komplexe Finanzierungsszenarien in Echtzeit visualisieren und berechnen.",
     result:
-      "95% Zeitersparnis bei der Angebotserstellung, signifikant reduzierte Fehlerquote und deutlich schnellere Reaktionszeiten im Vertriebsprozess.",
+      "Beratungszeit pro Kunde um 40% reduziert, höhere Abschlussquote und verbesserte Kundenzufriedenheit durch transparente Berechnungen.",
   },
   {
-    year: "2024",
-    industry: "Finanzdienstleistungen",
-    title: "Automatisierte Baufinanzierung",
+    year: "Jan 2025",
+    industry: "Case Study",
+    title: "Automatisierte Angebotserstellung mit SEVDESK",
     overview:
-      "Digitalisierung und Automatisierung des Baufinanzierungsprozesses, wodurch die Bearbeitungszeit pro Kunde von 90 Minuten auf nur 15 Minuten reduziert wurde - bei gleichzeitiger Steigerung der Genauigkeit.",
+      "Erfahre, wie Automatisierung administrative Prozesse beschleunigt und Vertriebseffizienz steigert. Wesa-Solar reduzierte den Prozess von 48 Stunden auf wenige Minuten.",
     challenge:
-      "Komplexe manuelle Prozesse in der Baufinanzierung führten zu langen Bearbeitungszeiten und hohem Personalaufwand.",
+      "Manuelle Angebotserstellung nahm bis zu 48 Stunden in Anspruch und band kritische Personalressourcen im Vertrieb.",
     solution:
-      "Integration einer KI-gestützten Prozessautomatisierung, die 90% der Finanzierungsstrecke selbstständig abwickelt und wichtige Entscheidungen vorbereitet.",
+      "Integration einer automatisierten Angebotserstellung in SEVDESK, die Kundendaten, Produkte und Preisstrukturen intelligent verarbeitet.",
     result:
-      "83% Zeitersparnis pro Kunde, höhere Kundenzufriedenheit durch schnellere Bearbeitung und signifikante Kosteneinsparungen im Prozess.",
+      "Reduzierung der Angebotserstellung auf wenige Minuten, Fehlerquote nahezu eliminiert und Vertriebsteam kann sich auf Kundenberatung konzentrieren.",
   },
   {
-    year: "2024",
-    industry: "Gesundheitswesen",
-    title: "Digitale Rezeptanforderung",
+    year: "Feb 2025",
+    industry: "Case Study",
+    title: "Voice-Agenten im Vertrieb: Automatische Qualifizierung",
     overview:
-      "Transformation der Rezeptanforderung in einer Arztpraxis durch KI-gestützte Sprachverarbeitung. Die bisherige manuelle Abarbeitung von Sprachnachrichten wurde durch ein intelligentes System ersetzt, das Anfragen automatisch verarbeitet und strukturiert.",
+      "Automatisierte Sprachassistenten als Schlüssel zur Effizienzsteigerung im Vertrieb kleiner und mittlerer Unternehmen. Ein Erfolgsbeispiel von Wesa-Solar.",
     challenge:
-      "Zeitaufwändiges manuelles Abhören eines Anrufbeantworters für Rezeptanfragen, was zu hoher Arbeitsbelastung des Praxispersonals und möglichen Verzögerungen führte.",
+      "Hoher Zeitaufwand für initiale Leadqualifizierung und Terminvereinbarung, der wertvolle Vertriebsressourcen band.",
     solution:
-      "Implementation eines KI-Sprachbots, der Patientenanfragen automatisch entgegennimmt, analysiert und in einer übersichtlichen digitalen Form für das Praxisteam aufbereitet.",
+      "Implementierung KI-basierter Voice-Agenten, die eingehende Leads qualifizieren und Termine automatisch koordinieren.",
     result:
-      "Signifikante Entlastung des Praxispersonals, schnellere Bearbeitung von Rezeptanfragen und höhere Patientenzufriedenheit durch effizientere Prozesse.",
+      "300% mehr qualifizierte Leads, 70% weniger Aufwand für Terminkoordination und signifikant höhere Conversion-Rate im Vertrieb.",
   },
 ];

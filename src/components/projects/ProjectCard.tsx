@@ -29,17 +29,18 @@ const ProjectCard = ({
         <div className="flex items-center gap-3 mb-4">
           <div 
             className={cn(
-              "w-12 h-12 rounded-md flex items-center justify-center text-primary border transition-all duration-300 shrink-0",
+              "flex-shrink-0 rounded-md flex items-center justify-center text-primary border transition-all duration-300",
               isActive 
                 ? "bg-[#1A1F35]/80 border-primary" 
-                : "bg-[#1A1F35] border-primary/40 group-hover:border-primary"
+                : "bg-[#1A1F35] border-primary/40 group-hover:border-primary",
+              "px-3 py-1.5 text-sm"
             )}
           >
             {project.year}
           </div>
           <div className="text-sm text-gray-400">{project.industry}</div>
         </div>
-        <h3 className="text-xl font-semibold text-primary mb-3">
+        <h3 className="text-xl font-semibold text-primary mb-3 line-clamp-2">
           {project.title}
         </h3>
         <p className="text-gray-400 text-sm line-clamp-4 mb-4 flex-grow">

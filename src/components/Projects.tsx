@@ -71,11 +71,11 @@ const Projects = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-center gap-2 mb-6">
           <Badge variant="outline" className="text-primary border-primary">
-            Projekte
+            Case Studies
           </Badge>
         </div>
         <h2 className="text-4xl font-bold text-white text-center mb-16">
-          Erfolgsgeschichten unserer Kunden
+          Erfolgsgeschichten aus der Praxis
         </h2>
 
         <div className="w-full max-w-6xl mx-auto">
