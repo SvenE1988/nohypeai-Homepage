@@ -1,5 +1,5 @@
 
-import { ArrowLeft, Calendar, Tag, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Tag, Share2, Clock } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
@@ -24,6 +24,17 @@ const BlogPost = () => {
     navigate("/blog");
     return null;
   }
+  
+  // Geschätzte Lesezeit berechnen (ca. 200 Wörter pro Minute)
+  const calculateReadTime = (text: string): number => {
+    const wordsPerMinute = 200;
+    // Für die Demo nutzen wir die Länge des Excerpts * 5 als Annäherung
+    // In Produktion würde man hier den vollen Textinhalt verwenden
+    const words = text.length * 5;
+    return Math.max(1, Math.ceil(words / wordsPerMinute));
+  };
+  
+  const readTimeMinutes = calculateReadTime(post.excerpt);
   
   // Funktion zum Kopieren des Artikellinks in die Zwischenablage
   const shareArticle = () => {
@@ -72,9 +83,16 @@ const BlogPost = () => {
         </div>
 
         <article className="max-w-4xl mx-auto bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-white/10 rounded-xl p-8 mb-16">
-          <div className="mb-6 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-primary" />
-            <time className="text-sm text-primary">{post.date}</time>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4 text-primary" />
+              <time className="text-sm text-primary">{post.date}</time>
+            </div>
+            
+            <div className="flex items-center gap-2 text-white/70">
+              <Clock className="w-4 h-4 text-primary" />
+              <span className="text-sm">{readTimeMinutes} Min. Lesezeit</span>
+            </div>
           </div>
           
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
