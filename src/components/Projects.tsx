@@ -1,11 +1,18 @@
+
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
+import { Button } from "./ui/button";
+import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
+import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { motion } from "framer-motion";
 
 interface Project {
   year: string;
@@ -73,9 +80,18 @@ const Projects = () => {
     },
   ];
 
+  const [currentProject, setCurrentProject] = useState<Project | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+
+  const handleViewDetails = (project: Project) => {
+    setCurrentProject(project);
+    setIsDetailsOpen(true);
+  };
+
   return (
-    <section id="projekte" className="w-full bg-black py-24">
-      <div className="container mx-auto px-4">
+    <section id="projekte" className="w-full py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-black/90 to-black/70 z-0"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-center gap-2 mb-6">
           <Badge variant="outline" className="text-primary border-primary">
             Projekte
@@ -84,61 +100,114 @@ const Projects = () => {
         <h2 className="text-4xl font-bold text-white text-center mb-16">
           Erfolgsgeschichten unserer Kunden
         </h2>
-        <div className="space-y-4">
-          <Accordion type="single" collapsible className="w-full">
+
+        {/* Carousel for Project Cards */}
+        <Carousel
+          opts={{
+            align: "start",
+            loop: true,
+          }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          <CarouselContent className="-ml-2 md:-ml-4">
             {projects.map((project, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <Card className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden">
-                  <AccordionTrigger className="px-8 py-6 hover:no-underline">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left w-full">
-                      <div className="w-12 h-12 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
-                        {project.year}
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="text-gray-400">{project.industry}</div>
-                        <h3 className="text-2xl font-semibold text-primary">
-                          {project.title}
-                        </h3>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="px-8 pb-8 pt-2">
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                          <div className="text-gray-400">
-                            <h4 className="font-medium mb-2">Overview:</h4>
-                            <p className="leading-relaxed">{project.overview}</p>
-                          </div>
+              <CarouselItem key={index} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
+                <div className="h-full">
+                  <Card className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-[#1A1A1A] hover:border-primary/30 transition-all duration-300 h-full overflow-hidden group">
+                    <div className="p-5 h-full flex flex-col">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 rounded-md bg-[#1A1F35] flex items-center justify-center text-primary border border-primary/40 group-hover:border-primary transition-all duration-300 shrink-0">
+                          {project.year}
                         </div>
-                        <div className="space-y-6">
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Challenge:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.challenge}
-                            </p>
-                          </div>
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Solution:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.solution}
-                            </p>
-                          </div>
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Result:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.result}
-                            </p>
-                          </div>
-                        </div>
+                        <div className="text-sm text-gray-400">{project.industry}</div>
                       </div>
+                      <h3 className="text-xl font-semibold text-primary mb-3">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-400 text-sm line-clamp-4 mb-4 flex-grow">
+                        {project.overview}
+                      </p>
+                      <Button 
+                        variant="ghost" 
+                        className="mt-auto self-start group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
+                        onClick={() => handleViewDetails(project)}
+                      >
+                        Details anzeigen
+                        <ExternalLink size={16} className="ml-1" />
+                      </Button>
                     </div>
-                  </AccordionContent>
-                </Card>
-              </AccordionItem>
+                  </Card>
+                </div>
+              </CarouselItem>
             ))}
-          </Accordion>
-        </div>
+          </CarouselContent>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <CarouselPrevious className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" />
+            <CarouselNext className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" />
+          </div>
+        </Carousel>
+
+        {/* Project Details Modal */}
+        {isDetailsOpen && currentProject && (
+          <motion.div 
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsDetailsOpen(false)}
+          >
+            <motion.div 
+              className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-primary/20 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            >
+              <div className="flex justify-between items-start mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
+                    {currentProject.year}
+                  </div>
+                  <div>
+                    <div className="text-gray-400 text-sm">{currentProject.industry}</div>
+                    <h3 className="text-2xl font-bold text-primary">
+                      {currentProject.title}
+                    </h3>
+                  </div>
+                </div>
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  className="rounded-full hover:bg-primary/10 text-primary"
+                  onClick={() => setIsDetailsOpen(false)}
+                >
+                  ✕
+                </Button>
+              </div>
+              
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-medium text-white mb-3">Überblick</h4>
+                  <p className="text-gray-300 leading-relaxed mb-6">{currentProject.overview}</p>
+                </div>
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Challenge</h4>
+                    <p className="text-gray-300 leading-relaxed">{currentProject.challenge}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Solution</h4>
+                    <p className="text-gray-300 leading-relaxed">{currentProject.solution}</p>
+                  </div>
+                  <div>
+                    <h4 className="font-medium text-white mb-2">Result</h4>
+                    <p className="text-gray-300 leading-relaxed">{currentProject.result}</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
