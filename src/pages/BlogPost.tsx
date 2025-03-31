@@ -17,7 +17,12 @@ const BlogPost = () => {
   const allPosts = blogPosts.flatMap(section => section.posts);
   
   // Artikel mit dem angegebenen Slug finden
-  const post = allPosts.find(post => createSlug(post.title) === slug);
+  const post = allPosts.find(post => {
+    // Zuerst versuchen, einen benutzerdefinierten slug zu verwenden, falls vorhanden
+    if (post.customSlug) return post.customSlug === slug;
+    // Ansonsten auf den automatisch generierten slug zurückgreifen
+    return createSlug(post.title) === slug;
+  });
   
   // Wenn kein Artikel gefunden wurde, zur Blog-Übersicht zurückleiten
   if (!post) {
@@ -173,7 +178,11 @@ const BlogPost = () => {
 
 // Hilfsfunktion, um aus einem Titel einen URL-freundlichen Slug zu erstellen
 export const createSlug = (title: string): string => {
-  return title
+  // Nehme nur die ersten 5-7 Wörter für kürzere URLs
+  const words = title.split(' ').slice(0, 6);
+  const shortenedTitle = words.join(' ');
+  
+  return shortenedTitle
     .toLowerCase()
     .replace(/ä/g, 'ae')
     .replace(/ö/g, 'oe')

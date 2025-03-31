@@ -12,7 +12,8 @@ interface BlogCardProps {
 }
 
 const BlogCard = ({ post }: BlogCardProps) => {
-  const slug = createSlug(post.title);
+  // Verwende den benutzerdefinierten Slug, falls vorhanden, sonst erstelle einen aus dem Titel
+  const slug = post.customSlug || createSlug(post.title);
   const { toast } = useToast();
   
   // Geschätzte Lesezeit berechnen (ca. 200 Wörter pro Minute)
