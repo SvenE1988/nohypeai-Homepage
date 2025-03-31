@@ -1,4 +1,3 @@
-
 export interface BlogPost {
   title: string;
   excerpt: string;
@@ -6,6 +5,7 @@ export interface BlogPost {
   category: string;
   tags: string[];
   content?: string; // Neues Feld für den vollständigen Artikelinhalt
+  customSlug?: string; // Neues Feld für benutzerdefinierte URL-Slugs
 }
 
 export interface BlogSection {
