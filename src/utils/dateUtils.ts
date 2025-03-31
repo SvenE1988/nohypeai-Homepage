@@ -25,7 +25,14 @@ export const parseDate = (dateStr: string): Date => {
       return new Date(0);
     }
     
-    return new Date(year, month, day);
+    const date = new Date(year, month, day);
+    // Check if the date is valid before returning
+    if (isNaN(date.getTime())) {
+      console.error(`Ungültiges Datum erstellt: ${dateStr}`);
+      return new Date(0);
+    }
+    
+    return date;
   } catch (error) {
     console.error(`Fehler beim Parsen des Datums "${dateStr}":`, error);
     return new Date(0);

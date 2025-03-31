@@ -23,7 +23,7 @@ const Blog = () => {
     sortedPosts.map(post => ({
       title: post.title,
       date: post.date,
-      parsed: parseDate(post.date).toLocaleString()
+      parsed: parseDate(post.date).toISOString()
     }))
   );
   console.log("Neueste 3 Artikel:", 
