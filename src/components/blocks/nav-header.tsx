@@ -89,7 +89,6 @@ function NavHeader() {
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
-    { href: "/pricing", label: "Preis" },
     { href: "/blog", label: "Blog" }, 
   ];
 
@@ -144,8 +143,7 @@ function NavHeader() {
             isActive={
               (activeSection === item.href.replace('#', '') && item.href.startsWith('#')) || 
               (item.href === '/' && location.pathname === '/') ||
-              (item.href === '/blog' && location.pathname === '/blog') ||
-              (item.href === '/pricing' && location.pathname === '/pricing')
+              (item.href === '/blog' && location.pathname === '/blog')
             }
             onClick={(e) => handleNavigation(item, e)}
           >
