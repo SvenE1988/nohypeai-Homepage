@@ -140,16 +140,16 @@ const AIFirstSection = () => {
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-            Werden Sie ein <br />
+            KI-First: <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-              KI-First
+              Was steckt 
             </span>{" "}
             <br />
-            Unternehmen
+            dahinter?
           </h2>
           
           <p className="text-xl text-gray-300">
-            Wir helfen wachsenden Unternehmen KI zu implementieren und zu skalieren - ohne zusätzliches Personal einzustellen.
+            Rechne selbst nach – wir zeigen dir, wie schon minimale KI-Automatisierungen messbaren Impact bringen. Ganz ohne extra Personal.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
