@@ -1,4 +1,3 @@
-
 import { ArrowLeft, Calendar, Tag, Share2, Clock } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import NavHeader from "../components/blocks/nav-header";
@@ -81,22 +80,38 @@ const BlogPost = () => {
           </ul>
         );
       } 
-      // Überprüfe auf Überschriften (mit ** markiert)
-      else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+      // Überprüfe auf nummerierte Listen (1., 2., etc.)
+      else if (/^\d+\./.test(paragraph)) {
+        const listItems = paragraph.split(/\d+\.\s/).filter(item => item.trim());
         return (
-          <h3 key={index} className="text-xl font-semibold text-white mb-4">
-            {paragraph.replace(/\*\*/g, '')}
-          </h3>
+          <ol key={index} className="list-decimal pl-5 mb-4 space-y-2">
+            {listItems.map((item, itemIndex) => (
+              <li key={itemIndex} className="text-white/80">{item.trim()}</li>
+            ))}
+          </ol>
         );
+      }
+      // Überprüfe auf Überschriften
+      else if (paragraph.endsWith(':') || paragraph.length < 50) {
+        const isPlainHeader = paragraph.endsWith(':') || 
+                             (paragraph.length < 50 && 
+                              !paragraph.includes('.') && 
+                              paragraph.trim() === paragraph);
+        
+        if (isPlainHeader) {
+          return (
+            <h3 key={index} className="text-xl font-semibold text-white mb-4">
+              {paragraph}
+            </h3>
+          );
+        }
       }
       // Standard-Absatz
-      else {
-        return (
-          <p key={index} className="mb-4 text-white/80 leading-relaxed">
-            {paragraph}
-          </p>
-        );
-      }
+      return (
+        <p key={index} className="mb-4 text-white/80 leading-relaxed">
+          {paragraph}
+        </p>
+      );
     });
   };
 
