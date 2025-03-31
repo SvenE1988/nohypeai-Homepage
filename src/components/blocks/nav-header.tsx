@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -86,12 +85,12 @@ function NavHeader() {
 
   const navItems = [
     { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
-    { href: "#benefits", label: "Vorteile" },
+    { href: "#nutzen", label: "Nutzen" },
     { href: "#einsparungen", label: "Einsparungen" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
     { href: "/pricing", label: "Preis" },
-    { href: "/blog", label: "Blog" }, // Geändert zu /blog statt #blog
+    { href: "/blog", label: "Blog" }, 
   ];
 
   return (
