@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -50,9 +51,9 @@ function NavHeader() {
   const handleNavigation = (item: any, e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Für Blog direkt zur Blog-Seite navigieren
-    if (item.href === "/blog") {
-      navigate("/blog");
+    // Für Blog oder Karriere direkt zur entsprechenden Seite navigieren
+    if (item.href === "/blog" || item.href === "/karriere") {
+      navigate(item.href);
       setIsMobileMenuOpen(false);
       return;
     }
@@ -86,10 +87,11 @@ function NavHeader() {
   const navItems = [
     { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
     { href: "#nutzen", label: "Nutzen" },
-    { href: "#einsparungen", label: "Einsparungen" },
+    { href: "#rechner", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
     { href: "/blog", label: "Blog" }, 
+    { href: "/karriere", label: "Karriere" },
   ];
 
   return (
