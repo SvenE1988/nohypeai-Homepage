@@ -1,9 +1,10 @@
 
-import { ArrowLeft, BookOpen, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, BookOpen, Calendar, Tag, Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 
 interface BlogPost {
   title: string;
@@ -93,6 +94,30 @@ const Blog = () => {
     },
   ];
 
+  // Alle Blogartikel sammeln und nach Datum sortieren (neueste zuerst)
+  const allPosts = blogPosts.flatMap(section => section.posts);
+  
+  // Datum-Parsing-Funktion
+  const parseDate = (dateStr: string) => {
+    const parts = dateStr.split('. ');
+    const day = parseInt(parts[0]);
+    const monthMap: {[key: string]: number} = {
+      "Januar": 0, "Februar": 1, "März": 2, "April": 3, "Mai": 4, "Juni": 5,
+      "Juli": 6, "August": 7, "September": 8, "Oktober": 9, "November": 10, "Dezember": 11
+    };
+    const month = monthMap[parts[1]];
+    const year = parseInt(parts[2]);
+    return new Date(year, month, day);
+  };
+
+  // Nach Datum sortieren (neueste zuerst)
+  const sortedPosts = [...allPosts].sort((a, b) => {
+    return parseDate(b.date).getTime() - parseDate(a.date).getTime();
+  });
+
+  // Die neuesten 3 Artikel
+  const latestPosts = sortedPosts.slice(0, 3);
+
   return (
     <div className="min-h-screen bg-black">
       <NavHeader />
@@ -111,6 +136,58 @@ const Blog = () => {
         <div className="flex items-center gap-3 mb-10">
           <BookOpen className="w-8 h-8 text-primary" />
           <h1 className="text-4xl font-bold text-white">Blog</h1>
+        </div>
+
+        {/* Neueste Blogartikel Sektion */}
+        <div className="mb-20">
+          <div className="flex items-center gap-3 mb-8">
+            <Clock className="w-6 h-6 text-primary" />
+            <h2 className="text-2xl font-semibold text-white">Neueste Blogartikel</h2>
+          </div>
+          
+          <Card className="border-0 bg-transparent">
+            <CardContent className="p-0">
+              <div className="grid md:grid-cols-3 gap-8">
+                {latestPosts.map((post, index) => (
+                  <article 
+                    key={index}
+                    className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-white/10 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 flex flex-col h-full"
+                  >
+                    <div className="mb-4 flex items-center gap-2">
+                      <Calendar className="w-4 h-4 text-primary" />
+                      <time className="text-sm text-primary">{post.date}</time>
+                    </div>
+                    
+                    <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
+                      {post.title}
+                    </h3>
+                    
+                    <p className="text-white/70 text-sm mb-4 flex-grow">
+                      {post.excerpt}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {post.tags.map((tag, tagIndex) => (
+                        <Badge 
+                          key={tagIndex} 
+                          variant="outline" 
+                          className="bg-white/5 text-primary/90 hover:bg-white/10 border-primary/20 text-xs"
+                        >
+                          <Tag className="mr-1 w-3 h-3" />
+                          {tag}
+                        </Badge>
+                      ))}
+                    </div>
+                    
+                    <button className="text-primary hover:text-white transition-colors self-start mt-auto group flex items-center">
+                      Weiterlesen
+                      <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         <div className="space-y-20">
