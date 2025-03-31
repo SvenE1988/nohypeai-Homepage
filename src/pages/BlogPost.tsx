@@ -58,6 +58,43 @@ const BlogPost = () => {
       });
   };
 
+  // Hilfsfunktion zum Umwandeln von Plain Text in JSX mit Zeilenumbrüchen und Listen
+  const renderContent = (content: string) => {
+    // Teile den Text in Absätze
+    const paragraphs = content.split('\n\n');
+    
+    return paragraphs.map((paragraph, index) => {
+      // Überprüfe, ob der Absatz eine Liste enthält
+      if (paragraph.includes('- ')) {
+        // Dies ist eine Liste
+        const listItems = paragraph.split('- ').filter(item => item.trim());
+        return (
+          <ul key={index} className="list-disc pl-5 mb-4 space-y-2">
+            {listItems.map((item, itemIndex) => (
+              <li key={itemIndex} className="text-white/80">{item.trim()}</li>
+            ))}
+          </ul>
+        );
+      } 
+      // Überprüfe auf Überschriften (mit ** markiert)
+      else if (paragraph.startsWith('**') && paragraph.endsWith('**')) {
+        return (
+          <h3 key={index} className="text-xl font-semibold text-white mb-4">
+            {paragraph.replace(/\*\*/g, '')}
+          </h3>
+        );
+      }
+      // Standard-Absatz
+      else {
+        return (
+          <p key={index} className="mb-4 text-white/80 leading-relaxed">
+            {paragraph}
+          </p>
+        );
+      }
+    });
+  };
+
   return (
     <div className="min-h-screen bg-black">
       <NavHeader />
@@ -112,28 +149,19 @@ const BlogPost = () => {
             ))}
           </div>
           
-          {/* Hier würde der vollständige Inhalt des Artikels angezeigt werden */}
-          {/* Da wir noch keinen vollständigen Inhalt haben, zeigen wir den Auszug an */}
-          <div className="text-white/80 leading-relaxed space-y-4">
-            <p className="text-xl">{post.excerpt}</p>
-            
-            {/* Dummy-Inhalt für Demonstration */}
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, 
-              nisl eget aliquam ultricies, nunc nisl aliquet nunc, quis aliquam nisl 
-              nisl eu nisl. Nullam euismod, nisl eget aliquam ultricies, nunc nisl 
-              aliquet nunc, quis aliquam nisl nisl eu nisl.
-            </p>
-            <p>
-              Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, 
-              quis aliquam nisl nisl eu nisl. Nullam euismod, nisl eget aliquam 
-              ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.
-            </p>
-            <p>
-              Nullam euismod, nisl eget aliquam ultricies, nunc nisl aliquet nunc, 
-              quis aliquam nisl nisl eu nisl. Nullam euismod, nisl eget aliquam 
-              ultricies, nunc nisl aliquet nunc, quis aliquam nisl nisl eu nisl.
-            </p>
+          {/* Artikel-Inhalt mit Formatierung */}
+          <div className="text-white/80 leading-relaxed space-y-1">
+            {/* Hier den vollständigen Artikelinhalt anzeigen */}
+            {post.content ? (
+              renderContent(post.content)
+            ) : (
+              <>
+                <p className="text-xl mb-4">{post.excerpt}</p>
+                <p className="text-white/60 italic mb-6">
+                  Vollständiger Artikelinhalt wird bald verfügbar sein.
+                </p>
+              </>
+            )}
           </div>
         </article>
       </main>

@@ -64,9 +64,19 @@ const BlogCard = ({ post }: BlogCardProps) => {
         {post.title}
       </h3>
       
-      <p className="text-white/70 text-sm mb-4 flex-grow">
-        {post.excerpt}
+      {/* Kürzere Vorschau mit "Hier erfährst du..." */}
+      <p className="text-white/70 text-sm mb-2">
+        Hier erfährst du:
       </p>
+      
+      {/* Stichpunktartige Darstellung des Inhalts */}
+      <ul className="text-white/70 text-sm mb-4 list-disc pl-5 flex-grow">
+        {post.excerpt.split('. ').slice(0, 2).map((point, index) => (
+          <li key={index} className="mb-1">
+            {point.trim() + (point.endsWith('.') ? '' : '.')}
+          </li>
+        ))}
+      </ul>
       
       <div className="flex flex-wrap gap-2 mb-5">
         {post.tags.map((tag, tagIndex) => (
