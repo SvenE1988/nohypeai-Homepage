@@ -1,4 +1,3 @@
-
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
@@ -92,7 +91,6 @@ const Projects = () => {
   const [slidesInView, setSlidesInView] = useState<number[]>([]);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
   
-  // Setup embla carousel
   useEffect(() => {
     if (!emblaApi) return;
     
@@ -103,15 +101,11 @@ const Projects = () => {
     const onScroll = () => {
       const inView = [];
       const slides = emblaApi.slideNodes();
-      const scrollSnap = emblaApi.selectedScrollSnap();
       
-      // Add visible slides to inView array
       for (let i = 0; i < slides.length; i++) {
         const slide = slides[i];
         const rect = slide.getBoundingClientRect();
-        const center = window.innerWidth / 2;
         
-        // Check if slide is visible (partially or fully)
         if (rect.left < window.innerWidth && rect.right > 0) {
           inView.push(i);
         }
@@ -133,7 +127,6 @@ const Projects = () => {
     };
   }, [emblaApi]);
   
-  // Autoplay functionality
   useEffect(() => {
     if (!emblaApi) return;
     
@@ -150,7 +143,6 @@ const Projects = () => {
     
     startAutoplay();
     
-    // Stop autoplay when user interacts and restart when they stop
     emblaApi.on('pointerDown', stopAutoplay);
     emblaApi.on('pointerUp', startAutoplay);
     
@@ -181,7 +173,6 @@ const Projects = () => {
           Erfolgsgeschichten unserer Kunden
         </h2>
 
-        {/* Centered Focus Carousel */}
         <div className="w-full max-w-6xl mx-auto">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex py-8">
@@ -245,10 +236,15 @@ const Projects = () => {
           </div>
           
           <div className="mt-8 flex items-center justify-center gap-4">
-            <CarouselPrevious 
+            <button 
               onClick={() => emblaApi?.scrollPrev()} 
-              className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20"
-            />
+              className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
+              aria-label="Previous slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <path d="m15 18-6-6 6-6"></path>
+              </svg>
+            </button>
             <div className="flex gap-2">
               {projects.map((_, index) => (
                 <button
@@ -264,14 +260,18 @@ const Projects = () => {
                 />
               ))}
             </div>
-            <CarouselNext 
+            <button 
               onClick={() => emblaApi?.scrollNext()}
-              className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" 
-            />
+              className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
+              aria-label="Next slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </button>
           </div>
         </div>
 
-        {/* Project Details Modal */}
         <AnimatePresence>
           {isDetailsOpen && currentProject && (
             <motion.div 
