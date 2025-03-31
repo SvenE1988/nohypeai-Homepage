@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Project } from "./types";
+import { X } from "lucide-react";
 
 interface ProjectDetailsProps {
   project: Project;
@@ -46,7 +47,8 @@ const ProjectDetails = ({ project, isOpen, onClose }: ProjectDetailsProps) => {
             className="rounded-full hover:bg-primary/10 text-primary"
             onClick={onClose}
           >
-            ✕
+            <X size={20} />
+            <span className="sr-only">Schließen</span>
           </Button>
         </div>
         
