@@ -97,7 +97,7 @@ const Blog = () => {
   // Alle Blogartikel sammeln und nach Datum sortieren (neueste zuerst)
   const allPosts = blogPosts.flatMap(section => section.posts);
   
-  // Datum-Parsing-Funktion
+  // Verbesserte Datum-Parsing-Funktion
   const parseDate = (dateStr: string) => {
     const parts = dateStr.split('. ');
     const day = parseInt(parts[0]);
@@ -112,11 +112,28 @@ const Blog = () => {
 
   // Nach Datum sortieren (neueste zuerst)
   const sortedPosts = [...allPosts].sort((a, b) => {
-    return parseDate(b.date).getTime() - parseDate(a.date).getTime();
+    const dateA = parseDate(a.date);
+    const dateB = parseDate(b.date);
+    return dateB.getTime() - dateA.getTime();
   });
 
   // Die neuesten 3 Artikel
   const latestPosts = sortedPosts.slice(0, 3);
+  
+  // Console.log zur Überprüfung (für Debugging)
+  console.log("Sortierte Artikel (neueste zuerst):", 
+    sortedPosts.map(post => ({
+      title: post.title,
+      date: post.date,
+      parsed: parseDate(post.date).toISOString()
+    }))
+  );
+  console.log("Neueste 3 Artikel:", 
+    latestPosts.map(post => ({
+      title: post.title,
+      date: post.date
+    }))
+  );
 
   return (
     <div className="min-h-screen bg-black">
