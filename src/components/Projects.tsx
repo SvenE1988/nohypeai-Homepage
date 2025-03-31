@@ -2,7 +2,7 @@
 import { Badge } from "./ui/badge";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
-import { ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import {
   Carousel,
   CarouselContent,
@@ -11,8 +11,9 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 import { cn } from "@/lib/utils";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
 
 interface Project {
   year: string;
@@ -82,6 +83,85 @@ const Projects = () => {
 
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+  });
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [slidesInView, setSlidesInView] = useState<number[]>([]);
+  const autoplayRef = useRef<NodeJS.Timeout | null>(null);
+  
+  // Setup embla carousel
+  useEffect(() => {
+    if (!emblaApi) return;
+    
+    const onSelect = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+    };
+    
+    const onScroll = () => {
+      const inView = [];
+      const slides = emblaApi.slideNodes();
+      const scrollSnap = emblaApi.selectedScrollSnap();
+      
+      // Add visible slides to inView array
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i];
+        const rect = slide.getBoundingClientRect();
+        const center = window.innerWidth / 2;
+        
+        // Check if slide is visible (partially or fully)
+        if (rect.left < window.innerWidth && rect.right > 0) {
+          inView.push(i);
+        }
+      }
+      
+      setSlidesInView(inView);
+    };
+    
+    emblaApi.on('select', onSelect);
+    emblaApi.on('scroll', onScroll);
+    emblaApi.on('reInit', onSelect);
+    
+    onSelect();
+    onScroll();
+    
+    return () => {
+      emblaApi.off('select', onSelect);
+      emblaApi.off('scroll', onScroll);
+    };
+  }, [emblaApi]);
+  
+  // Autoplay functionality
+  useEffect(() => {
+    if (!emblaApi) return;
+    
+    const startAutoplay = () => {
+      stopAutoplay();
+      autoplayRef.current = setInterval(() => {
+        if (emblaApi) emblaApi.scrollNext();
+      }, 5000);
+    };
+    
+    const stopAutoplay = () => {
+      if (autoplayRef.current) clearInterval(autoplayRef.current);
+    };
+    
+    startAutoplay();
+    
+    // Stop autoplay when user interacts and restart when they stop
+    emblaApi.on('pointerDown', stopAutoplay);
+    emblaApi.on('pointerUp', startAutoplay);
+    
+    return () => {
+      stopAutoplay();
+      if (emblaApi) {
+        emblaApi.off('pointerDown', stopAutoplay);
+        emblaApi.off('pointerUp', startAutoplay);
+      }
+    };
+  }, [emblaApi]);
 
   const handleViewDetails = (project: Project) => {
     setCurrentProject(project);
@@ -101,113 +181,160 @@ const Projects = () => {
           Erfolgsgeschichten unserer Kunden
         </h2>
 
-        {/* Carousel for Project Cards */}
-        <Carousel
-          opts={{
-            align: "start",
-            loop: true,
-          }}
-          className="w-full max-w-6xl mx-auto"
-        >
-          <CarouselContent className="-ml-2 md:-ml-4">
-            {projects.map((project, index) => (
-              <CarouselItem key={index} className="pl-2 md:pl-4 sm:basis-1/2 md:basis-1/2 lg:basis-1/3 xl:basis-1/4">
-                <div className="h-full">
-                  <Card className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-[#1A1A1A] hover:border-primary/30 transition-all duration-300 h-full overflow-hidden group">
-                    <div className="p-5 h-full flex flex-col">
-                      <div className="flex items-center gap-3 mb-4">
-                        <div className="w-12 h-12 rounded-md bg-[#1A1F35] flex items-center justify-center text-primary border border-primary/40 group-hover:border-primary transition-all duration-300 shrink-0">
-                          {project.year}
+        {/* Centered Focus Carousel */}
+        <div className="w-full max-w-6xl mx-auto">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex py-8">
+              {projects.map((project, index) => (
+                <div 
+                  key={index} 
+                  className="flex-[0_0_80%] sm:flex-[0_0_60%] md:flex-[0_0_40%] min-w-0 pl-4 transition-all duration-500 ease-out"
+                >
+                  <div 
+                    className={cn(
+                      "h-full transition-all duration-500 ease-out transform",
+                      selectedIndex === index 
+                        ? "scale-100 opacity-100 z-10" 
+                        : slidesInView.includes(index) 
+                          ? "scale-[0.85] opacity-60 z-0" 
+                          : "scale-[0.75] opacity-30 z-0"
+                    )}
+                  >
+                    <Card 
+                      className={cn(
+                        "bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border transition-all duration-300 h-full overflow-hidden group",
+                        selectedIndex === index 
+                          ? "border-primary/60 shadow-[0_0_15px_rgba(255,0,153,0.2)]" 
+                          : "border-[#1A1A1A] hover:border-primary/30"
+                      )}
+                    >
+                      <div className="p-5 h-full flex flex-col">
+                        <div className="flex items-center gap-3 mb-4">
+                          <div 
+                            className={cn(
+                              "w-12 h-12 rounded-md flex items-center justify-center text-primary border transition-all duration-300 shrink-0",
+                              selectedIndex === index 
+                                ? "bg-[#1A1F35]/80 border-primary" 
+                                : "bg-[#1A1F35] border-primary/40 group-hover:border-primary"
+                            )}
+                          >
+                            {project.year}
+                          </div>
+                          <div className="text-sm text-gray-400">{project.industry}</div>
                         </div>
-                        <div className="text-sm text-gray-400">{project.industry}</div>
+                        <h3 className="text-xl font-semibold text-primary mb-3">
+                          {project.title}
+                        </h3>
+                        <p className="text-gray-400 text-sm line-clamp-4 mb-4 flex-grow">
+                          {project.overview}
+                        </p>
+                        <Button 
+                          variant="ghost" 
+                          className="mt-auto self-start group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
+                          onClick={() => handleViewDetails(project)}
+                        >
+                          Details anzeigen
+                          <ExternalLink size={16} className="ml-1" />
+                        </Button>
                       </div>
-                      <h3 className="text-xl font-semibold text-primary mb-3">
-                        {project.title}
-                      </h3>
-                      <p className="text-gray-400 text-sm line-clamp-4 mb-4 flex-grow">
-                        {project.overview}
-                      </p>
-                      <Button 
-                        variant="ghost" 
-                        className="mt-auto self-start group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
-                        onClick={() => handleViewDetails(project)}
-                      >
-                        Details anzeigen
-                        <ExternalLink size={16} className="ml-1" />
-                      </Button>
-                    </div>
-                  </Card>
+                    </Card>
+                  </div>
                 </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="mt-8 flex items-center justify-center gap-4">
-            <CarouselPrevious className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" />
-            <CarouselNext className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" />
+              ))}
+            </div>
           </div>
-        </Carousel>
+          
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <CarouselPrevious 
+              onClick={() => emblaApi?.scrollPrev()} 
+              className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20"
+            />
+            <div className="flex gap-2">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => emblaApi?.scrollTo(index)}
+                  className={cn(
+                    "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                    selectedIndex === index 
+                      ? "bg-primary scale-125" 
+                      : "bg-gray-600 hover:bg-primary/50"
+                  )}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
+            <CarouselNext 
+              onClick={() => emblaApi?.scrollNext()}
+              className="static translate-y-0 h-10 w-10 rounded-full border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20" 
+            />
+          </div>
+        </div>
 
         {/* Project Details Modal */}
-        {isDetailsOpen && currentProject && (
-          <motion.div 
-            className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsDetailsOpen(false)}
-          >
+        <AnimatePresence>
+          {isDetailsOpen && currentProject && (
             <motion.div 
-              className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-primary/20 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ scale: 0.9, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsDetailsOpen(false)}
             >
-              <div className="flex justify-between items-start mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
-                    {currentProject.year}
+              <motion.div 
+                className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-primary/20 rounded-xl p-6 max-w-4xl w-full max-h-[90vh] overflow-y-auto"
+                onClick={(e) => e.stopPropagation()}
+                initial={{ scale: 0.9, y: 20 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              >
+                <div className="flex justify-between items-start mb-6">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
+                      {currentProject.year}
+                    </div>
+                    <div>
+                      <div className="text-gray-400 text-sm">{currentProject.industry}</div>
+                      <h3 className="text-2xl font-bold text-primary">
+                        {currentProject.title}
+                      </h3>
+                    </div>
                   </div>
+                  <Button 
+                    variant="ghost" 
+                    size="icon" 
+                    className="rounded-full hover:bg-primary/10 text-primary"
+                    onClick={() => setIsDetailsOpen(false)}
+                  >
+                    ✕
+                  </Button>
+                </div>
+                
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                   <div>
-                    <div className="text-gray-400 text-sm">{currentProject.industry}</div>
-                    <h3 className="text-2xl font-bold text-primary">
-                      {currentProject.title}
-                    </h3>
+                    <h4 className="font-medium text-white mb-3">Überblick</h4>
+                    <p className="text-gray-300 leading-relaxed mb-6">{currentProject.overview}</p>
+                  </div>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-medium text-white mb-2">Challenge</h4>
+                      <p className="text-gray-300 leading-relaxed">{currentProject.challenge}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-white mb-2">Solution</h4>
+                      <p className="text-gray-300 leading-relaxed">{currentProject.solution}</p>
+                    </div>
+                    <div>
+                      <h4 className="font-medium text-white mb-2">Result</h4>
+                      <p className="text-gray-300 leading-relaxed">{currentProject.result}</p>
+                    </div>
                   </div>
                 </div>
-                <Button 
-                  variant="ghost" 
-                  size="icon" 
-                  className="rounded-full hover:bg-primary/10 text-primary"
-                  onClick={() => setIsDetailsOpen(false)}
-                >
-                  ✕
-                </Button>
-              </div>
-              
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div>
-                  <h4 className="font-medium text-white mb-3">Überblick</h4>
-                  <p className="text-gray-300 leading-relaxed mb-6">{currentProject.overview}</p>
-                </div>
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Challenge</h4>
-                    <p className="text-gray-300 leading-relaxed">{currentProject.challenge}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Solution</h4>
-                    <p className="text-gray-300 leading-relaxed">{currentProject.solution}</p>
-                  </div>
-                  <div>
-                    <h4 className="font-medium text-white mb-2">Result</h4>
-                    <p className="text-gray-300 leading-relaxed">{currentProject.result}</p>
-                  </div>
-                </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
