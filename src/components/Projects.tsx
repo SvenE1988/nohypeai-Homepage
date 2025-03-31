@@ -1,7 +1,7 @@
 
 import { Badge } from "./ui/badge";
 import { AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProjectDetails from "./projects/ProjectDetails";
 import ProjectCard from "./projects/ProjectCard";
 import { Project } from "./projects/types";
@@ -14,7 +14,6 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useEffect } from "react";
 
 const Projects = () => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
@@ -114,8 +113,9 @@ const Projects = () => {
             <div className="mt-8 flex items-center justify-center gap-4">
               <CarouselPrevious 
                 className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 static" 
-                icon={<ChevronLeft className="h-4 w-4" />}
-              />
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </CarouselPrevious>
               <div className="flex gap-2">
                 {projectsData.map((_, index) => (
                   <button
@@ -132,8 +132,9 @@ const Projects = () => {
               </div>
               <CarouselNext 
                 className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 static" 
-                icon={<ChevronRight className="h-4 w-4" />}
-              />
+              >
+                <ChevronRight className="h-4 w-4" />
+              </CarouselNext>
             </div>
           </Carousel>
         </div>

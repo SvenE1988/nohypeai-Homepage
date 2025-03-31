@@ -95,9 +95,7 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
             >
               <ProjectCard
                 project={project}
-                index={index}
-                selectedIndex={selectedIndex}
-                slidesInView={slidesInView}
+                isActive={selectedIndex === index}
                 onViewDetails={onViewDetails}
               />
             </div>
