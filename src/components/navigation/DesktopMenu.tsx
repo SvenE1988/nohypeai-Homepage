@@ -35,7 +35,7 @@ export const DesktopMenu = ({
   return (
     <motion.ul
       className="relative mx-auto hidden md:flex w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center shadow-lg"
-      onMouseLeave={() => setPosition((pv) => ({ ...pv, opacity: 0 }))}
+      onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
       {navItems.map((item) => (
