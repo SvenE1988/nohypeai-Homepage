@@ -56,11 +56,11 @@ const AIHereSection = () => {
         <div className="text-center">
           <Button 
             size="lg"
-            className="bg-primary hover:bg-primary/90 text-white px-12 flex items-center gap-2"
+            className="bg-[#1A1F35] text-primary hover:bg-[#252A40] px-12 flex items-center gap-2 border border-[#3A3F55] rounded-md mx-auto"
             onClick={openCalendarBooking}
           >
-            <Calculator className="w-5 h-5" />
-            Sparpotenzial berechnen
+            <Calculator className="w-5 h-5 text-primary" />
+            Termin buchen
           </Button>
         </div>
       </div>

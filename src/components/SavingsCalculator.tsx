@@ -135,11 +135,11 @@ const SavingsCalculator = () => {
                 </div>
 
                 <Button 
-                  className="w-full py-4 md:py-6 bg-primary hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2"
+                  className="w-full py-4 md:py-6 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all duration-300 flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md"
                   onClick={openCalendarBooking}
                 >
-                  <Calculator className="h-4 w-4 md:h-5 md:w-5" />
-                  <span className="text-sm md:text-base">Sparpotenzial berechnen</span>
+                  <Calculator className="h-4 w-4 md:h-5 md:w-5 text-primary" />
+                  <span className="text-sm md:text-base">Termin buchen</span>
                 </Button>
               </motion.div>
             </div>

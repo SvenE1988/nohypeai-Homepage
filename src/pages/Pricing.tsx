@@ -79,11 +79,11 @@ const Pricing = () => {
                 ))}
               </ul>
               <Button 
-                className="w-full mt-8 bg-primary hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                className="w-full mt-8 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md"
                 onClick={openCalendarBooking}
               >
-                <Calculator className="w-4 h-4" />
-                Sparpotenzial berechnen
+                <Calculator className="w-4 h-4 text-primary" />
+                Termin buchen
               </Button>
             </div>
           ))}

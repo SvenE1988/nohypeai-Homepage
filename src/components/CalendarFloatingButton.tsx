@@ -12,8 +12,8 @@ const CalendarFloatingButton = () => {
           "layout": "month_view"
         },
         "buttonText": "Termin buchen",
-        "buttonColor": "#FF0099",
-        "buttonTextColor": "#FFFFFF"
+        "buttonColor": "#1A1F35", // Dunklere Farbe wie im Screenshot
+        "buttonTextColor": "#FF0099" // Pink für den Text
       });
       cal("ui", {
         "styles": {
@@ -31,8 +31,6 @@ const CalendarFloatingButton = () => {
     })();
   }, []);
   
-  // This component doesn't render anything visible itself,
-  // it just initializes the floating button
   return null;
 };
 
