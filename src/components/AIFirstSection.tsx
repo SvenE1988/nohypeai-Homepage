@@ -14,7 +14,7 @@ const AIFirstSection = () => {
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-16 relative overflow-hidden">
       {/* Lamp container in background */}
-      <div className="absolute inset-0 z-0 translate-y-24">
+      <div className="absolute inset-0 z-0 translate-y-[10rem]">
         <LampContainer>
           {/* Empty div as children for the LampContainer */}
           <div></div>
