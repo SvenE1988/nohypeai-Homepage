@@ -10,96 +10,88 @@ export interface JobPosting {
   requirements: string[];
   benefits: string[];
   skills: string[];
+  aboutUs?: string;
+  role?: string;
 }
 
 export const jobPostings: JobPosting[] = [
   {
     id: "automatisierungsentwickler",
-    title: "Automatisierungsentwickler (m/w/d)",
+    title: "Automatisierungsentwickler/in (m/w/d)",
     type: "Vollzeit",
     location: "Remote / Karlsruhe",
     postedDate: "24.02.2025",
+    aboutUs: "Mit unseren Sprachbots und intelligenten Automatisierungslösungen helfen wir Unternehmen, ihre Prozesse zu optimieren und neue Möglichkeiten zu erschließen. Für die Weiterentwicklung unserer Automatisierungsplattform suchen wir eine technisch versierte Person, die unser Team verstärkt.",
+    role: "Als Automatisierungsentwickler/in sind Sie die treibende Kraft hinter unseren intelligenten Prozesslösungen. Sie identifizieren Automatisierungspotenziale, entwickeln kreative Lösungsansätze und setzen diese mit modernsten Tools um. Dabei verbinden Sie verschiedene Systeme zu nahtlosen Workflows und sorgen dafür, dass unsere KI-Komponenten optimal in bestehende Prozesse integriert werden.",
     shortDescription: "Wir suchen einen engagierten Automatisierungsentwickler, der unser Team verstärkt und innovative KI-gestützte Automatisierungslösungen für unsere Kunden entwickelt.",
     responsibilities: [
-      "Entwicklung von Automatisierungslösungen mit Tools wie n8n, Zapier, Make.com und anderen Low-Code-Plattformen",
-      "Konzeption und Implementierung von KI-gestützten Automatisierungsprozessen für unsere Kunden",
-      "Integration von APIs für KI-Dienste (OpenAI, Google AI, etc.) in bestehende Workflows",
-      "Entwicklung intelligenter Workflows für die Verarbeitung natürlicher Sprache",
-      "Analyse bestehender Kundenprozesse und Identifikation von Automatisierungspotenzialen",
-      "Kombination verschiedener Systeme zu funktionierenden End-to-End-Automatisierungslösungen",
-      "Testing, Debugging und kontinuierliche Verbesserung der Automatisierungssysteme",
-      "Enge Zusammenarbeit mit Kunden zur Erstellung maßgeschneiderter Lösungen",
-      "Dokumentation der entwickelten Lösungen und Erstellung von Schulungsunterlagen"
+      "Entwicklung intelligenter Automatisierungslösungen unter Verwendung von Tools wie n8n, Zapier und Make.com",
+      "Integration von KI-Diensten (OpenAI, Google AI, etc.) in Automatisierungsworkflows",
+      "Analyse bestehender Prozesse und Identifikation von Optimierungspotenzialen",
+      "Implementierung von Workflows für die Verarbeitung natürlicher Sprache",
+      "Testing und kontinuierliche Verbesserung der entwickelten Systeme",
+      "Zusammenarbeit mit Stakeholdern zur Anforderungsanalyse und Lösungsimplementierung",
+      "Dokumentation und Wissenstransfer für entwickelte Lösungen"
     ],
     requirements: [
-      "Abgeschlossenes Studium im Bereich Informatik oder eine vergleichbare Qualifikation",
-      "Praktische Erfahrung in der Automatisierung von Prozessen und Workflows",
-      "Kenntnisse in Programmiersprachen wie Python, JavaScript oder TypeScript",
-      "Erfahrung mit No-Code/Low-Code-Plattformen wie n8n, Make.com oder Zapier",
+      "Erfahrung mit Programmiersprachen wie Python oder JavaScript",
+      "Kenntnisse in der Arbeit mit Automatisierungstools und Workflow-Plattformen",
       "Verständnis von API-Integrationen und Webservices",
-      "Erfahrung mit ChatGPT, OpenAI-API oder anderen KI-Diensten",
-      "Erfahrung mit Versionskontrollsystemen (z.B. Git)",
+      "Erfahrung mit Versionskontrollsystemen (Git)",
       "Analytisches Denkvermögen und kreative Problemlösungsfähigkeiten",
-      "Zielorientierte und autonome Arbeitsweise",
-      "Fähigkeit, komplexe Systeme zu verstehen und zu optimieren",
-      "Ausgezeichnete Kommunikationsfähigkeiten in Deutsch und Englisch"
+      "Selbstständige und strukturierte Arbeitsweise",
+      "Lernbereitschaft und Interesse an neuen Technologien",
+      "Teamfähigkeit und gute Kommunikationsfähigkeiten"
     ],
     benefits: [
+      "Dynamisches Arbeitsumfeld mit flachen Hierarchien und kurzen Entscheidungswegen",
       "Flexible Arbeitszeiten und vollständig remote oder aus unserem Büro in Karlsruhe",
       "Arbeit an innovativen KI-Projekten mit direktem Kundennutzen",
-      "Flache Hierarchien und direkte Kommunikationswege",
-      "Die Möglichkeit, die Zukunft der Prozessautomatisierung aktiv mitzugestalten",
       "Kontinuierliche Weiterbildungsmöglichkeiten im KI-Bereich",
       "Teil eines dynamischen Teams mit einer klaren Vision: KI ohne Hype, mit echtem Mehrwert",
       "Modernes Arbeitsumfeld mit neuester Technologie",
       "Wettbewerbsfähige Vergütung"
     ],
-    skills: ["Low-Code", "n8n", "Make.com", "Zapier", "API-Integration", "ChatGPT", "KI-Integration", "Automatisierung"]
+    skills: ["n8n", "Zapier", "Make.com", "Python", "JavaScript", "API-Integration", "KI-Dienste", "Automatisierung"]
   },
   {
     id: "backend-developer",
-    title: "Backend Entwickler (m/w/d)",
+    title: "Backend-Entwickler/in (m/w/d)",
     type: "Vollzeit",
     location: "Remote / Karlsruhe",
     postedDate: "24.02.2025",
+    aboutUs: "Mit unseren Sprachbots, intelligenten Datenbanksystemen und RAG-Anwendungen helfen wir Unternehmen, ihre Prozesse zu optimieren und neue Möglichkeiten zu erschließen. Für die Weiterentwicklung unserer technischen Infrastruktur suchen wir eine/n erfahrene/n Backend-Entwickler/in.",
+    role: "Als Backend-Entwickler/in sind Sie verantwortlich für das Herzstück unserer Anwendungen. Sie entwickeln robuste, skalierbare Systeme, die unsere KI-Lösungen zum Leben erwecken, und sorgen dafür, dass Daten effizient verarbeitet und bereitgestellt werden. Mit Ihrem technischen Know-how tragen Sie maßgeblich zur Qualität und Performance unserer Produkte bei.",
     shortDescription: "Wir suchen einen talentierten Backend-Entwickler, der unser Entwicklungsteam bei der Erstellung skalierbarer Systeme und der Integration von KI-Diensten unterstützt.",
     responsibilities: [
-      "Entwicklung und Implementierung robuster Backend-Lösungen für unsere KI-basierten Anwendungen",
-      "Design und Verwaltung von Datenbankstrukturen (SQL, NoSQL) für optimale Leistung",
-      "Implementierung von APIs, die eine nahtlose Kommunikation zwischen Frontend und Backend ermöglichen",
-      "Integration von KI-Modellen und Large Language Models in Backend-Systeme",
-      "Implementierung von Sicherheitsprotokollen und Authentifizierungssystemen",
-      "Serverkonfiguration und Performance-Optimierung für KI-intensive Anwendungen",
-      "Nutzung von Technologien wie Caching und Containerisierung für skalierbare Systeme",
-      "Zusammenarbeit mit Frontend-Entwicklern und KI-Spezialisten",
-      "Durchführung von Code-Reviews und Sicherstellung der Code-Qualität",
-      "Wartung und kontinuierliche Verbesserung bestehender Systeme"
+      "Entwicklung und Wartung skalierbarer Backend-Systeme mit modernen Technologien und Frameworks",
+      "Design und Implementierung von APIs, die eine nahtlose Kommunikation zwischen verschiedenen Systemkomponenten ermöglichen",
+      "Integration von KI-Modellen in bestehende Backend-Strukturen",
+      "Optimierung von Datenbankstrukturen für effiziente Abfragen und Datenintegrität",
+      "Implementierung von Sicherheitsprotokollen zum Schutz sensibler Daten",
+      "Performance-Optimierung für schnelle Antwortzeiten und hohe Verfügbarkeit",
+      "Zusammenarbeit mit Frontend-Entwicklern zur Integration von Benutzeroberflächen"
     ],
     requirements: [
-      "Abgeschlossenes Studium im Bereich Informatik oder eine vergleichbare Qualifikation",
-      "Nachgewiesene Berufserfahrung als Backend-Entwickler",
-      "Ausgezeichnete Programmierkenntnisse in Node.js, Python oder einer anderen modernen Backend-Sprache",
-      "Umfassende Kenntnisse in Datenbanktechnologien (SQL, NoSQL) wie PostgreSQL, MongoDB oder Redis",
-      "Erfahrung mit Server- und Cloud-Infrastrukturen (AWS, Azure, Google Cloud)",
-      "Kenntnisse in der Entwicklung von RESTful und GraphQL APIs",
-      "Vertrautheit mit Docker, Kubernetes und anderen Container-Technologien",
-      "Erfahrung mit Versionskontrollsystemen (Git) und CI/CD-Pipelines wie Jenkins oder GitHub Actions",
-      "Kenntnisse in IT-Sicherheit und Best Practices für die Backend-Entwicklung",
-      "Verständnis von Skalierbarkeits- und Performance-Optimierungstechniken",
-      "Erfahrung in der Integration von KI-Diensten wie OpenAI, Hugging Face oder eigenen ML-Modellen",
+      "Fundierte Kenntnisse in mindestens einer Backend-Programmiersprache (z.B. Node.js, Python, Java)",
+      "Erfahrung mit Datenbanktechnologien (SQL, NoSQL)",
+      "Kenntnisse in API-Design und -Entwicklung",
+      "Verständnis von Cloud-Infrastrukturen und Serverarchitekturen",
+      "Erfahrung mit Versionskontrollsystemen und CI/CD-Pipelines",
       "Analytisches Denkvermögen und strukturierte Arbeitsweise",
-      "Ausgezeichnete Kommunikationsfähigkeiten in Deutsch und Englisch"
+      "Qualitätsbewusstsein und Liebe zum Detail",
+      "Proaktive Problemlösungsfähigkeit",
+      "Teamfähigkeit und gute Kommunikationsfähigkeiten"
     ],
     benefits: [
+      "Dynamisches Arbeitsumfeld mit flachen Hierarchien und kurzen Entscheidungswegen",
       "Flexible Arbeitszeiten und vollständig remote oder aus unserem Büro in Karlsruhe",
       "Arbeit an innovativen KI-Projekten mit direktem Kundennutzen",
-      "Flache Hierarchien und direkte Kommunikationswege",
-      "Die Möglichkeit, die technische Infrastruktur von noHype.ai aktiv mitzugestalten",
       "Kontinuierliche Weiterbildungsmöglichkeiten im KI- und Backend-Bereich",
       "Teil eines dynamischen Teams mit einer klaren Vision: KI ohne Hype, mit echtem Mehrwert",
       "Modernes Arbeitsumfeld mit neuester Technologie",
       "Wettbewerbsfähige Vergütung"
     ],
-    skills: ["Node.js", "Python", "APIs", "Docker", "Cloud", "Datenbanken", "CI/CD", "KI-Integration"]
+    skills: ["Node.js", "Python", "Java", "APIs", "Docker", "Cloud", "Datenbanken", "CI/CD", "KI-Integration"]
   }
 ];

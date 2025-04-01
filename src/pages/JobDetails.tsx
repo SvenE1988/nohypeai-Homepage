@@ -108,8 +108,22 @@ const JobDetails = () => {
           
           {/* Job-Beschreibung */}
           <div className="text-white/80 leading-relaxed space-y-6 mb-10">
+            {job.aboutUs && (
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3">Über uns:</h3>
+                <p className="text-white/80">{job.aboutUs}</p>
+              </div>
+            )}
+            
+            {job.role && (
+              <div>
+                <h3 className="text-xl font-semibold text-white mb-3">Ihre Rolle:</h3>
+                <p className="text-white/80">{job.role}</p>
+              </div>
+            )}
+            
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Aufgabenbeschreibung:</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Ihre Aufgaben:</h3>
               <ul className="list-disc pl-5 space-y-2">
                 {job.responsibilities.map((item, index) => (
                   <li key={index} className="text-white/80">{item}</li>
@@ -118,7 +132,7 @@ const JobDetails = () => {
             </div>
             
             <div>
-              <h3 className="text-xl font-semibold text-white mb-3">Anforderungen:</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Ihr Profil:</h3>
               <ul className="list-disc pl-5 space-y-2">
                 {job.requirements.map((item, index) => (
                   <li key={index} className="text-white/80">{item}</li>
