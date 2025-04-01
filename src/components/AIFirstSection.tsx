@@ -12,8 +12,14 @@ const AIFirstSection = () => {
   };
   
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
-      <LampContainer>
+    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16 relative overflow-hidden">
+      {/* Lamp container in background */}
+      <div className="absolute inset-0 z-0">
+        <LampContainer />
+      </div>
+      
+      {/* Text content overlaid on top */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -35,14 +41,19 @@ const AIFirstSection = () => {
             Rechne selbst nach – wir zeigen dir, wie schon minimale KI-Automatisierungen messbaren Impact bringen. Ganz ohne extra Personal.
           </p>
         </motion.div>
-      </LampContainer>
+      </div>
 
-      <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer" animate={{
-        y: [0, 10, 0]
-      }} transition={{
-        duration: 2,
-        repeat: Infinity
-      }} onClick={scrollToNextSection}>
+      <motion.div 
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10" 
+        animate={{
+          y: [0, 10, 0]
+        }} 
+        transition={{
+          duration: 2,
+          repeat: Infinity
+        }} 
+        onClick={scrollToNextSection}
+      >
         <ChevronDown size={32} className="text-white/50 hover:text-white transition-colors" />
       </motion.div>
     </section>
