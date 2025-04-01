@@ -31,6 +31,7 @@ const AIFirstSection = () => {
             duration: 0.8,
             ease: "easeInOut",
           }}
+          viewport={{ once: false, amount: 0.3 }}
           className="text-center z-50"
         >
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
