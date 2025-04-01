@@ -4,7 +4,7 @@ import { useDialog } from "@/components/providers/DialogProvider";
 export const useCallToAction = () => {
   const { setContactDialogOpen } = useDialog();
 
-  // Direkte Links anstelle von Dialogen für Kontaktformular
+  // Aktualisierte direkte Links für Kontaktformular
   const openContactForm = () => {
     window.open("https://automatisierung.seserver.nohype-ai.de/form/Anfrage", "_blank");
   };

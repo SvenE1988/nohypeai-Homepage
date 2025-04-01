@@ -18,8 +18,8 @@ const ApplicationForm = ({
   isUploading,
   setIsUploading
 }: ApplicationFormProps) => {
-  // Definiert einen Standard-Webhook-URL für das Formular
-  const webhookUrl = "https://automatisierung.seserver.nohype-ai.de/webhook/n8n-form-webhook";
+  // Aktualisierte Webhook-URL für das Formular
+  const webhookUrl = "https://automatisierung.seserver.nohype-ai.de/form/Anfrage";
 
   return (
     <N8NWebhookForm 
