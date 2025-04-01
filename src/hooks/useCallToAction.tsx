@@ -19,18 +19,6 @@ export const useCallToAction = () => {
         styles: {
           branding: {
             brandColor: "#FF0099"
-          },
-          enabledDateButton: {
-            backgroundColor: "#FF0099",
-            color: "white"
-          },
-          selectedDateButton: {
-            backgroundColor: "#6B46C1",
-            color: "white"
-          },
-          submitButton: {
-            backgroundColor: "#FF0099",
-            color: "white"
           }
         }
       });

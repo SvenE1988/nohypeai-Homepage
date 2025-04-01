@@ -13,26 +13,12 @@ const CalendarFloatingButton = () => {
         },
         "buttonText": "Termin buchen",
         "buttonColor": "#FF0099",
-        "buttonTextColor": "#FFFFFF",
-        "buttonBorderRadius": "8px",
-        "buttonBorder": "2px solid #FFFFFF"
+        "buttonTextColor": "#FFFFFF"
       });
       cal("ui", {
         "styles": {
           "branding": {
             "brandColor": "#FF0099"
-          },
-          "enabledDateButton": {
-            "backgroundColor": "#FF0099",
-            "color": "white"
-          },
-          "selectedDateButton": {
-            "backgroundColor": "#6B46C1",
-            "color": "white"
-          },
-          "submitButton": {
-            "backgroundColor": "#FF0099",
-            "color": "white"
           }
         },
         "cssVarsPerTheme": {
