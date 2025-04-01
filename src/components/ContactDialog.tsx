@@ -15,9 +15,9 @@ const ContactDialog = ({ open, onOpenChange, jobTitle, isApplication = false }: 
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] bg-black/95 border border-white/10">
+      <DialogContent className="sm:max-w-[500px] bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-primary/20 text-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl">
+          <DialogTitle className="text-2xl text-white">
             {isApplication 
               ? jobTitle 
                 ? `Bewerbung für: ${jobTitle}` 

@@ -117,11 +117,11 @@ const N8NWebhookForm = ({
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Name</FormLabel>
+              <FormLabel className="text-white">Name</FormLabel>
               <FormControl>
-                <Input placeholder="Ihr Name" {...field} />
+                <Input placeholder="Ihr Name" {...field} className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -131,11 +131,11 @@ const N8NWebhookForm = ({
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>E-Mail</FormLabel>
+              <FormLabel className="text-white">E-Mail</FormLabel>
               <FormControl>
-                <Input placeholder="ihre-email@beispiel.de" {...field} />
+                <Input placeholder="ihre-email@beispiel.de" {...field} className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
@@ -145,23 +145,23 @@ const N8NWebhookForm = ({
           name="phone"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Telefon (optional)</FormLabel>
+              <FormLabel className="text-white">Telefon (optional)</FormLabel>
               <FormControl>
-                <Input placeholder="+49 123 456789" {...field} />
+                <Input placeholder="+49 123 456789" {...field} className="bg-white/10 border-white/20 text-white placeholder:text-white/50" />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
         
         {isApplication && (
           <div className="space-y-2">
-            <FormLabel>Lebenslauf hochladen</FormLabel>
+            <FormLabel className="text-white">Lebenslauf hochladen</FormLabel>
             <Input
               type="file"
               accept=".pdf,.doc,.docx"
               onChange={handleFileChange}
-              className="file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
+              className="bg-white/10 border-white/20 text-white file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:bg-primary/20 file:text-white hover:file:bg-primary/30 cursor-pointer"
             />
             <p className="text-xs text-white/60">Akzeptierte Formate: PDF, DOC, DOCX (max. 10MB)</p>
           </div>
@@ -172,22 +172,22 @@ const N8NWebhookForm = ({
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{isApplication ? "Anschreiben" : "Nachricht"}</FormLabel>
+              <FormLabel className="text-white">{isApplication ? "Anschreiben" : "Nachricht"}</FormLabel>
               <FormControl>
                 <Textarea 
                   placeholder={isApplication ? "Ihr Anschreiben..." : "Ihre Nachricht..."} 
-                  className="min-h-[120px]" 
+                  className="min-h-[120px] bg-white/10 border-white/20 text-white placeholder:text-white/50" 
                   {...field} 
                 />
               </FormControl>
-              <FormMessage />
+              <FormMessage className="text-red-400" />
             </FormItem>
           )}
         />
         
         <Button 
           type="submit" 
-          className="w-full" 
+          className="w-full bg-primary hover:bg-primary/90 text-white" 
           disabled={isUploading}
         >
           {isUploading ? (
