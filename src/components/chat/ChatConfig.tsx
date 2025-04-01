@@ -13,7 +13,7 @@ export const getChatConfig = () => {
         'Accept': 'application/json'
       }
     },
-    showWelcomeScreen: true,
+    showWelcomeScreen: false, // Changed to false to skip the welcome screen with "Neue Konversation" button
     defaultLanguage: 'en' as 'en', // Using type assertion to ensure it's the literal 'en' type
     initialMessages: [
       'Hallo! 👋',
@@ -24,7 +24,7 @@ export const getChatConfig = () => {
       en: {
         title: 'nohype-ai.de Assistent',
         subtitle: 'Stellen Sie Ihre Fragen oder buchen Sie einen Termin.',
-        footer: 'Powered by nohype-ai.de',
+        footer: '', // Removed "Powered by nohype-ai.de" by setting footer to empty string
         getStarted: 'Neue Konversation',
         inputPlaceholder: 'Stellen Sie Ihre Frage...',
         closeButtonTooltip: 'Chat schließen'

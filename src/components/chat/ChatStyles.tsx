@@ -89,27 +89,33 @@ export const applyChatStyles = () => {
       background-color: #e6008a;
     }
     
-    /* X-Button zum Schließen verbessern */
-    /* Das ist der tatsächliche Selektor für den Schließen-Button */
+    /* Verbessern des X-Buttons zum Schließen */
     .n8n-chat-window__header button:not(.n8n-booking-button) {
       position: absolute;
       top: 10px;
       right: 10px;
-      width: 26px;
-      height: 26px;
+      width: 30px !important; /* Größer machen */
+      height: 30px !important; /* Größer machen */
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      background: rgba(255, 255, 255, 0.1);
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      color: white !important;
+      background: rgba(255, 255, 255, 0.2) !important; /* Sichtbarer machen */
       border: none;
       padding: 0;
       transition: background-color 0.2s;
+      opacity: 1 !important; /* Sicherstellen, dass es sichtbar ist */
+      z-index: 9999;
     }
     
     .n8n-chat-window__header button:hover:not(.n8n-booking-button) {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.4) !important;
+    }
+    
+    /* Verstecken des n8n-Footers komplett */
+    .n8n-chat-window__footer {
+      display: none !important;
     }
   `;
   document.head.appendChild(styleElement);
