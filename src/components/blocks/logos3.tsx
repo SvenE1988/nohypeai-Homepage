@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 interface Logo {
@@ -33,7 +34,8 @@ export function Logos3({
       scrollRef.current.style.animationDuration = `${speed}s`;
     }
   }, [logos]);
-  return <div className="">
+  
+  return <div className={cn("py-8 bg-black/20", className)}>
       <div className="container px-4 mx-auto">
         {heading && heading.length > 0 && <h2 className="text-center text-lg font-medium text-gray-300 mb-6">
             {heading}
@@ -44,7 +46,11 @@ export function Logos3({
           animationDuration: `${animationDuration}s`
         }}>
             {duplicatedLogos.map((logo, index) => <div key={`${logo.id}-${index}`} className="flex items-center justify-center mx-16">
-                <img src={logo.image} alt={logo.description} className={cn("h-24 md:h-28 w-auto object-contain opacity-100 hover:opacity-100 transition-all duration-300", logo.className)} />
+                <img 
+                  src={logo.image} 
+                  alt={logo.description} 
+                  className={cn("h-24 md:h-28 w-auto object-contain opacity-100 hover:opacity-100 transition-all duration-300", logo.className)} 
+                />
               </div>)}
           </div>
         </div>
