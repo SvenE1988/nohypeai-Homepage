@@ -1,7 +1,7 @@
 
 "use client";
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useRef, useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export const LampContainer = ({
@@ -11,12 +11,29 @@ export const LampContainer = ({
   children: React.ReactNode;
   className?: string;
 }) => {
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.3 });
+  const [hasScrolled, setHasScrolled] = useState(false);
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0 && !hasScrolled) {
+        setHasScrolled(true);
+      }
+    };
+    
+    // Set initial state based on scroll position when component mounts
+    if (window.scrollY > 0) {
+      setHasScrolled(true);
+    }
+    
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasScrolled]);
   
   return (
     <div
-      ref={containerRef}
       className={cn(
         "relative flex min-h-[40vh] flex-col items-center justify-center overflow-hidden bg-transparent w-full z-0",
         className
@@ -25,7 +42,7 @@ export const LampContainer = ({
       <div className="relative flex w-full flex-1 scale-y-125 items-center justify-center isolate z-0 bg-transparent">
         <motion.div
           initial={{ opacity: 0.5, width: "15rem" }}
-          animate={isInView ? { opacity: 1, width: "40rem" } : { opacity: 0.5, width: "15rem" }}
+          animate={hasScrolled ? { opacity: 1, width: "40rem" } : { opacity: 0.5, width: "15rem" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
@@ -44,7 +61,7 @@ export const LampContainer = ({
         <div className="absolute inset-auto z-50 h-36 w-[28rem] -translate-y-1/2 rounded-full bg-primary opacity-50 blur-3xl"></div>
         <motion.div
           initial={{ width: "8rem" }}
-          animate={isInView ? { width: "16rem" } : { width: "8rem" }}
+          animate={hasScrolled ? { width: "16rem" } : { width: "8rem" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
@@ -54,7 +71,7 @@ export const LampContainer = ({
         ></motion.div>
         <motion.div
           initial={{ width: "15rem" }}
-          animate={isInView ? { width: "40rem" } : { width: "15rem" }}
+          animate={hasScrolled ? { width: "40rem" } : { width: "15rem" }}
           transition={{
             delay: 0.3,
             duration: 0.8,
