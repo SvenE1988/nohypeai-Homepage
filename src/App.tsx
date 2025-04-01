@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import { DialogProvider } from "./components/providers/DialogProvider";
 import CalendarFloatingButton from "./components/CalendarFloatingButton";
+import N8NChat from "./components/N8NChat";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
         <Sonner />
         <CookieConsent />
         <CalendarFloatingButton />
+        <N8NChat />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
