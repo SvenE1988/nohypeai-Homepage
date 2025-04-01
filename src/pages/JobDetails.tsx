@@ -6,13 +6,15 @@ import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import { jobPostings } from "@/data/jobData";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/neon-button";
+import { Button } from "@/components/ui/button";
+import { useCallToAction } from "@/hooks/useCallToAction";
 import { useToast } from "@/hooks/use-toast";
 
 const JobDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { openApplicationForm } = useCallToAction();
   
   // Job mit der angegebenen ID finden
   const job = jobPostings.find(job => job.id === id);
@@ -157,15 +159,19 @@ const JobDetails = () => {
               rel="noopener noreferrer"
               className="w-full sm:w-auto"
             >
-              <Button className="w-full sm:w-auto px-8 py-3 text-base">
+              <Button 
+                className="w-full sm:w-auto px-8 py-3 text-base bg-primary hover:bg-primary/90 text-white"
+                size="lg"
+              >
                 Jetzt bewerben
               </Button>
             </a>
             
             <Button
-              variant="ghost" 
-              className="w-full sm:w-auto px-8 py-3 text-base"
+              variant="outline" 
+              className="w-full sm:w-auto px-8 py-3 text-base border-white/20 hover:bg-white/10"
               onClick={shareJob}
+              size="lg"
             >
               Stelle teilen
             </Button>
