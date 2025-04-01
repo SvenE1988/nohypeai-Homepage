@@ -1,6 +1,7 @@
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useEffect } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface CalendarDialogProps {
   open: boolean;
@@ -8,6 +9,8 @@ interface CalendarDialogProps {
 }
 
 const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
+  const isMobile = useIsMobile();
+  
   useEffect(() => {
     // Cal.com Script laden, wenn der Dialog geöffnet wird
     if (open) {
@@ -53,7 +56,7 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
           (window as any).Cal.ns.erstanalyse("inline", {
             elementOrSelector: "#cal-booking-place",
             calLink: "nohypeai/erstanalyse",
-            layout: "month_view",
+            layout: isMobile ? "month_view" : "month_view",
             cssVarsPerTheme: {
               light: {"cal-brand": "#292929"},
               dark: {"cal-brand": "#fafafa"}
@@ -63,20 +66,25 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         }
       }, 300);
     }
-  }, [open]);
+  }, [open, isMobile]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] lg:max-w-[1000px] h-[80vh] max-h-[700px] bg-black/95 border border-white/10">
+      <DialogContent className="sm:max-w-[800px] lg:max-w-[1000px] max-h-[90vh] overflow-y-auto bg-black/95 border border-white/10">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Sparpotenzial berechnen</DialogTitle>
+          <DialogTitle className="text-xl sm:text-2xl">Sparpotenzial berechnen</DialogTitle>
         </DialogHeader>
         
-        <div className="h-full flex items-center justify-center">
+        <div className="flex items-center justify-center">
           {/* Cal.com Inline Embed Container */}
           <div 
             id="cal-booking-place" 
-            className="w-full h-full min-h-[500px]"
+            className="w-full min-h-[60vh] sm:min-h-[500px]"
+            style={{ 
+              height: isMobile ? 'calc(80vh - 100px)' : '500px',
+              overflowY: 'auto',
+              WebkitOverflowScrolling: 'touch'
+            }}
           />
         </div>
       </DialogContent>

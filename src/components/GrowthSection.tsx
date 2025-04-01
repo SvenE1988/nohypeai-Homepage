@@ -1,3 +1,4 @@
+
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import FeatureCard from "./FeatureCard";
 
@@ -14,22 +15,22 @@ const GrowthSection = () => {
         </h2>
 
         <Tabs defaultValue="sprachassistent" className="w-full">
-          <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-3 bg-[#1A1F35] p-1 rounded-full mb-12">
+          <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-3 bg-[#1A1F35] p-1 rounded-full mb-12 gap-1">
             <TabsTrigger
               value="sprachassistent"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
             >
               Sprachassistent
             </TabsTrigger>
             <TabsTrigger
               value="ablaufoptimierung"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
             >
               Ablaufoptimierung
             </TabsTrigger>
             <TabsTrigger
               value="content"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
             >
               Content & Marketing
             </TabsTrigger>
