@@ -14,7 +14,7 @@ export const getChatConfig = () => {
       }
     },
     showWelcomeScreen: true,
-    defaultLanguage: 'en', // Nur 'en' wird unterstützt
+    defaultLanguage: 'en' as 'en', // Using type assertion to ensure it's the literal 'en' type
     initialMessages: [
       'Hallo! 👋',
       'Ich bin der nohype-ai.de Assistent. Wie kann ich Ihnen heute helfen?',
