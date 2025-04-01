@@ -140,7 +140,7 @@ const CustomChat = () => {
 
   // Handle booking appointment
   const handleBookAppointment = () => {
-    window.open('https://cal.com/nohype/termin', '_blank');
+    window.open('https://cal.com/nohypeai/erstanalyse', '_blank');
   };
 
   // Handle voice chat (placeholder)
@@ -209,7 +209,7 @@ const CustomChat = () => {
             <div className="flex items-center space-x-2">
               <div className="text-white font-bold">AI Assistent</div>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="flex flex-col space-y-2">
               <Button 
                 onClick={handleBookAppointment}
                 size="sm" 
