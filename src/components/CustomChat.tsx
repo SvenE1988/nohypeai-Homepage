@@ -87,10 +87,11 @@ const CustomChat = () => {
       {!isOpen && (
         <button
           onClick={toggleChat}
-          className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full p-4 shadow-lg hover:bg-primary/90 transition-all duration-300"
+          className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full px-4 py-3 shadow-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2"
           aria-label="Open chat"
         >
-          <MessageCircle className="w-6 h-6" />
+          <span className="text-sm font-medium">Teste unseren Chatbot</span>
+          <MessageCircle className="w-5 h-5" />
         </button>
       )}
 
