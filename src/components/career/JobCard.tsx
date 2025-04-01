@@ -40,7 +40,7 @@ const JobCard = ({ job }: JobCardProps) => {
       </p>
       
       <div className="flex flex-wrap gap-2 mb-5">
-        {job.skills.map((skill, index) => (
+        {job.skills.slice(0, 4).map((skill, index) => (
           <Badge 
             key={index} 
             variant="outline" 
