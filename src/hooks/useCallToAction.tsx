@@ -16,6 +16,23 @@ export const useCallToAction = () => {
       (window as any).Cal.ns.erstanalyse("modal", {
         calLink: "nohypeai/erstanalyse",
         layout: "month_view",
+        styles: {
+          branding: {
+            brandColor: "#FF0099"
+          },
+          enabledDateButton: {
+            backgroundColor: "#FF0099",
+            color: "white"
+          },
+          selectedDateButton: {
+            backgroundColor: "#6B46C1",
+            color: "white"
+          },
+          submitButton: {
+            backgroundColor: "#FF0099",
+            color: "white"
+          }
+        }
       });
     }
   };

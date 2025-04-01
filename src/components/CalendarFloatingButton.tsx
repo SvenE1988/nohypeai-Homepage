@@ -11,13 +11,33 @@ const CalendarFloatingButton = () => {
         "config": {
           "layout": "month_view"
         },
-        "buttonText": "Sparpotenzial berechnen",
-        "buttonTextColor": "#e616d9"
+        "buttonText": "Termin buchen",
+        "buttonColor": "#FF0099",
+        "buttonTextColor": "#FFFFFF",
+        "buttonBorderRadius": "8px",
+        "buttonBorder": "2px solid #FFFFFF"
       });
       cal("ui", {
+        "styles": {
+          "branding": {
+            "brandColor": "#FF0099"
+          },
+          "enabledDateButton": {
+            "backgroundColor": "#FF0099",
+            "color": "white"
+          },
+          "selectedDateButton": {
+            "backgroundColor": "#6B46C1",
+            "color": "white"
+          },
+          "submitButton": {
+            "backgroundColor": "#FF0099",
+            "color": "white"
+          }
+        },
         "cssVarsPerTheme": {
-          "light": {"cal-brand": "#292929"},
-          "dark": {"cal-brand": "#fafafa"}
+          "light": {"cal-brand": "#FF0099"},
+          "dark": {"cal-brand": "#FF0099"}
         },
         "hideEventTypeDetails": false,
         "layout": "month_view"
