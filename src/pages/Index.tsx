@@ -11,14 +11,12 @@ import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
-import TechStack from "../components/TechStack";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      <TechStack />
       <Benefits />
       <AIHereSection />
       <section id="nutzen">
