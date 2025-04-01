@@ -59,10 +59,10 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Kontakt</h3>
             <ul className="space-y-2">
               <li className="text-gray-400">
-                E-Mail: kontakt@domain.de
+                E-Mail: info@nohype-ai.de
               </li>
               <li className="text-gray-400">
-                Tel: +49 (0) 123 456789
+                Tel: +49 175 9481994
               </li>
               <li>
                 <button
@@ -99,7 +99,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p>© {currentYear} Ihre Firma. Alle Rechte vorbehalten.</p>
+          <p>© {currentYear} nohype-ai.de. Alle Rechte vorbehalten.</p>
         </div>
       </div>
 
