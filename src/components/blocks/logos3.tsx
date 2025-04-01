@@ -35,7 +35,7 @@ export function Logos3({ heading, logos, className }: Logos3Props) {
   }, [logos]);
 
   return (
-    <div className={cn("py-6 bg-black/40 backdrop-blur-sm border-y border-white/10", className)}>
+    <div className={cn("py-6 bg-black/40 backdrop-blur-sm", className)}>
       <div className="container px-4 mx-auto">
         {heading && (
           <h2 className="text-center text-lg font-medium text-gray-300 mb-6">
@@ -57,7 +57,7 @@ export function Logos3({ heading, logos, className }: Logos3Props) {
                 <img
                   src={logo.image}
                   alt={logo.description}
-                  className={cn("grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all duration-300", logo.className)}
+                  className={cn("h-8 object-contain opacity-70 hover:opacity-100 transition-all duration-300", logo.className)}
                 />
               </div>
             ))}
