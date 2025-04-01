@@ -2,6 +2,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useEffect } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { X } from "lucide-react";
 
 interface CalendarDialogProps {
   open: boolean;
@@ -74,6 +75,15 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         <DialogHeader>
           <DialogTitle className="text-xl sm:text-2xl">Sparpotenzial berechnen</DialogTitle>
         </DialogHeader>
+        
+        {/* Custom close button */}
+        <button 
+          onClick={() => onOpenChange(false)}
+          className="absolute right-4 top-4 p-2 rounded-full bg-primary text-white hover:bg-primary/90 transition-colors focus:outline-none"
+          aria-label="Schließen"
+        >
+          <X className="h-4 w-4" />
+        </button>
         
         <div className="flex items-center justify-center">
           {/* Cal.com Inline Embed Container */}
