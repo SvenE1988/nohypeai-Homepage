@@ -3,6 +3,13 @@ import { useEffect, useRef } from 'react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
 
+// Vue Feature Flags - diese Zeilen helfen, die Vue-Warnungen zu vermeiden
+if (typeof window !== 'undefined') {
+  window.__VUE_OPTIONS_API__ = true;
+  window.__VUE_PROD_DEVTOOLS__ = false;
+  window.__VUE_PROD_HYDRATION_MISMATCH_DETAILS__ = false;
+}
+
 const N8NChat = () => {
   const chatInitialized = useRef(false);
 
