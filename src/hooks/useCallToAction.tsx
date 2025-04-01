@@ -2,27 +2,16 @@
 import { useDialog } from "@/components/providers/DialogProvider";
 
 export const useCallToAction = () => {
-  const { setContactDialogOpen } = useDialog();
+  const { setContactDialogOpen, setCalendarDialogOpen } = useDialog();
 
-  // Aktualisierte direkte Links für Kontaktformular
+  // Contact form direct link
   const openContactForm = () => {
     window.open("https://automatisierung.seserver.nohype-ai.de/form/Anfrage", "_blank");
   };
 
-  // Cal.com Integration über die Floating Button API
+  // Calendar booking using the DialogProvider
   const openCalendarBooking = () => {
-    // Sicherstellen, dass Cal API geladen ist
-    if ((window as any).Cal?.ns?.erstanalyse) {
-      (window as any).Cal.ns.erstanalyse("modal", {
-        calLink: "nohypeai/erstanalyse",
-        layout: "month_view",
-        styles: {
-          branding: {
-            brandColor: "#FF0099"
-          }
-        }
-      });
-    }
+    setCalendarDialogOpen(true);
   };
 
   const openApplicationForm = () => {

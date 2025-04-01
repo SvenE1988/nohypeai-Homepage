@@ -1,8 +1,12 @@
+
 import React from 'react';
 import { Button } from './ui/button';
 import { Bot, Cpu, MessageSquare, Mic2 } from 'lucide-react';
+import { useCallToAction } from '@/hooks/useCallToAction';
 
 const TechStack = () => {
+  const { openCalendarBooking } = useCallToAction();
+  
   const categories = [
     { name: 'KI-Agenten', icon: <Bot className="w-5 h-5" /> },
     { name: 'KI-Automatisierungen', icon: <Cpu className="w-5 h-5" /> },
@@ -40,7 +44,10 @@ const TechStack = () => {
               ))}
             </div>
 
-            <Button className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-xl">
+            <Button 
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-6 text-lg rounded-xl"
+              onClick={openCalendarBooking}
+            >
               Arbeite mit uns
             </Button>
           </div>

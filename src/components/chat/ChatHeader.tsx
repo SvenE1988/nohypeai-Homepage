@@ -1,18 +1,19 @@
 
 import { Calendar, Mic } from 'lucide-react';
 import { Button } from '../ui/button';
+import { useCallToAction } from '@/hooks/useCallToAction';
 
 interface ChatHeaderProps {
-  handleBookAppointment: () => void;
   handleVoiceChat: () => void;
   toggleChat: () => void;
 }
 
 const ChatHeader = ({ 
-  handleBookAppointment, 
   handleVoiceChat, 
   toggleChat 
 }: ChatHeaderProps) => {
+  const { openCalendarBooking } = useCallToAction();
+  
   return (
     <div className="flex items-center justify-between p-4 bg-gradient-to-r from-secondary/80 to-primary/80">
       <div className="flex items-center space-x-2">
@@ -20,7 +21,7 @@ const ChatHeader = ({
       </div>
       <div className="flex flex-col space-y-2">
         <Button 
-          onClick={handleBookAppointment}
+          onClick={openCalendarBooking}
           size="sm" 
           variant="outline"
           className="text-xs bg-black/20 text-white border-white/20 hover:bg-black/40"

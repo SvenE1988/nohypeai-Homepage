@@ -148,19 +148,13 @@ const JobDetails = () => {
           </div>
           
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
-            <a 
-              href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage"
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto"
+            <Button 
+              onClick={openApplicationForm}
+              className="w-full sm:w-auto px-8 py-3 text-base bg-primary hover:bg-primary/90 text-white"
+              size="lg"
             >
-              <Button 
-                className="w-full sm:w-auto px-8 py-3 text-base bg-primary hover:bg-primary/90 text-white"
-                size="lg"
-              >
-                Jetzt bewerben
-              </Button>
-            </a>
+              Jetzt bewerben
+            </Button>
             
             <Button
               variant="outline" 
