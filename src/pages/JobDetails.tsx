@@ -8,11 +8,13 @@ import { jobPostings } from "@/data/jobData";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/neon-button";
 import { useToast } from "@/hooks/use-toast";
+import { useDialog } from "@/components/providers/DialogProvider";
 
 const JobDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { setContactDialogOpen } = useDialog();
   
   // Job mit der angegebenen ID finden
   const job = jobPostings.find(job => job.id === id);
@@ -43,6 +45,10 @@ const JobDetails = () => {
           duration: 3000,
         });
       });
+  };
+
+  const handleApply = () => {
+    setContactDialogOpen(true, job.title, true);
   };
 
   return (
@@ -153,11 +159,7 @@ const JobDetails = () => {
           <div className="flex flex-col sm:flex-row items-center gap-4 justify-center">
             <Button
               className="w-full sm:w-auto px-8 py-3 text-base"
-              onClick={() => {
-                document.querySelector('button[onClick="setContactDialogOpen(true)"]')?.dispatchEvent(
-                  new MouseEvent('click', { bubbles: true })
-                );
-              }}
+              onClick={handleApply}
             >
               Jetzt bewerben
             </Button>

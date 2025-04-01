@@ -11,26 +11,29 @@ import Karriere from "./pages/Karriere";
 import JobDetails from "./pages/JobDetails";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
+import { DialogProvider } from "./components/providers/DialogProvider";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <div className="glow-overlay" />
-      <Toaster />
-      <Sonner />
-      <CookieConsent />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:slug" element={<BlogPost />} />
-          <Route path="/karriere" element={<Karriere />} />
-          <Route path="/karriere/:id" element={<JobDetails />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <DialogProvider>
+        <div className="glow-overlay" />
+        <Toaster />
+        <Sonner />
+        <CookieConsent />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/karriere" element={<Karriere />} />
+            <Route path="/karriere/:id" element={<JobDetails />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </DialogProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );
