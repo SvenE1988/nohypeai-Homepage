@@ -20,7 +20,7 @@ const Index = () => {
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      <Benefits className="-mt-28" /> {/* Nach oben geschoben um den Logos-Bereich zu ersetzen */}
+      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />

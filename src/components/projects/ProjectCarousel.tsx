@@ -110,11 +110,11 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
   return (
     <div className="w-full max-w-6xl mx-auto">
       <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex py-8">
+        <div className="flex py-6 md:py-8">
           {projects.map((project, index) => (
             <div 
               key={index} 
-              className="flex-[0_0_80%] sm:flex-[0_0_60%] md:flex-[0_0_40%] min-w-0 pl-4 transition-all duration-500 ease-out"
+              className="flex-[0_0_90%] sm:flex-[0_0_70%] md:flex-[0_0_45%] lg:flex-[0_0_40%] min-w-0 pl-4 transition-all duration-500 ease-out"
             >
               <ProjectCard
                 project={project}
@@ -126,10 +126,10 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
         </div>
       </div>
       
-      <div className="mt-8 flex items-center justify-center gap-4">
+      <div className="mt-6 md:mt-8 flex items-center justify-center gap-3 md:gap-4">
         <button 
           onClick={() => emblaApi?.scrollPrev()} 
-          className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
+          className="h-8 w-8 md:h-10 md:w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
           aria-label="Previous slide"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
@@ -142,7 +142,7 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
               key={index}
               onClick={() => emblaApi?.scrollTo(index)}
               className={cn(
-                "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                "w-2 h-2 md:w-2.5 md:h-2.5 rounded-full transition-all duration-300",
                 selectedIndex === index 
                   ? "bg-primary scale-125" 
                   : "bg-gray-600 hover:bg-primary/50"
@@ -153,7 +153,7 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
         </div>
         <button 
           onClick={() => emblaApi?.scrollNext()}
-          className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
+          className="h-8 w-8 md:h-10 md:w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 inline-flex items-center justify-center"
           aria-label="Next slide"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4">
