@@ -1,3 +1,4 @@
+
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
 import Benefits from "../components/Benefits";
@@ -18,11 +19,19 @@ const Index = () => {
       <AIFirstSection />
       <Benefits />
       <AIHereSection />
-      <GrowthSection />
-      <SavingsCalculator />
+      <section id="nutzen">
+        <GrowthSection />
+      </section>
+      <section id="einsparungen">
+        <SavingsCalculator />
+      </section>
       <Projects />
-      <Process />
-      <About />
+      <section id="prozess">
+        <Process />
+      </section>
+      <section id="ueber-uns">
+        <About />
+      </section>
       <FAQ />
       <Footer />
     </main>

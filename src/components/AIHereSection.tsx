@@ -1,3 +1,4 @@
+
 import { Brain, Target, Clock } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -50,12 +51,18 @@ const AIHereSection = () => {
         </div>
 
         <div className="text-center">
-          <Button 
-            size="lg"
-            className="bg-primary hover:bg-primary/90 text-white px-12"
+          <a 
+            href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage" 
+            target="_blank" 
+            rel="noopener noreferrer"
           >
-            Jetzt durchstarten
-          </Button>
+            <Button 
+              size="lg"
+              className="bg-primary hover:bg-primary/90 text-white px-12"
+            >
+              Jetzt durchstarten
+            </Button>
+          </a>
         </div>
       </div>
     </section>

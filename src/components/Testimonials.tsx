@@ -1,3 +1,4 @@
+
 import {
   Carousel,
   CarouselContent,
@@ -75,8 +76,10 @@ const Testimonials = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
+          <div className="hidden md:flex justify-center gap-4 mt-8">
+            <CarouselPrevious />
+            <CarouselNext />
+          </div>
         </Carousel>
       </div>
     </section>

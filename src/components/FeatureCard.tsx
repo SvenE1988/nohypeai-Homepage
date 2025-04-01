@@ -1,5 +1,7 @@
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
+import { Info } from "lucide-react"; 
 
 interface FeatureCardProps {
   title: string;
@@ -10,16 +12,21 @@ interface FeatureCardProps {
 const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
   return (
     <motion.div 
-      className="relative w-full h-48 perspective"
+      className="relative w-full h-48 perspective group"
       initial={false}
       whileHover={{ scale: 1.02 }}
       style={{ transformStyle: "preserve-3d" }}
     >
+      <div className="absolute top-2 right-2 z-10 text-primary/80 animate-pulse">
+        <Info size={18} />
+      </div>
+      
       <motion.div
-        className="absolute w-full h-full"
-        initial={false}
+        className="absolute w-full h-full transition-all duration-500"
+        initial={{ rotateY: 0 }}
+        animate={{ rotateY: 0 }}
         whileHover={{ rotateY: 180 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.6 }}
         style={{ 
           transformStyle: "preserve-3d",
           backfaceVisibility: "hidden",
@@ -28,7 +35,7 @@ const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
       >
         {/* Front of card */}
         <div 
-          className="absolute w-full h-full backface-hidden"
+          className="absolute w-full h-full backface-hidden cursor-pointer"
           style={{ transform: "rotateY(0deg)" }}
         >
           <Button
@@ -39,6 +46,7 @@ const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
             <div className="flex flex-col gap-2">
               <h3 className="text-lg font-medium text-white">{title}</h3>
               <p className="text-sm text-gray-400">{description}</p>
+              <span className="text-xs text-primary mt-2">Hover für mehr Details</span>
             </div>
           </Button>
         </div>

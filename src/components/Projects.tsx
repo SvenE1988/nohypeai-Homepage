@@ -1,144 +1,153 @@
-import { Badge } from "./ui/badge";
-import { Card } from "./ui/card";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "./ui/accordion";
 
-interface Project {
-  year: string;
-  industry: string;
-  title: string;
-  overview: string;
-  challenge: string;
-  solution: string;
-  result: string;
-}
+import { Badge } from "./ui/badge";
+import { AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
+import ProjectDetails from "./projects/ProjectDetails";
+import ProjectCard from "./projects/ProjectCard";
+import { Project } from "./projects/types";
+import { projectsData } from "./projects/ProjectsData";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Projects = () => {
-  const projects: Project[] = [
-    {
-      year: "2024",
-      industry: "Erneuerbare Energien",
-      title: "KI-gestützte Lead-Qualifizierung",
-      overview:
-        "Revolutionierung der Lead-Qualifizierung im Photovoltaik- und Wärmepumpenbereich durch KI-gesteuerte Sprachkommunikation. Mit über 500 Stunden Sprechzeit und spezifischem Finetuning erreichten wir eine beispiellose Effizienz in der Kundenvorqualifizierung.",
-      challenge:
-        "Manuelle Lead-Qualifizierung band wertvolle Vertriebsressourcen und führte zu langen Reaktionszeiten, wodurch potenzielle Kunden verloren gingen.",
-      solution:
-        "Implementierung eines KI-gestützten Sprachsystems, das eingehende und ausgehende Gespräche automatisch führt, qualifiziert und priorisiert - rund um die Uhr verfügbar.",
-      result:
-        "Reaktionszeit auf neue Leads von Stunden auf Minuten reduziert, Qualifizierungsrate um 300% gesteigert und Vertriebsteam kann sich auf hochwertige, vorqualifizierte Leads konzentrieren.",
-    },
-    {
-      year: "2024",
-      industry: "Vertrieb & Marketing",
-      title: "Automatisierte Angebotserstellung",
-      overview:
-        "Transformation des Angebotsprozesses durch vollautomatische Erstellung komplexer Angebote. Was früher 20 Minuten manuelle Arbeit erforderte, geschieht nun in unter einer Minute - bei gleichzeitig höherer Präzision.",
-      challenge:
-        "Zeitaufwändige manuelle Angebotserstellung führte zu Verzögerungen im Verkaufsprozess und band wichtige Personalressourcen.",
-      solution:
-        "Entwicklung einer KI-gestützten Automatisierungslösung, die alle relevanten Daten analysiert und daraus maßgeschneiderte Angebote erstellt.",
-      result:
-        "95% Zeitersparnis bei der Angebotserstellung, signifikant reduzierte Fehlerquote und deutlich schnellere Reaktionszeiten im Vertriebsprozess.",
-    },
-    {
-      year: "2024",
-      industry: "Finanzdienstleistungen",
-      title: "Automatisierte Baufinanzierung",
-      overview:
-        "Digitalisierung und Automatisierung des Baufinanzierungsprozesses, wodurch die Bearbeitungszeit pro Kunde von 90 Minuten auf nur 15 Minuten reduziert wurde - bei gleichzeitiger Steigerung der Genauigkeit.",
-      challenge:
-        "Komplexe manuelle Prozesse in der Baufinanzierung führten zu langen Bearbeitungszeiten und hohem Personalaufwand.",
-      solution:
-        "Integration einer KI-gestützten Prozessautomatisierung, die 90% der Finanzierungsstrecke selbstständig abwickelt und wichtige Entscheidungen vorbereitet.",
-      result:
-        "83% Zeitersparnis pro Kunde, höhere Kundenzufriedenheit durch schnellere Bearbeitung und signifikante Kosteneinsparungen im Prozess.",
-    },
-    {
-      year: "2024",
-      industry: "Gesundheitswesen",
-      title: "Digitale Rezeptanforderung",
-      overview:
-        "Transformation der Rezeptanforderung in einer Arztpraxis durch KI-gestützte Sprachverarbeitung. Die bisherige manuelle Abarbeitung von Sprachnachrichten wurde durch ein intelligentes System ersetzt, das Anfragen automatisch verarbeitet und strukturiert.",
-      challenge:
-        "Zeitaufwändiges manuelles Abhören eines Anrufbeantworters für Rezeptanfragen, was zu hoher Arbeitsbelastung des Praxispersonals und möglichen Verzögerungen führte.",
-      solution:
-        "Implementation eines KI-Sprachbots, der Patientenanfragen automatisch entgegennimmt, analysiert und in einer übersichtlichen digitalen Form für das Praxisteam aufbereitet.",
-      result:
-        "Signifikante Entlastung des Praxispersonals, schnellere Bearbeitung von Rezeptanfragen und höhere Patientenzufriedenheit durch effizientere Prozesse.",
-    },
-  ];
+  const [currentProject, setCurrentProject] = useState<Project | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<any>(null);
+  
+  const handleViewDetails = (project: Project) => {
+    setCurrentProject(project);
+    setIsDetailsOpen(true);
+  };
+  
+  // Startet Autoplay wenn API geladen ist
+  useEffect(() => {
+    if (!api) return;
+    
+    const autoplayInterval = setInterval(() => {
+      api.scrollNext();
+    }, 5000);
+    
+    // Stoppt Autoplay wenn Nutzer interagiert
+    const handlePointerDown = () => clearInterval(autoplayInterval);
+    const root = document.querySelector('#projekte');
+    if (root) {
+      root.addEventListener('pointerdown', handlePointerDown);
+    }
+    
+    return () => {
+      clearInterval(autoplayInterval);
+      if (root) {
+        root.removeEventListener('pointerdown', handlePointerDown);
+      }
+    };
+  }, [api]);
+  
+  // Verfolgt den aktuellen aktiven Slide
+  useEffect(() => {
+    if (!api) return;
+    
+    const onSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+    
+    api.on('select', onSelect);
+    api.on('reInit', onSelect);
+    
+    return () => {
+      api.off('select', onSelect);
+    };
+  }, [api]);
 
   return (
-    <section id="projekte" className="w-full bg-black py-24">
-      <div className="container mx-auto px-4">
+    <section id="projekte" className="w-full py-24 relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-black/90 to-black/70 z-0"></div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="flex items-center justify-center gap-2 mb-6">
           <Badge variant="outline" className="text-primary border-primary">
-            Projekte
+            Case Studies
           </Badge>
         </div>
         <h2 className="text-4xl font-bold text-white text-center mb-16">
-          Erfolgsgeschichten unserer Kunden
+          Erfolgsgeschichten aus der Praxis
         </h2>
-        <div className="space-y-4">
-          <Accordion type="single" collapsible className="w-full">
-            {projects.map((project, index) => (
-              <AccordionItem key={index} value={`item-${index}`}>
-                <Card className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden">
-                  <AccordionTrigger className="px-8 py-6 hover:no-underline">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 text-left w-full">
-                      <div className="w-12 h-12 rounded-lg bg-[#1A1F35] flex items-center justify-center text-primary border border-primary shrink-0">
-                        {project.year}
-                      </div>
-                      <div className="flex flex-col gap-2">
-                        <div className="text-gray-400">{project.industry}</div>
-                        <h3 className="text-2xl font-semibold text-primary">
-                          {project.title}
-                        </h3>
-                      </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent>
-                    <div className="px-8 pb-8 pt-2">
-                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                          <div className="text-gray-400">
-                            <h4 className="font-medium mb-2">Overview:</h4>
-                            <p className="leading-relaxed">{project.overview}</p>
-                          </div>
-                        </div>
-                        <div className="space-y-6">
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Challenge:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.challenge}
-                            </p>
-                          </div>
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Solution:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.solution}
-                            </p>
-                          </div>
-                          <div className="space-y-4">
-                            <h4 className="font-medium text-white">Result:</h4>
-                            <p className="text-gray-400 leading-relaxed">
-                              {project.result}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </Card>
-              </AccordionItem>
-            ))}
-          </Accordion>
+
+        <div className="w-full max-w-6xl mx-auto">
+          <Carousel
+            setApi={setApi}
+            opts={{
+              loop: true,
+              align: "center",
+              skipSnaps: false,
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="py-8">
+              {projectsData.map((project, index) => (
+                <CarouselItem 
+                  key={index} 
+                  className="pl-4 basis-full sm:basis-3/5 md:basis-2/5 transition-opacity duration-500 ease-out"
+                >
+                  <div className={`h-full transition-all duration-500 ease-out transform ${
+                    activeIndex === index 
+                      ? "scale-100 opacity-100 z-10" 
+                      : "scale-[0.85] opacity-60 z-0"
+                    }`}
+                  >
+                    <ProjectCard
+                      project={project}
+                      isActive={activeIndex === index}
+                      onViewDetails={handleViewDetails}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <CarouselPrevious 
+                className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 static" 
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </CarouselPrevious>
+              <div className="flex gap-2">
+                {projectsData.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => api?.scrollTo(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                      activeIndex === index 
+                        ? "bg-primary scale-125" 
+                        : "bg-gray-600 hover:bg-primary/50"
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+              <CarouselNext 
+                className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 static" 
+              >
+                <ChevronRight className="h-4 w-4" />
+              </CarouselNext>
+            </div>
+          </Carousel>
         </div>
+
+        <AnimatePresence>
+          {isDetailsOpen && currentProject && (
+            <ProjectDetails 
+              project={currentProject} 
+              isOpen={isDetailsOpen} 
+              onClose={() => setIsDetailsOpen(false)} 
+            />
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

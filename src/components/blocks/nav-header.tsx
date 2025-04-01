@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
@@ -35,6 +36,7 @@ function NavHeader() {
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check when component mounts
     return () => window.removeEventListener('scroll', handleScroll);
   }, [location]);
 
@@ -49,7 +51,15 @@ function NavHeader() {
   const handleNavigation = (item: any, e: React.MouseEvent) => {
     e.preventDefault();
     
-    if (location.pathname !== '/' && !item.href.startsWith('/')) {
+    // Für Blog oder Karriere direkt zur entsprechenden Seite navigieren
+    if (item.href === "/blog" || item.href === "/karriere") {
+      navigate(item.href);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    
+    if (location.pathname !== '/' && item.href.startsWith('#')) {
+      // Von einer anderen Seite zur Hauptseite und dann zum Anker scrollen
       navigate('/');
       setTimeout(() => {
         const element = document.querySelector(item.href);
@@ -58,13 +68,16 @@ function NavHeader() {
         }
       }, 100);
     } else if (item.href.startsWith('#') && location.pathname === '/') {
+      // Auf der Hauptseite zum Anker scrollen
       const element = document.querySelector(item.href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (item.href === '/') {
+      // Zum Seitenanfang scrollen oder zur Startseite navigieren
       scrollToTop();
     } else {
+      // Zu einer anderen Seite navigieren
       navigate(item.href);
     }
     
@@ -73,11 +86,12 @@ function NavHeader() {
 
   const navItems = [
     { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
-    { href: "#benefits", label: "Vorteile" },
-    { href: "#einsparungen", label: "Einsparungen" },
+    { href: "#nutzen", label: "Nutzen" },
+    { href: "#rechner", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
-    { href: "/pricing", label: "Preis" },
-    { href: "#blog", label: "Blog" },
+    { href: "#ueber-uns", label: "Über Uns" },
+    { href: "/blog", label: "Blog" }, 
+    { href: "/karriere", label: "Karriere" },
   ];
 
   return (
@@ -128,7 +142,11 @@ function NavHeader() {
             key={item.label}
             setPosition={setPosition} 
             href={item.href} 
-            isActive={activeSection === item.href.replace('#', '') || (item.href === '/' && location.pathname === '/')}
+            isActive={
+              (activeSection === item.href.replace('#', '') && item.href.startsWith('#')) || 
+              (item.href === '/' && location.pathname === '/') ||
+              (item.href === '/blog' && location.pathname === '/blog')
+            }
             onClick={(e) => handleNavigation(item, e)}
           >
             <span className="flex items-center gap-2">

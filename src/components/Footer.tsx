@@ -1,7 +1,20 @@
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import LegalDialog from "./legal/LegalDialog";
+import { useDialog } from "./providers/DialogProvider";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const [legalDialog, setLegalDialog] = useState<{
+    isOpen: boolean;
+    type: "impressum" | "datenschutz" | "agb";
+  }>({
+    isOpen: false,
+    type: "impressum",
+  });
+  
+  const { setContactDialogOpen } = useDialog();
   
   return (
     <footer className="bg-black/80 border-t border-gray-800 mt-20">
@@ -12,19 +25,28 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Rechtliches</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/impressum" className="text-gray-400 hover:text-primary transition-colors">
+                <button
+                  onClick={() => setLegalDialog({ isOpen: true, type: "impressum" })}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
                   Impressum
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/datenschutz" className="text-gray-400 hover:text-primary transition-colors">
+                <button
+                  onClick={() => setLegalDialog({ isOpen: true, type: "datenschutz" })}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
                   Datenschutzerklärung
-                </Link>
+                </button>
               </li>
               <li>
-                <Link to="/agb" className="text-gray-400 hover:text-primary transition-colors">
+                <button
+                  onClick={() => setLegalDialog({ isOpen: true, type: "agb" })}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
                   AGB
-                </Link>
+                </button>
               </li>
             </ul>
           </div>
@@ -39,6 +61,14 @@ const Footer = () => {
               <li className="text-gray-400">
                 Tel: +49 (0) 123 456789
               </li>
+              <li>
+                <button
+                  onClick={() => setContactDialogOpen(true)}
+                  className="text-gray-400 hover:text-primary transition-colors"
+                >
+                  Kontaktformular
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -47,22 +77,22 @@ const Footer = () => {
             <h3 className="text-white font-semibold mb-4">Service</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/faq" className="text-gray-400 hover:text-primary transition-colors">
+                <a href="#faq" className="text-gray-400 hover:text-primary transition-colors">
                   FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/kontakt" className="text-gray-400 hover:text-primary transition-colors">
-                  Kontaktformular
-                </Link>
+                </a>
               </li>
             </ul>
           </div>
 
-          {/* Social Media */}
+          {/* Blog & Social Media */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Social Media</h3>
+            <h3 className="text-white font-semibold mb-4">Blog & Social Media</h3>
             <ul className="space-y-2">
+              <li>
+                <Link to="/blog" className="text-gray-400 hover:text-primary transition-colors">
+                  Blog
+                </Link>
+              </li>
               <li>
                 <a href="#" className="text-gray-400 hover:text-primary transition-colors">
                   LinkedIn
@@ -81,6 +111,12 @@ const Footer = () => {
           <p>© {currentYear} Ihre Firma. Alle Rechte vorbehalten.</p>
         </div>
       </div>
+
+      <LegalDialog
+        isOpen={legalDialog.isOpen}
+        onClose={() => setLegalDialog({ ...legalDialog, isOpen: false })}
+        type={legalDialog.type}
+      />
     </footer>
   );
 };
