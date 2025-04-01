@@ -16,56 +16,38 @@ import TechStack from "../components/TechStack";
 
 // Logo data for the marquee
 const logoData = {
-  heading: "Wir arbeiten mit diesen Technologien",
+  heading: "Unsere AI-Tech-Partner",
   logos: [
     {
-      id: "logo-1",
-      description: "OpenAI",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/1280px-OpenAI_Logo.svg.png",
+      id: "logo-chatgpt",
+      description: "ChatGPT",
+      image: "public/lovable-uploads/9ca12b09-9e4c-4e40-be0f-4fe28b44e08d.png",
+      className: "h-12 w-auto",
+    },
+    {
+      id: "logo-gemini",
+      description: "Gemini",
+      image: "public/lovable-uploads/05626a4a-7cf4-4677-b23e-458e44a690c3.png",
       className: "h-10 w-auto",
     },
     {
-      id: "logo-2",
-      description: "Anthropic",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/82/Anthropic_logo.svg/2560px-Anthropic_logo.svg.png",
-      className: "h-6 w-auto",
+      id: "logo-lovable",
+      description: "Lovable",
+      image: "public/lovable-uploads/af11bd9a-17dc-44cf-b100-de117721696d.png",
+      className: "h-10 w-auto",
     },
     {
-      id: "logo-3",
-      description: "Google",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png",
-      className: "h-8 w-auto",
+      id: "logo-n8n",
+      description: "n8n",
+      image: "public/lovable-uploads/beb2f31a-56bf-4f78-880a-7a68f16a37f6.png",
+      className: "h-10 w-auto",
     },
     {
-      id: "logo-4",
-      description: "Microsoft",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/1024px-Microsoft_logo.svg.png",
-      className: "h-8 w-auto",
-    },
-    {
-      id: "logo-5",
-      description: "AWS",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Amazon_Web_Services_Logo.svg/2560px-Amazon_Web_Services_Logo.svg.png",
-      className: "h-8 w-auto",
-    },
-    {
-      id: "logo-6",
-      description: "Zapier",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Zapier_logo.svg/2560px-Zapier_logo.svg.png",
-      className: "h-8 w-auto",
-    },
-    {
-      id: "logo-7",
-      description: "HubSpot",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/Hubspot_Logo.svg/2560px-Hubspot_Logo.svg.png",
-      className: "h-9 w-auto",
-    },
-    {
-      id: "logo-8",
-      description: "Salesforce",
-      image: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Salesforce.com_logo.svg/2560px-Salesforce.com_logo.svg.png",
-      className: "h-6 w-auto",
-    },
+      id: "logo-perplexity",
+      description: "Perplexity",
+      image: "public/lovable-uploads/f512757e-3cbb-43c7-a856-a1d39548dbb2.png",
+      className: "h-11 w-auto",
+    }
   ],
 };
 
@@ -73,8 +55,8 @@ const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
-      <Logos3 {...logoData} />
       <AIFirstSection />
+      <Logos3 {...logoData} />
       <Benefits />
       <AIHereSection />
       <section id="nutzen">
@@ -98,4 +80,3 @@ const Index = () => {
 };
 
 export default Index;
-
