@@ -11,6 +11,8 @@ interface ContactDialogProps {
 }
 
 const ContactDialog = ({ open, onOpenChange, jobTitle, isApplication = false }: ContactDialogProps) => {
+  const [uploading, setUploading] = useState(false);
+  
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px] bg-black/95 border border-white/10">
@@ -25,8 +27,11 @@ const ContactDialog = ({ open, onOpenChange, jobTitle, isApplication = false }: 
           </DialogTitle>
         </DialogHeader>
         <ApplicationForm 
-          jobTitle={jobTitle} 
-          onSubmitSuccess={() => onOpenChange(false)} 
+          jobTitle={jobTitle}
+          isApplication={isApplication}
+          onSubmitSuccess={() => onOpenChange(false)}
+          isUploading={uploading}
+          setIsUploading={setUploading}
         />
       </DialogContent>
     </Dialog>

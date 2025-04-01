@@ -3,9 +3,13 @@ import { createContext, ReactNode, useContext, useState } from "react";
 import ContactDialog from "../ContactDialog";
 import CalendarDialog from "../CalendarDialog";
 
+// Konfiguration für den N8N-Webhook
+const N8N_WEBHOOK_URL = "https://your-n8n-instance.com/webhook/your-webhook-id";
+
 interface DialogContextType {
   setContactDialogOpen: (open: boolean, jobTitle?: string, isApplication?: boolean) => void;
   setCalendarDialogOpen: (open: boolean) => void;
+  webhookUrl: string;
 }
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined);
@@ -39,7 +43,11 @@ export const DialogProvider = ({ children }: DialogProviderProps) => {
   };
 
   return (
-    <DialogContext.Provider value={{ setContactDialogOpen, setCalendarDialogOpen }}>
+    <DialogContext.Provider value={{ 
+      setContactDialogOpen, 
+      setCalendarDialogOpen,
+      webhookUrl: N8N_WEBHOOK_URL 
+    }}>
       {children}
       <ContactDialog 
         open={contactOpen} 
