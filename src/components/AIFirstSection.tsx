@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useCallToAction } from "@/hooks/useCallToAction";
 
 const AIFirstSection = () => {
-  const { openCalendarBooking } = useCallToAction();
+  const { openCalendarBooking, openContactForm } = useCallToAction();
   
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('section:nth-of-type(2)');
