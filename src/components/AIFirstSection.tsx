@@ -12,7 +12,7 @@ const AIFirstSection = () => {
   };
   
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16 relative overflow-hidden">
+    <section className="min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-16 relative overflow-hidden">
       {/* Lamp container in background */}
       <div className="absolute inset-0 z-0 translate-y-24">
         <LampContainer>
@@ -34,10 +34,10 @@ const AIFirstSection = () => {
           className="text-center z-50"
         >
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
-            KI-First: <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-              Was steckt dahinter?
-            </span>
+              KI-First
+            </span>: <br />
+            Was steckt dahinter?
           </h2>
           
           <p className="text-xl text-gray-300 mt-8 max-w-3xl mx-auto">
