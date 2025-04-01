@@ -1,7 +1,7 @@
 
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Home } from "lucide-react";
 import { SocialLinks } from "../navigation/SocialLinks";
@@ -89,7 +89,7 @@ function NavHeader() {
   const navItems = [
     { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
     { href: "#nutzen", label: "Nutzen" },
-    { href: "#rechner", label: "Rechner" },
+    { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
     { href: "/blog", label: "Blog" }, 

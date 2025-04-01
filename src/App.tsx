@@ -31,7 +31,6 @@ const queryClient = new QueryClient({
       staleTime: 5 * 60 * 1000, // 5 minutes
       retry: 1,
       refetchOnWindowFocus: false, // Disable refetching when window regains focus
-      suspense: false, // We handle loading states manually for more control
     },
   },
 });
