@@ -13,6 +13,7 @@ import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import { DialogProvider } from "./components/providers/DialogProvider";
+import CalendarFloatingButton from "./components/CalendarFloatingButton";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <CookieConsent />
+        <CalendarFloatingButton />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
