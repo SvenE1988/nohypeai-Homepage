@@ -13,6 +13,7 @@ import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
 import { Logos3 } from "../components/blocks/logos3";
 import TechStack from "../components/TechStack";
+import EasterPromoPopup from "../components/EasterPromoPopup";
 
 // Logo data for the marquee
 const logoData = {
@@ -75,6 +76,7 @@ const Index = () => {
       <TechStack />
       <FAQ />
       <Footer />
+      <EasterPromoPopup />
     </main>
   );
 };
