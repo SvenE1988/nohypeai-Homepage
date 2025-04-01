@@ -14,10 +14,7 @@ import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import { DialogProvider } from "./components/providers/DialogProvider";
 import CalendarFloatingButton from "./components/CalendarFloatingButton";
-import N8NChatWidget from "./components/N8NChatWidget";
-
-// n8n Chat styles
-import '@n8n/chat/style.css';
+import CustomChat from "./components/CustomChat";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +27,7 @@ const App = () => (
         <Sonner />
         <CookieConsent />
         <CalendarFloatingButton />
-        <N8NChatWidget />
+        <CustomChat />
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
