@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
@@ -8,22 +8,46 @@ import { useCallToAction } from "@/hooks/useCallToAction";
 const EasterPromoPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
   const { openCalendarBooking } = useCallToAction();
+  const scrollListenerRef = useRef<((e: Event) => void) | null>(null);
   
   useEffect(() => {
+    // Check if the popup is still valid based on date (only show until April 15)
+    const currentDate = new Date();
+    const endDate = new Date(currentDate.getFullYear(), 3, 15); // April 15th
+    
+    // Don't show popup if it's past April 15
+    if (currentDate > endDate) {
+      return;
+    }
+    
     // Check if the popup has been shown recently
     const lastPopupTime = localStorage.getItem('lastEasterPromoTime');
     const currentTime = Date.now();
     const hasRecentlyDismissed = lastPopupTime && (currentTime - parseInt(lastPopupTime)) < 120000; // 2 minutes in milliseconds
     
+    // If user has recently dismissed, don't add scroll listener
+    if (hasRecentlyDismissed) {
+      return;
+    }
+    
+    // Create the scroll handler
     const handleScroll = () => {
       // Only show popup after scrolling 300px and if it hasn't been recently dismissed
       if (window.scrollY > 300 && !isVisible && !hasRecentlyDismissed) {
         setIsVisible(true);
+        
+        // Remove the scroll listener once popup is shown
+        if (scrollListenerRef.current) {
+          window.removeEventListener("scroll", scrollListenerRef.current);
+        }
       }
     };
-
+    
+    // Store the handler reference for cleanup
+    scrollListenerRef.current = handleScroll;
+    
     // Set up the scroll listener
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     
     // Show popup on initial load if conditions are met
     if (window.scrollY > 300 && !hasRecentlyDismissed) {
@@ -34,11 +58,17 @@ const EasterPromoPopup = () => {
       
       return () => {
         clearTimeout(initialTimer);
-        window.removeEventListener("scroll", handleScroll);
+        if (scrollListenerRef.current) {
+          window.removeEventListener("scroll", scrollListenerRef.current);
+        }
       };
     }
     
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      if (scrollListenerRef.current) {
+        window.removeEventListener("scroll", scrollListenerRef.current);
+      }
+    };
   }, [isVisible]);
 
   const handleDismiss = () => {
@@ -47,7 +77,12 @@ const EasterPromoPopup = () => {
     localStorage.setItem('lastEasterPromoTime', Date.now().toString());
   };
 
-  if (!isVisible) return null;
+  // Don't render anything if we shouldn't show popup based on date
+  const currentDate = new Date();
+  const endDate = new Date(currentDate.getFullYear(), 3, 15); // April 15th
+  if (currentDate > endDate) {
+    return null;
+  }
 
   return (
     <AnimatePresence>

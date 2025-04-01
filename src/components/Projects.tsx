@@ -1,7 +1,7 @@
 
 import { Badge } from "./ui/badge";
 import { AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import ProjectDetails from "./projects/ProjectDetails";
 import ProjectCard from "./projects/ProjectCard";
 import { Project } from "./projects/types";
@@ -20,36 +20,59 @@ const Projects = () => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [api, setApi] = useState<any>(null);
+  const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
-  const handleViewDetails = (project: Project) => {
+  const handleViewDetails = useCallback((project: Project) => {
     setCurrentProject(project);
     setIsDetailsOpen(true);
-  };
+  }, []);
   
-  // Startet Autoplay wenn API geladen ist
+  // Optimized autoplay logic
   useEffect(() => {
     if (!api) return;
     
-    const autoplayInterval = setInterval(() => {
-      api.scrollNext();
-    }, 5000);
+    const startAutoplay = () => {
+      if (autoplayIntervalRef.current) {
+        clearInterval(autoplayIntervalRef.current);
+      }
+      
+      autoplayIntervalRef.current = setInterval(() => {
+        api.scrollNext();
+      }, 5000);
+    };
     
-    // Stoppt Autoplay wenn Nutzer interagiert
-    const handlePointerDown = () => clearInterval(autoplayInterval);
+    const stopAutoplay = () => {
+      if (autoplayIntervalRef.current) {
+        clearInterval(autoplayIntervalRef.current);
+        autoplayIntervalRef.current = null;
+      }
+    };
+    
+    // Start autoplay
+    startAutoplay();
+    
+    // Pause on user interaction
     const root = document.querySelector('#projekte');
     if (root) {
-      root.addEventListener('pointerdown', handlePointerDown);
+      root.addEventListener('pointerdown', stopAutoplay);
+      root.addEventListener('pointerup', startAutoplay);
+      root.addEventListener('touchstart', stopAutoplay);
+      root.addEventListener('touchend', startAutoplay);
     }
     
+    // Clean up on unmount
     return () => {
-      clearInterval(autoplayInterval);
+      stopAutoplay();
       if (root) {
-        root.removeEventListener('pointerdown', handlePointerDown);
+        root.removeEventListener('pointerdown', stopAutoplay);
+        root.removeEventListener('pointerup', startAutoplay);
+        root.removeEventListener('touchstart', stopAutoplay);
+        root.removeEventListener('touchend', startAutoplay);
       }
     };
   }, [api]);
   
-  // Verfolgt den aktuellen aktiven Slide
+  // Track active slide with memoized callback
   useEffect(() => {
     if (!api) return;
     
@@ -62,6 +85,7 @@ const Projects = () => {
     
     return () => {
       api.off('select', onSelect);
+      api.off('reInit', onSelect);
     };
   }, [api]);
 

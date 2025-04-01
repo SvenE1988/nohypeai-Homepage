@@ -1,5 +1,5 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { cn } from "@/lib/utils";
 import ProjectCard from "./ProjectCard";
@@ -20,49 +20,59 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
   const [slidesInView, setSlidesInView] = useState<number[]>([]);
   const autoplayRef = useRef<NodeJS.Timeout | null>(null);
   
+  // Optimize scroll detection
+  const onScroll = useCallback(() => {
+    if (!emblaApi) return;
+    
+    const inView: number[] = [];
+    const slides = emblaApi.slideNodes();
+    
+    for (let i = 0; i < slides.length; i++) {
+      const slide = slides[i];
+      const rect = slide.getBoundingClientRect();
+      
+      if (rect.left < window.innerWidth && rect.right > 0) {
+        inView.push(i);
+      }
+    }
+    
+    setSlidesInView(inView);
+  }, [emblaApi]);
+  
+  // Optimize selection tracking
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+  
+  // Setup event listeners
   useEffect(() => {
     if (!emblaApi) return;
     
-    const onSelect = () => {
-      setSelectedIndex(emblaApi.selectedScrollSnap());
-    };
-    
-    const onScroll = () => {
-      const inView = [];
-      const slides = emblaApi.slideNodes();
-      
-      for (let i = 0; i < slides.length; i++) {
-        const slide = slides[i];
-        const rect = slide.getBoundingClientRect();
-        
-        if (rect.left < window.innerWidth && rect.right > 0) {
-          inView.push(i);
-        }
-      }
-      
-      setSlidesInView(inView);
-    };
+    onSelect();
+    onScroll();
     
     emblaApi.on('select', onSelect);
     emblaApi.on('scroll', onScroll);
     emblaApi.on('reInit', onSelect);
     
-    onSelect();
-    onScroll();
-    
     return () => {
       emblaApi.off('select', onSelect);
       emblaApi.off('scroll', onScroll);
+      emblaApi.off('reInit', onSelect);
     };
-  }, [emblaApi]);
+  }, [emblaApi, onSelect, onScroll]);
   
+  // Optimize autoplay
   useEffect(() => {
     if (!emblaApi) return;
     
     const startAutoplay = () => {
       stopAutoplay();
       autoplayRef.current = setInterval(() => {
-        if (emblaApi) emblaApi.scrollNext();
+        if (emblaApi && document.visibilityState === 'visible') {
+          emblaApi.scrollNext();
+        }
       }, 5000);
     };
     
@@ -72,11 +82,24 @@ const ProjectCarousel = ({ projects, onViewDetails }: ProjectCarouselProps) => {
     
     startAutoplay();
     
+    // Pause on pointer events
     emblaApi.on('pointerDown', stopAutoplay);
     emblaApi.on('pointerUp', startAutoplay);
     
+    // Pause when tab not visible
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
     return () => {
       stopAutoplay();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (emblaApi) {
         emblaApi.off('pointerDown', stopAutoplay);
         emblaApi.off('pointerUp', startAutoplay);
