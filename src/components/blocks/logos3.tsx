@@ -66,3 +66,4 @@ export function Logos3({ heading, logos, className }: Logos3Props) {
       </div>
     </div>
   );
+}
