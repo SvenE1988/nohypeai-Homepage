@@ -57,7 +57,7 @@ export function Logos3({ heading, logos, className }: Logos3Props) {
                 <img
                   src={logo.image}
                   alt={logo.description}
-                  className={cn("h-20 md:h-24 w-auto object-contain opacity-90 hover:opacity-100 transition-all duration-300", logo.className)}
+                  className={cn("h-24 md:h-28 w-auto object-contain opacity-100 hover:opacity-100 transition-all duration-300", logo.className)}
                 />
               </div>
             ))}
