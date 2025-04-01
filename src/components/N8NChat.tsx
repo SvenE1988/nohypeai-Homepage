@@ -16,7 +16,7 @@ const N8NChat = () => {
         }
       },
       showWelcomeScreen: true,
-      defaultLanguage: 'de',
+      defaultLanguage: 'en', // Changed from 'de' to 'en' as it's the only supported language
       initialMessages: [
         'Hallo! 👋',
         'Ich bin der nohype-ai.de Assistent. Wie kann ich Ihnen heute helfen?'
@@ -28,6 +28,7 @@ const N8NChat = () => {
           footer: 'Powered by nohype-ai.de',
           getStarted: 'Neue Konversation',
           inputPlaceholder: 'Stellen Sie Ihre Frage...',
+          closeButtonTooltip: 'Chat schließen' // Added the missing property
         },
       },
       metadata: {
