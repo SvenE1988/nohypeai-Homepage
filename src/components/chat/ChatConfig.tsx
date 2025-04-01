@@ -14,14 +14,14 @@ export const getChatConfig = () => {
       }
     },
     showWelcomeScreen: true,
-    defaultLanguage: 'de' as 'de', // Using type assertion to ensure it's the literal 'de' type
+    defaultLanguage: 'en' as 'en', // Using type assertion to ensure it's the literal 'en' type
     initialMessages: [
       'Hallo! 👋',
       'Ich bin der nohype-ai.de Assistent. Wie kann ich Ihnen heute helfen?',
       'Sie können auch direkt einen Termin vereinbaren, indem Sie auf den Button oben klicken.'
     ],
     i18n: {
-      de: {
+      en: {
         title: 'nohype-ai.de Assistent',
         subtitle: 'Stellen Sie Ihre Fragen oder buchen Sie einen Termin.',
         footer: 'Powered by nohype-ai.de',
