@@ -1,8 +1,14 @@
 
 import { Clock, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-const Benefits = () => {
+// Benefits-Props mit optionalem className
+interface BenefitsProps {
+  className?: string;
+}
+
+const Benefits = ({ className }: BenefitsProps) => {
   const benefits = [
     {
       icon: Clock,
@@ -25,7 +31,7 @@ const Benefits = () => {
   ];
 
   return (
-    <section className="py-12 bg-gradient-dark">
+    <section className={cn("py-12 bg-gradient-dark", className)}>
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {benefits.map((benefit, index) => {
