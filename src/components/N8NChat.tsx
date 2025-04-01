@@ -34,8 +34,8 @@ const N8NChat = () => {
           subtitle: 'Stellen Sie Ihre Fragen oder buchen Sie einen Termin.',
           footer: '',
           getStarted: 'Neue Konversation',
-          inputPlaceholder: 'Stellen Sie Ihre Frage...'
-          // Die closeButtonTooltip-Option wurde entfernt
+          inputPlaceholder: 'Stellen Sie Ihre Frage...',
+          closeButtonTooltip: 'Chat schließen' // Added back to satisfy type requirements
         },
       },
       metadata: {
