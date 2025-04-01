@@ -2,8 +2,11 @@
 import { useEffect } from 'react';
 import '@n8n/chat/style.css';
 import { createChat } from '@n8n/chat';
+import { useCallToAction } from '@/hooks/useCallToAction';
 
 const N8NChat = () => {
+  const { openCalendarBooking } = useCallToAction();
+
   useEffect(() => {
     // Benutzerdefinierte CSS für den Chat hinzufügen
     const styleElement = document.createElement('style');
@@ -68,98 +71,108 @@ const N8NChat = () => {
         --chat--toggle--size: 60px;
       }
       
-      /* Zusätzliches Styling für einen "Termin buchen" Button im Header */
-      .n8n-chat-header-booking-button {
+      /* Benutzerdefinierte Klassen für Chat-UI-Komponenten */
+      .n8n-booking-button {
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        padding: 8px 12px;
         background-color: #FF0099;
         color: white;
         border: none;
-        border-radius: 4px;
-        padding: 6px 12px;
+        border-radius: 6px;
         font-size: 14px;
-        cursor: pointer;
-        margin-top: 10px;
-        transition: background-color 0.2s;
-        display: block;
-        width: 100%;
+        font-weight: 500;
         text-align: center;
+        cursor: pointer;
+        transition: background-color 0.2s;
         text-decoration: none;
       }
       
-      .n8n-chat-header-booking-button:hover {
+      .n8n-booking-button:hover {
         background-color: #e6008a;
       }
-
-      /* Styling für den X-Button zum Schließen */
-      .n8n-chat-close-button {
+      
+      /* X-Button zum Schließen verbessern */
+      /* Das ist der tatsächliche Selektor für den Schließen-Button */
+      .n8n-chat-window__header button:not(.n8n-booking-button) {
         position: absolute;
-        top: 15px;
-        right: 15px;
-        background: transparent;
-        border: none;
-        color: white;
-        font-size: 20px;
-        cursor: pointer;
+        top: 10px;
+        right: 10px;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
+        color: white;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        padding: 0;
         transition: background-color 0.2s;
       }
       
-      .n8n-chat-close-button:hover {
-        background-color: rgba(255, 255, 255, 0.1);
+      .n8n-chat-window__header button:hover:not(.n8n-booking-button) {
+        background: rgba(255, 255, 255, 0.2);
       }
     `;
     document.head.appendChild(styleElement);
 
-    // Benutzerdefiniertes JavaScript für UI-Anpassungen hinzufügen
+    // Benutzerdefiniertes JavaScript für UI-Anpassungen
     const script = document.createElement('script');
     script.textContent = `
-      // Funktion zum Hinzufügen eines Termin-Buttons in den Header und zur Verbesserung des Schließen-Buttons
-      function enhanceChatUI() {
-        // Chat-Header finden
-        const chatHeader = document.querySelector('.n8n-chat-header');
+      // Diese Funktion fügt den Termin-Button hinzu
+      function addBookingButton() {
+        // Den richtigen Header-Selektor verwenden
+        const chatHeader = document.querySelector('.n8n-chat-window__header');
         if (!chatHeader) return;
         
-        // Schließen-Button verbessern (X)
-        const closeButton = document.querySelector('.n8n-chat-header button');
-        if (closeButton) {
-          closeButton.classList.add('n8n-chat-close-button');
-          closeButton.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
-        }
+        // Prüfen, ob der Button bereits existiert
+        if (chatHeader.querySelector('.n8n-booking-button')) return;
         
-        // Termin-Button erstellen und zum Header hinzufügen
-        const bookingButton = document.createElement('a');
-        bookingButton.href = "https://nohypeai.com/booking";
-        bookingButton.target = "_blank";
-        bookingButton.className = 'n8n-chat-header-booking-button';
+        // Termin-Button erstellen
+        const bookingButton = document.createElement('button');
+        bookingButton.className = 'n8n-booking-button';
         bookingButton.textContent = 'Termin vereinbaren';
+        bookingButton.onclick = function() {
+          // Cal.com öffnen, wenn vorhanden
+          if (window.Cal?.ns?.erstanalyse) {
+            window.Cal.ns.erstanalyse("modal", {
+              calLink: "nohypeai/erstanalyse",
+              layout: "month_view",
+              styles: { branding: { brandColor: "#FF0099" } }
+            });
+          } else {
+            // Fallback: Link direkt öffnen
+            window.open("https://nohypeai.com/booking", "_blank");
+          }
+        };
+        
+        // Button zum Header hinzufügen
         chatHeader.appendChild(bookingButton);
       }
-      
-      // Beobachter einrichten, um auf DOM-Änderungen zu reagieren und die UI zu verbessern
+
+      // MutationObserver verwenden, um auf DOM-Änderungen zu reagieren
       const observer = new MutationObserver((mutations) => {
         for (const mutation of mutations) {
           if (mutation.addedNodes.length) {
-            // Prüfen, ob der Chat-Header hinzugefügt wurde
-            if (document.querySelector('.n8n-chat-header')) {
-              enhanceChatUI();
-              // Nur einmal ausführen
-              observer.disconnect();
-              
-              // Erneut beobachten, falls der Chat geschlossen und wieder geöffnet wird
-              setTimeout(() => {
-                observer.observe(document.body, { childList: true, subtree: true });
-              }, 1000);
+            // Prüfen, ob der Chat geöffnet wurde
+            if (document.querySelector('.n8n-chat-window__header')) {
+              setTimeout(addBookingButton, 100); // Kurze Verzögerung für stabilere Ausführung
             }
           }
         }
       });
       
-      // Beobachtung starten
+      // Beobachtung des gesamten body starten
       observer.observe(document.body, { childList: true, subtree: true });
+      
+      // Wenn die Seite bereits den Chat anzeigt, Button sofort hinzufügen
+      setTimeout(() => {
+        if (document.querySelector('.n8n-chat-window__header')) {
+          addBookingButton();
+        }
+      }, 500);
     `;
     document.head.appendChild(script);
 
