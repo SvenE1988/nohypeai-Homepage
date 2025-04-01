@@ -51,22 +51,17 @@ const N8NChat = () => {
           source: 'website',
           page: window.location.pathname
         },
-        // Anpassung des Styles, um Z-Index-Probleme zu beheben
-        styles: {
-          button: {
-            size: 60,
-            iconSize: 24,
-            horizontalDistance: 20,
-            verticalDistance: 20,
-            zIndex: 99999, // Höherer z-index, um Überlagerungen zu vermeiden
-            position: 'bottom-right', // Explizite Position festlegen
-          },
-          chat: {
-            zIndex: 99999, // Höherer z-index für das Chat-Fenster
-            height: '70vh',
-            maxHeight: '800px',
-            width: '380px'
-          }
+        button: {
+          size: 60,
+          iconSize: 24,
+          horizontalDistance: 20,
+          verticalDistance: 20,
+          position: 'bottom-right',
+        },
+        chat: {
+          height: '70vh',
+          maxHeight: '800px',
+          width: '380px'
         }
       });
       
@@ -84,6 +79,20 @@ const N8NChat = () => {
       }
       .n8n-chat-window-container {
         z-index: 99999 !important;
+      }
+      .n8n-chat-input-container {
+        padding: 12px !important;
+      }
+      .n8n-chat-message-container {
+        padding: 16px !important;
+      }
+      .n8n-chat-input textarea {
+        min-height: 50px !important;
+        padding: 10px !important;
+        border-radius: 8px !important;
+      }
+      .n8n-chat-header {
+        padding: 16px !important;
       }
     `;
     document.head.appendChild(style);
