@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Calculator } from "lucide-react";
+import { X, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCallToAction } from "@/hooks/useCallToAction";
 
@@ -17,7 +17,17 @@ const EasterPromoPopup = () => {
       }
     };
 
+    // Set up the scroll listener
     window.addEventListener("scroll", handleScroll);
+    
+    // Store the popup state in session storage to prevent repeated appearances
+    const hasSeenPopup = sessionStorage.getItem('hasSeenEasterPromo');
+    
+    if (!hasSeenPopup && window.scrollY > 300) {
+      setIsVisible(true);
+      sessionStorage.setItem('hasSeenEasterPromo', 'true');
+    }
+    
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isVisible]);
 
@@ -38,7 +48,11 @@ const EasterPromoPopup = () => {
             <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-[#E1BEE7]/30 to-[#CE93D8]/30 rounded-full blur-xl"></div>
             
             <button 
-              onClick={() => setIsVisible(false)}
+              onClick={() => {
+                setIsVisible(false);
+                // When closed manually, remember it for the entire browser session
+                sessionStorage.setItem('hasSeenEasterPromo', 'true');
+              }}
               className="absolute top-2 right-2 text-white/70 hover:text-white z-10"
             >
               <X size={20} />
@@ -78,8 +92,8 @@ const EasterPromoPopup = () => {
                 className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
                 onClick={openCalendarBooking}
               >
-                <Calculator className="w-4 h-4" />
-                Jetzt Termin sichern
+                <Calendar className="w-4 h-4" />
+                Kostenloses Erstgespräch buchen
               </Button>
             </div>
           </div>
