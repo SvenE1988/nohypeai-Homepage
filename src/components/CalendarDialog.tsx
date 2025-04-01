@@ -47,16 +47,18 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         document.body.appendChild(script);
       }
 
-      // Cal initialisieren, wenn es bereits geladen ist
+      // Cal Inline Embed initialisieren, wenn der Dialog geöffnet wird
       setTimeout(() => {
         if ((window as any).Cal && (window as any).Cal.ns && (window as any).Cal.ns.erstanalyse) {
-          (window as any).Cal.ns.erstanalyse("ui", {
-            "cssVarsPerTheme": {
-              "light": {"cal-brand": "#292929"},
-              "dark": {"cal-brand": "#fafafa"}
+          (window as any).Cal.ns.erstanalyse("inline", {
+            elementOrSelector: "#cal-booking-place",
+            calLink: "sven-erkens-bp1ovm/erstanalyse",
+            layout: "month_view",
+            cssVarsPerTheme: {
+              light: {"cal-brand": "#292929"},
+              dark: {"cal-brand": "#fafafa"}
             },
-            "hideEventTypeDetails": false,
-            "layout": "month_view"
+            hideEventTypeDetails: false
           });
         }
       }, 300);
@@ -71,15 +73,11 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         </DialogHeader>
         
         <div className="h-full flex items-center justify-center">
-          {/* Cal.com Element-Click Button */}
-          <button
-            className="py-3 px-6 bg-primary hover:bg-primary/90 text-white rounded-lg transition-all duration-300 flex items-center gap-2"
-            data-cal-link="sven-erkens-bp1ovm/erstanalyse"
-            data-cal-namespace="erstanalyse"
-            data-cal-config='{"layout":"month_view"}'
-          >
-            Termin vereinbaren
-          </button>
+          {/* Cal.com Inline Embed Container */}
+          <div 
+            id="cal-booking-place" 
+            className="w-full h-full min-h-[500px]"
+          />
         </div>
       </DialogContent>
     </Dialog>
