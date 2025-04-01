@@ -10,7 +10,7 @@ const N8NChat = () => {
     // Only initialize once to prevent the Vue warning about multiple mounts
     if (chatInitialized.current) return;
     
-    // Initialize chat with standard settings
+    // Initialize chat with simplified settings
     createChat({
       webhookUrl: 'https://automatisierung.seserver.nohype-ai.de/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
       webhookConfig: {
@@ -34,8 +34,8 @@ const N8NChat = () => {
           subtitle: 'Stellen Sie Ihre Fragen oder buchen Sie einen Termin.',
           footer: '',
           getStarted: 'Neue Konversation',
-          inputPlaceholder: 'Stellen Sie Ihre Frage...',
-          closeButtonTooltip: 'Chat schließen'
+          inputPlaceholder: 'Stellen Sie Ihre Frage...'
+          // Die closeButtonTooltip-Option wurde entfernt
         },
       },
       metadata: {
