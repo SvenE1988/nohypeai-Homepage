@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -44,6 +45,7 @@
     background: 
       radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
       radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
+    z-index: 1; /* Niedriger z-index für den Glow-Effekt */
   }
 
   /* Section styling */
@@ -59,6 +61,7 @@
     background: 
       radial-gradient(circle at 15% 50%, rgba(107, 70, 193, 0.08) 0%, transparent 60%),
       radial-gradient(circle at 85% 50%, rgba(255, 0, 153, 0.08) 0%, transparent 60%);
+    z-index: 0; /* Niedriger z-index für den Glow-Effekt */
   }
 
   .perspective {
@@ -90,6 +93,7 @@
     radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
     radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
   pointer-events: none;
+  z-index: 1; /* Niedriger z-index */
 }
 
 /* Cookie consent backdrop styles */
@@ -111,4 +115,16 @@
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+/* N8N Chat Anpassungen */
+#n8n-chat-button {
+  z-index: 99999 !important;
+  position: fixed !important;
+  bottom: 20px !important;
+  right: 20px !important;
+}
+
+.n8n-chat-window-container {
+  z-index: 99999 !important;
 }
