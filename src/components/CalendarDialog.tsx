@@ -52,7 +52,7 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         if ((window as any).Cal && (window as any).Cal.ns && (window as any).Cal.ns.erstanalyse) {
           (window as any).Cal.ns.erstanalyse("inline", {
             elementOrSelector: "#cal-booking-place",
-            calLink: "sven-erkens-bp1ovm/erstanalyse",
+            calLink: "nohypeai/erstanalyse",
             layout: "month_view",
             cssVarsPerTheme: {
               light: {"cal-brand": "#292929"},
