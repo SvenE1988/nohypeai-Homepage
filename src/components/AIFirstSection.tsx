@@ -25,9 +25,15 @@ const AIFirstSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button size="lg" className="bg-black hover:bg-black/80 text-white border-2 border-primary">
-              Jetzt durchstarten
-            </Button>
+            <a 
+              href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" className="bg-black hover:bg-black/80 text-white border-2 border-primary">
+                Jetzt durchstarten
+              </Button>
+            </a>
           </div>
 
           <div className="flex gap-6 pt-4">

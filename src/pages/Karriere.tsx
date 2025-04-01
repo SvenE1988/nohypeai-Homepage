@@ -5,15 +5,8 @@ import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import JobCard from "../components/career/JobCard";
 import { jobPostings } from "../data/jobData";
-import { useDialog } from "@/components/providers/DialogProvider";
 
 const Karriere = () => {
-  const { setContactDialogOpen } = useDialog();
-
-  const handleInitiativeApplication = () => {
-    setContactDialogOpen(true, undefined, true);
-  };
-
   return (
     <div className="min-h-screen bg-black">
       <NavHeader />
@@ -78,12 +71,14 @@ const Karriere = () => {
               Wir sind immer auf der Suche nach talentierten Menschen. Schick uns deine Initiativbewerbung!
             </p>
             
-            <button
+            <a
+              href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-6 py-3 bg-primary/20 hover:bg-primary/30 border border-primary/40 rounded-lg text-white transition-colors duration-300"
-              onClick={handleInitiativeApplication}
             >
               Initiativbewerbung senden
-            </button>
+            </a>
           </div>
         </section>
       </main>

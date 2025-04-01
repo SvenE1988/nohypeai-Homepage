@@ -5,20 +5,12 @@ import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { JobPosting } from "@/data/jobData";
 import { Button } from "@/components/ui/neon-button";
-import { useDialog } from "@/components/providers/DialogProvider";
 
 interface JobCardProps {
   job: JobPosting;
 }
 
 const JobCard = ({ job }: JobCardProps) => {
-  const { setContactDialogOpen } = useDialog();
-
-  const handleApply = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setContactDialogOpen(true, job.title, true);
-  };
-
   return (
     <article className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-white/10 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
       <div className="flex justify-between items-center mb-4">
@@ -68,14 +60,19 @@ const JobCard = ({ job }: JobCardProps) => {
           <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
         </Link>
         
-        <Button 
-          variant="ghost" 
-          size="sm"
-          className="text-white"
-          onClick={handleApply}
+        <a 
+          href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage"
+          target="_blank" 
+          rel="noopener noreferrer"
         >
-          Bewerben
-        </Button>
+          <Button 
+            variant="ghost" 
+            size="sm"
+            className="text-white"
+          >
+            Bewerben
+          </Button>
+        </a>
       </div>
     </article>
   );
