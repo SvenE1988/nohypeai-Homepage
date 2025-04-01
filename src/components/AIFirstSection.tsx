@@ -1,5 +1,5 @@
 
-import { Mail, Linkedin, Instagram, ChevronDown, Calculator } from "lucide-react";
+import { Mail, Linkedin, ChevronDown, Calculator } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
 import { useCallToAction } from "@/hooks/useCallToAction";
@@ -40,26 +40,32 @@ const AIFirstSection = () => {
             </Button>
           </div>
 
-          <div className="flex gap-6 pt-4">
-            <motion.a href="#" className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5" whileHover={{
-            scale: 1.1
-          }} whileTap={{
-            scale: 0.95
-          }}>
-              <Instagram size={32} />
-            </motion.a>
-            <motion.a href="#" className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5" whileHover={{
-            scale: 1.1
-          }} whileTap={{
-            scale: 0.95
-          }}>
+          <div className="flex gap-6 pt-4 pl-0">
+            <motion.a 
+              href="https://www.linkedin.com/in/svenerkens" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5" 
+              whileHover={{
+                scale: 1.1
+              }} 
+              whileTap={{
+                scale: 0.95
+              }}
+            >
               <Linkedin size={32} />
             </motion.a>
-            <motion.a href="#" className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5" whileHover={{
-            scale: 1.1
-          }} whileTap={{
-            scale: 0.95
-          }}>
+            <motion.a 
+              href="#" 
+              className="text-gray-400 hover:text-primary transition-colors p-2 rounded-full hover:bg-white/5" 
+              onClick={openContactForm}
+              whileHover={{
+                scale: 1.1
+              }} 
+              whileTap={{
+                scale: 0.95
+              }}
+            >
               <Mail size={32} />
             </motion.a>
           </div>
