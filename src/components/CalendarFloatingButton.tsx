@@ -7,10 +7,12 @@ const CalendarFloatingButton = () => {
     (async function () {
       const cal = await getCalApi({"namespace":"erstanalyse"});
       cal("floatingButton", {
-        "calLink": "sven-erkens-bp1ovm/erstanalyse",
+        "calLink": "nohypeai/erstanalyse", 
         "config": {
           "layout": "month_view"
-        }
+        },
+        "buttonText": "Sparpotenzial berechnen",
+        "buttonTextColor": "#e616d9"
       });
       cal("ui", {
         "cssVarsPerTheme": {

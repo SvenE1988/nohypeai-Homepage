@@ -14,7 +14,7 @@ export const useCallToAction = () => {
     // Sicherstellen, dass Cal API geladen ist
     if ((window as any).Cal?.ns?.erstanalyse) {
       (window as any).Cal.ns.erstanalyse("modal", {
-        calLink: "sven-erkens-bp1ovm/erstanalyse",
+        calLink: "nohypeai/erstanalyse",
         layout: "month_view",
       });
     }
