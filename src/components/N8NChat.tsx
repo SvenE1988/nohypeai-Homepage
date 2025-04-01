@@ -51,18 +51,16 @@ const N8NChat = () => {
           source: 'website',
           page: window.location.pathname
         },
-        button: {
-          size: 60,
-          iconSize: 24,
-          horizontalDistance: 20,
-          verticalDistance: 20,
-          position: 'bottom-right',
+        position: 'bottom-right',
+        distanceFromEdge: {
+          horizontal: 20,
+          vertical: 20
         },
-        chat: {
-          height: '70vh',
-          maxHeight: '800px',
-          width: '380px'
-        }
+        buttonSize: 60,
+        buttonIconSize: 24,
+        height: '70vh',
+        maxHeight: '800px',
+        width: '380px'
       });
       
       // Mark as initialized
@@ -93,6 +91,10 @@ const N8NChat = () => {
       }
       .n8n-chat-header {
         padding: 16px !important;
+      }
+      .n8n-chat-input-actions {
+        right: 16px !important;
+        bottom: 16px !important;
       }
     `;
     document.head.appendChild(style);
