@@ -6,7 +6,7 @@ const GrowthSection = () => {
   return (
     <section className="py-24 px-4 bg-black">
       <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-8 md:mb-12 text-white">
           Steigern Sie Ihr Wachstum
           <br />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
@@ -15,22 +15,22 @@ const GrowthSection = () => {
         </h2>
 
         <Tabs defaultValue="sprachassistent" className="w-full">
-          <TabsList className="w-full max-w-2xl mx-auto grid grid-cols-1 sm:grid-cols-3 bg-[#1A1F35] p-1 rounded-full mb-12 gap-1">
+          <TabsList className="w-full max-w-2xl mx-auto flex flex-col sm:grid sm:grid-cols-3 bg-transparent sm:bg-[#1A1F35] sm:p-1 rounded-full mb-8 md:mb-12 gap-3 sm:gap-1">
             <TabsTrigger
               value="sprachassistent"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-sm py-3 sm:py-2 bg-[#1A1F35] sm:bg-transparent"
             >
               Sprachassistent
             </TabsTrigger>
             <TabsTrigger
               value="ablaufoptimierung"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-sm py-3 sm:py-2 bg-[#1A1F35] sm:bg-transparent"
             >
               Ablaufoptimierung
             </TabsTrigger>
             <TabsTrigger
               value="content"
-              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-xs sm:text-sm py-2"
+              className="rounded-full data-[state=active]:bg-primary data-[state=active]:text-white text-gray-400 text-sm py-3 sm:py-2 bg-[#1A1F35] sm:bg-transparent"
             >
               Content & Marketing
             </TabsTrigger>
