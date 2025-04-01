@@ -67,11 +67,6 @@ const CustomChat = () => {
     }
   };
 
-  // Handle booking appointment
-  const handleBookAppointment = () => {
-    setCalendarDialogOpen(true);
-  };
-
   // Handle voice chat (placeholder)
   const handleVoiceChat = () => {
     console.log("Sprachchat");
@@ -108,7 +103,6 @@ const CustomChat = () => {
         >
           {/* Chat header */}
           <ChatHeader 
-            handleBookAppointment={handleBookAppointment}
             handleVoiceChat={handleVoiceChat}
             toggleChat={toggleChat}
           />
