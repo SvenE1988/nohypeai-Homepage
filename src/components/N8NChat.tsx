@@ -7,7 +7,7 @@ const N8NChat = () => {
   useEffect(() => {
     // Adding more configuration options based on the documentation
     createChat({
-      webhookUrl: 'https://automatisierung.seserver.nohype-ai.de/webhook/087c4d6d-9ff6-4abe-8f73-191e36d6ece3/chat',
+      webhookUrl: 'https://automatisierung.seserver.nohype-ai.de/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
       webhookConfig: {
         method: 'POST',
         headers: {
