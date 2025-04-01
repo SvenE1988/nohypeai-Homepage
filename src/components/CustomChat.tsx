@@ -5,6 +5,7 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Separator } from './ui/separator';
 import { MessageCircle, Send, Calendar, Mic } from 'lucide-react';
+import { useDialog } from './providers/DialogProvider';
 
 // Message type definition
 interface Message {
@@ -22,6 +23,7 @@ const CustomChat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const { setCalendarDialogOpen } = useDialog();
 
   // Initialize session and chat
   useEffect(() => {
@@ -140,7 +142,7 @@ const CustomChat = () => {
 
   // Handle booking appointment
   const handleBookAppointment = () => {
-    window.open('https://cal.com/nohypeai/erstanalyse', '_blank');
+    setCalendarDialogOpen(true);
   };
 
   // Handle voice chat (placeholder)
