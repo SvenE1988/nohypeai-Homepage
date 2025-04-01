@@ -1,3 +1,4 @@
+
 import { Clock, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -6,8 +7,8 @@ const Benefits = () => {
     {
       icon: Clock,
       title: "Zeitersparnis",
-      description: "Bis zu 100 Stunden pro Woche sparen",
-      stat: "100h/Woche",
+      description: "Bis zu 40 Stunden pro Woche sparen",
+      stat: "40h/Woche",
     },
     {
       icon: TrendingDown,

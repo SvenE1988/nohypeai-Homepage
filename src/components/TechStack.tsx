@@ -22,7 +22,7 @@ const TechStack = () => {
             <img
               src="/lovable-uploads/27ffae7e-aa7e-410a-8f02-c0729294e221.png"
               alt="Tech Stack Logos"
-              className="w-full h-auto rounded-xl shadow-lg"
+              className="w-full h-auto rounded-xl shadow-lg opacity-70" 
             />
           </div>
 
