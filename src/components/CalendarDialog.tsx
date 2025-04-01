@@ -30,17 +30,13 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[800px] lg:max-w-[1000px] h-[80vh] max-h-[700px] bg-black/95 border border-white/10">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Beratungsgespräch vereinbaren</DialogTitle>
+          <DialogTitle className="text-2xl">Sparpotenzial berechnen</DialogTitle>
         </DialogHeader>
         
         <div className="h-full">
-          {/* 
-            Cal.com Embed einfügen
-            Ersetzen Sie "YOUR_CAL_LINK" durch Ihren tatsächlichen Cal.com Link
-            z.B. "yourname/consultation"
-          */}
+          {/* Cal.com Embed */}
           <div
-            data-cal-embed="YOUR_CAL_LINK"
+            data-cal-embed="your-username/beratung"
             data-cal-theme="dark"
             style={{ width: '100%', height: '100%', minHeight: '500px' }}
           />

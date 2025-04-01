@@ -1,10 +1,11 @@
+
 import { useState, useEffect } from 'react';
 import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { useCallToAction } from "@/hooks/useCallToAction";
 
 const SavingsCalculator = () => {
   const [hours, setHours] = useState([20]);
@@ -14,6 +15,7 @@ const SavingsCalculator = () => {
     monthly: 0,
     yearly: 0
   });
+  const { openCalendarBooking } = useCallToAction();
 
   const calculateSavings = () => {
     const weeklySavings = hours[0] * rate[0];
@@ -132,14 +134,13 @@ const SavingsCalculator = () => {
                   </motion.div>
                 </div>
 
-                <Link to="/pricing" className="block w-full mt-4">
-                  <Button 
-                    className="w-full py-4 md:py-6 bg-primary hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2"
-                  >
-                    <span className="text-sm md:text-base">Kostenloses Erstgespräch vereinbaren</span>
-                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-                  </Button>
-                </Link>
+                <Button 
+                  className="w-full py-4 md:py-6 bg-primary hover:bg-primary/90 transition-all duration-300 flex items-center justify-center gap-2"
+                  onClick={openCalendarBooking}
+                >
+                  <Calculator className="h-4 w-4 md:h-5 md:w-5" />
+                  <span className="text-sm md:text-base">Sparpotenzial berechnen</span>
+                </Button>
               </motion.div>
             </div>
           </CardContent>

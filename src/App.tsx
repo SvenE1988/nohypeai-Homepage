@@ -9,6 +9,7 @@ import Blog from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
 import Karriere from "./pages/Karriere";
 import JobDetails from "./pages/JobDetails";
+import Pricing from "./pages/Pricing";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import { DialogProvider } from "./components/providers/DialogProvider";
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/karriere" element={<Karriere />} />
             <Route path="/karriere/:id" element={<JobDetails />} />
+            <Route path="/pricing" element={<Pricing />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

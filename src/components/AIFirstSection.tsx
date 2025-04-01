@@ -1,16 +1,21 @@
 
-import { Mail, Linkedin, Instagram, ChevronDown } from "lucide-react";
+import { Mail, Linkedin, Instagram, ChevronDown, Calculator } from "lucide-react";
 import { Button } from "./ui/button";
 import { motion } from "framer-motion";
+import { useCallToAction } from "@/hooks/useCallToAction";
 
 const AIFirstSection = () => {
+  const { openCalendarBooking } = useCallToAction();
+  
   const scrollToNextSection = () => {
     const nextSection = document.querySelector('section:nth-of-type(2)');
     nextSection?.scrollIntoView({
       behavior: 'smooth'
     });
   };
-  return <section className="min-h-screen flex items-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
+  
+  return (
+    <section className="min-h-screen flex items-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
@@ -25,15 +30,14 @@ const AIFirstSection = () => {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <a 
-              href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90 text-white flex items-center gap-2"
+              onClick={openCalendarBooking}
             >
-              <Button size="lg" className="bg-black hover:bg-black/80 text-white border-2 border-primary">
-                Jetzt durchstarten
-              </Button>
-            </a>
+              <Calculator className="w-5 h-5" />
+              Sparpotenzial berechnen
+            </Button>
           </div>
 
           <div className="flex gap-6 pt-4">
@@ -81,6 +85,8 @@ const AIFirstSection = () => {
     }} onClick={scrollToNextSection}>
         <ChevronDown size={32} className="text-white/50 hover:text-white transition-colors" />
       </motion.div>
-    </section>;
+    </section>
+  );
 };
+
 export default AIFirstSection;

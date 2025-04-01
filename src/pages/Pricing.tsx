@@ -1,9 +1,14 @@
+
 import NavHeader from "../components/blocks/nav-header";
-import { Check } from "lucide-react";
+import { Check, Calculator } from "lucide-react";
 import SavingsCalculator from "../components/SavingsCalculator";
 import Footer from "../components/Footer";
+import { Button } from "@/components/ui/button";
+import { useCallToAction } from "@/hooks/useCallToAction";
 
 const Pricing = () => {
+  const { openCalendarBooking } = useCallToAction();
+  
   const tiers = [
     {
       name: "Starter",
@@ -73,9 +78,13 @@ const Pricing = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full mt-8 border border-white/20 rounded-full py-2 px-4 hover:bg-white/10 transition-colors">
-                Jetzt starten
-              </button>
+              <Button 
+                className="w-full mt-8 bg-primary hover:bg-primary/90 transition-colors flex items-center justify-center gap-2"
+                onClick={openCalendarBooking}
+              >
+                <Calculator className="w-4 h-4" />
+                Sparpotenzial berechnen
+              </Button>
             </div>
           ))}
         </div>

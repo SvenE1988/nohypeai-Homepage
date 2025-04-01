@@ -1,6 +1,5 @@
-
 import React from "react";
-import { ArrowLeft, Briefcase, Calendar, MapPin, Share2 } from "lucide-react";
+import { ArrowLeft, Briefcase, Calendar, MapPin, Share2, Calculator } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
@@ -14,18 +13,15 @@ const JobDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { openApplicationForm } = useCallToAction();
+  const { openApplicationForm, openCalendarBooking } = useCallToAction();
   
-  // Job mit der angegebenen ID finden
   const job = jobPostings.find(job => job.id === id);
   
-  // Wenn kein Job gefunden wurde, zur Karriere-Übersicht zurückleiten
   if (!job) {
     navigate("/karriere");
     return null;
   }
   
-  // Funktion zum Kopieren des Job-Links in die Zwischenablage
   const shareJob = () => {
     const url = window.location.href;
     navigator.clipboard.writeText(url)
@@ -108,7 +104,6 @@ const JobDetails = () => {
             ))}
           </div>
           
-          {/* Job-Beschreibung */}
           <div className="text-white/80 leading-relaxed space-y-6 mb-10">
             {job.aboutUs && (
               <div>
@@ -170,10 +165,11 @@ const JobDetails = () => {
             <Button
               variant="outline" 
               className="w-full sm:w-auto px-8 py-3 text-base border-white/20 hover:bg-white/10"
-              onClick={shareJob}
+              onClick={openCalendarBooking}
               size="lg"
             >
-              Stelle teilen
+              <Calculator className="w-4 h-4 mr-2" />
+              Sparpotenzial berechnen
             </Button>
           </div>
         </article>
