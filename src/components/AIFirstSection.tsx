@@ -1,6 +1,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
+import { LampContainer } from "./ui/lamp";
 
 const AIFirstSection = () => {
   const scrollToNextSection = () => {
@@ -11,9 +12,18 @@ const AIFirstSection = () => {
   };
   
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
-      <div className="container mx-auto px-4 text-center">
-        <div className="space-y-8 max-w-3xl mx-auto">
+    <section className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-black to-[#1a1f35] text-white py-16">
+      <LampContainer>
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            delay: 0.5,
+            duration: 0.8,
+            ease: "easeInOut",
+          }}
+          className="text-center z-50"
+        >
           <h2 className="text-5xl md:text-6xl font-bold leading-tight">
             KI-First: <br />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
@@ -21,11 +31,11 @@ const AIFirstSection = () => {
             </span>
           </h2>
           
-          <p className="text-xl text-gray-300">
+          <p className="text-xl text-gray-300 mt-8 max-w-3xl mx-auto">
             Rechne selbst nach – wir zeigen dir, wie schon minimale KI-Automatisierungen messbaren Impact bringen. Ganz ohne extra Personal.
           </p>
-        </div>
-      </div>
+        </motion.div>
+      </LampContainer>
 
       <motion.div className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer" animate={{
         y: [0, 10, 0]
