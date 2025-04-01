@@ -1,16 +1,8 @@
 
-import { ChevronDown } from "lucide-react";
 import { motion } from "framer-motion";
 import { LampContainer } from "./ui/lamp";
 
 const AIFirstSection = () => {
-  const scrollToNextSection = () => {
-    const nextSection = document.querySelector('section:nth-of-type(2)');
-    nextSection?.scrollIntoView({
-      behavior: 'smooth'
-    });
-  };
-  
   return (
     <section className="min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-16 relative overflow-hidden">
       {/* Lamp container in background */}
@@ -46,20 +38,6 @@ const AIFirstSection = () => {
           </p>
         </motion.div>
       </div>
-
-      <motion.div 
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer z-10" 
-        animate={{
-          y: [0, 10, 0]
-        }} 
-        transition={{
-          duration: 2,
-          repeat: Infinity
-        }} 
-        onClick={scrollToNextSection}
-      >
-        <ChevronDown size={32} className="text-white/50 hover:text-white transition-colors" />
-      </motion.div>
     </section>
   );
 };
