@@ -7,7 +7,7 @@ export const getChatConfig = () => {
   return {
     webhookUrl: 'https://automatisierung.seserver.nohype-ai.de/webhook/f406671e-c954-4691-b39a-66c90aa2f103/chat',
     webhookConfig: {
-      method: 'POST',
+      method: 'POST' as 'POST', // Using type assertion to ensure it's the literal 'POST' type
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
