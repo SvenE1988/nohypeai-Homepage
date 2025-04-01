@@ -14,7 +14,7 @@ export interface JobPosting {
 
 export const jobPostings: JobPosting[] = [
   {
-    id: "frontend-developer",
+    id: "automatisierungsentwickler",
     title: "Automatisierungsentwickler (m/w/d)",
     type: "Vollzeit",
     location: "Remote / Karlsruhe",
@@ -79,12 +79,14 @@ export const jobPostings: JobPosting[] = [
       "Abgeschlossenes Studium im Bereich Informatik oder eine vergleichbare Qualifikation",
       "Nachgewiesene Berufserfahrung als Backend-Entwickler",
       "Ausgezeichnete Programmierkenntnisse in Node.js, Python oder einer anderen modernen Backend-Sprache",
-      "Umfassende Kenntnisse in Datenbanktechnologien (SQL, NoSQL)",
+      "Umfassende Kenntnisse in Datenbanktechnologien (SQL, NoSQL) wie PostgreSQL, MongoDB oder Redis",
       "Erfahrung mit Server- und Cloud-Infrastrukturen (AWS, Azure, Google Cloud)",
-      "Kenntnisse in API-Design und -Entwicklung für KI-Dienste",
-      "Erfahrung mit Versionskontrollsystemen (Git) und CI/CD-Pipelines",
-      "Kenntnisse in IT-Sicherheit und Best Practices",
+      "Kenntnisse in der Entwicklung von RESTful und GraphQL APIs",
+      "Vertrautheit mit Docker, Kubernetes und anderen Container-Technologien",
+      "Erfahrung mit Versionskontrollsystemen (Git) und CI/CD-Pipelines wie Jenkins oder GitHub Actions",
+      "Kenntnisse in IT-Sicherheit und Best Practices für die Backend-Entwicklung",
       "Verständnis von Skalierbarkeits- und Performance-Optimierungstechniken",
+      "Erfahrung in der Integration von KI-Diensten wie OpenAI, Hugging Face oder eigenen ML-Modellen",
       "Analytisches Denkvermögen und strukturierte Arbeitsweise",
       "Ausgezeichnete Kommunikationsfähigkeiten in Deutsch und Englisch"
     ],
@@ -98,6 +100,6 @@ export const jobPostings: JobPosting[] = [
       "Modernes Arbeitsumfeld mit neuester Technologie",
       "Wettbewerbsfähige Vergütung"
     ],
-    skills: ["Node.js", "Python", "APIs", "Datenbanken", "Cloud", "Docker", "CI/CD", "KI-Integration"]
+    skills: ["Node.js", "Python", "APIs", "Docker", "Cloud", "Datenbanken", "CI/CD", "KI-Integration"]
   }
 ];
