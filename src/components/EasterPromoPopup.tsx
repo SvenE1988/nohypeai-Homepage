@@ -10,9 +10,14 @@ const EasterPromoPopup = () => {
   const { openCalendarBooking } = useCallToAction();
   
   useEffect(() => {
+    // Check if the popup has been shown recently
+    const lastPopupTime = localStorage.getItem('lastEasterPromoTime');
+    const currentTime = Date.now();
+    const hasRecentlyDismissed = lastPopupTime && (currentTime - parseInt(lastPopupTime)) < 120000; // 2 minutes in milliseconds
+    
     const handleScroll = () => {
-      // Show popup after scrolling 300px
-      if (window.scrollY > 300 && !isVisible) {
+      // Only show popup after scrolling 300px and if it hasn't been recently dismissed
+      if (window.scrollY > 300 && !isVisible && !hasRecentlyDismissed) {
         setIsVisible(true);
       }
     };
@@ -20,16 +25,27 @@ const EasterPromoPopup = () => {
     // Set up the scroll listener
     window.addEventListener("scroll", handleScroll);
     
-    // Store the popup state in session storage to prevent repeated appearances
-    const hasSeenPopup = sessionStorage.getItem('hasSeenEasterPromo');
-    
-    if (!hasSeenPopup && window.scrollY > 300) {
-      setIsVisible(true);
-      sessionStorage.setItem('hasSeenEasterPromo', 'true');
+    // Show popup on initial load if conditions are met
+    if (window.scrollY > 300 && !hasRecentlyDismissed) {
+      // Small delay for initial popup to make it less jarring
+      const initialTimer = setTimeout(() => {
+        setIsVisible(true);
+      }, 1500);
+      
+      return () => {
+        clearTimeout(initialTimer);
+        window.removeEventListener("scroll", handleScroll);
+      };
     }
     
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isVisible]);
+
+  const handleDismiss = () => {
+    setIsVisible(false);
+    // Store the current timestamp when the popup is dismissed
+    localStorage.setItem('lastEasterPromoTime', Date.now().toString());
+  };
 
   if (!isVisible) return null;
 
@@ -48,11 +64,7 @@ const EasterPromoPopup = () => {
             <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-[#E1BEE7]/30 to-[#CE93D8]/30 rounded-full blur-xl"></div>
             
             <button 
-              onClick={() => {
-                setIsVisible(false);
-                // When closed manually, remember it for the entire browser session
-                sessionStorage.setItem('hasSeenEasterPromo', 'true');
-              }}
+              onClick={handleDismiss}
               className="absolute top-2 right-2 text-white/70 hover:text-white z-10"
             >
               <X size={20} />
