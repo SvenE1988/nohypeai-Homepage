@@ -39,7 +39,7 @@ export function Logos3({
   }, [logos]);
   
   return (
-    <div className={cn("py-8 bg-black/20", className)}>
+    <div className={cn("py-8 bg-black/20 relative", className)}>
       <div className="container px-4 mx-auto">
         {heading && heading.length > 0 && (
           <h2 className="text-center text-lg font-medium text-gray-300 mb-6">
@@ -47,7 +47,7 @@ export function Logos3({
           </h2>
         )}
         
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-hidden z-10">
           <div 
             ref={scrollRef} 
             className="flex items-center justify-center animate-marquee whitespace-nowrap" 
@@ -58,13 +58,13 @@ export function Logos3({
             {duplicatedLogos.map((logo, index) => (
               <div 
                 key={`${logo.id}-${index}`} 
-                className="flex items-center justify-center mx-16"
+                className="flex items-center justify-center mx-8 md:mx-16"
               >
                 <img 
                   src={logo.image} 
                   alt={logo.description} 
                   className={cn(
-                    "h-24 md:h-28 w-auto object-contain opacity-100 transition-all duration-300", 
+                    "h-16 md:h-24 lg:h-28 w-auto object-contain opacity-100 transition-all duration-300 z-20", 
                     logo.className
                   )} 
                 />
