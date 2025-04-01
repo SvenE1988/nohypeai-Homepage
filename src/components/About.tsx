@@ -17,22 +17,24 @@ const About = () => {
       <div className="container mx-auto px-4">
         <span className="text-primary mb-4 block text-center">Über Uns</span>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {/* Über Uns Text */}
-          <div className="order-2 md:order-1">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-              Über Uns
-            </h2>
-            <p className="text-gray-400 leading-relaxed">
-              Wir sind eine Automatisierungs- und KI-Agentur aus Karlsruhe und haben uns darauf spezialisiert, Unternehmen den Einstieg in die Welt der Künstlichen Intelligenz zu erleichtern. Mit smarten Tools wie n8n, Gemini &amp; Co. zeigen wir, wie schon kleine Automatisierungen große Wirkung entfalten können – im Vertrieb, im Support oder in internen Prozessen.
-            </p>
-            <p className="text-gray-400 leading-relaxed mt-4">
-              Seit Juli 2024 entwickeln wir Lösungen, die nicht nur Zeit sparen, sondern echten Mehrwert schaffen. Gemeinsam finden wir heraus, wo in deinem Unternehmen Potenzial steckt – und wie wir es mit cleveren Automationen und KI effizient heben können.
-            </p>
+          <div className="order-2 md:order-1 flex items-center">
+            <div className="md:pl-8">
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+                Über Uns
+              </h2>
+              <p className="text-gray-400 leading-relaxed">
+                Wir sind eine Automatisierungs- und KI-Agentur aus Karlsruhe und haben uns darauf spezialisiert, Unternehmen den Einstieg in die Welt der Künstlichen Intelligenz zu erleichtern. Mit smarten Tools wie n8n, Gemini &amp; Co. zeigen wir, wie schon kleine Automatisierungen große Wirkung entfalten können – im Vertrieb, im Support oder in internen Prozessen.
+              </p>
+              <p className="text-gray-400 leading-relaxed mt-4">
+                Seit Juli 2024 entwickeln wir Lösungen, die nicht nur Zeit sparen, sondern echten Mehrwert schaffen. Gemeinsam finden wir heraus, wo in deinem Unternehmen Potenzial steckt – und wie wir es mit cleveren Automationen und KI effizient heben können.
+              </p>
+            </div>
           </div>
           
           {/* Gründer Profil */}
-          <div className="order-1 md:order-2 flex justify-center md:justify-end">
+          <div className="order-1 md:order-2 flex justify-center md:justify-center">
             <div className="bg-[#0D0F1A] rounded-2xl p-6 max-w-md">
               <Avatar className="w-full h-[300px] rounded-xl mb-6">
                 <img src={team[0].image} alt={team[0].name} className="object-cover w-full h-full" />
