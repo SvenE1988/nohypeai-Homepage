@@ -41,7 +41,8 @@ const N8NChat = () => {
           subtitle: 'Stellen Sie Ihre Fragen oder buchen Sie einen Termin.',
           footer: '',
           getStarted: 'Neue Konversation',
-          inputPlaceholder: 'Stellen Sie Ihre Frage...'
+          inputPlaceholder: 'Stellen Sie Ihre Frage...',
+          closeButtonTooltip: 'Chat schließen'
         },
       },
       metadata: {
