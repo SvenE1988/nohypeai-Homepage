@@ -1,17 +1,20 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
+
 interface Logo {
   id: string;
   description: string;
   image: string;
   className?: string;
 }
+
 interface Logos3Props {
   heading?: string;
   logos: Logo[];
   className?: string;
 }
+
 export function Logos3({
   heading,
   logos,
@@ -26,7 +29,7 @@ export function Logos3({
     setDuplicatedLogos([...logos, ...logos]);
 
     // Adjust animation speed based on number of logos
-    const speed = Math.max(20, logos.length * 4);
+    const speed = Math.max(30, logos.length * 4);
     setAnimationDuration(speed);
 
     // Update animation speed inline style
@@ -35,25 +38,41 @@ export function Logos3({
     }
   }, [logos]);
   
-  return <div className={cn("py-8 bg-black/20", className)}>
+  return (
+    <div className={cn("py-8 bg-black/20", className)}>
       <div className="container px-4 mx-auto">
-        {heading && heading.length > 0 && <h2 className="text-center text-lg font-medium text-gray-300 mb-6">
+        {heading && heading.length > 0 && (
+          <h2 className="text-center text-lg font-medium text-gray-300 mb-6">
             {heading}
-          </h2>}
+          </h2>
+        )}
         
         <div className="relative w-full overflow-hidden">
-          <div ref={scrollRef} className="flex items-center justify-center animate-marquee whitespace-nowrap" style={{
-          animationDuration: `${animationDuration}s`
-        }}>
-            {duplicatedLogos.map((logo, index) => <div key={`${logo.id}-${index}`} className="flex items-center justify-center mx-16">
+          <div 
+            ref={scrollRef} 
+            className="flex items-center justify-center animate-marquee whitespace-nowrap" 
+            style={{
+              animationDuration: `${animationDuration}s`
+            }}
+          >
+            {duplicatedLogos.map((logo, index) => (
+              <div 
+                key={`${logo.id}-${index}`} 
+                className="flex items-center justify-center mx-16"
+              >
                 <img 
                   src={logo.image} 
                   alt={logo.description} 
-                  className={cn("h-24 md:h-28 w-auto object-contain opacity-100 hover:opacity-100 transition-all duration-300", logo.className)} 
+                  className={cn(
+                    "h-24 md:h-28 w-auto object-contain opacity-100 transition-all duration-300", 
+                    logo.className
+                  )} 
                 />
-              </div>)}
+              </div>
+            ))}
           </div>
         </div>
       </div>
-    </div>;
+    </div>
+  );
 }
