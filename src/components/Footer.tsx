@@ -1,7 +1,8 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LegalDialog from "./legal/LegalDialog";
-import ContactDialog from "./ContactDialog";
+import { useDialog } from "./providers/DialogProvider";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,7 +14,7 @@ const Footer = () => {
     type: "impressum",
   });
   
-  const [contactDialogOpen, setContactDialogOpen] = useState(false);
+  const { setContactDialogOpen } = useDialog();
   
   return (
     <footer className="bg-black/80 border-t border-gray-800 mt-20">
@@ -115,11 +116,6 @@ const Footer = () => {
         isOpen={legalDialog.isOpen}
         onClose={() => setLegalDialog({ ...legalDialog, isOpen: false })}
         type={legalDialog.type}
-      />
-      
-      <ContactDialog 
-        open={contactDialogOpen} 
-        onOpenChange={setContactDialogOpen}
       />
     </footer>
   );

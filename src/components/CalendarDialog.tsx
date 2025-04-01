@@ -36,11 +36,11 @@ const CalendarDialog = ({ open, onOpenChange }: CalendarDialogProps) => {
         <div className="h-full">
           {/* 
             Cal.com Embed einfügen
-            Ersetzen Sie "IHR_CAL_LINK" durch Ihren tatsächlichen Cal.com Link
-            z.B. "jdoe/beratungsgespraech"
+            Ersetzen Sie "YOUR_CAL_LINK" durch Ihren tatsächlichen Cal.com Link
+            z.B. "yourname/consultation"
           */}
           <div
-            data-cal-embed="IHR_CAL_LINK"
+            data-cal-embed="YOUR_CAL_LINK"
             data-cal-theme="dark"
             style={{ width: '100%', height: '100%', minHeight: '500px' }}
           />
