@@ -11,6 +11,8 @@ const VoiceBot = () => {
   );
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<{sender: string, text: string}[]>([]);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptError, setScriptError] = useState<string | null>(null);
 
   const deepgramScriptAdded = useRef(false);
 
@@ -18,29 +20,41 @@ const VoiceBot = () => {
     if (!deepgramScriptAdded.current) {
       const script = document.createElement("script");
       script.src = "https://cdn.jsdelivr.net/npm/@deepgram/agents-client/browser.min.js";
+      script.async = true;
+      
       script.onload = () => {
         console.log("Deepgram SDK geladen");
+        setScriptLoaded(true);
+        setScriptError(null);
       };
+      
+      script.onerror = (error) => {
+        console.error("Fehler beim Laden des Deepgram SDK:", error);
+        setScriptError("Deepgram SDK konnte nicht geladen werden. Bitte versuchen Sie es später erneut.");
+      };
+      
       document.body.appendChild(script);
       deepgramScriptAdded.current = true;
     }
   }, []);
 
   const startAgent = async () => {
-    setListening(true);
-    setMessages([]);
-
-    // Typeerweiterung für Window-Objekt
-    const DeepgramAgents = (window as any).DeepgramAgents;
-    if (!DeepgramAgents) {
-      console.error("Deepgram SDK nicht geladen");
-      setListening(false);
-      return;
-    }
-
-    const { connectToAgent } = DeepgramAgents;
-
     try {
+      setListening(true);
+      setMessages([]);
+      setScriptError(null);
+
+      // Check if DeepgramAgents is available
+      const DeepgramAgents = (window as any).DeepgramAgents;
+      if (!DeepgramAgents) {
+        console.error("Deepgram SDK nicht geladen");
+        setScriptError("Deepgram SDK nicht geladen. Bitte versuchen Sie es später erneut.");
+        setListening(false);
+        return;
+      }
+
+      const { connectToAgent } = DeepgramAgents;
+
       const agent = await connectToAgent({
         apiKey: "ca56f058f600d2432e546bc000976a8da9a82d73", // Deepgram API-Key
         agent: {
@@ -64,6 +78,7 @@ const VoiceBot = () => {
           onDisconnect: () => setListening(false),
           onError: (err: any) => {
             console.error("Fehler:", err);
+            setScriptError(`Fehler bei der Kommunikation mit Deepgram: ${err.message || "Unbekannter Fehler"}`);
             setListening(false);
           }
         }
@@ -72,6 +87,7 @@ const VoiceBot = () => {
       await agent.start();
     } catch (error) {
       console.error("Fehler beim Starten des Agents:", error);
+      setScriptError(`Fehler beim Starten des Sprachassistenten: ${(error as Error).message || "Unbekannter Fehler"}`);
       setListening(false);
     }
   };
@@ -96,9 +112,15 @@ const VoiceBot = () => {
           />
         </div>
         
+        {scriptError && (
+          <div className="p-3 bg-red-900/20 border border-red-800 text-red-300 rounded-lg text-sm">
+            {scriptError}
+          </div>
+        )}
+        
         <Button
           onClick={startAgent}
-          disabled={listening}
+          disabled={listening || !(window as any).DeepgramAgents}
           className="w-full bg-primary hover:bg-primary/90 text-white py-6"
         >
           {listening ? (
