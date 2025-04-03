@@ -21,11 +21,11 @@ const Index = () => {
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      {/* VoiceBot moved here, right after AIFirstSection */}
+      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
+      {/* VoiceBot moved here, after Benefits section */}
       <div className="container px-4 mx-auto py-10">
         <VoiceBot />
       </div>
-      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />

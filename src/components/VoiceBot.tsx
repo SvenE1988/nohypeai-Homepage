@@ -113,7 +113,7 @@ const VoiceBot = () => {
         </div>
         
         {scriptError && (
-          <div className="p-3 bg-red-900/20 border border-red-800 text-red-300 rounded-lg text-sm">
+          <div className="p-3 bg-red-600/30 border border-red-500 text-white rounded-lg text-sm font-medium">
             {scriptError}
           </div>
         )}
