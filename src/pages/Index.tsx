@@ -1,3 +1,4 @@
+
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
 import Benefits from "../components/Benefits";
@@ -10,21 +11,39 @@ import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
+import TechStack from "../components/TechStack";
+import EasterPromoPopup from "../components/EasterPromoPopup";
+import Partners from "../components/Partners";
+import VoiceBot from "../components/VoiceBot";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      <Benefits />
+      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
+      {/* VoiceBot positioned after Benefits to avoid overlap */}
+      <div className="container px-4 mx-auto py-10 mt-10">
+        <VoiceBot />
+      </div>
       <AIHereSection />
-      <GrowthSection />
-      <SavingsCalculator />
+      <section id="nutzen">
+        <GrowthSection />
+      </section>
+      <section id="einsparungen">
+        <SavingsCalculator />
+      </section>
       <Projects />
-      <Process />
-      <About />
+      <section id="prozess">
+        <Process />
+      </section>
+      <section id="ueber-uns">
+        <About />
+      </section>
+      <TechStack />
       <FAQ />
       <Footer />
+      <EasterPromoPopup />
     </main>
   );
 };
