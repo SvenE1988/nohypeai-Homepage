@@ -14,6 +14,7 @@ import Footer from "../components/Footer";
 import TechStack from "../components/TechStack";
 import EasterPromoPopup from "../components/EasterPromoPopup";
 import Partners from "../components/Partners";
+import VoiceBot from "../components/VoiceBot";
 
 const Index = () => {
   return (
@@ -24,6 +25,15 @@ const Index = () => {
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />
+      </section>
+      <section className="py-16">
+        <div className="container px-4 mx-auto">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 text-white">
+            Rechne selbst nach - wir zeigen dir, wie...
+            <span className="block text-xl md:text-2xl mt-2 text-gray-400">Ganz ohne extra Personal</span>
+          </h2>
+          <VoiceBot />
+        </div>
       </section>
       <section id="einsparungen">
         <SavingsCalculator />
