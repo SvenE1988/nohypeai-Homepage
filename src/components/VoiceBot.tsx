@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, Headphones, RefreshCw } from "lucide-react";
+import { Mic, Headphones, RefreshCw, StopCircle } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,105 +13,145 @@ const VoiceBot = () => {
   );
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<{sender: string, text: string}[]>([]);
-  const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [scriptLoading, setScriptLoading] = useState(false);
-  const [scriptError, setScriptError] = useState<string | null>(null);
-  const [retryCount, setRetryCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const deepgramScriptAdded = useRef(false);
+  // WebSocket and audio processing references
+  const wsRef = useRef<WebSocket | null>(null);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const processorRef = useRef<ScriptProcessorNode | null>(null);
+  const streamRef = useRef<MediaStream | null>(null);
 
-  // Load the Deepgram script
-  useEffect(() => {
-    const loadDeepgramScript = () => {
-      if (deepgramScriptAdded.current) {
-        return;
+  // Cleanup function for audio resources
+  const cleanupAudioResources = () => {
+    try {
+      if (processorRef.current) {
+        processorRef.current.disconnect();
+        processorRef.current = null;
       }
       
-      setScriptLoading(true);
-      setScriptError(null);
+      if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
+        audioContextRef.current.close();
+        audioContextRef.current = null;
+      }
       
-      const script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/npm/@deepgram/agents-client/browser.min.js";
-      script.async = true;
-      
-      script.onload = () => {
-        console.log("Deepgram SDK erfolgreich geladen");
-        setScriptLoaded(true);
-        setScriptLoading(false);
-        setScriptError(null);
-      };
-      
-      script.onerror = () => {
-        console.error("Fehler beim Laden des Deepgram SDK");
-        setScriptError("Deepgram SDK konnte nicht geladen werden. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.");
-        setScriptLoading(false);
-        setScriptLoaded(false);
-      };
-      
-      document.body.appendChild(script);
-      deepgramScriptAdded.current = true;
-    };
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach(track => track.stop());
+        streamRef.current = null;
+      }
 
-    loadDeepgramScript();
-  }, [retryCount]);
-
-  // Function to retry loading the script
-  const retryLoadingScript = () => {
-    deepgramScriptAdded.current = false;
-    setRetryCount(prev => prev + 1);
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+        wsRef.current = null;
+      }
+    } catch (err) {
+      console.error("Fehler beim Bereinigen der Audio-Ressourcen:", err);
+    }
   };
 
-  const startAgent = async () => {
-    try {
-      // Check if DeepgramAgents is available in the window object
-      if (!(window as any).DeepgramAgents) {
-        console.error("Deepgram SDK nicht verfügbar");
-        setScriptError("Deepgram SDK nicht verfügbar. Bitte laden Sie die Seite neu und versuchen Sie es erneut.");
-        return;
-      }
+  // Cleanup on component unmount
+  useEffect(() => {
+    return () => {
+      cleanupAudioResources();
+    };
+  }, []);
 
+  const startAudioStreaming = async () => {
+    try {
+      setError(null);
+      setIsLoading(true);
       setListening(true);
       setMessages([]);
-      setScriptError(null);
 
-      const DeepgramAgents = (window as any).DeepgramAgents;
-      const { connectToAgent } = DeepgramAgents;
+      // Get user microphone permission and setup audio context
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      streamRef.current = stream;
+      
+      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const source = audioContextRef.current.createMediaStreamSource(stream);
+      
+      // Create script processor for audio processing
+      processorRef.current = audioContextRef.current.createScriptProcessor(4096, 1, 1);
+      
+      source.connect(processorRef.current);
+      processorRef.current.connect(audioContextRef.current.destination);
 
-      const agent = await connectToAgent({
-        apiKey: "ca56f058f600d2432e546bc000976a8da9a82d73", // Deepgram API-Key
-        agent: {
-          prompt: prompt,
-          speak_model: "aura-2-thalia-de",
-          llm: {
-            provider: "openai",
-            model: "gpt-4o-mini"
+      // Setup WebSocket connection
+      const ws = new WebSocket("wss://api.deepgram.com/v1/listen?model=aura-2-thalia-de&encoding=linear16&sample_rate=16000");
+      wsRef.current = ws;
+
+      ws.onopen = () => {
+        console.log("WebSocket verbunden, sende Konfiguration...");
+        ws.send(
+          JSON.stringify({
+            type: "Configure",
+            api_key: "ca56f058f600d2432e546bc000976a8da9a82d73",
+            llm: {
+              provider: "openai",
+              model: "gpt-4o-mini"
+            },
+            agent: {
+              prompt: prompt
+            }
+          })
+        );
+        setIsLoading(false);
+      };
+
+      ws.onmessage = (msg) => {
+        try {
+          const data = JSON.parse(msg.data);
+          
+          if (data.user_utterance) {
+            setMessages((prev) => [...prev, { sender: "user", text: data.user_utterance }]);
           }
-        },
-        handler: {
-          onMessage: (msg: { text: string }) => {
-            setMessages((prev) => [...prev, { sender: "bot", text: msg.text }]);
-            const utterance = new SpeechSynthesisUtterance(msg.text);
+          
+          if (data.text) {
+            setMessages((prev) => [...prev, { sender: "bot", text: data.text }]);
+            const utterance = new SpeechSynthesisUtterance(data.text);
             utterance.lang = "de-DE";
             speechSynthesis.speak(utterance);
-          },
-          onUserUtterance: (msg: { text: string }) => {
-            setMessages((prev) => [...prev, { sender: "user", text: msg.text }]);
-          },
-          onDisconnect: () => setListening(false),
-          onError: (err: any) => {
-            console.error("Fehler:", err);
-            setScriptError(`Fehler bei der Kommunikation mit Deepgram: ${err.message || "Unbekannter Fehler"}`);
-            setListening(false);
           }
+        } catch (err) {
+          console.error("Fehler beim Verarbeiten der WebSocket-Nachricht:", err);
         }
-      });
+      };
 
-      await agent.start();
-    } catch (error) {
-      console.error("Fehler beim Starten des Agents:", error);
-      setScriptError(`Fehler beim Starten des Sprachassistenten: ${(error as Error).message || "Unbekannter Fehler"}`);
+      processorRef.current.onaudioprocess = (e) => {
+        if (ws.readyState === WebSocket.OPEN) {
+          const input = e.inputBuffer.getChannelData(0);
+          const int16 = new Int16Array(input.length);
+          for (let i = 0; i < input.length; i++) {
+            int16[i] = input[i] * 32767;
+          }
+          ws.send(int16);
+        }
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket geschlossen");
+        setListening(false);
+        cleanupAudioResources();
+      };
+
+      ws.onerror = (e) => {
+        console.error("WebSocket Fehler:", e);
+        setError("Verbindungsfehler mit Deepgram. Bitte versuche es später erneut.");
+        setListening(false);
+        cleanupAudioResources();
+      };
+    } catch (err) {
+      console.error("Fehler beim Starten des Audio-Streamings:", err);
+      setError(`Fehler beim Starten des Sprachassistenten: ${(err as Error).message || "Unbekannter Fehler"}`);
       setListening(false);
+      setIsLoading(false);
+      cleanupAudioResources();
     }
+  };
+
+  const stopAudioStreaming = () => {
+    setListening(false);
+    cleanupAudioResources();
   };
 
   return (
@@ -135,11 +175,11 @@ const VoiceBot = () => {
           />
         </div>
         
-        {scriptLoading && (
+        {isLoading && (
           <div className="flex flex-col space-y-2 p-4 bg-black/30 rounded-lg border border-gray-700">
             <div className="flex items-center space-x-2">
               <Skeleton className="h-4 w-4 rounded-full bg-gray-700" />
-              <p className="text-gray-300 text-sm">Deepgram SDK wird geladen...</p>
+              <p className="text-gray-300 text-sm">Verbindung wird hergestellt...</p>
             </div>
             <div className="w-full bg-gray-800 h-1 rounded-full overflow-hidden">
               <div className="bg-primary h-full w-1/2 animate-pulse"></div>
@@ -147,35 +187,32 @@ const VoiceBot = () => {
           </div>
         )}
         
-        {scriptError && (
-          <div className="p-4 bg-red-600/30 border border-red-500 text-white rounded-lg text-sm font-medium flex flex-col gap-2">
-            <p>{scriptError}</p>
-            <Button 
-              onClick={retryLoadingScript} 
-              variant="outline" 
-              size="sm" 
-              className="self-start bg-black/20 border-red-500/50 hover:bg-black/40 text-white"
-            >
-              <RefreshCw className="w-3 h-3 mr-1" /> Erneut versuchen
-            </Button>
+        {error && (
+          <div className="p-4 bg-red-600/30 border border-red-500 text-white rounded-lg text-sm font-medium">
+            <p>{error}</p>
           </div>
         )}
         
-        <Button
-          onClick={startAgent}
-          disabled={listening || scriptLoading || !(window as any).DeepgramAgents}
-          className="w-full bg-primary hover:bg-primary/90 text-white py-6 disabled:bg-gray-700 disabled:text-gray-300"
-        >
-          {listening ? (
+        {listening ? (
+          <Button
+            onClick={stopAudioStreaming}
+            className="w-full bg-red-600 hover:bg-red-700 text-white py-6"
+          >
             <span className="flex items-center gap-2">
-              <Headphones className="animate-pulse" /> Sprachdialog läuft...
+              <StopCircle className="animate-pulse" /> Sprachdialog beenden
             </span>
-          ) : (
+          </Button>
+        ) : (
+          <Button
+            onClick={startAudioStreaming}
+            disabled={isLoading}
+            className="w-full bg-primary hover:bg-primary/90 text-white py-6 disabled:bg-gray-700 disabled:text-gray-300"
+          >
             <span className="flex items-center gap-2">
               <Mic /> Sprachdialog starten
             </span>
-          )}
-        </Button>
+          </Button>
+        )}
 
         {messages.length > 0 && (
           <div className="mt-4">
