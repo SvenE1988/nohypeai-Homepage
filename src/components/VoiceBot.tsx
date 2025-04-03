@@ -1,9 +1,11 @@
 
 import React, { useState, useRef, useEffect } from "react";
-import { Mic, Headphones } from "lucide-react";
+import { Mic, Headphones, RefreshCw } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const VoiceBot = () => {
   const [prompt, setPrompt] = useState(
@@ -12,47 +14,67 @@ const VoiceBot = () => {
   const [listening, setListening] = useState(false);
   const [messages, setMessages] = useState<{sender: string, text: string}[]>([]);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [scriptLoading, setScriptLoading] = useState(false);
   const [scriptError, setScriptError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
 
   const deepgramScriptAdded = useRef(false);
 
+  // Load the Deepgram script
   useEffect(() => {
-    if (!deepgramScriptAdded.current) {
+    const loadDeepgramScript = () => {
+      if (deepgramScriptAdded.current) {
+        return;
+      }
+      
+      setScriptLoading(true);
+      setScriptError(null);
+      
       const script = document.createElement("script");
       script.src = "https://cdn.jsdelivr.net/npm/@deepgram/agents-client/browser.min.js";
       script.async = true;
       
       script.onload = () => {
-        console.log("Deepgram SDK geladen");
+        console.log("Deepgram SDK erfolgreich geladen");
         setScriptLoaded(true);
+        setScriptLoading(false);
         setScriptError(null);
       };
       
-      script.onerror = (error) => {
-        console.error("Fehler beim Laden des Deepgram SDK:", error);
-        setScriptError("Deepgram SDK konnte nicht geladen werden. Bitte versuchen Sie es später erneut.");
+      script.onerror = () => {
+        console.error("Fehler beim Laden des Deepgram SDK");
+        setScriptError("Deepgram SDK konnte nicht geladen werden. Bitte prüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.");
+        setScriptLoading(false);
+        setScriptLoaded(false);
       };
       
       document.body.appendChild(script);
       deepgramScriptAdded.current = true;
-    }
-  }, []);
+    };
+
+    loadDeepgramScript();
+  }, [retryCount]);
+
+  // Function to retry loading the script
+  const retryLoadingScript = () => {
+    deepgramScriptAdded.current = false;
+    setRetryCount(prev => prev + 1);
+  };
 
   const startAgent = async () => {
     try {
+      // Check if DeepgramAgents is available in the window object
+      if (!(window as any).DeepgramAgents) {
+        console.error("Deepgram SDK nicht verfügbar");
+        setScriptError("Deepgram SDK nicht verfügbar. Bitte laden Sie die Seite neu und versuchen Sie es erneut.");
+        return;
+      }
+
       setListening(true);
       setMessages([]);
       setScriptError(null);
 
-      // Check if DeepgramAgents is available
       const DeepgramAgents = (window as any).DeepgramAgents;
-      if (!DeepgramAgents) {
-        console.error("Deepgram SDK nicht geladen");
-        setScriptError("Deepgram SDK nicht geladen. Bitte versuchen Sie es später erneut.");
-        setListening(false);
-        return;
-      }
-
       const { connectToAgent } = DeepgramAgents;
 
       const agent = await connectToAgent({
@@ -109,19 +131,40 @@ const VoiceBot = () => {
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             placeholder="System-Prompt eingeben..."
+            disabled={listening}
           />
         </div>
         
+        {scriptLoading && (
+          <div className="flex flex-col space-y-2 p-4 bg-black/30 rounded-lg border border-gray-700">
+            <div className="flex items-center space-x-2">
+              <Skeleton className="h-4 w-4 rounded-full bg-gray-700" />
+              <p className="text-gray-300 text-sm">Deepgram SDK wird geladen...</p>
+            </div>
+            <div className="w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+              <div className="bg-primary h-full w-1/2 animate-pulse"></div>
+            </div>
+          </div>
+        )}
+        
         {scriptError && (
-          <div className="p-3 bg-red-600/30 border border-red-500 text-white rounded-lg text-sm font-medium">
-            {scriptError}
+          <div className="p-4 bg-red-600/30 border border-red-500 text-white rounded-lg text-sm font-medium flex flex-col gap-2">
+            <p>{scriptError}</p>
+            <Button 
+              onClick={retryLoadingScript} 
+              variant="outline" 
+              size="sm" 
+              className="self-start bg-black/20 border-red-500/50 hover:bg-black/40 text-white"
+            >
+              <RefreshCw className="w-3 h-3 mr-1" /> Erneut versuchen
+            </Button>
           </div>
         )}
         
         <Button
           onClick={startAgent}
-          disabled={listening || !(window as any).DeepgramAgents}
-          className="w-full bg-primary hover:bg-primary/90 text-white py-6"
+          disabled={listening || scriptLoading || !(window as any).DeepgramAgents}
+          className="w-full bg-primary hover:bg-primary/90 text-white py-6 disabled:bg-gray-700 disabled:text-gray-300"
         >
           {listening ? (
             <span className="flex items-center gap-2">
@@ -135,22 +178,25 @@ const VoiceBot = () => {
         </Button>
 
         {messages.length > 0 && (
-          <div className="mt-4 max-h-64 overflow-y-auto space-y-3 p-3 bg-black/30 rounded-lg">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`p-3 rounded-lg max-w-[80%] ${
-                  msg.sender === "user" 
-                    ? "bg-gray-800/70 self-start mr-auto" 
-                    : "bg-primary/20 self-end ml-auto"
-                }`}
-              >
-                <div className="text-xs mb-1 text-gray-400">
-                  {msg.sender === "user" ? "Du" : "KI-Assistent"}:
+          <div className="mt-4">
+            <Separator className="mb-3 bg-gray-700" />
+            <div className="max-h-64 overflow-y-auto space-y-3 p-3 bg-black/30 rounded-lg">
+              {messages.map((msg, index) => (
+                <div
+                  key={index}
+                  className={`p-3 rounded-lg max-w-[80%] ${
+                    msg.sender === "user" 
+                      ? "bg-gray-800/70 self-start mr-auto" 
+                      : "bg-primary/20 self-end ml-auto"
+                  }`}
+                >
+                  <div className="text-xs mb-1 text-gray-400">
+                    {msg.sender === "user" ? "Du" : "KI-Assistent"}:
+                  </div>
+                  <div className="text-white">{msg.text}</div>
                 </div>
-                <div className="text-white">{msg.text}</div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         )}
       </CardContent>

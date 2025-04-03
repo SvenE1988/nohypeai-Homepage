@@ -22,8 +22,8 @@ const Index = () => {
       <NavHeader />
       <AIFirstSection />
       <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
-      {/* VoiceBot moved here, after Benefits section */}
-      <div className="container px-4 mx-auto py-10">
+      {/* VoiceBot positioned after Benefits to avoid overlap */}
+      <div className="container px-4 mx-auto py-10 mt-10">
         <VoiceBot />
       </div>
       <AIHereSection />
