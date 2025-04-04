@@ -23,6 +23,7 @@ const Karriere = lazy(() => import("./pages/Karriere"));
 const JobDetails = lazy(() => import("./pages/JobDetails"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const LiveTests = lazy(() => import("./pages/LiveTests"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -58,6 +59,7 @@ const App = () => (
                 <Route path="/karriere" element={<Karriere />} />
                 <Route path="/karriere/:id" element={<JobDetails />} />
                 <Route path="/pricing" element={<Pricing />} />
+                <Route path="/live-tests" element={<LiveTests />} />
                 <Route path="/404" element={<NotFound />} />
                 <Route path="*" element={<Navigate to="/404" replace />} />
               </Routes>
