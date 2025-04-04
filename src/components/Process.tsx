@@ -1,6 +1,5 @@
 
 import { useState } from "react";
-import { ChevronDown } from "lucide-react";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -13,7 +12,7 @@ const Process = () => {
       shortDescription:
         "Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum,...",
       fullDescription:
-        "Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum, aktuelle Prozesse zu analysieren, Optimierungspotenziale zu identifizieren und messbare Ziele zu definieren. Wir führen eine gründliche Bestandsaufnahme durch, um zu verstehen, wo KI den größten Mehrwert für Ihr Unternehmen schaffen kann.",
+        "Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum, aktuelle Prozesse zu analysieren, Optimierungspotenziale zu identifizieren und messbare Ziele zu definieren. Wir führen eine gründliche Bestandsaufnahme durch, um zu verstehen, wo KI den größten Mehrwert für Ihr Unternehmen schaffen kann. In einem entspannten 20-minütigen Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihre Geschäftsabläufe optimieren und Ihr Unternehmen langfristig voranbringen kann.",
     },
     {
       number: "2",
@@ -21,7 +20,7 @@ const Process = () => {
       shortDescription:
         "Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt.",
       fullDescription:
-        "Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt, die festlegt, welche Daten für die KI-Modelle benötigt werden, wie diese Daten gesammelt und verarbeitet werden sollen und wie ihre Qualität sichergestellt wird. Unternehmen müssen sicherstellen, dass sie über ausreichende Datenmengen verfügen und dass diese Daten für die geplanten KI-Anwendungen relevant sind. Gleichzeitig muss auch der Datenschutz berücksichtigt werden, da die KI oft auf sensible Daten zugreifen wird. Eine klare Datenstrategie ermöglicht es, KI effektiv und nachhaltig einzusetzen.",
+        "Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt, die festlegt, welche Daten für die KI-Modelle benötigt werden, wie diese Daten gesammelt und verarbeitet werden sollen und wie ihre Qualität sichergestellt wird. Unternehmen müssen sicherstellen, dass sie über ausreichende Datenmengen verfügen und dass diese Daten für die geplanten KI-Anwendungen relevant sind. Gleichzeitig muss auch der Datenschutz berücksichtigt werden, da die KI oft auf sensible Daten zugreifen wird. Eine klare Datenstrategie ermöglicht es, KI effektiv und nachhaltig einzusetzen. Wir entwickeln einen maßgeschneiderten Plan für Ihr Projekt, der all diese Aspekte berücksichtigt und dabei Ihre spezifischen Ziele, technischen Anforderungen und den gewünschten Zeitrahmen einbezieht.",
     },
     {
       number: "3",
@@ -29,7 +28,7 @@ const Process = () => {
       shortDescription:
         "Der nächste Schritt in der Entwicklung einer KI-Strategie ist der Aufbau einer robusten technologischen Infrastruktur. Da KI häufig große Datenmengen und...",
       fullDescription:
-        "Der nächste Schritt in der Entwicklung einer KI-Strategie ist der Aufbau einer robusten technologischen Infrastruktur. Da KI häufig große Datenmengen und erhebliche Rechenleistung erfordert, müssen Unternehmen sicherstellen, dass ihre technische Infrastruktur diesen Anforderungen gerecht wird. Dies kann die Implementierung von Cloud-Lösungen, die Einrichtung von Datenplattformen oder die Integration von KI-Tools in bestehende Systeme umfassen.",
+        "Der nächste Schritt in der Entwicklung einer KI-Strategie ist der Aufbau einer robusten technologischen Infrastruktur. Da KI häufig große Datenmengen und erhebliche Rechenleistung erfordert, müssen Unternehmen sicherstellen, dass ihre technische Infrastruktur diesen Anforderungen gerecht wird. Dies kann die Implementierung von Cloud-Lösungen, die Einrichtung von Datenplattformen oder die Integration von KI-Tools in bestehende Systeme umfassen. Sie erhalten von uns ein detailliertes Konzept mit transparenter Kostenaufstellung und klarem Zeitplan für den Aufbau dieser Infrastruktur. Alle Projektphasen werden verständlich dargestellt, sodass Sie genau wissen, welche Schritte notwendig sind und wie wir gemeinsam vorgehen werden.",
     },
     {
       number: "4",
@@ -37,7 +36,7 @@ const Process = () => {
       shortDescription:
         "Mit modernsten Technologien setzen wir Ihr Projekt um. Durch regelmäßige Updates bleiben Sie stets im Bild und können direkt Feedback geben.",
       fullDescription:
-        "Mit modernsten Technologien setzen wir Ihr Projekt um. Durch regelmäßige Updates bleiben Sie stets im Bild und können direkt Feedback geben. Wir arbeiten in agilen Sprints, um schnell erste Ergebnisse zu liefern und kontinuierlich zu verbessern. Unser erfahrenes Entwicklungsteam setzt dabei auf bewährte Methoden und innovative Ansätze, um Ihr KI-Projekt erfolgreich zu implementieren und nahtlos in Ihre bestehenden Prozesse zu integrieren.",
+        "Mit modernsten Technologien setzen wir Ihr Projekt um. Durch regelmäßige Updates bleiben Sie stets im Bild und können direkt Feedback geben. Wir arbeiten in agilen Sprints, um schnell erste Ergebnisse zu liefern und kontinuierlich zu verbessern. Unser erfahrenes Entwicklungsteam setzt dabei auf bewährte Methoden und innovative Ansätze, um Ihr KI-Projekt erfolgreich zu implementieren und nahtlos in Ihre bestehenden Prozesse zu integrieren. Die agile Vorgehensweise ermöglicht es uns, flexibel auf Veränderungen zu reagieren und sicherzustellen, dass das Endprodukt exakt Ihren Anforderungen entspricht. Nach jeder Iteration haben Sie die Möglichkeit, das bisherige Ergebnis zu bewerten und Anpassungen vorzuschlagen.",
     },
   ];
 
