@@ -16,13 +16,13 @@ const useVoiceStream = ({ prompt }: UseVoiceStreamProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // WebSocket and audio processing references
+  // WebSocket und Audio-Verarbeitung Referenzen
   const wsRef = useRef<WebSocket | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const processorRef = useRef<ScriptProcessorNode | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
-  // Cleanup function for audio resources
+  // Bereinigungsfunktion für Audio-Ressourcen
   const cleanupAudioResources = () => {
     try {
       if (processorRef.current) {
@@ -49,7 +49,7 @@ const useVoiceStream = ({ prompt }: UseVoiceStreamProps) => {
     }
   };
 
-  // Cleanup on component unmount
+  // Bereinigung bei Komponenten-Unmount
   useEffect(() => {
     return () => {
       cleanupAudioResources();
@@ -63,21 +63,22 @@ const useVoiceStream = ({ prompt }: UseVoiceStreamProps) => {
       setListening(true);
       setMessages([]);
 
-      // Get user microphone permission and setup audio context
+      // Mikrofonzugriff anfordern
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       streamRef.current = stream;
       
       audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
       const source = audioContextRef.current.createMediaStreamSource(stream);
       
-      // Create script processor for audio processing
+      // Script Processor für Audio-Verarbeitung erstellen
       processorRef.current = audioContextRef.current.createScriptProcessor(4096, 1, 1);
       
       source.connect(processorRef.current);
       processorRef.current.connect(audioContextRef.current.destination);
 
-      // Setup WebSocket connection
-      const ws = new WebSocket("wss://api.deepgram.com/v1/listen?model=aura-2-thalia-de&encoding=linear16&sample_rate=16000");
+      // Statt direkter Verbindung zu Deepgram nutzen wir unser Backend als Proxy
+      // Die URL sollte auf die Backend-Subdomain zeigen
+      const ws = new WebSocket("wss://deepgram.se-server.nohype.ai.de/voice-agent");
       wsRef.current = ws;
 
       ws.onopen = () => {
@@ -85,14 +86,7 @@ const useVoiceStream = ({ prompt }: UseVoiceStreamProps) => {
         ws.send(
           JSON.stringify({
             type: "Configure",
-            api_key: "ca56f058f600d2432e546bc000976a8da9a82d73",
-            llm: {
-              provider: "openai",
-              model: "gpt-4o-mini"
-            },
-            agent: {
-              prompt: prompt
-            }
+            prompt: prompt
           })
         );
         setIsLoading(false);
@@ -136,7 +130,7 @@ const useVoiceStream = ({ prompt }: UseVoiceStreamProps) => {
 
       ws.onerror = (e) => {
         console.error("WebSocket Fehler:", e);
-        setError("Verbindungsfehler mit Deepgram. Bitte versuche es später erneut.");
+        setError("Verbindungsfehler mit dem Server. Bitte versuche es später erneut.");
         setListening(false);
         cleanupAudioResources();
       };

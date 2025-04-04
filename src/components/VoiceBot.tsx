@@ -1,18 +1,31 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Headphones } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import useVoiceStream from "@/hooks/useVoiceStream";
 import VoiceBotMessages from "@/components/voice/VoiceBotMessages";
 import VoiceBotLoading from "@/components/voice/VoiceBotLoading";
 import VoiceBotError from "@/components/voice/VoiceBotError";
 import VoiceBotControls from "@/components/voice/VoiceBotControls";
+import VoiceBotAgentSelector, { AGENT_OPTIONS } from "@/components/voice/VoiceBotAgentSelector";
 
 const VoiceBot = () => {
-  const [prompt, setPrompt] = useState(
-    "Du bist ein hilfsbereiter deutscher Sprachassistent für eine KI-Agentur. Begrüße neue Nutzer freundlich, stelle Fragen zu ihren Bedürfnissen und erkläre, wie Sprach-KI helfen kann."
-  );
+  const [selectedAgentId, setSelectedAgentId] = useState("default");
+  const [showCustomPrompt, setShowCustomPrompt] = useState(false);
+  const [customPrompt, setCustomPrompt] = useState("");
+  
+  // Finde den ausgewählten Agenten aus den Optionen
+  const selectedAgent = AGENT_OPTIONS.find(agent => agent.id === selectedAgentId);
+  
+  // Verwende entweder den benutzerdefinierten Prompt oder den des ausgewählten Agenten
+  const prompt = showCustomPrompt ? customPrompt : (selectedAgent?.prompt || "");
+
+  // Effekt zum Setzen des benutzerdefinierten Prompts, wenn der Agent wechselt
+  useEffect(() => {
+    if (selectedAgent && !showCustomPrompt) {
+      setCustomPrompt(selectedAgent.prompt);
+    }
+  }, [selectedAgentId, selectedAgent, showCustomPrompt]);
 
   const {
     listening,
@@ -32,17 +45,15 @@ const VoiceBot = () => {
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
-          <label className="text-sm text-gray-300">System-Prompt:</label>
-          <Textarea
-            className="w-full bg-black/30 border-gray-700 text-white"
-            rows={3}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="System-Prompt eingeben..."
-            disabled={listening}
-          />
-        </div>
+        {/* Agent-Auswahl Dropdown */}
+        <VoiceBotAgentSelector 
+          selectedAgentId={selectedAgentId}
+          onAgentChange={(agentId) => {
+            setSelectedAgentId(agentId);
+            setShowCustomPrompt(false);
+          }}
+          disabled={listening}
+        />
         
         {isLoading && <VoiceBotLoading />}
         
