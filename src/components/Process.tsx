@@ -8,27 +8,27 @@ const Process = () => {
   const steps = [
     {
       number: "1",
-      title: "Audit & Analyse",
+      title: "Persönliches Kennenlernen",
       shortDescription:
-        "Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum,...",
+        "In einem entspannten 20-minütigen Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihr Unternehmen voranbringen kann.",
       fullDescription:
-        "Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum, aktuelle Prozesse zu analysieren, Optimierungspotenziale zu identifizieren und messbare Ziele zu definieren. Wir führen eine gründliche Bestandsaufnahme durch, um zu verstehen, wo KI den größten Mehrwert für Ihr Unternehmen schaffen kann. In einem entspannten 20-minütigen Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihre Geschäftsabläufe optimieren und Ihr Unternehmen langfristig voranbringen kann.",
+        "In einem entspannten 20-minütigen Gespräch lernen wir uns kennen und verstehen Ihre Vision. Gemeinsam erkunden wir, wie KI Ihre Geschäftsabläufe optimieren und Ihr Unternehmen langfristig voranbringen kann. Wir führen eine gründliche Bestandsaufnahme durch, um zu verstehen, wo KI den größten Mehrwert für Ihr Unternehmen schaffen kann. Eine erfolgreiche KI-Strategie beginnt mit der klaren Definition von Zielen, die das Unternehmen mit der Implementierung von KI erreichen möchte. Es geht darum, aktuelle Prozesse zu analysieren, Optimierungspotenziale zu identifizieren und messbare Ziele zu definieren.",
     },
     {
       number: "2",
-      title: "Datenstrategie Entwickeln",
+      title: "Strategische Planung",
       shortDescription:
-        "Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt.",
+        "Wir entwickeln einen maßgeschneiderten Plan für Ihr Projekt. Dabei berücksichtigen wir Ihre Ziele, technischen Anforderungen und gewünschten Zeitrahmen.",
       fullDescription:
-        "Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt, die festlegt, welche Daten für die KI-Modelle benötigt werden, wie diese Daten gesammelt und verarbeitet werden sollen und wie ihre Qualität sichergestellt wird. Unternehmen müssen sicherstellen, dass sie über ausreichende Datenmengen verfügen und dass diese Daten für die geplanten KI-Anwendungen relevant sind. Gleichzeitig muss auch der Datenschutz berücksichtigt werden, da die KI oft auf sensible Daten zugreifen wird. Eine klare Datenstrategie ermöglicht es, KI effektiv und nachhaltig einzusetzen. Wir entwickeln einen maßgeschneiderten Plan für Ihr Projekt, der all diese Aspekte berücksichtigt und dabei Ihre spezifischen Ziele, technischen Anforderungen und den gewünschten Zeitrahmen einbezieht.",
+        "Wir entwickeln einen maßgeschneiderten Plan für Ihr Projekt. Dabei berücksichtigen wir Ihre Ziele, technischen Anforderungen und gewünschten Zeitrahmen. Daten sind das Herzstück jeder KI-Initiative. Ohne qualitativ hochwertige Daten kann KI keine zuverlässigen Ergebnisse liefern. In dieser Phase wird eine umfassende Datenstrategie entwickelt, die festlegt, welche Daten für die KI-Modelle benötigt werden, wie diese Daten gesammelt und verarbeitet werden sollen und wie ihre Qualität sichergestellt wird. Unternehmen müssen sicherstellen, dass sie über ausreichende Datenmengen verfügen und dass diese Daten für die geplanten KI-Anwendungen relevant sind. Gleichzeitig muss auch der Datenschutz berücksichtigt werden.",
     },
     {
       number: "3",
-      title: "Infrastruktur aufbauen",
+      title: "Individuelles Konzept",
       shortDescription:
-        "Der nächste Schritt in der Entwicklung einer KI-Strategie ist der Aufbau einer robusten technologischen Infrastruktur. Da KI häufig große Datenmengen und...",
+        "Sie erhalten ein detailliertes Konzept mit transparenter Kostenaufstellung und klarem Zeitplan. Alle Projektphasen werden verständlich dargestellt.",
       fullDescription:
-        "Der nächste Schritt in der Entwicklung einer KI-Strategie ist der Aufbau einer robusten technologischen Infrastruktur. Da KI häufig große Datenmengen und erhebliche Rechenleistung erfordert, müssen Unternehmen sicherstellen, dass ihre technische Infrastruktur diesen Anforderungen gerecht wird. Dies kann die Implementierung von Cloud-Lösungen, die Einrichtung von Datenplattformen oder die Integration von KI-Tools in bestehende Systeme umfassen. Sie erhalten von uns ein detailliertes Konzept mit transparenter Kostenaufstellung und klarem Zeitplan für den Aufbau dieser Infrastruktur. Alle Projektphasen werden verständlich dargestellt, sodass Sie genau wissen, welche Schritte notwendig sind und wie wir gemeinsam vorgehen werden.",
+        "Sie erhalten ein detailliertes Konzept mit transparenter Kostenaufstellung und klarem Zeitplan. Alle Projektphasen werden verständlich dargestellt, sodass Sie genau wissen, welche Schritte notwendig sind und wie wir gemeinsam vorgehen werden. Der Aufbau einer robusten technologischen Infrastruktur ist ein wesentlicher Schritt in der Entwicklung einer KI-Strategie. Da KI häufig große Datenmengen und erhebliche Rechenleistung erfordert, müssen Unternehmen sicherstellen, dass ihre technische Infrastruktur diesen Anforderungen gerecht wird. Dies kann die Implementierung von Cloud-Lösungen, die Einrichtung von Datenplattformen oder die Integration von KI-Tools in bestehende Systeme umfassen.",
     },
     {
       number: "4",
