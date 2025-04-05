@@ -32,7 +32,8 @@ export const MobileMenu = ({
           <img 
             src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
             alt="nohype Logo" 
-            className="h-10 w-auto" 
+            className="h-10 w-auto"
+            style={{ display: 'block' }}
           />
         </Link>
       </div>
