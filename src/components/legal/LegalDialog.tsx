@@ -1,3 +1,4 @@
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { FileText, Shield, File } from "lucide-react";
 
@@ -16,16 +17,24 @@ const LegalDialog = ({ isOpen, onClose, type }: LegalDialogProps) => {
         <>
           <h2 className="text-xl font-semibold mb-4">Angaben gemäß § 5 TMG</h2>
           <p className="mb-4">
-            Firmenname GmbH<br />
-            Musterstraße 123<br />
-            12345 Musterstadt
+            nohype.ai<br />
+            eine Marke der<br /><br />
+            Powerplant Promotion GmbH<br />
+            Bierdener Kämpe 4<br />
+            28832 Achim
           </p>
           <h3 className="text-lg font-semibold mb-2">Vertreten durch</h3>
-          <p className="mb-4">Max Mustermann</p>
+          <p className="mb-4">Geschäftsführer: Sven Erkens, Adrian Wülbers</p>
           <h3 className="text-lg font-semibold mb-2">Kontakt</h3>
           <p className="mb-4">
             Telefon: +49 (0) 123 456789<br />
             E-Mail: info@firma.de
+          </p>
+          <h3 className="text-lg font-semibold mb-2">Handelsregister</h3>
+          <p className="mb-4">
+            Sitz der Gesellschaft: Achim<br />
+            Amtsgericht Walsrode HRB 211757<br />
+            Steuer-Nr.: 48/207/01745
           </p>
         </>
       ),
