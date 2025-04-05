@@ -30,10 +30,9 @@ export const MobileMenu = ({
       <div className="fixed top-4 left-4 z-50 md:hidden flex items-center">
         <Link to="/" onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}>
           <img 
-            src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="nohype Logo" 
-            className="h-10 w-auto"
-            style={{ display: 'block' }}
+            className="h-8 w-auto"
           />
         </Link>
       </div>
