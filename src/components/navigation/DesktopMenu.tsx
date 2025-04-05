@@ -49,7 +49,7 @@ export const DesktopMenu = ({
           src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
           alt="nohype Logo" 
           className="h-10 w-auto"
-          style={{ aspectRatio: "2/1", display: "block", objectFit: "contain" }}
+          style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
         />
       </Link>
       
