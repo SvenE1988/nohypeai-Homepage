@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -53,7 +52,6 @@ function NavHeader() {
   const handleNavigation = (item: any, e: React.MouseEvent) => {
     e.preventDefault();
     
-    // Für Blog oder Karriere direkt zur entsprechenden Seite navigieren
     if (item.href === "/blog" || item.href === "/karriere" || item.href === "/pricing") {
       navigate(item.href);
       setIsMobileMenuOpen(false);
@@ -61,7 +59,6 @@ function NavHeader() {
     }
     
     if (location.pathname !== '/' && item.href.startsWith('#')) {
-      // Von einer anderen Seite zur Hauptseite und dann zum Anker scrollen
       navigate('/');
       setTimeout(() => {
         const element = document.querySelector(item.href);
@@ -70,16 +67,13 @@ function NavHeader() {
         }
       }, 100);
     } else if (item.href.startsWith('#') && location.pathname === '/') {
-      // Auf der Hauptseite zum Anker scrollen
       const element = document.querySelector(item.href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
     } else if (item.href === '/') {
-      // Zum Seitenanfang scrollen oder zur Startseite navigieren
       scrollToTop();
     } else {
-      // Zu einer anderen Seite navigieren
       navigate(item.href);
     }
     
@@ -92,25 +86,19 @@ function NavHeader() {
     { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
-    { href: "/pricing", label: "Preise" },
     { href: "/blog", label: "Blog" }, 
     { href: "/karriere", label: "Karriere" },
   ];
 
   return (
     <>
-      {/* Social Media Links */}
       <SocialLinks />
-
-      {/* Mobile Menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
         navItems={navItems}
         handleNavigation={handleNavigation}
       />
-
-      {/* Desktop Menu */}
       <DesktopMenu
         navItems={navItems}
         position={position}
