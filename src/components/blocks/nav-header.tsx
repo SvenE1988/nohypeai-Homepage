@@ -54,7 +54,7 @@ function NavHeader() {
     e.preventDefault();
     
     // Für Blog oder Karriere direkt zur entsprechenden Seite navigieren
-    if (item.href === "/blog" || item.href === "/karriere") {
+    if (item.href === "/blog" || item.href === "/karriere" || item.href === "/pricing") {
       navigate(item.href);
       setIsMobileMenuOpen(false);
       return;
@@ -92,6 +92,7 @@ function NavHeader() {
     { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
     { href: "#ueber-uns", label: "Über Uns" },
+    { href: "/pricing", label: "Preise" },
     { href: "/blog", label: "Blog" }, 
     { href: "/karriere", label: "Karriere" },
   ];

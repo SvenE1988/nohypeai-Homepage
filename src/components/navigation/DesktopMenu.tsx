@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
+import { Link } from "react-router-dom";
 
 interface DesktopMenuProps {
   navItems: Array<{
@@ -34,10 +35,23 @@ export const DesktopMenu = ({
 }: DesktopMenuProps) => {
   return (
     <motion.ul
-      className="relative mx-auto hidden md:flex w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center items-center shadow-lg"
+      className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
       onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
+      {/* Logo auf der linken Seite */}
+      <Link 
+        to="/" 
+        className="mr-3 pl-2 flex items-center"
+        onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}
+      >
+        <img 
+          src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+          alt="nohype Logo" 
+          className="h-8 w-auto" 
+        />
+      </Link>
+      
       {navItems.map((item) => (
         <Tab 
           key={item.label}

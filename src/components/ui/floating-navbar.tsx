@@ -99,12 +99,25 @@ export const FloatingNav = memo(({
           animate="visible"
           exit="hidden"
           className={cn(
-            "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_8px_40px_-12px_rgba(0,0,0,0.2)] z-[5000] pr-2 pl-8 py-2 items-center justify-center space-x-4",
+            "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_8px_40px_-12px_rgba(0,0,0,0.2)] z-[5000] pr-2 pl-2 py-2 items-center justify-center space-x-4",
             className
           )}
           role="navigation"
           aria-label="Floating navigation"
         >
+          {/* Logo in the floating navbar */}
+          <Link
+            to="/"
+            onClick={(e) => handleLinkClick(e, '/')}
+            className="flex items-center mr-2 pl-3"
+          >
+            <img 
+              src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+              alt="nohype Logo" 
+              className="h-6 w-auto"
+            />
+          </Link>
+          
           {navItems.map((navItem: NavItem, idx: number) => (
             <Link
               key={`nav-link-${idx}`}

@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface MobileMenuProps {
   isMobileMenuOpen: boolean;
@@ -25,6 +26,17 @@ export const MobileMenu = ({
 }: MobileMenuProps) => {
   return (
     <>
+      {/* Mobile Menu Top Bar with Logo */}
+      <div className="fixed top-4 left-4 z-50 md:hidden flex items-center">
+        <Link to="/" onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}>
+          <img 
+            src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+            alt="nohype Logo" 
+            className="h-8 w-auto" 
+          />
+        </Link>
+      </div>
+      
       {/* Mobile Menu Button */}
       <button
         className="fixed top-4 right-16 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
