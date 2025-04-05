@@ -14,6 +14,9 @@ export const projectsData: Project[] = [
       "Implementation eines KI-gestützten Chatbot-Systems, das Kundenanfragen automatisch beantwortet und bei Bedarf an Mitarbeiter eskaliert.",
     result:
       "Reaktionszeit von Stunden auf Sekunden reduziert, 24/7 Verfügbarkeit und signifikante Entlastung des Serviceteams.",
+    logoUrl: "/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png",
+    logoAspectRatio: "3.87/1",
+    company: "Purainvest",
   },
   {
     year: "Nov 2024",
@@ -27,6 +30,9 @@ export const projectsData: Project[] = [
       "Entwicklung und Integration dynamischer Beraterrechner, die komplexe Finanzierungsszenarien in Echtzeit visualisieren und berechnen.",
     result:
       "Beratungszeit pro Kunde um 40% reduziert, höhere Abschlussquote und verbesserte Kundenzufriedenheit durch transparente Berechnungen.",
+    logoUrl: "/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png",
+    logoAspectRatio: "3.87/1",
+    company: "Purainvest",
   },
   {
     year: "Jan 2025",
@@ -40,6 +46,9 @@ export const projectsData: Project[] = [
       "Integration einer automatisierten Angebotserstellung in SEVDESK, die Kundendaten, Produkte und Preisstrukturen intelligent verarbeitet.",
     result:
       "Reduzierung der Angebotserstellung auf wenige Minuten, Fehlerquote nahezu eliminiert und Vertriebsteam kann sich auf Kundenberatung konzentrieren.",
+    logoUrl: "/lovable-uploads/837bd445-fe20-4f21-b2bb-cf283ab3b0b2.png",
+    logoAspectRatio: "1.42/1",
+    company: "Wesa Solar",
   },
   {
     year: "Feb 2025",
@@ -53,5 +62,8 @@ export const projectsData: Project[] = [
       "Implementierung KI-basierter Voice-Agenten, die eingehende Leads qualifizieren und Termine automatisch koordinieren.",
     result:
       "300% mehr qualifizierte Leads, 70% weniger Aufwand für Terminkoordination und signifikant höhere Conversion-Rate im Vertrieb.",
+    logoUrl: "/lovable-uploads/837bd445-fe20-4f21-b2bb-cf283ab3b0b2.png",
+    logoAspectRatio: "1.42/1",
+    company: "Wesa Solar",
   },
 ];
