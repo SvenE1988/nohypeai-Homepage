@@ -85,7 +85,7 @@ const ProcessStep = ({ step, isLast }: ProcessStepProps) => {
       <div className="flex items-start">
         {/* Number and circle */}
         <div className="mr-6 flex flex-col items-center">
-          <div className="text-[#f0e14a] text-4xl font-bold mb-2">{step.number}</div>
+          <div className="text-primary text-4xl font-bold mb-2">{step.number}</div>
           <div className="relative z-10 w-7 h-7 rounded-full border-2 border-white bg-black" />
         </div>
 
@@ -104,7 +104,7 @@ const ProcessStep = ({ step, isLast }: ProcessStepProps) => {
             <CollapsibleTrigger asChild>
               <Button
                 variant="ghost" 
-                className="bg-[#252b45] hover:bg-[#30364e] text-[#f0e14a] px-4 py-2 rounded-md"
+                className="bg-[#252b45] hover:bg-[#30364e] text-primary px-4 py-2 rounded-md"
               >
                 {isOpen ? "weniger anzeigen..." : "mehr erfahren..."}
               </Button>
