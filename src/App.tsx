@@ -1,5 +1,5 @@
 
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -14,6 +14,7 @@ import { DialogProvider } from "./components/providers/DialogProvider";
 // Components that are always needed
 import CookieConsent from "./components/CookieConsent";
 import CustomChat from "./components/CustomChat";
+import LegalDialog from "./components/legal/LegalDialog";
 
 // Lazy-loaded pages for better performance
 const Index = lazy(() => import("./pages/Index"));
