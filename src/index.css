@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -164,10 +165,10 @@
   @apply text-black;
 }
 
-.light .bg-black\\/70 {
+.light .bg-black\/70 {
   @apply bg-white/70;
 }
 
-.light .border-white\\/30 {
+.light .border-white\/30 {
   @apply border-black/30;
 }
