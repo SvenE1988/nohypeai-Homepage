@@ -1,14 +1,16 @@
+
 import React, { useState, useEffect, useRef } from "react";
 import { Proposal } from "./types";
-import { PageRenderer } from "./preview/PageRenderer";
 import { PaginationControls } from "./preview/PaginationControls";
 import { usePaginatedContent } from "../../hooks/usePaginatedContent";
-import { Button } from "@/components/ui/button";
-import { FileDown } from "lucide-react";
 import { toast } from "sonner";
-import html2pdf from "html2pdf.js";
 import { ExportDialog } from "./ExportDialog";
 import { ExportSettings } from "./types";
+import { generatePDF, printDocument } from "./utils/pdfUtils";
+import { PrintPreview } from "./preview/PrintPreview";
+import { SinglePagePreview } from "./preview/SinglePagePreview";
+import { PreviewControls } from "./preview/PreviewControls";
+import { StatusMessage } from "./preview/StatusMessage";
 
 interface ProposalPreviewProps {
   proposal: Proposal;
@@ -35,52 +37,23 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
     setCurrentPreviewPage(0);
   }, [proposal.id]);
 
-  const handlePrintPDF = () => {
-    setTimeout(() => {
-      window.print();
-    }, 100);
-  };
-
-  const handleDownloadPDF = async (settings?: ExportSettings) => {
-    if (!pdfContentRef.current) return;
-    
-    setIsGeneratingPDF(true);
-    toast.loading("PDF wird erstellt...");
-    
-    try {
-      const element = pdfContentRef.current;
-      
-      // Configure html2pdf options
-      const opt = {
-        margin: 0,
-        filename: `${proposal.title || 'Angebot'}.pdf`,
-        image: { type: 'jpeg', quality: settings?.quality === 'high' ? 0.98 : settings?.quality === 'standard' ? 0.92 : 0.85 },
-        html2canvas: { 
-          scale: settings?.quality === 'high' ? 2 : settings?.quality === 'standard' ? 1.5 : 1, 
-          useCORS: true 
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      
-      // Generate PDF
-      await html2pdf().set(opt).from(element).save();
-      
-      toast.success("PDF wurde erfolgreich erstellt");
-    } catch (error) {
-      console.error("PDF generation error:", error);
-      toast.error("Fehler beim Erstellen des PDFs");
-    } finally {
-      setIsGeneratingPDF(false);
-    }
-  };
-
-  const handleExportAction = (type: string, settings: ExportSettings) => {
+  const handleExportAction = async (type: string, settings: ExportSettings) => {
     switch (type) {
       case "download":
-        handleDownloadPDF(settings);
+        if (!pdfContentRef.current) return;
+        setIsGeneratingPDF(true);
+        try {
+          await generatePDF(
+            pdfContentRef.current, 
+            proposal.title || 'Angebot',
+            settings
+          );
+        } finally {
+          setIsGeneratingPDF(false);
+        }
         break;
       case "print":
-        handlePrintPDF();
+        printDocument();
         break;
       case "email":
         toast.info("E-Mail-Funktion wird in einer zukünftigen Version verfügbar sein");
@@ -92,43 +65,23 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
 
   return (
     <div className={`preview-wrapper ${className}`}>
-      <div className="flex justify-between items-center mb-4 print:hidden">
-        <h3 className="text-xl font-medium text-white">Vorschau: {proposal.title}</h3>
-        <div className="flex gap-2">
-          <Button 
-            variant="default" 
-            size="sm" 
-            onClick={() => setShowExportDialog(true)}
-            className="flex items-center gap-1"
-            disabled={isGeneratingPDF}
-          >
-            <FileDown size={16} />
-            <span className="hidden sm:inline">Exportieren</span>
-          </Button>
-        </div>
-      </div>
+      <PreviewControls
+        title={proposal.title}
+        isGeneratingPDF={isGeneratingPDF}
+        onExportClick={() => setShowExportDialog(true)}
+      />
 
       <div className="preview-container" id="pdf-content" ref={pdfContentRef}>
-        {/* In print mode, we render all pages */}
-        <div className="print:block hidden">
-          {pages.map((page, pageIndex) => (
-            <PageRenderer
-              key={`page-${pageIndex}`}
-              sections={page.sections}
-              pageIndex={pageIndex}
-            />
-          ))}
-        </div>
+        {/* Print mode - render all pages */}
+        <PrintPreview pages={pages} />
         
-        {/* In preview mode, we only render the current page */}
-        <div className="print:hidden">
-          {pages.length > 0 && currentPreviewPage < pages.length && (
-            <PageRenderer
-              sections={pages[currentPreviewPage].sections}
-              pageIndex={currentPreviewPage}
-            />
-          )}
-        </div>
+        {/* Preview mode - render only current page */}
+        {pages.length > 0 && currentPreviewPage < pages.length && (
+          <SinglePagePreview
+            sections={pages[currentPreviewPage].sections}
+            pageIndex={currentPreviewPage}
+          />
+        )}
       </div>
       
       {/* Pagination controls - only shown in preview mode */}
@@ -138,15 +91,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         onPageChange={setCurrentPreviewPage}
       />
       
-      {isGeneratingPDF ? (
-        <p className="text-center text-sm text-gray-400 mt-4 print:hidden animate-pulse">
-          PDF wird generiert...
-        </p>
-      ) : (
-        <p className="text-center text-sm text-gray-400 mt-4 print:hidden print-instructions">
-          Klicken Sie auf "Exportieren", um das Angebot als PDF zu speichern oder zu drucken.
-        </p>
-      )}
+      <StatusMessage isGeneratingPDF={isGeneratingPDF} />
 
       <ExportDialog
         open={showExportDialog}
