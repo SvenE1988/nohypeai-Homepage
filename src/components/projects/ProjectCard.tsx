@@ -49,7 +49,7 @@ const ProjectCard = ({
                 alt={`${project.company} Logo`}
                 className="h-8 w-auto"
                 style={{
-                  aspectRatio: project.logoAspectRatio,
+                  aspectRatio: project.logoAspectRatio || "auto",
                   display: "block",
                   objectFit: "contain"
                 }}

@@ -112,9 +112,10 @@ export const FloatingNav = memo(({
             className="flex items-center mr-2 pl-3"
           >
             <img 
-              src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+              src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
               alt="nohype Logo" 
               className="h-6 w-auto"
+              style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
             />
           </Link>
           
