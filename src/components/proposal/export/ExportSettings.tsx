@@ -8,11 +8,13 @@ import { ExportSettings } from "../types";
 interface ExportSettingsProps {
   settings: ExportSettings;
   onSettingChange: (key: keyof ExportSettings, value: any) => void;
+  type?: "download" | "print" | "email";
 }
 
-export const ExportSettingsComponent: React.FC<ExportSettingsProps> = ({
+export const ExportSettingsPanel: React.FC<ExportSettingsProps> = ({
   settings,
   onSettingChange,
+  type = "download"
 }) => {
   return (
     <div className="space-y-4 py-2">
@@ -102,3 +104,4 @@ export const ExportSettingsComponent: React.FC<ExportSettingsProps> = ({
     </div>
   );
 };
+
