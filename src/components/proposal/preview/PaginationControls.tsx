@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -60,6 +61,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
             <PaginationPrevious 
               onClick={() => currentPage > 0 && onPageChange(currentPage - 1)}
               className={currentPage === 0 ? "pointer-events-none opacity-50" : ""}
+              aria-label="Vorherige Seite"
             />
           </PaginationItem>
           
@@ -68,6 +70,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
               <PaginationLink 
                 isActive={currentPage === index} 
                 onClick={() => onPageChange(index)}
+                aria-label={`Seite ${index + 1}`}
               >
                 {index + 1}
               </PaginationLink>
@@ -78,6 +81,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
             <PaginationNext 
               onClick={() => currentPage < totalPages - 1 && onPageChange(currentPage + 1)}
               className={currentPage === totalPages - 1 ? "pointer-events-none opacity-50" : ""}
+              aria-label="Nächste Seite"
             />
           </PaginationItem>
         </PaginationContent>

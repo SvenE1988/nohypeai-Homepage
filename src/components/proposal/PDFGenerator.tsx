@@ -143,7 +143,7 @@ export const PDFGenerator = () => {
   // Render split view (editor + preview) when in editor mode
   const renderEditorContent = () => {
     return (
-      <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border">
+      <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border border-white/10">
         <ResizablePanel defaultSize={50} minSize={30}>
           <div className="p-4 h-full overflow-auto">
             <ProposalEditor proposal={proposal} onChange={handleProposalChange} />
@@ -177,7 +177,7 @@ export const PDFGenerator = () => {
       case "editor":
         return renderEditorContent();
       case "preview":
-        return <ProposalPreview proposal={proposal} />;
+        return <ProposalPreview proposal={proposal} className="bg-black/30 p-6 rounded-lg border border-white/10" />;
       default:
         return null;
     }
