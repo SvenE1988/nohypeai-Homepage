@@ -32,11 +32,11 @@ export const generatePDF = async (
       image: { 
         type: 'jpeg', 
         quality: settings?.quality === 'high' ? 0.98 : 
-                 settings?.quality === 'standard' ? 0.92 : 0.85 
+                settings?.quality === 'standard' ? 0.92 : 0.85 
       },
       html2canvas: { 
         scale: settings?.quality === 'high' ? 2 : 
-               settings?.quality === 'standard' ? 1.5 : 1, 
+              settings?.quality === 'standard' ? 1.5 : 1, 
         useCORS: true,
         letterRendering: true
       },
@@ -46,7 +46,7 @@ export const generatePDF = async (
         orientation: 'portrait',
         compress: true
       },
-      pagebreak: { mode: ['css', 'legacy'] }
+      pagebreak: { mode: 'css', avoid: '.avoid-break', before: '.page-break-before', after: '.page-break-after' }
     };
     
     // Generate PDF

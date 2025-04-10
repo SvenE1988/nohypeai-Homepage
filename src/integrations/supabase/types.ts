@@ -66,33 +66,6 @@ export type Database = {
         }
         Relationships: []
       }
-      website_content: {
-        Row: {
-          created_at: string
-          id: number
-          savings_calculator: Json
-          tech_stack: Json
-          testimonials: Json
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          savings_calculator?: Json
-          tech_stack?: Json
-          testimonials?: Json
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          savings_calculator?: Json
-          tech_stack?: Json
-          testimonials?: Json
-          updated_at?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       [_ in never]: never

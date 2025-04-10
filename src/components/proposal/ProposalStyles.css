@@ -29,7 +29,6 @@
   width: 210mm;
   height: 297mm;
   margin: 0 auto;
-  background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
   overflow: hidden;
@@ -73,16 +72,6 @@
   font-weight: bold;
   margin-bottom: 20px;
   color: #fff;
-}
-
-.cover-page-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent, rgba(30, 58, 138, 0.2));
-  z-index: 5;
 }
 
 /* Page footer styling */

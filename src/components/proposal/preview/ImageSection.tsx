@@ -14,7 +14,7 @@ interface ImageSectionProps {
 export const ImageSection: React.FC<ImageSectionProps> = ({ content }) => {
   return (
     <div className="mb-6">
-      <div className="border border-gray-200 rounded overflow-hidden">
+      <div className="border border-gray-600 rounded overflow-hidden">
         <img
           src={content.src}
           alt={content.alt}
@@ -23,7 +23,7 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ content }) => {
         />
       </div>
       {content.caption && (
-        <p className="text-sm text-gray-500 mt-2 text-center">{content.caption}</p>
+        <p className="text-sm text-gray-300 mt-2 text-center">{content.caption}</p>
       )}
     </div>
   );

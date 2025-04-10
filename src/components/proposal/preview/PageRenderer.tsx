@@ -46,7 +46,6 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       width: '210mm',
       height: '297mm',
       margin: '0 auto',
-      backgroundColor: '#fff',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden'
     }}>
@@ -54,20 +53,11 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       <div className="absolute inset-0 bg-gradient-dark" style={{ zIndex: 0 }}></div>
       
       {/* Gradient glow overlays */}
-      <div className="absolute inset-0 bg-gradient-glow" style={{ zIndex: 1, opacity: 0.4 }}></div>
-      <div className="absolute inset-0 bg-accent-glow" style={{ zIndex: 2, opacity: 0.3 }}></div>
-      
-      {/* Background image (reduced opacity) */}
-      <div className="absolute inset-0 w-full h-full" style={{ zIndex: 3 }}>
-        <img 
-          src="/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png" 
-          alt="Background" 
-          className="w-full h-full object-cover opacity-15"
-        />
-      </div>
+      <div className="absolute inset-0 bg-gradient-glow" style={{ zIndex: 1, opacity: 0.6 }}></div>
+      <div className="absolute inset-0 bg-accent-glow" style={{ zIndex: 2, opacity: 0.4 }}></div>
       
       {/* Page content with proper z-index to be above backgrounds */}
-      <div className="a4-content relative p-10 h-full flex flex-col" style={{ zIndex: 10 }}>
+      <div className="a4-content relative p-10 h-full flex flex-col text-white" style={{ zIndex: 10 }}>
         {/* NoHype logo fixed on every page */}
         <div className="absolute top-6 right-6 w-28">
           <img 
@@ -105,7 +95,6 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
                 day: 'numeric'
               })}
             </div>
-            <div className="cover-page-overlay absolute inset-0 bg-gradient-to-b from-transparent to-blue-900/20 opacity-30"></div>
           </div>
         ) : (
           /* Regular page content */
