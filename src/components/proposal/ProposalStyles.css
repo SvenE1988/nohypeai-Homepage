@@ -1,28 +1,92 @@
 
+/* A4 page dimensions */
+.a4-page {
+  width: 210mm;
+  height: 297mm;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Content container within the A4 page */
+.a4-content {
+  position: relative;
+  z-index: 10;
+  padding: 20mm;
+  height: calc(100% - 40mm);
+  overflow: hidden;
+}
+
+/* Background gradients */
+.bg-gradient-dark {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
+  z-index: 1;
+}
+
+.bg-gradient-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(107, 70, 193, 0.2) 0%, transparent 60%);
+  z-index: 2;
+}
+
+.bg-accent-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at bottom left, rgba(255, 0, 153, 0.1) 0%, transparent 40%);
+  z-index: 3;
+}
+
+/* Page footer */
+.page-footer {
+  position: absolute;
+  bottom: 10mm;
+  left: 20mm;
+  right: 20mm;
+  padding-top: 3mm;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  z-index: 10;
+}
+
+/* Preview container */
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+/* Print styles */
 @media print {
   /* Hide everything except the PDF content */
   body * {
     visibility: hidden;
   }
   
-  #pdf-content, #pdf-content * {
+  .a4-page, .a4-page * {
     visibility: visible;
   }
   
-  #pdf-content {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 210mm;
-    min-height: 297mm;
-    margin: 0;
+  .a4-page {
+    position: relative;
     box-shadow: none;
-    border: none;
-    /* Ensure the gradient background prints */
+    margin: 0;
+    page-break-after: always;
     background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     print-color-adjust: exact !important;
+  }
+  
+  /* Hide the preview instructions and controls when printing */
+  .print-instructions {
+    display: none !important;
   }
   
   /* Custom styling for the gradient backgrounds to ensure they print */
@@ -49,32 +113,24 @@
   }
 }
 
-/* Add some custom styles for the PDF content */
-#pdf-content {
-  /* Use the website's gradient background */
-  background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
-}
-
-#pdf-content .bg-gradient-glow {
-  /* Add the purple glow from the website */
-  background: radial-gradient(circle at top right, rgba(107, 70, 193, 0.2) 0%, transparent 60%);
-}
-
-#pdf-content .bg-accent-glow {
-  /* Add the magenta glow from the website */
-  background: radial-gradient(circle at bottom left, rgba(255, 0, 153, 0.1) 0%, transparent 40%);
-}
-
 /* Text colors for better contrast on dark background */
-#pdf-content h1, 
-#pdf-content h2, 
-#pdf-content h3, 
-#pdf-content h4 {
+.a4-page h1, 
+.a4-page h2, 
+.a4-page h3, 
+.a4-page h4 {
   color: #FF0099; /* Primary color */
 }
 
-#pdf-content p, 
-#pdf-content li, 
-#pdf-content span {
+.a4-page p, 
+.a4-page li, 
+.a4-page span,
+.a4-page div {
   color: rgba(255, 255, 255, 0.9);
+}
+
+/* Company logo */
+.company-logo {
+  height: 40px;
+  margin-bottom: 40px;
+  object-fit: contain;
 }

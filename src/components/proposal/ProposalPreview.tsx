@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Proposal } from "./types";
 import { HeaderSection } from "./preview/HeaderSection";
 import { TextSection } from "./preview/TextSection";
@@ -13,6 +13,81 @@ interface ProposalPreviewProps {
 }
 
 export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) => {
+  // Sort sections by order
+  const sortedSections = [...proposal.sections].sort((a, b) => a.order - b.order);
+  
+  // State to store our paginated content
+  const [pages, setPages] = useState<Array<{ sections: typeof sortedSections }>>([]);
+  
+  // Calculate pagination when sections change
+  useEffect(() => {
+    const paginateContent = () => {
+      const newPages: Array<{ sections: typeof sortedSections }> = [];
+      let currentPage: typeof sortedSections = [];
+      let currentEstimatedHeight = 0;
+      
+      // First page always has the header which takes more space
+      const firstPageMaxHeight = 900; // Approximate pixel height for A4 page with margins minus header space
+      const otherPagesMaxHeight = 1000; // Approximate pixel height for subsequent A4 pages with margins
+      
+      sortedSections.forEach((section, index) => {
+        // Estimated heights in pixels for different section types
+        let sectionHeight = 0;
+        
+        switch (section.type) {
+          case "header":
+            sectionHeight = 200; // Header with logo takes more space
+            break;
+          case "text":
+            // Calculate height based on text length
+            sectionHeight = 80 + (section.content.text.length / 4); // Approximation
+            break;
+          case "image":
+            sectionHeight = 350; // Image with caption
+            break;
+          case "caseStudy":
+            sectionHeight = 450; // Case studies have more content
+            break;
+          case "pricing":
+            sectionHeight = 100 + (section.content.items.length * 50); // Base + rows
+            break;
+          case "contact":
+            sectionHeight = 200; // Contact information
+            break;
+          default:
+            sectionHeight = 150; // Default fallback
+        }
+        
+        const maxHeightForCurrentPage = currentPage.length === 0 && newPages.length === 0 
+          ? firstPageMaxHeight 
+          : otherPagesMaxHeight;
+        
+        // Check if adding this section would exceed the current page's height
+        if (currentEstimatedHeight + sectionHeight > maxHeightForCurrentPage) {
+          // Create a new page with current sections
+          if (currentPage.length > 0) {
+            newPages.push({ sections: [...currentPage] });
+            currentPage = [];
+            currentEstimatedHeight = 0;
+          }
+        }
+        
+        // Add section to current page
+        currentPage.push(section);
+        currentEstimatedHeight += sectionHeight;
+        
+        // If this is the last section, add the current page
+        if (index === sortedSections.length - 1 && currentPage.length > 0) {
+          newPages.push({ sections: [...currentPage] });
+        }
+      });
+      
+      setPages(newPages);
+    };
+    
+    paginateContent();
+  }, [sortedSections]);
+  
   const renderSection = (section: any) => {
     switch (section.type) {
       case "header":
@@ -34,38 +109,47 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
 
   return (
     <div>
-      <div className="border border-gray-300 rounded overflow-hidden print:shadow-none print:border-none">
-        <div className="min-h-[842px] w-[595px] mx-auto relative" id="pdf-content">
-          {/* Background gradient */}
-          <div className="absolute inset-0 bg-gradient-dark">
-            <div className="absolute inset-0 bg-gradient-glow opacity-70"></div>
-            <div className="absolute inset-0 bg-accent-glow opacity-70"></div>
-          </div>
-          
-          {/* Content with padding */}
-          <div className="relative z-10 px-8 py-10 m-6">
-            {/* Proposal Content */}
-            <div className="space-y-6">
-              {proposal.sections
-                .sort((a, b) => a.order - b.order)
-                .map((section) => (
+      <div className="preview-container" id="pdf-content">
+        {pages.map((page, pageIndex) => (
+          <div key={`page-${pageIndex}`} className="a4-page">
+            {/* Background layers */}
+            <div className="bg-gradient-dark"></div>
+            <div className="bg-gradient-glow"></div>
+            <div className="bg-accent-glow"></div>
+            
+            {/* Page content */}
+            <div className="a4-content">
+              {/* Add logo to first page only */}
+              {pageIndex === 0 && (
+                <img 
+                  src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+                  alt="nohype Logo" 
+                  className="company-logo"
+                />
+              )}
+              
+              {/* Render the sections for this page */}
+              <div className="space-y-6">
+                {page.sections.map((section) => (
                   <div key={section.id} className="mb-6 proposal-section">
                     {renderSection(section)}
                   </div>
                 ))}
+              </div>
             </div>
             
             {/* Footer with company info */}
-            <div className="mt-12 pt-4 border-t border-white/20">
+            <div className="page-footer">
               <div className="flex justify-between items-center text-xs text-white/70">
                 <div>NoHype GmbH • Weidenallee 13 • 20357 Hamburg</div>
                 <div>Tel: +49 40 2093 3340 • info@nohype.io</div>
               </div>
             </div>
           </div>
-        </div>
+        ))}
       </div>
-      <p className="text-center text-sm text-gray-400 mt-4">
+      
+      <p className="text-center text-sm text-gray-400 mt-4 print-instructions">
         Drücke "Download PDF", um das Angebot als PDF herunterzuladen.
       </p>
     </div>
