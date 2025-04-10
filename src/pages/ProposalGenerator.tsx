@@ -12,7 +12,7 @@ const ProposalGenerator = () => {
         <h1 className="text-3xl font-bold text-white text-center mb-8">Broschüren- und Angebotsgenerator</h1>
         <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12">
           Erstellen Sie professionelle Angebote und Broschüren in wenigen Minuten. 
-          Wählen Sie eine Vorlage, passen Sie den Inhalt an und exportieren Sie als PDF.
+          Wählen Sie eine Vorlage, passen Sie den Inhalt an und exportieren Sie als PDF oder drucken Sie direkt.
         </p>
         <div className="max-w-7xl mx-auto">
           <PDFGenerator />

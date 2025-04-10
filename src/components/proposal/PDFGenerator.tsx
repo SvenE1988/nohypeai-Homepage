@@ -12,6 +12,7 @@ import { ProposalTemplates } from "./ProposalTemplates";
 import { SavedBrochuresView } from "./SavedBrochuresView";
 import { SaveBrochureDialog } from "./SaveBrochureDialog";
 import { ProposalTabs } from "./ProposalTabs";
+import { ExportDialog, ExportSettings } from "./ExportDialog";
 import { 
   ResizablePanelGroup, 
   ResizablePanel, 
@@ -25,6 +26,7 @@ export const PDFGenerator = () => {
   const [savedBrochures, setSavedBrochures] = useState<SavedBrochure[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [showExportDialog, setShowExportDialog] = useState(false);
   const [saveTitle, setSaveTitle] = useState("");
   const [saveDescription, setSaveDescription] = useState("");
   
@@ -123,11 +125,10 @@ export const PDFGenerator = () => {
     setActiveTab("editor");
   };
   
-  const handlePrintPDF = () => {
-    // Set a timeout to ensure all styles are applied
-    setTimeout(() => {
-      window.print();
-    }, 100);
+  const handleExportAction = (type: string, settings: ExportSettings) => {
+    // This function would be passed to the embedded ProposalPreview component
+    // We'll implement it here mainly to handle the dialog
+    setShowExportDialog(false);
   };
   
   const handleOpenSaveDialog = () => {
@@ -191,7 +192,7 @@ export const PDFGenerator = () => {
           setActiveTab={setActiveTab}
           onSaveClick={handleOpenSaveDialog}
           onResetClick={handleResetProposal}
-          onPrintPDF={handlePrintPDF}
+          onExportClick={() => setShowExportDialog(true)}
         />
         
         <div className="mt-6">
@@ -208,6 +209,13 @@ export const PDFGenerator = () => {
         onDescriptionChange={setSaveDescription}
         onSave={handleSaveBrochure}
         isLoading={isLoading}
+      />
+      
+      <ExportDialog 
+        open={showExportDialog}
+        onOpenChange={setShowExportDialog}
+        proposal={proposal}
+        onExport={handleExportAction}
       />
     </div>
   );
