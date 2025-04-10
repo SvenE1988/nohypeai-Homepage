@@ -20,7 +20,7 @@ export const PDFGenerator = () => {
       sections: [...template.sections],
     });
     setActiveTab("editor");
-    toast.success("Template applied successfully!");
+    toast.success("Vorlage erfolgreich angewendet!");
   };
   
   const handleProposalChange = (updatedProposal: Proposal) => {
@@ -32,18 +32,18 @@ export const PDFGenerator = () => {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex items-center justify-between mb-6">
           <TabsList className="bg-black/50">
-            <TabsTrigger value="templates" className="text-white">Templates</TabsTrigger>
+            <TabsTrigger value="templates" className="text-white">Vorlagen</TabsTrigger>
             <TabsTrigger value="editor" className="text-white">Editor</TabsTrigger>
-            <TabsTrigger value="preview" className="text-white">Preview</TabsTrigger>
+            <TabsTrigger value="preview" className="text-white">Vorschau</TabsTrigger>
           </TabsList>
           
           <div className="flex gap-2">
             <Button variant="outline" onClick={() => setProposal(defaultProposal)}>
-              Reset
+              Zurücksetzen
             </Button>
             {activeTab === "preview" && (
               <Button onClick={() => window.print()}>
-                Download PDF
+                PDF herunterladen
               </Button>
             )}
           </div>

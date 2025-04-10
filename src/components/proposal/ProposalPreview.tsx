@@ -103,7 +103,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
       case "contact":
         return <ContactSection content={section.content} />;
       default:
-        return <div>Unknown section type: {section.type}</div>;
+        return <div>Unbekannter Sektionstyp: {section.type}</div>;
     }
   };
 
@@ -123,7 +123,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
               {pageIndex === 0 && (
                 <img 
                   src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
-                  alt="nohype Logo" 
+                  alt="NoHype Logo" 
                   className="company-logo"
                 />
               )}
@@ -141,8 +141,8 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
             {/* Footer with company info */}
             <div className="page-footer">
               <div className="flex justify-between items-center text-xs text-white/70">
-                <div>NoHype GmbH • Weidenallee 13 • 20357 Hamburg</div>
-                <div>Tel: +49 40 2093 3340 • info@nohype.io</div>
+                <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
+                <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
       </div>
       
       <p className="text-center text-sm text-gray-400 mt-4 print-instructions">
-        Drücke "Download PDF", um das Angebot als PDF herunterzuladen.
+        Klicken Sie auf "PDF herunterladen", um das Angebot als PDF zu speichern.
       </p>
     </div>
   );

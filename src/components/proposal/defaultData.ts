@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const defaultProposal: Proposal = {
   id: uuidv4(),
-  title: "Business Automation Proposal",
+  title: "Geschäftsprozessautomatisierung Angebot",
   clientName: "Beispiel GmbH",
   clientLogo: "",
   createdAt: new Date().toISOString(),
@@ -14,8 +14,8 @@ export const defaultProposal: Proposal = {
       id: uuidv4(),
       type: "header",
       content: {
-        title: "Business Automation Proposal",
-        subtitle: "Prepared for Beispiel GmbH",
+        title: "Angebot zur Geschäftsprozessautomatisierung",
+        subtitle: "Erstellt für Beispiel GmbH",
         date: new Date().toLocaleDateString('de-DE')
       },
       order: 0
@@ -25,7 +25,7 @@ export const defaultProposal: Proposal = {
       type: "text",
       content: {
         title: "Über uns",
-        text: "nohype ist Ihr Partner für KI-gestützte Prozessautomatisierung. Wir helfen Ihnen dabei, Ihre Geschäftsprozesse zu optimieren und zu automatisieren, um Zeit und Kosten zu sparen."
+        text: "NoHype ist Ihr Partner für KI-gestützte Prozessautomatisierung. Wir helfen Ihnen dabei, Ihre Geschäftsprozesse zu optimieren und zu automatisieren, um Zeit und Kosten zu sparen."
       },
       order: 1
     },
@@ -33,7 +33,7 @@ export const defaultProposal: Proposal = {
       id: uuidv4(),
       type: "caseStudy",
       content: {
-        caseStudyId: 0 // Index of the first case study in the projectsData array
+        caseStudyId: 0 // Index des ersten Fallbeispiels im projectsData Array
       },
       order: 2
     },
@@ -66,7 +66,7 @@ export const defaultProposal: Proposal = {
         title: "Kontakt",
         contact: {
           name: "Max Mustermann",
-          position: "CEO",
+          position: "Geschäftsführer",
           email: "kontakt@nohype.de",
           phone: "+49 123 456789"
         }
@@ -79,7 +79,7 @@ export const defaultProposal: Proposal = {
 export const proposalTemplates: ProposalTemplate[] = [
   {
     id: uuidv4(),
-    name: "Standard Proposal",
+    name: "Standard Angebot",
     description: "Eine vollständige Angebotsvorlage mit allen wichtigen Sektionen",
     sections: defaultProposal.sections
   },
@@ -93,7 +93,7 @@ export const proposalTemplates: ProposalTemplate[] = [
   },
   {
     id: uuidv4(),
-    name: "Case Study Fokus",
+    name: "Fallstudien Fokus",
     description: "Ein Angebot mit Fokus auf Erfolgsgeschichten",
     sections: [
       ...defaultProposal.sections.filter(section => section.type === 'header'),

@@ -64,6 +64,12 @@
 
 /* Print styles */
 @media print {
+  /* Reset all margins and padding */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
   /* Hide everything except the PDF content */
   body * {
     visibility: hidden;
@@ -73,10 +79,13 @@
     visibility: visible;
   }
   
+  /* Reset positioning for print view */
   .a4-page {
-    position: relative;
-    box-shadow: none;
+    position: absolute;
+    left: 0;
+    top: 0;
     margin: 0;
+    box-shadow: none;
     page-break-after: always;
     background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     -webkit-print-color-adjust: exact !important;
@@ -84,7 +93,14 @@
     print-color-adjust: exact !important;
   }
   
-  /* Hide the preview instructions and controls when printing */
+  /* Ensure the page is properly filled */
+  .preview-container {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+  
+  /* Hide the preview instructions when printing */
   .print-instructions {
     display: none !important;
   }
@@ -104,12 +120,6 @@
   /* Avoid page breaks after headings */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
-  }
-  
-  /* Ensure proper page size for printing */
-  @page {
-    size: A4 portrait;
-    margin: 0;
   }
 }
 
