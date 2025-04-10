@@ -1,13 +1,17 @@
 
+import { useDialog } from "@/components/providers/DialogProvider";
+
 export const useCallToAction = () => {
-  // Direkte Links anstelle von Dialogen
+  const { setContactDialogOpen, setCalendarDialogOpen } = useDialog();
+
+  // Contact form direct link
   const openContactForm = () => {
     window.open("https://automatisierung.seserver.nohype-ai.de/form/Anfrage", "_blank");
   };
 
+  // Calendar booking using the DialogProvider
   const openCalendarBooking = () => {
-    // Behalten Sie dies für die Cal.com-Integration
-    window.open("https://cal.com/your-username", "_blank");
+    setCalendarDialogOpen(true);
   };
 
   const openApplicationForm = () => {

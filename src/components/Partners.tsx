@@ -1,4 +1,9 @@
+
+import { useCallToAction } from "@/hooks/useCallToAction";
+
 const Partners = () => {
+  const { openCalendarBooking } = useCallToAction();
+  
   return (
     <section id="partnerprojekte" className="w-full bg-black py-16">
       <div className="container mx-auto px-4">

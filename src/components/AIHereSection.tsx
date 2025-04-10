@@ -1,8 +1,11 @@
 
-import { Brain, Target, Clock } from "lucide-react";
+import { Brain, Target, Clock, Calculator } from "lucide-react";
 import { Button } from "./ui/button";
+import { useCallToAction } from "@/hooks/useCallToAction";
 
 const AIHereSection = () => {
+  const { openCalendarBooking } = useCallToAction();
+  
   return (
     <section className="min-h-screen flex items-center bg-black py-16">
       <div className="container mx-auto px-4">
@@ -51,18 +54,14 @@ const AIHereSection = () => {
         </div>
 
         <div className="text-center">
-          <a 
-            href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <Button 
+            size="lg"
+            className="bg-[#1A1F35] text-primary hover:bg-[#252A40] px-12 flex items-center gap-2 border border-[#3A3F55] rounded-md mx-auto"
+            onClick={openCalendarBooking}
           >
-            <Button 
-              size="lg"
-              className="bg-primary hover:bg-primary/90 text-white px-12"
-            >
-              Jetzt durchstarten
-            </Button>
-          </a>
+            <Calculator className="w-5 h-5 text-primary" />
+            Termin buchen
+          </Button>
         </div>
       </div>
     </section>

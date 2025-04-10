@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @tailwind base;
@@ -36,17 +37,21 @@
     @apply bg-black text-foreground font-sans min-h-screen;
     background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     background-attachment: fixed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
-  /* Global overlay for glow effect */
+  /* Global overlay for glow effect - cross-browser compatible */
   .glow-overlay {
     @apply pointer-events-none fixed inset-0;
     background: 
       radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
       radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
+    z-index: 1;
   }
 
-  /* Section styling */
+  /* Section styling with vendor prefixes */
   section {
     @apply relative;
     background: transparent !important;
@@ -59,19 +64,63 @@
     background: 
       radial-gradient(circle at 15% 50%, rgba(107, 70, 193, 0.08) 0%, transparent 60%),
       radial-gradient(circle at 85% 50%, rgba(255, 0, 153, 0.08) 0%, transparent 60%);
+    z-index: 0;
   }
 
   .perspective {
     perspective: 2000px;
+    -webkit-perspective: 2000px;
   }
 
   .preserve-3d {
     transform-style: preserve-3d;
+    -webkit-transform-style: preserve-3d;
   }
 
   .backface-hidden {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
+  }
+  
+  /* Marquee animation for logos with vendor prefixes */
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+      -webkit-transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+      -webkit-transform: translateX(-50%);
+    }
+  }
+  
+  @-webkit-keyframes marquee {
+    0% {
+      -webkit-transform: translateX(0);
+    }
+    100% {
+      -webkit-transform: translateX(-50%);
+    }
+  }
+  
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+    -webkit-animation: marquee 30s linear infinite;
+  }
+
+  /* Focus styles for better accessibility across browsers */
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  /* Fix for iOS input issues */
+  input, 
+  textarea, 
+  button,
+  select {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 }
 
@@ -90,6 +139,7 @@
     radial-gradient(circle at 20% 20%, rgba(107, 70, 193, 0.15) 0%, transparent 70%),
     radial-gradient(circle at 80% 80%, rgba(255, 0, 153, 0.1) 0%, transparent 70%);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* Cookie consent backdrop styles */
@@ -100,6 +150,7 @@
 /* Cookie consent animation */
 [data-dialog-content] {
   animation: slideUp 0.3s ease-out;
+  -webkit-animation: slideUp 0.3s ease-out;
 }
 
 @keyframes slideUp {
@@ -110,5 +161,31 @@
   to {
     opacity: 1;
     transform: translate(-50%, 0);
+  }
+}
+
+@-webkit-keyframes slideUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate(-50%, 100%);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: translate(-50%, 0);
+  }
+}
+
+/* Media-specific fixes */
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  /* IE-specific fixes */
+  .flex {
+    display: flex;
+  }
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+  /* iOS-specific fixes */
+  body {
+    -webkit-overflow-scrolling: touch;
   }
 }
