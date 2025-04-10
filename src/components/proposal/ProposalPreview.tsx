@@ -7,14 +7,22 @@ import { PrintPreview } from "./preview/PrintPreview";
 import { SinglePagePreview } from "./preview/SinglePagePreview";
 import { PreviewControls } from "./preview/PreviewControls";
 import { StatusMessage } from "./preview/StatusMessage";
-import { PageRenderer } from "./preview/PageRenderer";
+import { generatePDF, printDocument } from "./utils/pdfUtils";
+import { toast } from "sonner";
 
 interface ProposalPreviewProps {
   proposal: Proposal;
   className?: string;
+  isGeneratingPDF?: boolean;
+  setIsGeneratingPDF?: (isGenerating: boolean) => void;
 }
 
-export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, className = "" }) => {
+export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ 
+  proposal, 
+  className = "",
+  isGeneratingPDF = false,
+  setIsGeneratingPDF
+}) => {
   // Sort sections by order
   const sortedSections = [...proposal.sections].sort((a, b) => a.order - b.order);
   
@@ -33,12 +41,46 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
     setCurrentPreviewPage(0);
   }, [proposal.id]);
 
+  const handleExport = async () => {
+    if (setIsGeneratingPDF) {
+      setIsGeneratingPDF(true);
+    }
+    
+    try {
+      if (pdfContentRef.current) {
+        await generatePDF(pdfContentRef.current, proposal.title || 'Angebot', {
+          quality: 'high',
+          includeCoverPage: useCoverPage,
+          includeTableOfContents: false,
+          includePageNumbers: true,
+          includeFooter: true,
+          format: 'a4'
+        });
+      } else {
+        toast.error("PDF-Inhalt konnte nicht gefunden werden");
+      }
+    } catch (error) {
+      console.error("Export error:", error);
+      toast.error("Fehler beim Exportieren");
+    } finally {
+      if (setIsGeneratingPDF) {
+        setIsGeneratingPDF(false);
+      }
+    }
+  };
+
+  const handlePrint = () => {
+    printDocument();
+  };
+
   return (
     <div className={`preview-wrapper ${className}`}>
       <PreviewControls
-        title={proposal.title}
+        title={proposal.title || 'Vorschau'}
         onToggleAllPages={() => setShowAllPages(!showAllPages)}
         showAllPages={showAllPages}
+        onExport={handleExport}
+        onPrint={handlePrint}
       />
 
       <div className="preview-container" id="pdf-content" ref={pdfContentRef}>
@@ -52,25 +94,21 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
             {/* Cover page if enabled */}
             {useCoverPage && (
               <div className="mb-8 flex justify-center">
-                <div className="transform scale-65 origin-top">
-                  <PageRenderer
-                    sections={[]}
-                    pageIndex={0}
-                    isCoverPage={true}
-                  />
-                </div>
+                <SinglePagePreview
+                  sections={[]}
+                  pageIndex={0}
+                  isCoverPage={true}
+                />
               </div>
             )}
             
             {/* Regular pages */}
             {pages.map((page, index) => (
-              <div key={`all-page-${index}`} className="mb-8 flex justify-center">
-                <div className="transform scale-65 origin-top">
-                  <PageRenderer
-                    sections={page.sections}
-                    pageIndex={index}
-                  />
-                </div>
+              <div key={`all-page-${index}`} className="mb-8">
+                <SinglePagePreview
+                  sections={page.sections}
+                  pageIndex={useCoverPage ? index + 1 : index}
+                />
               </div>
             ))}
           </div>
@@ -106,7 +144,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         />
       )}
       
-      <StatusMessage isGeneratingPDF={false} />
+      <StatusMessage isGeneratingPDF={isGeneratingPDF} />
     </div>
   );
 };

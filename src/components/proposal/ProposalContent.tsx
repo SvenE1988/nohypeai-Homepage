@@ -22,6 +22,8 @@ interface ProposalContentProps {
   onProposalChange: (proposal: Proposal) => void;
   onTemplateSelect: (template: any) => void;
   onLoadBrochure: (brochure: SavedBrochure) => void;
+  isGeneratingPDF?: boolean;
+  setIsGeneratingPDF?: (isGenerating: boolean) => void;
 }
 
 export const ProposalContent: React.FC<ProposalContentProps> = ({
@@ -31,7 +33,9 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   isLoading,
   onProposalChange,
   onTemplateSelect,
-  onLoadBrochure
+  onLoadBrochure,
+  isGeneratingPDF = false,
+  setIsGeneratingPDF
 }) => {
   const [editorMode, setEditorMode] = useState<'sections' | 'pages'>('pages');
   const [currentPage, setCurrentPage] = useState(0);
@@ -74,7 +78,11 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
             
             <ResizablePanel defaultSize={50} minSize={30}>
               <div className="p-4 h-full overflow-auto bg-black/10">
-                <ProposalPreview proposal={proposal} />
+                <ProposalPreview
+                  proposal={proposal}
+                  isGeneratingPDF={isGeneratingPDF}
+                  setIsGeneratingPDF={setIsGeneratingPDF}
+                />
               </div>
             </ResizablePanel>
           </ResizablePanelGroup>
@@ -108,7 +116,14 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
     case "editor":
       return renderEditorContent();
     case "preview":
-      return <ProposalPreview proposal={proposal} className="bg-black/30 p-6 rounded-lg border border-white/10" />;
+      return (
+        <ProposalPreview 
+          proposal={proposal} 
+          className="bg-black/30 p-6 rounded-lg border border-white/10"
+          isGeneratingPDF={isGeneratingPDF}
+          setIsGeneratingPDF={setIsGeneratingPDF}
+        />
+      );
     default:
       return null;
   }

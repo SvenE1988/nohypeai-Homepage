@@ -47,7 +47,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       height: '297mm',
       margin: '0 auto',
       backgroundColor: '#fff',
-      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden'
     }}>
       {/* Enhanced background layers with more dynamic gradients */}
@@ -74,7 +74,17 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
               alt="NoHype Logo" 
               className="cover-page-logo w-40 mb-8"
             />
-            <h1 className="cover-page-title text-4xl font-bold mb-4 text-gray-800">Deckblatt</h1>
+            <h1 className="cover-page-title text-5xl font-bold mb-6 text-gray-800">Angebot</h1>
+            <div className="cover-page-subtitle text-2xl mb-4 text-gray-600">
+              {/* Placeholder for dynamic title */}
+            </div>
+            <div className="cover-page-date text-lg text-gray-500">
+              {new Date().toLocaleDateString('de-DE', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </div>
             <div className="cover-page-overlay absolute inset-0 bg-gradient-to-b from-transparent to-blue-50 opacity-20"></div>
           </div>
         ) : (
@@ -90,7 +100,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       
         {/* Footer with company info and page number */}
         <div className="page-footer mt-auto pt-4 border-t border-gray-200">
-          <div className="flex justify-between items-center text-xs text-gray-600">
+          <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600">
             <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
             <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
           </div>

@@ -105,6 +105,8 @@ export const PDFGenerator = () => {
             onProposalChange={handleProposalChange}
             onTemplateSelect={handleTemplateSelect}
             onLoadBrochure={handleLoadBrochure}
+            isGeneratingPDF={isGeneratingPDF}
+            setIsGeneratingPDF={setIsGeneratingPDF}
           />
         </div>
       </div>

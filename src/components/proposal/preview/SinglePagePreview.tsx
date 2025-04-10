@@ -16,7 +16,7 @@ export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({
 }) => {
   return (
     <div className="print:hidden flex justify-center">
-      <div className="transform scale-65 origin-top my-4">
+      <div className="transform scale-75 origin-top my-4 shadow-lg rounded-sm">
         <PageRenderer
           sections={sections}
           pageIndex={pageIndex}
