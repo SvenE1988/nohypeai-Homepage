@@ -50,22 +50,22 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden'
     }}>
-      {/* Background image layer */}
-      <div className="absolute inset-0 w-full h-full z-0">
+      {/* Background image layer - Erhöhte Opazität und korrigierter z-index */}
+      <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
         <img 
           src="/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png" 
           alt="Background" 
-          className="w-full h-full object-cover opacity-10"
+          className="w-full h-full object-cover opacity-30"
         />
       </div>
       
       {/* Enhanced background layers with more dynamic gradients */}
-      <div className="bg-gradient-dark absolute inset-0 bg-gradient-to-b from-blue-50 to-white"></div>
-      <div className="bg-gradient-glow absolute inset-0 opacity-20"></div>
-      <div className="bg-accent-glow absolute top-0 right-0 w-1/3 h-1/3 opacity-10 bg-gradient-to-br from-blue-300 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white" style={{ zIndex: 1, opacity: 0.7 }}></div>
+      <div className="absolute inset-0 opacity-20" style={{ zIndex: 2 }}></div>
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 opacity-10 bg-gradient-to-br from-blue-300 to-transparent" style={{ zIndex: 3 }}></div>
       
       {/* Page content with better spacing */}
-      <div className="a4-content relative z-10 p-10 h-full flex flex-col">
+      <div className="a4-content relative p-10 h-full flex flex-col" style={{ zIndex: 10 }}>
         {/* NoHype logo fixed on every page */}
         <div className="absolute top-6 right-6 w-28">
           <img 
