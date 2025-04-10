@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Layers, FileText, FilePresentation } from "lucide-react";
+import { Layers, FileText, Presentation } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/neon-button"; 
@@ -25,7 +25,7 @@ export const PreviewControls: React.FC<PreviewControlsProps> = ({
         <span className="px-2 py-0.5 bg-primary/20 text-primary rounded-full text-xs flex items-center">
           {documentType === 'brochure' ? (
             <>
-              <FilePresentation className="h-3 w-3 mr-1" />
+              <Presentation className="h-3 w-3 mr-1" />
               Broschüre
             </>
           ) : (

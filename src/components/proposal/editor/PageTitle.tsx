@@ -3,7 +3,7 @@ import React from "react";
 import { Proposal } from "../types";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Book, List, FileText, FilePresentation } from "lucide-react";
+import { Book, List, FileText, Presentation } from "lucide-react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
 interface PageTitleProps {
@@ -74,7 +74,7 @@ export const PageTitle: React.FC<PageTitleProps> = ({ proposal, onChange }) => {
               Angebot
             </ToggleGroupItem>
             <ToggleGroupItem value="brochure" className="text-xs h-7 data-[state=on]:bg-primary">
-              <FilePresentation className="h-3.5 w-3.5 mr-1" />
+              <Presentation className="h-3.5 w-3.5 mr-1" />
               Broschüre
             </ToggleGroupItem>
           </ToggleGroup>
