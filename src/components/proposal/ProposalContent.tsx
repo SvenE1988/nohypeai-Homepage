@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Proposal, SavedBrochure } from "./types";
 import { ProposalEditor } from "./ProposalEditor";
 import { ProposalPreview } from "./ProposalPreview";
@@ -10,6 +10,9 @@ import {
   ResizablePanel, 
   ResizableHandle 
 } from "@/components/ui/resizable";
+import { usePaginatedContent } from "../../hooks/usePaginatedContent";
+import { PageBasedEditor } from "./PageBasedEditor";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 interface ProposalContentProps {
   activeTab: string;
@@ -30,24 +33,53 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   onTemplateSelect,
   onLoadBrochure
 }) => {
+  const [editorMode, setEditorMode] = useState<'sections' | 'pages'>('pages');
+  const [currentPage, setCurrentPage] = useState(0);
+  
+  // Use the paginatedContent hook to split sections into pages
+  const { pages } = usePaginatedContent(
+    proposal.sections.sort((a, b) => a.order - b.order)
+  );
+  
   // Render split view (editor + preview) when in editor mode
   const renderEditorContent = () => {
     return (
-      <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border border-white/10">
-        <ResizablePanel defaultSize={50} minSize={30}>
-          <div className="p-4 h-full overflow-auto">
-            <ProposalEditor proposal={proposal} onChange={onProposalChange} />
-          </div>
-        </ResizablePanel>
+      <div className="space-y-6">
+        <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'sections' | 'pages')}>
+          <TabsList className="mb-4">
+            <TabsTrigger value="pages">Seitenbasierter Editor</TabsTrigger>
+            <TabsTrigger value="sections">Klassischer Editor</TabsTrigger>
+          </TabsList>
+        </Tabs>
         
-        <ResizableHandle withHandle />
-        
-        <ResizablePanel defaultSize={50} minSize={30}>
-          <div className="p-4 h-full overflow-auto bg-black/10">
-            <ProposalPreview proposal={proposal} />
+        {editorMode === 'sections' ? (
+          <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border border-white/10">
+            <ResizablePanel defaultSize={50} minSize={30}>
+              <div className="p-4 h-full overflow-auto">
+                <ProposalEditor proposal={proposal} onChange={onProposalChange} />
+              </div>
+            </ResizablePanel>
+            
+            <ResizableHandle withHandle />
+            
+            <ResizablePanel defaultSize={50} minSize={30}>
+              <div className="p-4 h-full overflow-auto bg-black/10">
+                <ProposalPreview proposal={proposal} />
+              </div>
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        ) : (
+          <div className="min-h-[600px] rounded-lg border border-white/10 p-4 bg-black/30">
+            <PageBasedEditor
+              proposal={proposal}
+              onChange={onProposalChange}
+              currentPage={currentPage}
+              setCurrentPage={setCurrentPage}
+              pages={pages}
+            />
           </div>
-        </ResizablePanel>
-      </ResizablePanelGroup>
+        )}
+      </div>
     );
   };
   

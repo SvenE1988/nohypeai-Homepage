@@ -1,263 +1,175 @@
-
-/* A4 page dimensions */
+/* Page rendering */
 .a4-page {
+  position: relative;
   width: 210mm;
   height: 297mm;
-  margin: 0 auto 20px auto;
-  background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
-  position: relative;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   overflow: hidden;
-  page-break-after: always;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  border-radius: 4px;
+  transform-origin: top center;
 }
 
-/* Content container within the A4 page */
+.company-logo {
+  position: absolute;
+  top: 15mm;
+  right: 15mm;
+  height: 12mm;
+  z-index: 10;
+}
+
 .a4-content {
   position: relative;
-  z-index: 10;
-  padding: 20mm;
-  height: calc(100% - 40mm);
-  overflow: hidden;
+  padding: 25mm 20mm;
+  height: 100%;
+  z-index: 5;
+  color: #333;
 }
 
-/* Background gradients */
-.bg-gradient-dark {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
-  z-index: 1;
-}
-
-.bg-gradient-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at top right, rgba(107, 70, 193, 0.25) 0%, transparent 60%);
-  z-index: 2;
-}
-
-.bg-accent-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at bottom left, rgba(255, 0, 153, 0.15) 0%, transparent 40%);
-  z-index: 3;
-}
-
-/* Page footer */
 .page-footer {
   position: absolute;
   bottom: 10mm;
   left: 20mm;
   right: 20mm;
-  padding-top: 3mm;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  font-size: 9pt;
   z-index: 10;
 }
 
-/* Preview container */
-.preview-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 40px;
-}
-
-/* Split view styles */
-.split-view-container {
-  display: flex;
-  min-height: 600px;
-  border-radius: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.split-view-panel {
-  overflow: auto;
-  padding: 1rem;
-}
-
-.split-view-handle {
-  width: 1px;
-  background-color: rgba(255, 255, 255, 0.1);
-  position: relative;
-}
-
-.split-view-handle::after {
-  content: "";
+/* Background gradients */
+.bg-gradient-dark {
   position: absolute;
-  left: -2px;
-  top: 50%;
-  height: 30px;
-  width: 4px;
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-  transform: translateY(-50%);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80mm;
+  background: linear-gradient(to bottom, rgba(30, 30, 30, 0.05), transparent);
+  z-index: 1;
 }
 
-/* Scale preview in split view */
-.preview-scale-container {
-  transform-origin: top center;
-  transform: scale(0.8);
-  padding: 1rem;
+.bg-gradient-glow {
+  position: absolute;
+  top: 20mm;
+  right: -40mm;
+  width: 100mm;
+  height: 100mm;
+  background: radial-gradient(circle, rgba(30, 144, 255, 0.1), transparent 70%);
+  z-index: 2;
+}
+
+.bg-accent-glow {
+  position: absolute;
+  bottom: 30mm;
+  left: -20mm;
+  width: 80mm;
+  height: 80mm;
+  background: radial-gradient(circle, rgba(255, 105, 180, 0.05), transparent 70%);
+  z-index: 1;
 }
 
 /* Print styles */
 @media print {
-  /* Reset all margins and padding */
-  @page {
-    size: A4 portrait;
+  .a4-page {
     margin: 0;
+    box-shadow: none;
+    page-break-after: always;
+    transform: none !important;
   }
   
   body {
-    margin: 0;
-    padding: 0;
-    background: none;
+    background: white;
   }
   
-  /* Hide everything except the PDF content */
-  body * {
-    visibility: hidden;
-  }
-  
-  #pdf-content, #pdf-content * {
-    visibility: visible;
-  }
-  
-  /* Position and fix page layout */
-  .preview-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    display: block;
-  }
-  
-  .a4-page {
-    margin: 0;
-    page-break-after: always;
-    box-shadow: none;
-    border-radius: 0;
-    background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
-    -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  
-  /* Ensure each page is printed on a separate sheet */
-  .a4-page {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    page-break-after: always;
-    page-break-before: auto;
-    box-sizing: border-box;
-  }
-  
-  /* Custom styling for the gradient backgrounds to ensure they print */
-  .bg-gradient-dark, .bg-gradient-glow, .bg-accent-glow {
-    -webkit-print-color-adjust: exact !important;
-    color-adjust: exact !important;
-    print-color-adjust: exact !important;
-  }
-  
-  /* Ensure page breaks don't happen inside sections */
-  .proposal-section {
-    page-break-inside: avoid;
-  }
-  
-  /* Avoid page breaks after headings */
-  h1, h2, h3, h4, h5, h6 {
-    page-break-after: avoid;
-  }
-  
-  /* Hide the preview instructions when printing */
-  .print-instructions {
+  .print-hidden {
     display: none !important;
   }
-  
-  /* Fix for Chrome to ensure each page is printed */
-  .a4-page:last-of-type {
-    page-break-after: auto;
-  }
 }
 
-/* Text colors for better contrast on dark background */
-.a4-page h1, 
-.a4-page h2, 
-.a4-page h3, 
-.a4-page h4 {
-  color: #FF0099; /* Primary magenta color */
+/* Proposal sections */
+.proposal-section {
+  position: relative;
 }
 
-.a4-page p, 
-.a4-page li, 
-.a4-page span,
-.a4-page div {
-  color: rgba(255, 255, 255, 0.9);
+/* Text section */
+.text-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #0066cc;
 }
 
-/* Company logo */
-.company-logo {
-  height: 40px;
-  margin-bottom: 40px;
-  object-fit: contain;
+.text-section p {
+  line-height: 1.6;
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .preview-container {
-    padding: 0;
-  }
-  
-  .a4-page {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1/1.414; /* A4 aspect ratio */
-    margin-bottom: 10px;
-  }
-  
-  .a4-content {
-    padding: 10mm;
-  }
-  
-  .page-footer {
-    bottom: 5mm;
-    left: 10mm;
-    right: 10mm;
-    font-size: 0.7rem;
-  }
-}
-
-/* Scale control for preview in split view */
-.scale-controls {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 50;
-  display: flex;
-  gap: 4px;
-  background-color: rgba(0, 0, 0, 0.6);
-  padding: 4px;
+/* Image section */
+.image-section img {
+  max-width: 100%;
   border-radius: 4px;
 }
 
-/* PDF controls */
-.pdf-controls {
+.image-section .caption {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #666;
+  text-align: center;
+}
+
+/* Pricing section */
+.pricing-section {
+  margin: 1.5rem 0;
+}
+
+.pricing-section table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.pricing-section th,
+.pricing-section td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+}
+
+.pricing-section th {
+  text-align: left;
+  font-weight: 600;
+  color: #0066cc;
+}
+
+.pricing-section .price {
+  text-align: right;
+  font-weight: 500;
+}
+
+.pricing-section .total-row {
+  font-weight: bold;
+  background-color: #f9f9f9;
+}
+
+/* Contact section */
+.contact-section {
   display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-bottom: 16px;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
 }
 
-/* Section transition effects */
-.proposal-section {
-  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+.contact-section .contact-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-.proposal-section:hover {
-  transform: translateY(-2px);
+.contact-section .contact-info h3 {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  color: #0066cc;
+}
+
+.contact-section .contact-info p {
+  margin: 0.25rem 0;
+  color: #555;
 }
