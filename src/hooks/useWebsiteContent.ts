@@ -101,8 +101,9 @@ export const useWebsiteContent = () => {
     
     try {
       // Try to load data from the website_content table
+      // We use 'from' with any type to avoid TypeScript errors since the tables aren't fully typed
       const { data: websiteData, error: websiteError } = await supabase
-        .from('website_content')
+        .from('website_content' as any)
         .select('*')
         .order('id', { ascending: false })
         .limit(1)
@@ -116,13 +117,16 @@ export const useWebsiteContent = () => {
       }
       
       if (websiteData) {
+        // Since TypeScript doesn't know about website_content table structure,
+        // we need to cast the data to access the properties
+        const data = websiteData as any;
         setContent({
-          testimonials: websiteData.testimonials || [],
-          techStack: websiteData.tech_stack || {
+          testimonials: data.testimonials || [],
+          techStack: data.tech_stack || {
             categories: [],
             description: "",
           },
-          savingsCalculator: websiteData.savings_calculator || {
+          savingsCalculator: data.savings_calculator || {
             defaultHours: 20,
             defaultRate: 50,
           },
@@ -157,7 +161,7 @@ export const useWebsiteContent = () => {
       
       // Get the current record ID or default to 1
       const { data: existingData, error: fetchError } = await supabase
-        .from('website_content')
+        .from('website_content' as any)
         .select('id')
         .order('id', { ascending: false })
         .limit(1)
@@ -169,8 +173,9 @@ export const useWebsiteContent = () => {
       
       const id = existingData?.id || 1;
       
+      // Use 'from' with any type to avoid TypeScript errors
       const { error: upsertError } = await supabase
-        .from('website_content')
+        .from('website_content' as any)
         .upsert({ 
           id, 
           testimonials: updateData.testimonials,
