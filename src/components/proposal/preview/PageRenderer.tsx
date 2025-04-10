@@ -68,11 +68,11 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       
       {/* Footer with company info and page number */}
       <div className="page-footer">
-        <div className="flex justify-between items-center text-xs text-white/70">
+        <div className="flex justify-between items-center text-xs text-gray-600">
           <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
           <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
         </div>
-        <div className="text-center text-xs text-white/50 mt-2">
+        <div className="text-center text-xs text-gray-500 mt-2">
           Seite {pageIndex + 1}
         </div>
       </div>

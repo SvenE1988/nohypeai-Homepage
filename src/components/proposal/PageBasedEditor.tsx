@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Proposal, ProposalSection } from "./types";
@@ -29,11 +28,9 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
   const currentPageSections = pages[currentPage]?.sections || [];
   
   const handleSectionChange = (updatedSection: ProposalSection) => {
-    // Find which page the section belongs to
     let updatedPages = [...pages];
     let foundPage = false;
     
-    // Update the section in the correct page
     updatedPages = updatedPages.map(page => {
       const updatedSections = page.sections.map(section => 
         section.id === updatedSection.id ? updatedSection : section
@@ -48,7 +45,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
     });
     
     if (foundPage) {
-      // Flatten all sections for the proposal
       const allSections = updatedPages.flatMap(page => page.sections);
       
       onChange({
@@ -71,11 +67,9 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       order: index
     }));
     
-    // Update the current page's sections
     const updatedPages = [...pages];
     updatedPages[currentPage] = { sections: newSections };
     
-    // Flatten all sections for the proposal
     const allSections = updatedPages.flatMap(page => page.sections);
     
     onChange({
@@ -93,7 +87,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       order: currentPageSections.length
     };
     
-    // Add to current page
     const updatedPages = [...pages];
     if (!updatedPages[currentPage]) {
       updatedPages[currentPage] = { sections: [] };
@@ -102,7 +95,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       sections: [...updatedPages[currentPage].sections, newSection] 
     };
     
-    // Flatten all sections for the proposal
     const allSections = updatedPages.flatMap(page => page.sections);
     
     onChange({
@@ -113,7 +105,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
   };
   
   const removeSection = (sectionId: string) => {
-    // Remove from current page
     const updatedPages = [...pages];
     if (updatedPages[currentPage]) {
       const filteredSections = updatedPages[currentPage].sections.filter(
@@ -127,7 +118,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
         }))
       };
       
-      // Flatten all sections for the proposal
       const allSections = updatedPages.flatMap(page => page.sections);
       
       onChange({
@@ -139,10 +129,8 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
   };
   
   const addNewPage = () => {
-    // Add an empty page at the end
     const updatedPages = [...pages, { sections: [] }];
     
-    // Flatten all sections for the proposal update
     const allSections = updatedPages.flatMap(page => page.sections);
     
     onChange({
@@ -151,24 +139,20 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       updatedAt: new Date().toISOString()
     });
     
-    // Navigate to the new page
     setCurrentPage(updatedPages.length - 1);
   };
   
   const duplicatePage = () => {
     if (currentPage < 0 || currentPage >= pages.length) return;
     
-    // Duplicate sections from current page with new IDs
     const duplicatedSections = pages[currentPage].sections.map(section => ({
       ...section,
       id: uuidv4()
     }));
     
-    // Insert the duplicated page after the current page
     const updatedPages = [...pages];
     updatedPages.splice(currentPage + 1, 0, { sections: duplicatedSections });
     
-    // Flatten all sections for the proposal update
     const allSections = updatedPages.flatMap(page => page.sections);
     
     onChange({
@@ -177,19 +161,17 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       updatedAt: new Date().toISOString()
     });
     
-    // Navigate to the duplicated page
     setCurrentPage(currentPage + 1);
   };
   
   const deletePage = () => {
     if (pages.length <= 1) {
-      return; // Don't delete the last page
+      return;
     }
     
     const updatedPages = [...pages];
     updatedPages.splice(currentPage, 1);
     
-    // Flatten all sections for the proposal update
     const allSections = updatedPages.flatMap(page => page.sections);
     
     onChange({
@@ -198,7 +180,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       updatedAt: new Date().toISOString()
     });
     
-    // Navigate to previous page or first page if deleting first page
     setCurrentPage(Math.max(0, currentPage - 1));
   };
   
@@ -234,13 +215,11 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
   
   return (
     <div className="space-y-6">
-      {/* Page navigation and actions */}
       <div className="bg-black/50 p-4 rounded-lg border border-white/10">
         <div className="flex flex-wrap justify-between items-center gap-3">
           <div className="flex items-center">
             <h3 className="text-white font-medium">Seite {currentPage + 1} von {pages.length}</h3>
             
-            {/* Page navigation on desktop */}
             <div className="hidden sm:flex ml-4 space-x-2">
               {pages.map((_, index) => (
                 <Button
@@ -283,7 +262,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
               <Trash2 size={16} className="mr-1" /> Löschen
             </Button>
             
-            {/* Mobile preview trigger */}
             <Sheet>
               <SheetTrigger asChild>
                 <Button 
@@ -308,7 +286,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
           </div>
         </div>
         
-        {/* Mobile page selector */}
         <div className="flex overflow-x-auto py-2 mt-2 sm:hidden gap-1">
           {pages.map((_, index) => (
             <Button
@@ -332,9 +309,7 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
         </div>
       </div>
       
-      {/* Split view with editor and preview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Sections editor */}
         <div className="space-y-4">
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="sections">
@@ -384,7 +359,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
             </Droppable>
           </DragDropContext>
           
-          {/* Add section controls */}
           <div className="bg-black/30 border border-white/10 rounded-lg p-4">
             <h3 className="text-white font-medium mb-4">Abschnitt hinzufügen</h3>
             <div className="flex flex-wrap gap-2">
@@ -398,7 +372,6 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
           </div>
         </div>
         
-        {/* Page preview - only visible on desktop */}
         <div className="hidden lg:block">
           <div className="bg-black/30 p-4 rounded-lg border border-white/10 overflow-auto">
             <PageRenderer 
