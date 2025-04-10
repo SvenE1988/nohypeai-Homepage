@@ -6,16 +6,9 @@ import { ProposalSection } from "../types";
 interface PrintPreviewProps {
   pages: Array<{ sections: ProposalSection[] }>;
   useCoverPage?: boolean;
-  showPageNumbers?: boolean;
-  showFooter?: boolean;
 }
 
-export const PrintPreview: React.FC<PrintPreviewProps> = ({ 
-  pages, 
-  useCoverPage = false,
-  showPageNumbers = true,
-  showFooter = true
-}) => {
+export const PrintPreview: React.FC<PrintPreviewProps> = ({ pages, useCoverPage = false }) => {
   return (
     <div className="print:block hidden">
       {/* Render cover page if enabled */}
@@ -25,8 +18,6 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({
           sections={[]}
           pageIndex={0}
           isCoverPage={true}
-          showPageNumbers={showPageNumbers}
-          showFooter={showFooter}
         />
       )}
       
@@ -36,8 +27,6 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({
           key={`page-${pageIndex}`}
           sections={page.sections}
           pageIndex={useCoverPage ? pageIndex + 1 : pageIndex}
-          showPageNumbers={showPageNumbers}
-          showFooter={showFooter}
         />
       ))}
     </div>

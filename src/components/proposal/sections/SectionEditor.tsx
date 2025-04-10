@@ -7,9 +7,6 @@ import { ImageSectionEditor } from "./ImageSectionEditor";
 import { CaseStudySectionEditor } from "./CaseStudySectionEditor";
 import { PricingSectionEditor } from "./PricingSectionEditor";
 import { ContactSectionEditor } from "./ContactSectionEditor";
-import { TestimonialSectionEditor } from "./TestimonialSectionEditor";
-import { TechStackSectionEditor } from "./TechStackSectionEditor";
-import { SavingsSectionEditor } from "./SavingsSectionEditor";
 
 interface SectionEditorProps {
   section: ProposalSection;
@@ -37,12 +34,6 @@ export const SectionEditor: React.FC<SectionEditorProps> = ({ section, onChange 
       return <PricingSectionEditor content={section.content} onChange={handleContentChange} />;
     case "contact":
       return <ContactSectionEditor content={section.content} onChange={handleContentChange} />;
-    case "testimonial":
-      return <TestimonialSectionEditor content={section.content} onChange={handleContentChange} />;
-    case "techStack":
-      return <TechStackSectionEditor content={section.content} onChange={handleContentChange} />;
-    case "savings":
-      return <SavingsSectionEditor content={section.content} onChange={handleContentChange} />;
     default:
       return <div className="text-red-500">Unknown section type: {section.type}</div>;
   }
