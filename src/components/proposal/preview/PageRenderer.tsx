@@ -50,21 +50,23 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden'
     }}>
-      {/* Background image layer - Erhöhte Opazität und korrigierter z-index */}
-      <div className="absolute inset-0 w-full h-full" style={{ zIndex: 0 }}>
+      {/* Main dark background like on the homepage */}
+      <div className="absolute inset-0 bg-gradient-dark" style={{ zIndex: 0 }}></div>
+      
+      {/* Gradient glow overlays */}
+      <div className="absolute inset-0 bg-gradient-glow" style={{ zIndex: 1, opacity: 0.4 }}></div>
+      <div className="absolute inset-0 bg-accent-glow" style={{ zIndex: 2, opacity: 0.3 }}></div>
+      
+      {/* Background image (reduced opacity) */}
+      <div className="absolute inset-0 w-full h-full" style={{ zIndex: 3 }}>
         <img 
           src="/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png" 
           alt="Background" 
-          className="w-full h-full object-cover opacity-30"
+          className="w-full h-full object-cover opacity-15"
         />
       </div>
       
-      {/* Enhanced background layers with more dynamic gradients */}
-      <div className="absolute inset-0 bg-gradient-to-b from-blue-50 to-white" style={{ zIndex: 1, opacity: 0.7 }}></div>
-      <div className="absolute inset-0 opacity-20" style={{ zIndex: 2 }}></div>
-      <div className="absolute top-0 right-0 w-1/3 h-1/3 opacity-10 bg-gradient-to-br from-blue-300 to-transparent" style={{ zIndex: 3 }}></div>
-      
-      {/* Page content with better spacing */}
+      {/* Page content with proper z-index to be above backgrounds */}
       <div className="a4-content relative p-10 h-full flex flex-col" style={{ zIndex: 10 }}>
         {/* NoHype logo fixed on every page */}
         <div className="absolute top-6 right-6 w-28">
@@ -92,22 +94,22 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
               alt="NoHype Logo" 
               className="cover-page-logo w-40 mb-8"
             />
-            <h1 className="cover-page-title text-5xl font-bold mb-6 text-gray-800">Angebot</h1>
-            <div className="cover-page-subtitle text-2xl mb-4 text-gray-600">
+            <h1 className="cover-page-title text-5xl font-bold mb-6 text-white">Angebot</h1>
+            <div className="cover-page-subtitle text-2xl mb-4 text-gray-200">
               {/* Placeholder for dynamic title */}
             </div>
-            <div className="cover-page-date text-lg text-gray-500">
+            <div className="cover-page-date text-lg text-gray-300">
               {new Date().toLocaleDateString('de-DE', {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
               })}
             </div>
-            <div className="cover-page-overlay absolute inset-0 bg-gradient-to-b from-transparent to-blue-50 opacity-20"></div>
+            <div className="cover-page-overlay absolute inset-0 bg-gradient-to-b from-transparent to-blue-900/20 opacity-30"></div>
           </div>
         ) : (
           /* Regular page content */
-          <div className="space-y-6 flex-grow">
+          <div className="space-y-6 flex-grow text-white">
             {sections.map((section) => (
               <div key={section.id} className="mb-6 proposal-section">
                 {renderSection(section)}
@@ -117,12 +119,12 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
         )}
       
         {/* Footer with company info and page number */}
-        <div className="page-footer mt-auto pt-4 border-t border-gray-200">
-          <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-600">
+        <div className="page-footer mt-auto pt-4 border-t border-gray-600">
+          <div className="flex flex-col sm:flex-row justify-between items-center text-xs text-gray-300">
             <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
             <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
           </div>
-          <div className="text-center text-xs text-gray-500 mt-2">
+          <div className="text-center text-xs text-gray-400 mt-2">
             Seite {pageIndex + 1}
           </div>
         </div>

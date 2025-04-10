@@ -12,7 +12,8 @@ import {
 } from "@/components/ui/resizable";
 import { usePaginatedContent } from "../../hooks/usePaginatedContent";
 import { PageBasedEditor } from "./PageBasedEditor";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Button } from "@/components/ui/neon-button"; // Using neon-button for consistency
 
 interface ProposalContentProps {
   activeTab: string;
@@ -59,12 +60,16 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   const renderEditorContent = () => {
     return (
       <div className="space-y-6">
-        <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'sections' | 'pages')}>
-          <TabsList className="mb-4">
-            <TabsTrigger value="pages" className="text-gray-200">Seitenbasierter Editor</TabsTrigger>
-            <TabsTrigger value="sections" className="text-gray-200">Kategoriebasierter Editor</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        <div className="flex justify-center mb-6">
+          <ToggleGroup type="single" value={editorMode} onValueChange={(value) => setEditorMode(value as 'sections' | 'pages')}>
+            <ToggleGroupItem value="pages" className="border border-white/10 bg-blue-500/5 hover:bg-blue-500/10 text-white px-4 py-2 rounded-l-lg">
+              Seitenbasierter Editor
+            </ToggleGroupItem>
+            <ToggleGroupItem value="sections" className="border border-white/10 bg-blue-500/5 hover:bg-blue-500/10 text-white px-4 py-2 rounded-r-lg">
+              Kategoriebasierter Editor
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
         
         {editorMode === 'sections' ? (
           <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border border-white/10">

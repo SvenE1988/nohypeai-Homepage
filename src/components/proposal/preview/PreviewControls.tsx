@@ -1,9 +1,9 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
-import { Layers, Book } from "lucide-react";
+import { Layers } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/neon-button"; // Using neon-button for consistency
 
 interface PreviewControlsProps {
   title: string;
@@ -25,6 +25,7 @@ export const PreviewControls: React.FC<PreviewControlsProps> = ({
             id="show-all-pages" 
             checked={showAllPages} 
             onCheckedChange={onToggleAllPages}
+            className="data-[state=checked]:bg-primary"
           />
           <Label htmlFor="show-all-pages" className="text-white text-sm flex items-center">
             <Layers className="h-4 w-4 mr-1.5" />
