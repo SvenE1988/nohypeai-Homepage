@@ -34,4 +34,25 @@ export interface ContactInfo {
   position: string;
   email: string;
   phone: string;
+  profileImage?: string;
+}
+
+// Types for Supabase
+export interface BrochureTemplate {
+  id: string;
+  name: string;
+  description: string | null;
+  sections: ProposalSection[];
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SavedBrochure {
+  id: string;
+  title: string;
+  description: string | null;
+  content: Proposal;
+  thumbnail: string | null;
+  created_at: string;
+  updated_at: string;
 }
