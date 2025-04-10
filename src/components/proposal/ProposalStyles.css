@@ -1,0 +1,40 @@
+
+@media print {
+  /* Hide everything except the PDF content */
+  body * {
+    visibility: hidden;
+  }
+  
+  #pdf-content, #pdf-content * {
+    visibility: visible;
+  }
+  
+  #pdf-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm;
+    margin: 0;
+    box-shadow: none;
+    border: none;
+    background: white;
+  }
+  
+  /* Ensure page breaks don't happen inside sections */
+  .proposal-section {
+    page-break-inside: avoid;
+  }
+  
+  /* Avoid page breaks after headings */
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+  
+  /* Ensure proper page size for printing */
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+}
