@@ -25,7 +25,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
   const sortedSections = [...proposal.sections].sort((a, b) => a.order - b.order);
   
   // Use custom hook for pagination
-  const { pages, useCoverPage } = usePaginatedContent(sortedSections);
+  const { pages, useCoverPage, useTableOfContents } = usePaginatedContent(sortedSections);
   
   // State for current page in preview mode
   const [currentPreviewPage, setCurrentPreviewPage] = useState(0);
@@ -38,6 +38,9 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
   useEffect(() => {
     setCurrentPreviewPage(0);
   }, [proposal.id]);
+  
+  // Calculate total pages including cover page and table of contents
+  const totalPages = calculateTotalPages(pages.length, proposal.useCoverPage, proposal.useTableOfContents);
 
   return (
     <div className={`preview-wrapper ${className}`}>
@@ -45,6 +48,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
         title={proposal.title || 'Vorschau'}
         onToggleAllPages={() => setShowAllPages(!showAllPages)}
         showAllPages={showAllPages}
+        documentType={proposal.documentType}
       />
 
       <div className="preview-container bg-black/30" id="pdf-content" ref={pdfContentRef}>
@@ -52,8 +56,11 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
         <PrintPreview 
           pages={pages} 
           useCoverPage={useCoverPage}
+          useTableOfContents={useTableOfContents}
+          allSections={sortedSections}
           title={proposal.title}
           clientName={proposal.clientName}
+          documentType={proposal.documentType}
         />
         
         {/* Preview mode - single page or all pages */}
@@ -69,6 +76,22 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
                   isCoverPage={true}
                   title={proposal.title}
                   clientName={proposal.clientName}
+                  documentType={proposal.documentType}
+                />
+              </div>
+            )}
+            
+            {/* Table of contents if enabled */}
+            {useTableOfContents && (
+              <div className="mb-8 flex justify-center">
+                <SinglePagePreview
+                  sections={[]}
+                  pageIndex={useCoverPage ? 1 : 0}
+                  isTableOfContents={true}
+                  allSections={sortedSections}
+                  title={proposal.title}
+                  clientName={proposal.clientName}
+                  documentType={proposal.documentType}
                 />
               </div>
             )}
@@ -78,7 +101,10 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
               <div key={`all-page-${index}`} className="mb-8">
                 <SinglePagePreview
                   sections={page.sections}
-                  pageIndex={useCoverPage ? index + 1 : index}
+                  pageIndex={getAdjustedPageIndex(index, useCoverPage, useTableOfContents)}
+                  title={proposal.title}
+                  clientName={proposal.clientName}
+                  documentType={proposal.documentType}
                 />
               </div>
             ))}
@@ -94,13 +120,28 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
                 isCoverPage={true}
                 title={proposal.title}
                 clientName={proposal.clientName}
+                documentType={proposal.documentType}
+              />
+            ) : useTableOfContents && (useCoverPage ? currentPreviewPage === 1 : currentPreviewPage === 0) ? (
+              // Table of contents page
+              <SinglePagePreview
+                sections={[]}
+                pageIndex={useCoverPage ? 1 : 0}
+                isTableOfContents={true}
+                allSections={sortedSections}
+                title={proposal.title}
+                clientName={proposal.clientName}
+                documentType={proposal.documentType}
               />
             ) : (
               /* Regular page */
-              pages.length > 0 && (useCoverPage ? currentPreviewPage - 1 : currentPreviewPage) < pages.length && (
+              pages.length > 0 && (getContentPageIndex(currentPreviewPage, useCoverPage, useTableOfContents) < pages.length) && (
                 <SinglePagePreview
-                  sections={pages[useCoverPage ? currentPreviewPage - 1 : currentPreviewPage].sections}
+                  sections={pages[getContentPageIndex(currentPreviewPage, useCoverPage, useTableOfContents)].sections}
                   pageIndex={currentPreviewPage}
+                  title={proposal.title}
+                  clientName={proposal.clientName}
+                  documentType={proposal.documentType}
                 />
               )
             )}
@@ -112,7 +153,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
       {!showAllPages && (
         <PaginationControls
           currentPage={currentPreviewPage}
-          totalPages={useCoverPage ? pages.length + 1 : pages.length}
+          totalPages={totalPages}
           onPageChange={setCurrentPreviewPage}
         />
       )}
@@ -121,3 +162,27 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
     </div>
   );
 };
+
+// Helper function to calculate adjusted page index with cover page and table of contents
+function getAdjustedPageIndex(pageIndex: number, useCoverPage: boolean, useTableOfContents: boolean): number {
+  let adjustment = 0;
+  if (useCoverPage) adjustment += 1;
+  if (useTableOfContents) adjustment += 1;
+  return pageIndex + adjustment;
+}
+
+// Helper function to calculate content page index considering cover page and table of contents
+function getContentPageIndex(currentPage: number, useCoverPage: boolean, useTableOfContents: boolean): number {
+  let offset = 0;
+  if (useCoverPage) offset += 1;
+  if (useTableOfContents) offset += 1;
+  return currentPage - offset;
+}
+
+// Helper function to calculate total pages
+function calculateTotalPages(contentPages: number, useCoverPage?: boolean, useTableOfContents?: boolean): number {
+  let total = contentPages;
+  if (useCoverPage) total += 1;
+  if (useTableOfContents) total += 1;
+  return total;
+}

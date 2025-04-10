@@ -7,16 +7,22 @@ interface SinglePagePreviewProps {
   sections: ProposalSection[];
   pageIndex: number;
   isCoverPage?: boolean;
+  isTableOfContents?: boolean;
+  allSections?: ProposalSection[];
   title?: string;
   clientName?: string;
+  documentType?: 'proposal' | 'brochure';
 }
 
 export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({ 
   sections, 
   pageIndex,
   isCoverPage = false,
+  isTableOfContents = false,
+  allSections = [],
   title = "",
-  clientName = ""
+  clientName = "",
+  documentType = "proposal"
 }) => {
   return (
     <div className="print:hidden flex justify-center">
@@ -25,8 +31,11 @@ export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({
           sections={sections}
           pageIndex={pageIndex}
           isCoverPage={isCoverPage}
+          isTableOfContents={isTableOfContents}
+          allSections={allSections}
           title={title}
           clientName={clientName}
+          documentType={documentType}
         />
       </div>
     </div>

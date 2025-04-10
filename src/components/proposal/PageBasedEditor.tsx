@@ -41,7 +41,7 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
   } = usePageEditorLogic(proposal, onChange, currentPage, setCurrentPage, pages);
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Document title and client name */}
       <PageTitle proposal={proposal} onChange={onChange} />
       
@@ -58,8 +58,8 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       />
       
       {/* Main content area with editor and preview */}
-      <ResizablePanelGroup direction="horizontal" className="min-h-[600px]">
-        <ResizablePanel defaultSize={60} minSize={40}>
+      <ResizablePanelGroup direction="horizontal" className="min-h-[550px]">
+        <ResizablePanel defaultSize={50} minSize={35}>
           <EditorContent 
             proposal={proposal}
             useCoverPage={useCoverPage}
@@ -74,7 +74,7 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
         
         <ResizableHandle withHandle />
         
-        <ResizablePanel defaultSize={40} minSize={30}>
+        <ResizablePanel defaultSize={50} minSize={35}>
           <ContentPreview 
             isCoverPage={useCoverPage && currentPage === 0}
             sections={currentPageSections}

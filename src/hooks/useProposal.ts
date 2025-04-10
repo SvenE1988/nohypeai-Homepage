@@ -15,6 +15,9 @@ export const useProposal = () => {
     setProposal({
       ...proposal,
       sections: [...template.sections],
+      documentType: template.documentType || 'proposal',
+      useTableOfContents: template.useTableOfContents || false,
+      updatedAt: new Date().toISOString()
     });
     toast.success("Vorlage erfolgreich angewendet!");
   };

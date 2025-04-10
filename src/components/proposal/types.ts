@@ -1,7 +1,7 @@
 
 export interface ProposalSection {
   id: string;
-  type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact';
+  type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact' | 'tableOfContents';
   content: any;
   order: number;
 }
@@ -15,6 +15,8 @@ export interface Proposal {
   updatedAt: string;
   sections: ProposalSection[];
   useCoverPage?: boolean;
+  useTableOfContents?: boolean;
+  documentType: 'proposal' | 'brochure';
 }
 
 export interface ProposalTemplate {
@@ -22,6 +24,8 @@ export interface ProposalTemplate {
   name: string;
   description: string;
   sections: ProposalSection[];
+  documentType: 'proposal' | 'brochure';
+  useTableOfContents?: boolean;
 }
 
 export interface PricingItem {
@@ -46,6 +50,7 @@ export interface BrochureTemplate {
   sections: ProposalSection[];
   created_at: string;
   updated_at: string;
+  document_type?: string;
 }
 
 export interface SavedBrochure {
@@ -56,6 +61,7 @@ export interface SavedBrochure {
   thumbnail: string | null;
   created_at: string;
   updated_at: string;
+  user_id: string | null;
 }
 
 export interface ExportSettings {

@@ -27,7 +27,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({
   addSection
 }) => {
   return (
-    <div className="h-full overflow-y-auto pr-4">
+    <div className="h-full overflow-y-auto pr-3">
       {useCoverPage && currentPage === 0 ? (
         <CoverPageInfo proposal={proposal} />
       ) : (

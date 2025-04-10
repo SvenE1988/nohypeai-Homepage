@@ -20,7 +20,7 @@ export const ProposalEditor: React.FC<ProposalEditorProps> = ({ proposal, onChan
   } = useProposalSections(proposal, onChange);
   
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <ProposalHeader proposal={proposal} onChange={onChange} />
       
       <SectionManager 

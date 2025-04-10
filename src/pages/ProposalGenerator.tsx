@@ -8,9 +8,9 @@ const ProposalGenerator = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
-      <div className="container mx-auto px-4 py-16">
-        <h1 className="text-3xl font-bold text-white text-center mb-8">Broschüren- und Angebotsgenerator</h1>
-        <p className="text-gray-300 text-center max-w-3xl mx-auto mb-12">
+      <div className="container mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold text-white text-center mb-6">Broschüren- und Angebotsgenerator</h1>
+        <p className="text-gray-300 text-center max-w-3xl mx-auto mb-10">
           Erstellen Sie professionelle Angebote und Broschüren in wenigen Minuten. 
           Wählen Sie eine Vorlage, passen Sie den Inhalt an und exportieren Sie als PDF oder drucken Sie direkt.
         </p>

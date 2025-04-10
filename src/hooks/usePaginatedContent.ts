@@ -12,6 +12,7 @@ interface PageData {
 export const usePaginatedContent = (sections: ProposalSection[]) => {
   const [pages, setPages] = useState<PageData[]>([]);
   const [useCoverPage, setUseCoverPage] = useState<boolean>(true);
+  const [useTableOfContents, setUseTableOfContents] = useState<boolean>(false);
   
   useEffect(() => {
     const paginateContent = () => {
@@ -48,6 +49,9 @@ export const usePaginatedContent = (sections: ProposalSection[]) => {
           case "contact":
             sectionHeight = 200; // Contact information
             break;
+          case "tableOfContents":
+            sectionHeight = 500; // Table of contents takes more space
+            break;
           default:
             sectionHeight = 150; // Default fallback
         }
@@ -82,5 +86,5 @@ export const usePaginatedContent = (sections: ProposalSection[]) => {
     paginateContent();
   }, [sections]);
   
-  return { pages, useCoverPage, setUseCoverPage };
+  return { pages, useCoverPage, setUseCoverPage, useTableOfContents, setUseTableOfContents };
 };

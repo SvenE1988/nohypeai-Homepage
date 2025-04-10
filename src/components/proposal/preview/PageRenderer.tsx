@@ -7,14 +7,18 @@ import { ImageSection } from "./ImageSection";
 import { CaseStudySection } from "./CaseStudySection";
 import { PricingSection } from "./PricingSection";
 import { ContactSection } from "./ContactSection";
+import { TableOfContentsSection } from "./TableOfContentsSection";
 
 interface PageRendererProps {
   sections: ProposalSection[];
   pageIndex: number;
   scale?: number;
   isCoverPage?: boolean;
+  isTableOfContents?: boolean;
+  allSections?: ProposalSection[];
   title?: string;
   clientName?: string;
+  documentType?: 'proposal' | 'brochure';
 }
 
 export const PageRenderer: React.FC<PageRendererProps> = ({ 
@@ -22,8 +26,11 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
   pageIndex,
   scale = 1,
   isCoverPage = false,
+  isTableOfContents = false,
+  allSections = [],
   title = "",
-  clientName = ""
+  clientName = "",
+  documentType = "proposal"
 }) => {
   const renderSection = (section: ProposalSection) => {
     switch (section.type) {
@@ -39,6 +46,8 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
         return <PricingSection content={section.content} />;
       case "contact":
         return <ContactSection content={section.content} />;
+      case "tableOfContents":
+        return <TableOfContentsSection sections={allSections} />;
       default:
         return <div>Unbekannter Sektionstyp: {section.type}</div>;
     }
@@ -74,7 +83,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
         </div>
         
         {/* Add logo to first page only */}
-        {pageIndex === 0 && !isCoverPage && (
+        {pageIndex === 0 && !isCoverPage && !isTableOfContents && (
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="NoHype Logo" 
@@ -90,11 +99,13 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
               alt="NoHype Logo" 
               className="cover-page-logo w-40 mb-8"
             />
-            <h1 className="cover-page-title text-5xl font-bold mb-6 text-white">Angebot</h1>
+            <h1 className="cover-page-title text-5xl font-bold mb-6 text-white">
+              {documentType === 'brochure' ? 'Broschüre' : 'Angebot'}
+            </h1>
             <div className="cover-page-subtitle text-2xl mb-4 text-gray-200">
               {title || ""}
             </div>
-            {clientName && (
+            {clientName && documentType === 'proposal' && (
               <div className="cover-page-client text-xl mb-6 text-gray-300">
                 für {clientName}
               </div>
@@ -106,6 +117,12 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
                 day: 'numeric'
               })}
             </div>
+          </div>
+        ) : isTableOfContents ? (
+          /* Table of Contents page */
+          <div className="table-of-contents-page flex flex-col h-full">
+            <h2 className="text-3xl font-bold mb-8">Inhaltsverzeichnis</h2>
+            <TableOfContentsSection sections={allSections} />
           </div>
         ) : (
           /* Regular page content */

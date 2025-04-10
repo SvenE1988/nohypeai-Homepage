@@ -33,7 +33,7 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
   
   // Use the paginatedContent hook to split sections into pages
-  const { pages, useCoverPage } = usePaginatedContent(
+  const { pages, useCoverPage, useTableOfContents } = usePaginatedContent(
     proposal.sections.sort((a, b) => a.order - b.order)
   );
   
@@ -50,8 +50,8 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   // Render editor content
   const renderEditorContent = () => {
     return (
-      <div className="space-y-6">
-        <div className="min-h-[600px] rounded-lg border border-white/10 p-4 bg-black/30">
+      <div className="space-y-3">
+        <div className="min-h-[550px] rounded-lg border border-white/10 p-3 bg-black/30">
           <PageBasedEditor
             proposal={proposal}
             onChange={onProposalChange}
@@ -82,7 +82,7 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
       return (
         <ProposalPreview 
           proposal={proposal} 
-          className="bg-black/30 p-6 rounded-lg border border-white/10"
+          className="bg-black/30 p-4 rounded-lg border border-white/10"
           isGeneratingPDF={isGeneratingPDF}
           setIsGeneratingPDF={setIsGeneratingPDF}
         />
