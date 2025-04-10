@@ -39,7 +39,7 @@ export const DesktopMenu = ({
       onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
-      {/* Logo auf der linken Seite */}
+      {/* Logo on the left side */}
       <Link 
         to="/" 
         className="mr-3 pl-2 flex items-center"
@@ -49,7 +49,11 @@ export const DesktopMenu = ({
           src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
           alt="nohype Logo" 
           className="h-10 w-auto"
-          style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
+          style={{ 
+            aspectRatio: "4.19/1", 
+            display: "block", 
+            objectFit: "contain" 
+          }}
         />
       </Link>
       
