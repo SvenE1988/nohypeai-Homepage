@@ -45,6 +45,7 @@ export type Database = {
           thumbnail: string | null
           title: string
           updated_at: string
+          user_id: string | null
         }
         Insert: {
           content: Json
@@ -54,6 +55,7 @@ export type Database = {
           thumbnail?: string | null
           title: string
           updated_at?: string
+          user_id?: string | null
         }
         Update: {
           content?: Json
@@ -63,6 +65,7 @@ export type Database = {
           thumbnail?: string | null
           title?: string
           updated_at?: string
+          user_id?: string | null
         }
         Relationships: []
       }
