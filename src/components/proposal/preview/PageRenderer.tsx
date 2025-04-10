@@ -11,9 +11,14 @@ import { ContactSection } from "./ContactSection";
 interface PageRendererProps {
   sections: ProposalSection[];
   pageIndex: number;
+  scale?: number;
 }
 
-export const PageRenderer: React.FC<PageRendererProps> = ({ sections, pageIndex }) => {
+export const PageRenderer: React.FC<PageRendererProps> = ({ 
+  sections, 
+  pageIndex,
+  scale = 1 
+}) => {
   const renderSection = (section: ProposalSection) => {
     switch (section.type) {
       case "header":
@@ -34,7 +39,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ sections, pageIndex 
   };
 
   return (
-    <div className="a4-page">
+    <div className="a4-page" style={{ transform: `scale(${scale})` }}>
       {/* Enhanced background layers with more dynamic gradients */}
       <div className="bg-gradient-dark"></div>
       <div className="bg-gradient-glow"></div>

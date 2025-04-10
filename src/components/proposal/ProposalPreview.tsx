@@ -1,11 +1,13 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Proposal } from "./types";
 import { PageRenderer } from "./preview/PageRenderer";
 import { PaginationControls } from "./preview/PaginationControls";
 import { usePaginatedContent } from "../../hooks/usePaginatedContent";
 import { Button } from "@/components/ui/button";
-import { FileDown, Printer } from "lucide-react";
+import { FileDown, Printer, Download } from "lucide-react";
+import { toast } from "sonner";
+import html2pdf from "html2pdf.js";
 
 interface ProposalPreviewProps {
   proposal: Proposal;
@@ -21,6 +23,10 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
   
   // State for current page in preview mode
   const [currentPreviewPage, setCurrentPreviewPage] = useState(0);
+  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+  
+  // Reference to PDF content element
+  const pdfContentRef = useRef<HTMLDivElement>(null);
 
   // Reset to first page when proposal changes
   useEffect(() => {
@@ -33,6 +39,36 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
     }, 100);
   };
 
+  const handleDownloadPDF = async () => {
+    if (!pdfContentRef.current) return;
+    
+    setIsGeneratingPDF(true);
+    toast.loading("PDF wird erstellt...");
+    
+    try {
+      const element = pdfContentRef.current;
+      
+      // Configure html2pdf options
+      const opt = {
+        margin: 0,
+        filename: `${proposal.title || 'Angebot'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+      
+      // Generate PDF
+      await html2pdf().set(opt).from(element).save();
+      
+      toast.success("PDF wurde erfolgreich erstellt");
+    } catch (error) {
+      console.error("PDF generation error:", error);
+      toast.error("Fehler beim Erstellen des PDFs");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+
   return (
     <div className={`preview-wrapper ${className}`}>
       <div className="flex justify-between items-center mb-4 print:hidden">
@@ -43,6 +79,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
             size="sm" 
             onClick={handlePrintPDF} 
             className="flex items-center gap-1"
+            disabled={isGeneratingPDF}
           >
             <Printer size={16} />
             <span className="hidden sm:inline">Drucken</span>
@@ -50,8 +87,9 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
           <Button 
             variant="default" 
             size="sm" 
-            onClick={handlePrintPDF} 
+            onClick={handleDownloadPDF} 
             className="flex items-center gap-1"
+            disabled={isGeneratingPDF}
           >
             <FileDown size={16} />
             <span className="hidden sm:inline">PDF herunterladen</span>
@@ -59,7 +97,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         </div>
       </div>
 
-      <div className="preview-container" id="pdf-content">
+      <div className="preview-container" id="pdf-content" ref={pdfContentRef}>
         {/* In print mode, we render all pages */}
         <div className="print:block hidden">
           {pages.map((page, pageIndex) => (
@@ -89,9 +127,15 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         onPageChange={setCurrentPreviewPage}
       />
       
-      <p className="text-center text-sm text-gray-400 mt-4 print:hidden print-instructions">
-        Klicken Sie auf "PDF herunterladen", um das Angebot als PDF zu speichern.
-      </p>
+      {isGeneratingPDF ? (
+        <p className="text-center text-sm text-gray-400 mt-4 print:hidden animate-pulse">
+          PDF wird generiert...
+        </p>
+      ) : (
+        <p className="text-center text-sm text-gray-400 mt-4 print:hidden print-instructions">
+          Klicken Sie auf "PDF herunterladen", um das Angebot als PDF zu speichern.
+        </p>
+      )}
     </div>
   );
 };
