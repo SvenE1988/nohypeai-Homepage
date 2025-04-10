@@ -101,28 +101,28 @@ export const useWebsiteContent = () => {
     
     try {
       // Try to load data from the website_content table
-      const { data, error } = await supabase
+      const { data: websiteData, error: websiteError } = await supabase
         .from('website_content')
         .select('*')
         .order('id', { ascending: false })
         .limit(1)
         .single();
       
-      if (error) {
-        console.warn("Could not load content from database, using fallback content:", error);
+      if (websiteError) {
+        console.warn("Could not load content from database, using fallback content:", websiteError);
         const fallbackContent = fetchFallbackContent();
         setContent(fallbackContent);
         return;
       }
       
-      if (data) {
+      if (websiteData) {
         setContent({
-          testimonials: data.testimonials || [],
-          techStack: data.tech_stack || {
+          testimonials: websiteData.testimonials || [],
+          techStack: websiteData.tech_stack || {
             categories: [],
             description: "",
           },
-          savingsCalculator: data.savings_calculator || {
+          savingsCalculator: websiteData.savings_calculator || {
             defaultHours: 20,
             defaultRate: 50,
           },
@@ -156,20 +156,30 @@ export const useWebsiteContent = () => {
       };
       
       // Get the current record ID or default to 1
-      const { data: existingData } = await supabase
+      const { data: existingData, error: fetchError } = await supabase
         .from('website_content')
         .select('id')
         .order('id', { ascending: false })
         .limit(1)
         .single();
       
+      if (fetchError && fetchError.code !== 'PGRST116') {
+        throw fetchError;
+      }
+      
       const id = existingData?.id || 1;
       
-      const { error } = await supabase
+      const { error: upsertError } = await supabase
         .from('website_content')
-        .upsert({ id, ...updateData });
+        .upsert({ 
+          id, 
+          testimonials: updateData.testimonials,
+          tech_stack: updateData.tech_stack,
+          savings_calculator: updateData.savings_calculator,
+          updated_at: updateData.updated_at
+        });
       
-      if (error) throw error;
+      if (upsertError) throw upsertError;
       
       setContent({
         ...content,
