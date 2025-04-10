@@ -54,13 +54,13 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
   };
 
   return (
-    <div className="flex justify-center my-4 print:hidden">
+    <div className="flex justify-center my-4 bg-black/20 rounded-lg p-2 print:hidden">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious 
               onClick={() => currentPage > 0 && onPageChange(currentPage - 1)}
-              className={currentPage === 0 ? "pointer-events-none opacity-50" : ""}
+              className={`${currentPage === 0 ? "pointer-events-none opacity-50" : ""} text-black dark:text-white`}
               aria-label="Vorherige Seite"
             />
           </PaginationItem>
@@ -70,6 +70,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
               <PaginationLink 
                 isActive={currentPage === index} 
                 onClick={() => onPageChange(index)}
+                className={`${currentPage === index ? "bg-primary text-white" : "text-black dark:text-white"}`}
                 aria-label={`Seite ${index + 1}`}
               >
                 {index + 1}
@@ -80,7 +81,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
           <PaginationItem>
             <PaginationNext 
               onClick={() => currentPage < totalPages - 1 && onPageChange(currentPage + 1)}
-              className={currentPage === totalPages - 1 ? "pointer-events-none opacity-50" : ""}
+              className={`${currentPage === totalPages - 1 ? "pointer-events-none opacity-50" : ""} text-black dark:text-white`}
               aria-label="Nächste Seite"
             />
           </PaginationItem>

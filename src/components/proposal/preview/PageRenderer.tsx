@@ -35,12 +35,12 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ sections, pageIndex 
 
   return (
     <div className="a4-page">
-      {/* Background layers */}
+      {/* Enhanced background layers with more dynamic gradients */}
       <div className="bg-gradient-dark"></div>
       <div className="bg-gradient-glow"></div>
       <div className="bg-accent-glow"></div>
       
-      {/* Page content */}
+      {/* Page content with better spacing */}
       <div className="a4-content">
         {/* Add logo to first page only */}
         {pageIndex === 0 && (
@@ -51,7 +51,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ sections, pageIndex 
           />
         )}
         
-        {/* Render the sections for this page */}
+        {/* Render the sections for this page with improved spacing */}
         <div className="space-y-6">
           {sections.map((section) => (
             <div key={section.id} className="mb-6 proposal-section">
@@ -61,11 +61,14 @@ export const PageRenderer: React.FC<PageRendererProps> = ({ sections, pageIndex 
         </div>
       </div>
       
-      {/* Footer with company info */}
+      {/* Footer with company info and page number */}
       <div className="page-footer">
         <div className="flex justify-between items-center text-xs text-white/70">
           <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
           <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
+        </div>
+        <div className="text-center text-xs text-white/50 mt-2">
+          Seite {pageIndex + 1}
         </div>
       </div>
     </div>
