@@ -49,28 +49,12 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
 
       <div className="preview-container bg-black/30" id="pdf-content" ref={pdfContentRef}>
         {/* Print mode - render all pages for PDF export */}
-        <div className="print:block hidden">
-          {/* Cover page if enabled */}
-          {useCoverPage && (
-            <div className="mb-0 page-break-after">
-              <SinglePagePreview
-                sections={[]}
-                pageIndex={0}
-                isCoverPage={true}
-              />
-            </div>
-          )}
-          
-          {/* Regular pages */}
-          {pages.map((page, index) => (
-            <div key={`page-${index}`} className={index < pages.length - 1 ? "page-break-after" : ""}>
-              <SinglePagePreview
-                sections={page.sections}
-                pageIndex={useCoverPage ? index + 1 : index}
-              />
-            </div>
-          ))}
-        </div>
+        <PrintPreview 
+          pages={pages} 
+          useCoverPage={useCoverPage}
+          title={proposal.title}
+          clientName={proposal.clientName}
+        />
         
         {/* Preview mode - single page or all pages */}
         {showAllPages ? (
@@ -83,6 +67,8 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
                   sections={[]}
                   pageIndex={0}
                   isCoverPage={true}
+                  title={proposal.title}
+                  clientName={proposal.clientName}
                 />
               </div>
             )}
@@ -106,6 +92,8 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
                 sections={[]}
                 pageIndex={0}
                 isCoverPage={true}
+                title={proposal.title}
+                clientName={proposal.clientName}
               />
             ) : (
               /* Regular page */

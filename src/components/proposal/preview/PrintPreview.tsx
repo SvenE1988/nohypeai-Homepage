@@ -6,9 +6,16 @@ import { ProposalSection } from "../types";
 interface PrintPreviewProps {
   pages: Array<{ sections: ProposalSection[] }>;
   useCoverPage?: boolean;
+  title?: string;
+  clientName?: string;
 }
 
-export const PrintPreview: React.FC<PrintPreviewProps> = ({ pages, useCoverPage = false }) => {
+export const PrintPreview: React.FC<PrintPreviewProps> = ({ 
+  pages, 
+  useCoverPage = false,
+  title = "",
+  clientName = ""
+}) => {
   return (
     <div className="print:block hidden">
       {/* Render cover page if enabled */}
@@ -19,6 +26,8 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({ pages, useCoverPage 
             sections={[]}
             pageIndex={0}
             isCoverPage={true}
+            title={title}
+            clientName={clientName}
           />
         </div>
       )}

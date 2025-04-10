@@ -1,11 +1,12 @@
 
 import React from "react";
-import { ProposalSection } from "../types";
+import { Proposal, ProposalSection } from "../types";
 import { SectionList } from "./SectionList";
 import { SectionAdder } from "./SectionAdder";
 import { CoverPageInfo } from "./CoverPageInfo";
 
 interface EditorContentProps {
+  proposal: Proposal;
   useCoverPage: boolean;
   currentPage: number;
   currentPageSections: ProposalSection[];
@@ -16,6 +17,7 @@ interface EditorContentProps {
 }
 
 export const EditorContent: React.FC<EditorContentProps> = ({
+  proposal,
   useCoverPage,
   currentPage,
   currentPageSections,
@@ -27,7 +29,7 @@ export const EditorContent: React.FC<EditorContentProps> = ({
   return (
     <div className="h-full overflow-y-auto pr-4">
       {useCoverPage && currentPage === 0 ? (
-        <CoverPageInfo />
+        <CoverPageInfo proposal={proposal} />
       ) : (
         <>
           <SectionList 

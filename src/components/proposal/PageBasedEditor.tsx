@@ -61,6 +61,7 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
       <ResizablePanelGroup direction="horizontal" className="min-h-[600px]">
         <ResizablePanel defaultSize={60} minSize={40}>
           <EditorContent 
+            proposal={proposal}
             useCoverPage={useCoverPage}
             currentPage={currentPage}
             currentPageSections={currentPageSections}
@@ -78,6 +79,8 @@ export const PageBasedEditor: React.FC<PageBasedEditorProps> = ({
             isCoverPage={useCoverPage && currentPage === 0}
             sections={currentPageSections}
             pageIndex={currentPage}
+            title={proposal.title}
+            clientName={proposal.clientName}
           />
         </ResizablePanel>
       </ResizablePanelGroup>

@@ -13,13 +13,17 @@ interface PageRendererProps {
   pageIndex: number;
   scale?: number;
   isCoverPage?: boolean;
+  title?: string;
+  clientName?: string;
 }
 
 export const PageRenderer: React.FC<PageRendererProps> = ({ 
   sections, 
   pageIndex,
   scale = 1,
-  isCoverPage = false
+  isCoverPage = false,
+  title = "",
+  clientName = ""
 }) => {
   const renderSection = (section: ProposalSection) => {
     switch (section.type) {
@@ -86,8 +90,13 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
             />
             <h1 className="cover-page-title text-5xl font-bold mb-6 text-white">Angebot</h1>
             <div className="cover-page-subtitle text-2xl mb-4 text-gray-200">
-              {/* Placeholder for dynamic title */}
+              {title || ""}
             </div>
+            {clientName && (
+              <div className="cover-page-client text-xl mb-6 text-gray-300">
+                für {clientName}
+              </div>
+            )}
             <div className="cover-page-date text-lg text-gray-300">
               {new Date().toLocaleDateString('de-DE', {
                 year: 'numeric',

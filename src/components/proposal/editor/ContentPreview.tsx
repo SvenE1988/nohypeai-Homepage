@@ -8,13 +8,17 @@ interface ContentPreviewProps {
   sections: ProposalSection[];
   pageIndex: number;
   scale?: number;
+  title?: string;
+  clientName?: string;
 }
 
 export const ContentPreview: React.FC<ContentPreviewProps> = ({ 
   isCoverPage, 
   sections, 
   pageIndex, 
-  scale = 0.8 
+  scale = 0.8,
+  title = "",
+  clientName = ""
 }) => {
   return (
     <div className="h-full overflow-y-auto bg-black/30 p-4 rounded-lg border border-white/10">
@@ -24,6 +28,8 @@ export const ContentPreview: React.FC<ContentPreviewProps> = ({
           pageIndex={0}
           scale={scale}
           isCoverPage={true}
+          title={title}
+          clientName={clientName}
         />
       ) : (
         <PageRenderer 
