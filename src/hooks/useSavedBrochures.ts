@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Proposal, SavedBrochure } from "../components/proposal/types";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/contexts/AuthContext";
 
 export const useSavedBrochures = (
   proposal: Proposal,
@@ -10,10 +11,13 @@ export const useSavedBrochures = (
 ) => {
   const [savedBrochures, setSavedBrochures] = useState<SavedBrochure[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAuth();
   
   // Fetch saved brochures from Supabase
   useEffect(() => {
     const fetchSavedBrochures = async () => {
+      if (!user) return;
+      
       setIsLoading(true);
       try {
         const { data, error } = await supabase
@@ -41,9 +45,14 @@ export const useSavedBrochures = (
     };
     
     fetchSavedBrochures();
-  }, []);
+  }, [user]);
   
   const handleSaveBrochure = async (title: string, description: string) => {
+    if (!user) {
+      toast.error('Sie müssen angemeldet sein, um Broschüren zu speichern');
+      return;
+    }
+    
     if (!title.trim()) {
       toast.error('Bitte geben Sie einen Titel ein');
       return;
@@ -60,7 +69,8 @@ export const useSavedBrochures = (
           title: title,
           description: description || null,
           content: proposal as any,
-          thumbnail
+          thumbnail,
+          user_id: user.id
         })
         .select();
         

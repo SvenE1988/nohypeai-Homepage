@@ -10,11 +10,13 @@ import { LoadingScreen } from "./components/ui/loading-spinner";
 
 // Providers
 import { DialogProvider } from "./components/providers/DialogProvider";
+import { AuthProvider } from "./contexts/AuthContext";
 
 // Components that are always needed
 import CookieConsent from "./components/CookieConsent";
 import CustomChat from "./components/CustomChat";
 import LegalDialog from "./components/legal/LegalDialog";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Lazy-loaded pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -26,6 +28,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LiveTests = lazy(() => import("./pages/LiveTests"));
 const ProposalGenerator = lazy(() => import("./pages/ProposalGenerator"));
+const Auth = lazy(() => import("./pages/Auth"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -53,20 +56,30 @@ const App = () => (
           <CustomChat />
           
           <BrowserRouter>
-            <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/karriere" element={<Karriere />} />
-                <Route path="/karriere/:id" element={<JobDetails />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/live-tests" element={<LiveTests />} />
-                <Route path="/proposals" element={<ProposalGenerator />} />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="*" element={<Navigate to="/404" replace />} />
-              </Routes>
-            </Suspense>
+            <AuthProvider>
+              <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/karriere" element={<Karriere />} />
+                  <Route path="/karriere/:id" element={<JobDetails />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/live-tests" element={<LiveTests />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route 
+                    path="/proposals" 
+                    element={
+                      <ProtectedRoute>
+                        <ProposalGenerator />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="/404" element={<NotFound />} />
+                  <Route path="*" element={<Navigate to="/404" replace />} />
+                </Routes>
+              </Suspense>
+            </AuthProvider>
           </BrowserRouter>
         </ErrorBoundary>
       </DialogProvider>
