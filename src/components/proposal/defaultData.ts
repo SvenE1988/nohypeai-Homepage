@@ -65,10 +65,10 @@ export const defaultProposal: Proposal = {
       content: {
         title: "Kontakt",
         contact: {
-          name: "Max Mustermann",
+          name: "Sven Erkens",
           position: "Geschäftsführer",
-          email: "kontakt@nohype.de",
-          phone: "+49 123 456789"
+          email: "se@nohype-ai.de",
+          phone: "+49 175 9481994"
         }
       },
       order: 5

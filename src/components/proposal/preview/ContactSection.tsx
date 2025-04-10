@@ -17,10 +17,12 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ content }) => {
       <h3 className="text-2xl font-semibold text-secondary mb-4">{content.title}</h3>
       
       <div className="flex items-start gap-6 border-t border-gray-200 pt-4">
-        <div className="flex-none w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center">
-          <span className="text-3xl text-secondary font-semibold">
-            {content.contact.name.split(' ').map(name => name[0]).join('')}
-          </span>
+        <div className="flex-none w-24 h-24 overflow-hidden rounded-full">
+          <img 
+            src="/lovable-uploads/53242408-166e-4bd6-89db-0295c8e032ca.png" 
+            alt={content.contact.name} 
+            className="w-full h-full object-cover"
+          />
         </div>
         
         <div>

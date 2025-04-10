@@ -3,7 +3,7 @@
 .a4-page {
   width: 210mm;
   height: 297mm;
-  margin: 0 auto;
+  margin: 0 auto 20px auto;
   background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
   position: relative;
   overflow: hidden;
@@ -70,39 +70,50 @@
     margin: 0;
   }
   
+  body {
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+  
   /* Hide everything except the PDF content */
   body * {
     visibility: hidden;
   }
   
-  .a4-page, .a4-page * {
+  #pdf-content, #pdf-content * {
     visibility: visible;
   }
   
-  /* Reset positioning for print view */
-  .a4-page {
+  /* Position and fix page layout */
+  .preview-container {
     position: absolute;
     left: 0;
     top: 0;
+    width: 100%;
+    padding: 0;
     margin: 0;
-    box-shadow: none;
+    display: block;
+  }
+  
+  .a4-page {
+    margin: 0;
     page-break-after: always;
+    box-shadow: none;
     background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     -webkit-print-color-adjust: exact !important;
     color-adjust: exact !important;
     print-color-adjust: exact !important;
   }
   
-  /* Ensure the page is properly filled */
-  .preview-container {
+  /* Ensure each page is printed on a separate sheet */
+  .a4-page {
+    position: relative;
     display: block;
-    padding: 0;
-    margin: 0;
-  }
-  
-  /* Hide the preview instructions when printing */
-  .print-instructions {
-    display: none !important;
+    overflow: hidden;
+    page-break-after: always;
+    page-break-before: auto;
+    box-sizing: border-box;
   }
   
   /* Custom styling for the gradient backgrounds to ensure they print */
@@ -120,6 +131,16 @@
   /* Avoid page breaks after headings */
   h1, h2, h3, h4, h5, h6 {
     page-break-after: avoid;
+  }
+  
+  /* Hide the preview instructions when printing */
+  .print-instructions {
+    display: none !important;
+  }
+  
+  /* Fix for Chrome to ensure each page is printed */
+  .a4-page:last-of-type {
+    page-break-after: auto;
   }
 }
 

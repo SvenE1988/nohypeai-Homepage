@@ -27,6 +27,13 @@ export const PDFGenerator = () => {
     setProposal(updatedProposal);
   };
   
+  const handlePrintPDF = () => {
+    // Setze einen Timeout, um sicherzustellen, dass alle Styles angewendet werden
+    setTimeout(() => {
+      window.print();
+    }, 100);
+  };
+  
   return (
     <div className="bg-black/30 border border-white/10 rounded-lg p-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -42,7 +49,7 @@ export const PDFGenerator = () => {
               Zurücksetzen
             </Button>
             {activeTab === "preview" && (
-              <Button onClick={() => window.print()}>
+              <Button onClick={handlePrintPDF}>
                 PDF herunterladen
               </Button>
             )}
