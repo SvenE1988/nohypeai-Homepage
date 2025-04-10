@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Proposal } from "./types";
 import { PageRenderer } from "./preview/PageRenderer";
@@ -8,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { FileDown } from "lucide-react";
 import { toast } from "sonner";
 import html2pdf from "html2pdf.js";
-import { ExportDialog, ExportSettings } from "./ExportDialog";
+import { ExportDialog } from "./ExportDialog";
+import { ExportSettings } from "./types";
 
 interface ProposalPreviewProps {
   proposal: Proposal;

@@ -1,4 +1,3 @@
-
 export interface ProposalSection {
   id: string;
   type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact';
@@ -55,4 +54,13 @@ export interface SavedBrochure {
   thumbnail: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface ExportSettings {
+  quality: "draft" | "standard" | "high";
+  includeCoverPage: boolean;
+  includeTableOfContents: boolean;
+  includePageNumbers: boolean;
+  includeFooter: boolean;
+  format: string;
 }
