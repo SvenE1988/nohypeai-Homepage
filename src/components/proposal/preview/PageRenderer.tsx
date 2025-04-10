@@ -7,19 +7,26 @@ import { ImageSection } from "./ImageSection";
 import { CaseStudySection } from "./CaseStudySection";
 import { PricingSection } from "./PricingSection";
 import { ContactSection } from "./ContactSection";
+import { TestimonialSection } from "./TestimonialSection";
+import { TechStackSection } from "./TechStackSection";
+import { SavingsSection } from "./SavingsSection";
 
 interface PageRendererProps {
   sections: ProposalSection[];
   pageIndex: number;
   scale?: number;
   isCoverPage?: boolean;
+  showPageNumbers?: boolean;
+  showFooter?: boolean;
 }
 
 export const PageRenderer: React.FC<PageRendererProps> = ({ 
   sections, 
   pageIndex,
   scale = 1,
-  isCoverPage = false
+  isCoverPage = false,
+  showPageNumbers = true,
+  showFooter = true
 }) => {
   const renderSection = (section: ProposalSection) => {
     switch (section.type) {
@@ -35,6 +42,12 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
         return <PricingSection content={section.content} />;
       case "contact":
         return <ContactSection content={section.content} />;
+      case "testimonial":
+        return <TestimonialSection content={section.content} />;
+      case "techStack":
+        return <TechStackSection content={section.content} />;
+      case "savings":
+        return <SavingsSection content={section.content} />;
       default:
         return <div>Unbekannter Sektionstyp: {section.type}</div>;
     }
@@ -82,15 +95,19 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       </div>
       
       {/* Footer with company info and page number */}
-      <div className="page-footer">
-        <div className="flex justify-between items-center text-xs text-gray-600">
-          <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
-          <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
+      {showFooter && (
+        <div className="page-footer">
+          <div className="flex justify-between items-center text-xs text-gray-600">
+            <div>NoHype - eine Marke der Powerplant Promotion GmbH • Achim</div>
+            <div>Tel: +49 175 9481994 • info@nohype-ai.de</div>
+          </div>
+          {showPageNumbers && (
+            <div className="text-center text-xs text-gray-500 mt-2">
+              Seite {pageIndex + 1}
+            </div>
+          )}
         </div>
-        <div className="text-center text-xs text-gray-500 mt-2">
-          Seite {pageIndex + 1}
-        </div>
-      </div>
+      )}
     </div>
   );
 };

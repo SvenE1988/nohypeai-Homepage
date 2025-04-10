@@ -1,7 +1,7 @@
 
 export interface ProposalSection {
   id: string;
-  type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact';
+  type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact' | 'testimonial' | 'techStack' | 'savings';
   content: any;
   order: number;
 }
@@ -22,6 +22,7 @@ export interface ProposalTemplate {
   name: string;
   description: string;
   sections: ProposalSection[];
+  hasCoverPage?: boolean;
 }
 
 export interface PricingItem {

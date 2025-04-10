@@ -8,6 +8,7 @@ import { SectionEditor } from "./sections/SectionEditor";
 import { v4 as uuidv4 } from "uuid";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { useWebsiteContent } from "@/hooks/useWebsiteContent";
 
 interface ProposalEditorProps {
   proposal: Proposal;
@@ -16,6 +17,7 @@ interface ProposalEditorProps {
 
 export const ProposalEditor: React.FC<ProposalEditorProps> = ({ proposal, onChange }) => {
   const { useCoverPage = true } = proposal;
+  const { content: websiteContent } = useWebsiteContent();
 
   const handleSectionChange = (updatedSection: ProposalSection) => {
     const updatedSections = proposal.sections.map(section => 
@@ -110,6 +112,25 @@ export const ProposalEditor: React.FC<ProposalEditorProps> = ({ proposal, onChan
             email: "email@example.com",
             phone: "+49 123 456789"
           }
+        };
+      case 'testimonial':
+        return {
+          title: "Kundenfeedback",
+          testimonials: websiteContent.testimonials || [],
+          maxDisplay: 2
+        };
+      case 'techStack':
+        return {
+          title: "Unser Tech Stack",
+          techStack: websiteContent.techStack || { categories: [], description: "" },
+          showDescription: true
+        };
+      case 'savings':
+        return {
+          title: "Potenzielle Einsparungen",
+          calculatorData: websiteContent.savingsCalculator || { defaultHours: 20, defaultRate: 50 },
+          hours: websiteContent.savingsCalculator?.defaultHours || 20,
+          rate: websiteContent.savingsCalculator?.defaultRate || 50
         };
       default:
         return {};
@@ -208,6 +229,15 @@ export const ProposalEditor: React.FC<ProposalEditorProps> = ({ proposal, onChan
           <Button onClick={() => addSection('caseStudy')} variant="outline" size="sm" className="text-xs py-1 h-8">Case Study</Button>
           <Button onClick={() => addSection('pricing')} variant="outline" size="sm" className="text-xs py-1 h-8">Preistabelle</Button>
           <Button onClick={() => addSection('contact')} variant="outline" size="sm" className="text-xs py-1 h-8">Kontakt</Button>
+        </div>
+        
+        <div className="mt-2 pt-2 border-t border-white/10">
+          <h3 className="text-white font-medium mb-3 text-sm">Website-Inhalte hinzufügen</h3>
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={() => addSection('testimonial')} variant="outline" size="sm" className="text-xs py-1 h-8">Testimonials</Button>
+            <Button onClick={() => addSection('techStack')} variant="outline" size="sm" className="text-xs py-1 h-8">Tech Stack</Button>
+            <Button onClick={() => addSection('savings')} variant="outline" size="sm" className="text-xs py-1 h-8">Einsparungsrechner</Button>
+          </div>
         </div>
       </div>
     </div>
