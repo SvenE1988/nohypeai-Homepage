@@ -23,7 +23,7 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ content }) => {
         />
       </div>
       {content.caption && (
-        <p className="text-sm text-gray-300 mt-2 text-center">{content.caption}</p>
+        <p className="text-sm text-white mt-2 text-center">{content.caption}</p>
       )}
     </div>
   );
