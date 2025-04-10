@@ -34,7 +34,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "templates" ? "solid" : "default"} 
           onClick={() => setActiveTab("templates")}
-          className={`whitespace-nowrap ${activeTab === "templates" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
+          className={`whitespace-nowrap text-white ${activeTab === "templates" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
           size="sm"
         >
           <LayoutTemplate className="mr-2 h-4 w-4" />
@@ -43,7 +43,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "saved" ? "solid" : "default"} 
           onClick={() => setActiveTab("saved")}
-          className={`whitespace-nowrap ${activeTab === "saved" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
+          className={`whitespace-nowrap text-white ${activeTab === "saved" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
           size="sm"
         >
           <BookOpen className="mr-2 h-4 w-4" />
@@ -52,7 +52,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "editor" ? "solid" : "default"} 
           onClick={() => setActiveTab("editor")}
-          className={`whitespace-nowrap ${activeTab === "editor" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
+          className={`whitespace-nowrap text-white ${activeTab === "editor" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
           size="sm"
         >
           <Pencil className="mr-2 h-4 w-4" />
@@ -61,7 +61,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "preview" ? "solid" : "default"} 
           onClick={() => setActiveTab("preview")}
-          className={`whitespace-nowrap ${activeTab === "preview" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
+          className={`whitespace-nowrap text-white ${activeTab === "preview" ? "bg-primary hover:bg-primary/90" : "hover:bg-blue-500/10"}`}
           size="sm"
         >
           <Eye className="mr-2 h-4 w-4" />
@@ -71,12 +71,12 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
       
       <div className="flex gap-2">
         {(activeTab === "editor" || activeTab === "preview") && (
-          <Button variant="default" onClick={onSaveClick} size="sm" className="hover:bg-blue-500/10">
+          <Button variant="default" onClick={onSaveClick} size="sm" className="hover:bg-blue-500/10 text-white">
             <Save className="mr-2 h-4 w-4" />
             Speichern
           </Button>
         )}
-        <Button variant="default" onClick={onResetClick} size="sm" className="hover:bg-blue-500/10">
+        <Button variant="default" onClick={onResetClick} size="sm" className="hover:bg-blue-500/10 text-white">
           Zurücksetzen
         </Button>
         {(activeTab === "editor" || activeTab === "preview") && (
@@ -85,7 +85,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
               <Button 
                 variant="solid" 
                 size="sm" 
-                className="bg-primary hover:bg-primary/90"
+                className="bg-primary hover:bg-primary/90 text-white"
                 disabled={isGeneratingPDF}
               >
                 <FileDown className="mr-2 h-4 w-4" />
@@ -93,11 +93,11 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-black/90 border border-white/10 text-white">
-              <DropdownMenuItem onClick={onExportClick} className="cursor-pointer hover:bg-white/10">
+              <DropdownMenuItem onClick={onExportClick} className="cursor-pointer hover:bg-white/10 text-white">
                 <FileDown className="mr-2 h-4 w-4" />
                 PDF exportieren
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={onPrintClick} className="cursor-pointer hover:bg-white/10">
+              <DropdownMenuItem onClick={onPrintClick} className="cursor-pointer hover:bg-white/10 text-white">
                 <Printer className="mr-2 h-4 w-4" />
                 Drucken
               </DropdownMenuItem>
