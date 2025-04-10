@@ -1,22 +1,18 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { FileDown, Layers, Book } from "lucide-react";
+import { Layers, Book } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 interface PreviewControlsProps {
   title: string;
-  isGeneratingPDF: boolean;
-  onExportClick: () => void;
   onToggleAllPages: () => void;
   showAllPages: boolean;
 }
 
 export const PreviewControls: React.FC<PreviewControlsProps> = ({ 
   title, 
-  isGeneratingPDF, 
-  onExportClick,
   onToggleAllPages,
   showAllPages
 }) => {
@@ -34,16 +30,6 @@ export const PreviewControls: React.FC<PreviewControlsProps> = ({
             Alle Seiten anzeigen
           </Label>
         </div>
-        <Button 
-          variant="default" 
-          size="sm" 
-          onClick={onExportClick}
-          className="flex items-center gap-1"
-          disabled={isGeneratingPDF}
-        >
-          <FileDown size={16} />
-          <span className="hidden sm:inline">Exportieren</span>
-        </Button>
       </div>
     </div>
   );

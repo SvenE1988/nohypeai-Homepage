@@ -1,42 +1,59 @@
 
-/* Page rendering */
+/* Page styles */
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .print\:hidden {
+    display: none !important;
+  }
+  
+  .print\:block {
+    display: block !important;
+  }
+  
+  .page-break-after {
+    page-break-after: always;
+  }
+}
+
+/* A4 page dimensions and styling */
 .a4-page {
-  position: relative;
   width: 210mm;
   height: 297mm;
   margin: 0 auto;
-  background-color: #1a1f2c;
-  color: white;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  overflow: hidden;
-  transform-origin: top center;
-}
-
-.company-logo {
-  position: absolute;
-  top: 15mm;
-  right: 15mm;
-  height: 12mm;
-  z-index: 10;
-}
-
-.a4-content {
+  background-color: white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: relative;
-  padding: 25mm 20mm;
-  height: 100%;
-  z-index: 5;
-  color: #fff;
+  overflow: hidden;
 }
 
-.page-footer {
-  position: absolute;
-  bottom: 10mm;
-  left: 20mm;
-  right: 20mm;
-  text-align: center;
-  font-size: 9pt;
-  color: #ccc;
-  z-index: 10;
+/* Content container inside A4 page */
+.a4-content {
+  padding: 20mm 15mm;
+  height: 100%;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Company logo styling */
+.company-logo {
+  max-width: 120px;
+  margin-bottom: 20px;
+}
+
+.cover-page-logo {
+  max-width: 160px;
+  margin-bottom: 30px;
 }
 
 /* Cover page styling */
@@ -46,21 +63,16 @@
   justify-content: center;
   align-items: center;
   height: 100%;
+  text-align: center;
   position: relative;
-  z-index: 10;
-}
-
-.cover-page-logo {
-  width: 40mm;
-  height: auto;
-  margin-bottom: 20mm;
+  z-index: 2;
 }
 
 .cover-page-title {
-  font-size: 36pt;
-  font-weight: 700;
-  color: white;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
 }
 
 .cover-page-overlay {
@@ -69,8 +81,21 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 70%);
-  z-index: -1;
+  background: linear-gradient(to bottom, transparent, rgba(235, 245, 255, 0.2));
+  z-index: 1;
+}
+
+/* Page footer styling */
+.page-footer {
+  border-top: 1px solid #eaeaea;
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+/* Scaling for preview */
+.transform.scale-65 {
+  transform: scale(0.65);
+  transform-origin: top center;
 }
 
 /* Background gradients */
@@ -79,134 +104,65 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 80mm;
-  background: linear-gradient(to bottom, rgba(0, 0, 20, 0.5), transparent);
+  bottom: 0;
+  background: linear-gradient(to bottom, #f9fbff, white);
   z-index: 1;
 }
 
 .bg-gradient-glow {
   position: absolute;
-  top: 20mm;
-  right: -40mm;
-  width: 100mm;
-  height: 100mm;
-  background: radial-gradient(circle, rgba(30, 144, 255, 0.15), transparent 70%);
-  z-index: 2;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.1), transparent 70%);
+  z-index: 1;
+  opacity: 0.6;
 }
 
 .bg-accent-glow {
   position: absolute;
-  bottom: 30mm;
-  left: -20mm;
-  width: 80mm;
-  height: 80mm;
-  background: radial-gradient(circle, rgba(255, 105, 180, 0.1), transparent 70%);
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 30%;
+  background: radial-gradient(circle at top right, rgba(59, 130, 246, 0.15), transparent 80%);
   z-index: 1;
 }
 
-/* Print styles */
-@media print {
-  .a4-page {
-    margin: 0;
-    box-shadow: none;
-    page-break-after: always;
-    transform: none !important;
-  }
-  
-  body {
-    background: #1a1f2c;
-  }
-  
-  .print-hidden {
-    display: none !important;
-  }
-}
-
-/* Proposal sections */
+/* Section specific styles */
 .proposal-section {
-  position: relative;
+  margin-bottom: 24px;
 }
 
-/* Text section */
-.text-section h2 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #59a0ff;
-}
-
-.text-section p {
-  line-height: 1.6;
-}
-
-/* Image section */
-.image-section img {
-  max-width: 100%;
-  border-radius: 4px;
-}
-
-.image-section .caption {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  color: #ccc;
-  text-align: center;
-}
-
-/* Pricing section */
-.pricing-section {
-  margin: 1.5rem 0;
-}
-
-.pricing-section table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.pricing-section th,
-.pricing-section td {
-  padding: 0.75rem;
-  border-bottom: 1px solid #2a3040;
-}
-
-.pricing-section th {
-  text-align: left;
-  font-weight: 600;
-  color: #59a0ff;
-}
-
-.pricing-section .price {
-  text-align: right;
-  font-weight: 500;
-}
-
-.pricing-section .total-row {
-  font-weight: bold;
-  background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Contact section */
-.contact-section {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  background-color: rgba(255, 255, 255, 0.05);
+/* Preview container */
+.preview-container {
+  background-color: rgba(0, 0, 0, 0.03);
   border-radius: 8px;
+  padding: 2rem;
+  min-height: 600px;
+  display: flex;
+  justify-content: center;
 }
 
-.contact-section .contact-photo {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
+.all-pages-preview {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.contact-section .contact-info h3 {
-  margin-top: 0;
-  margin-bottom: 0.25rem;
-  color: #59a0ff;
+/* Make text more visible on dark backgrounds */
+.text-white {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.contact-section .contact-info p {
-  margin: 0.25rem 0;
-  color: #ccc;
+/* Extra responsive styles */
+@media (max-width: 640px) {
+  .preview-container {
+    padding: 1rem;
+  }
+  
+  .transform.scale-65 {
+    transform: scale(0.5);
+  }
 }

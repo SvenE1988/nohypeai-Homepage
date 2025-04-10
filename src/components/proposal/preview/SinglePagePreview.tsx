@@ -15,12 +15,14 @@ export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({
   isCoverPage = false
 }) => {
   return (
-    <div className="print:hidden">
-      <PageRenderer
-        sections={sections}
-        pageIndex={pageIndex}
-        isCoverPage={isCoverPage}
-      />
+    <div className="print:hidden flex justify-center">
+      <div className="transform scale-65 origin-top my-4">
+        <PageRenderer
+          sections={sections}
+          pageIndex={pageIndex}
+          isCoverPage={isCoverPage}
+        />
+      </div>
     </div>
   );
 };

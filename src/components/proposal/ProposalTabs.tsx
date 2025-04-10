@@ -1,6 +1,5 @@
 
 import React from "react";
-import { TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Save, FileDown, Pencil, Eye, LayoutTemplate, BookOpen } from "lucide-react";
 
@@ -10,6 +9,7 @@ interface ProposalTabsProps {
   onSaveClick: () => void;
   onResetClick: () => void;
   onExportClick: () => void;
+  isGeneratingPDF?: boolean;
 }
 
 export const ProposalTabs: React.FC<ProposalTabsProps> = ({
@@ -17,7 +17,8 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
   setActiveTab,
   onSaveClick,
   onResetClick,
-  onExportClick
+  onExportClick,
+  isGeneratingPDF = false
 }) => {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -71,9 +72,14 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
           Zurücksetzen
         </Button>
         {(activeTab === "editor" || activeTab === "preview") && (
-          <Button onClick={onExportClick} size="sm" className="text-sm">
+          <Button 
+            onClick={onExportClick} 
+            size="sm" 
+            className="text-sm"
+            disabled={isGeneratingPDF}
+          >
             <FileDown className="mr-2 h-4 w-4" />
-            Exportieren
+            {isGeneratingPDF ? "Wird erstellt..." : "Exportieren"}
           </Button>
         )}
       </div>

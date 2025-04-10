@@ -13,21 +13,24 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({ pages, useCoverPage 
     <div className="print:block hidden">
       {/* Render cover page if enabled */}
       {useCoverPage && (
-        <PageRenderer
-          key="cover-page"
-          sections={[]}
-          pageIndex={0}
-          isCoverPage={true}
-        />
+        <div className="mb-0 page-break-after">
+          <PageRenderer
+            key="cover-page"
+            sections={[]}
+            pageIndex={0}
+            isCoverPage={true}
+          />
+        </div>
       )}
       
       {/* Render regular pages */}
       {pages.map((page, pageIndex) => (
-        <PageRenderer
-          key={`page-${pageIndex}`}
-          sections={page.sections}
-          pageIndex={useCoverPage ? pageIndex + 1 : pageIndex}
-        />
+        <div key={`page-${pageIndex}`} className={pageIndex < pages.length - 1 ? "page-break-after" : ""}>
+          <PageRenderer
+            sections={page.sections}
+            pageIndex={useCoverPage ? pageIndex + 1 : pageIndex}
+          />
+        </div>
       ))}
     </div>
   );

@@ -3,10 +3,6 @@ import React, { useState, useEffect, useRef } from "react";
 import { Proposal } from "./types";
 import { PaginationControls } from "./preview/PaginationControls";
 import { usePaginatedContent } from "../../hooks/usePaginatedContent";
-import { toast } from "sonner";
-import { ExportDialog } from "./ExportDialog";
-import { ExportSettings } from "./types";
-import { generatePDF, printDocument } from "./utils/pdfUtils";
 import { PrintPreview } from "./preview/PrintPreview";
 import { SinglePagePreview } from "./preview/SinglePagePreview";
 import { PreviewControls } from "./preview/PreviewControls";
@@ -27,8 +23,6 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
   
   // State for current page in preview mode
   const [currentPreviewPage, setCurrentPreviewPage] = useState(0);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const [showExportDialog, setShowExportDialog] = useState(false);
   const [showAllPages, setShowAllPages] = useState(false);
   
   // Reference to PDF content element
@@ -39,38 +33,10 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
     setCurrentPreviewPage(0);
   }, [proposal.id]);
 
-  const handleExportAction = async (type: string, settings: ExportSettings) => {
-    switch (type) {
-      case "download":
-        if (!pdfContentRef.current) return;
-        setIsGeneratingPDF(true);
-        try {
-          await generatePDF(
-            pdfContentRef.current, 
-            proposal.title || 'Angebot',
-            settings
-          );
-        } finally {
-          setIsGeneratingPDF(false);
-        }
-        break;
-      case "print":
-        printDocument();
-        break;
-      case "email":
-        toast.info("E-Mail-Funktion wird in einer zukünftigen Version verfügbar sein");
-        break;
-      default:
-        break;
-    }
-  };
-
   return (
     <div className={`preview-wrapper ${className}`}>
       <PreviewControls
         title={proposal.title}
-        isGeneratingPDF={isGeneratingPDF}
-        onExportClick={() => setShowExportDialog(true)}
         onToggleAllPages={() => setShowAllPages(!showAllPages)}
         showAllPages={showAllPages}
       />
@@ -85,24 +51,26 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
           <div className="all-pages-preview space-y-8 print:hidden">
             {/* Cover page if enabled */}
             {useCoverPage && (
-              <div className="mb-8">
-                <PageRenderer
-                  sections={[]}
-                  pageIndex={-1}
-                  scale={0.6}
-                  isCoverPage={true}
-                />
+              <div className="mb-8 flex justify-center">
+                <div className="transform scale-65 origin-top">
+                  <PageRenderer
+                    sections={[]}
+                    pageIndex={0}
+                    isCoverPage={true}
+                  />
+                </div>
               </div>
             )}
             
             {/* Regular pages */}
             {pages.map((page, index) => (
-              <div key={`all-page-${index}`} className="mb-8">
-                <PageRenderer
-                  sections={page.sections}
-                  pageIndex={index}
-                  scale={0.6}
-                />
+              <div key={`all-page-${index}`} className="mb-8 flex justify-center">
+                <div className="transform scale-65 origin-top">
+                  <PageRenderer
+                    sections={page.sections}
+                    pageIndex={index}
+                  />
+                </div>
               </div>
             ))}
           </div>
@@ -138,14 +106,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         />
       )}
       
-      <StatusMessage isGeneratingPDF={isGeneratingPDF} />
-
-      <ExportDialog
-        open={showExportDialog}
-        onOpenChange={setShowExportDialog}
-        proposal={proposal}
-        onExport={handleExportAction}
-      />
+      <StatusMessage isGeneratingPDF={false} />
     </div>
   );
 };

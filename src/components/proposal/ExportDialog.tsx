@@ -63,10 +63,10 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-gray-950 border-gray-800">
         <DialogHeader>
-          <DialogTitle>Angebot exportieren</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-white">Angebot exportieren</DialogTitle>
+          <DialogDescription className="text-gray-400">
             Wählen Sie aus, wie Sie "{proposal.title || 'Unbenanntes Angebot'}" exportieren möchten.
           </DialogDescription>
         </DialogHeader>

@@ -5,103 +5,98 @@ import { Switch } from "@/components/ui/switch";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { ExportSettings } from "../types";
 
-interface ExportSettingsProps {
+interface ExportSettingsPanelProps {
+  type: string;
   settings: ExportSettings;
   onSettingChange: (key: keyof ExportSettings, value: any) => void;
-  type?: "download" | "print" | "email";
 }
 
-export const ExportSettingsPanel: React.FC<ExportSettingsProps> = ({
+export const ExportSettingsPanel: React.FC<ExportSettingsPanelProps> = ({
+  type,
   settings,
   onSettingChange,
-  type = "download"
 }) => {
   return (
-    <div className="space-y-4 py-2">
-      <div className="space-y-2">
-        <Label className="text-sm font-medium">Qualität</Label>
-        <RadioGroup
-          value={settings.quality}
-          onValueChange={(value) => onSettingChange("quality", value)}
-          className="flex flex-col space-y-1"
-        >
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="draft" id="quality-draft" />
-            <Label htmlFor="quality-draft" className="text-sm cursor-pointer">
-              Entwurf (schneller, kleinere Dateigröße)
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="standard" id="quality-standard" />
-            <Label htmlFor="quality-standard" className="text-sm cursor-pointer">
-              Standard (empfohlen)
-            </Label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <RadioGroupItem value="high" id="quality-high" />
-            <Label htmlFor="quality-high" className="text-sm cursor-pointer">
-              Hoch (langsamer, größere Dateigröße)
-            </Label>
-          </div>
-        </RadioGroup>
-      </div>
+    <div className="space-y-5">
+      {/* Quality settings (for PDF and Print) */}
+      {(type === "download" || type === "print") && (
+        <div className="space-y-3">
+          <h4 className="text-sm font-medium text-gray-300">Qualität</h4>
+          <RadioGroup
+            value={settings.quality}
+            onValueChange={(value) => onSettingChange("quality", value)}
+            className="flex flex-col space-y-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="draft" id="draft" className="border-gray-600" />
+              <Label htmlFor="draft" className="text-gray-300">Entwurf (schneller)</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="standard" id="standard" className="border-gray-600" />
+              <Label htmlFor="standard" className="text-gray-300">Standard</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="high" id="high" className="border-gray-600" />
+              <Label htmlFor="high" className="text-gray-300">Hohe Qualität (langsamer)</Label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
 
+      {/* General layout settings */}
       <div className="space-y-3">
-        <Label className="text-sm font-medium">Optionen</Label>
-        
-        <div className="flex items-center space-x-2">
+        <h4 className="text-sm font-medium text-gray-300">Layout</h4>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="cover-page" className="text-gray-300 text-sm">Deckblatt einbeziehen</Label>
           <Switch
             id="cover-page"
             checked={settings.includeCoverPage}
-            onCheckedChange={(checked) =>
-              onSettingChange("includeCoverPage", checked)
-            }
+            onCheckedChange={(value) => onSettingChange("includeCoverPage", value)}
+            className="data-[state=checked]:bg-blue-600"
           />
-          <Label htmlFor="cover-page" className="text-sm cursor-pointer">
-            Deckblatt einbeziehen
-          </Label>
         </div>
-
-        <div className="flex items-center space-x-2">
-          <Switch
-            id="table-of-contents"
-            checked={settings.includeTableOfContents}
-            onCheckedChange={(checked) =>
-              onSettingChange("includeTableOfContents", checked)
-            }
-          />
-          <Label htmlFor="table-of-contents" className="text-sm cursor-pointer">
-            Inhaltsverzeichnis einbeziehen
-          </Label>
-        </div>
-
-        <div className="flex items-center space-x-2">
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="page-numbers" className="text-gray-300 text-sm">Seitenzahlen anzeigen</Label>
           <Switch
             id="page-numbers"
             checked={settings.includePageNumbers}
-            onCheckedChange={(checked) =>
-              onSettingChange("includePageNumbers", checked)
-            }
+            onCheckedChange={(value) => onSettingChange("includePageNumbers", value)}
+            className="data-[state=checked]:bg-blue-600"
           />
-          <Label htmlFor="page-numbers" className="text-sm cursor-pointer">
-            Seitenzahlen anzeigen
-          </Label>
         </div>
-
-        <div className="flex items-center space-x-2">
+        
+        <div className="flex items-center justify-between">
+          <Label htmlFor="footer" className="text-gray-300 text-sm">Fußzeile anzeigen</Label>
           <Switch
             id="footer"
             checked={settings.includeFooter}
-            onCheckedChange={(checked) =>
-              onSettingChange("includeFooter", checked)
-            }
+            onCheckedChange={(value) => onSettingChange("includeFooter", value)}
+            className="data-[state=checked]:bg-blue-600"
           />
-          <Label htmlFor="footer" className="text-sm cursor-pointer">
-            Fußzeile anzeigen
-          </Label>
         </div>
       </div>
+
+      {/* Email specific settings */}
+      {type === "email" && (
+        <div className="space-y-3">
+          <h4 className="text-sm font-medium text-gray-300">Format</h4>
+          <RadioGroup
+            value={settings.format}
+            onValueChange={(value) => onSettingChange("format", value)}
+            className="flex flex-col space-y-2"
+          >
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="pdf" id="format-pdf" className="border-gray-600" />
+              <Label htmlFor="format-pdf" className="text-gray-300">PDF Anhang</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="link" id="format-link" className="border-gray-600" />
+              <Label htmlFor="format-link" className="text-gray-300">Link (kommt bald)</Label>
+            </div>
+          </RadioGroup>
+        </div>
+      )}
     </div>
   );
 };
-
