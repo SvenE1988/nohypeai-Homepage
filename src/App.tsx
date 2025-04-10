@@ -12,6 +12,7 @@ import JobDetails from "./pages/JobDetails";
 import NotFound from "./pages/NotFound";
 import CookieConsent from "./components/CookieConsent";
 import { DialogProvider } from "./components/providers/DialogProvider";
+import Proposals from "./pages/Proposals";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ const App = () => (
             <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/karriere" element={<Karriere />} />
             <Route path="/karriere/:id" element={<JobDetails />} />
+            <Route path="/proposals" element={<Proposals />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
