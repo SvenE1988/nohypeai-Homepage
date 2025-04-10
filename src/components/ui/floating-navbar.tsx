@@ -9,8 +9,6 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
-import { useTheme } from "@/components/providers/ThemeProvider";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavItem {
   name: string;
@@ -30,11 +28,7 @@ export const FloatingNav = memo(({
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
   const location = useLocation();
-  const { theme } = useTheme();
-  
-  const logoSrc = theme === "light" 
-    ? "/lovable-uploads/b4a3ba59-8ec3-4409-8f86-f9e3df143d78.png" 
-    : "/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png";
+  const logoSrc = "/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png";
 
   // The animation variants
   const navVariants = {
@@ -106,7 +100,7 @@ export const FloatingNav = memo(({
           animate="visible"
           exit="hidden"
           className={cn(
-            "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full bg-white/90 dark:bg-black/90 backdrop-blur-sm shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_8px_40px_-12px_rgba(0,0,0,0.2)] z-[5000] pr-2 pl-2 py-2 items-center justify-center space-x-4",
+            "flex max-w-fit fixed top-10 inset-x-0 mx-auto border border-transparent dark:border-white/[0.2] rounded-full bg-black/90 backdrop-blur-sm shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_8px_40px_-12px_rgba(0,0,0,0.2)] z-[5000] pr-2 pl-2 py-2 items-center justify-center space-x-4",
             className
           )}
           role="navigation"
@@ -131,8 +125,8 @@ export const FloatingNav = memo(({
               to={navItem.link}
               onClick={(e) => handleLinkClick(e, navItem.link)}
               className={cn(
-                "relative text-neutral-600 dark:text-neutral-200 items-center flex space-x-1 hover:text-neutral-500 dark:hover:text-white transition-colors",
-                isActiveLink(navItem.link) && "text-primary dark:text-primary font-medium"
+                "relative text-neutral-200 items-center flex space-x-1 hover:text-white transition-colors",
+                isActiveLink(navItem.link) && "text-primary font-medium"
               )}
               aria-current={isActiveLink(navItem.link) ? "page" : undefined}
             >
@@ -148,15 +142,12 @@ export const FloatingNav = memo(({
             </Link>
           ))}
           <button 
-            className="border text-sm font-medium relative border-neutral-200 dark:border-white/10 text-black dark:text-white px-4 py-2 rounded-full hover:bg-neutral-50 dark:hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-black"
+            className="border text-sm font-medium relative border-white/10 text-white px-4 py-2 rounded-full hover:bg-white/5 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-black"
             onClick={() => window.location.href = '/login'}
           >
             <span>Login</span>
             <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
           </button>
-          
-          {/* Theme toggle */}
-          <ThemeToggle />
         </motion.div>
       )}
     </AnimatePresence>

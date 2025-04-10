@@ -37,36 +37,6 @@
     
     --radius: 0.5rem;
   }
-
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
-    
-    --primary: 328 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 271 81% 56%;
-    --secondary-foreground: 0 0% 100%;
-    
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
-    
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
-    
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 5.9% 10%;
-  }
 }
 
 @layer base {
@@ -143,32 +113,4 @@
   body {
     -webkit-overflow-scrolling: touch;
   }
-}
-
-/* Add styles for light/dark theme transitions */
-.theme-transition {
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-}
-
-/* Fix for theme toggle in mobile menu */
-@media (max-width: 768px) {
-  .theme-toggle-mobile {
-    position: fixed;
-    top: 1rem;
-    right: 1rem;
-    z-index: 50;
-  }
-}
-
-/* Styles for proper text contrast in light theme */
-.light .text-white {
-  @apply text-black;
-}
-
-.light .bg-black\/70 {
-  @apply bg-white/70;
-}
-
-.light .border-white\/30 {
-  @apply border-black/30;
 }

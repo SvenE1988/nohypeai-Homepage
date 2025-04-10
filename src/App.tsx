@@ -1,5 +1,5 @@
 
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -11,7 +11,6 @@ import { LoadingScreen } from "./components/ui/loading-spinner";
 // Providers
 import { DialogProvider } from "./components/providers/DialogProvider";
 import { AuthProvider } from "./contexts/AuthContext";
-import { ThemeProvider } from "./components/providers/ThemeProvider";
 
 // Components that are always needed
 import CookieConsent from "./components/CookieConsent";
@@ -49,42 +48,40 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <DialogProvider>
-        <ThemeProvider defaultTheme="dark">
-          <ErrorBoundary>
-            <div className="glow-overlay" />
-            <Toaster />
-            <Sonner />
-            <CookieConsent />
-            <CustomChat />
-            
-            <BrowserRouter>
-              <AuthProvider>
-                <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
-                  <Routes>
-                    <Route path="/" element={<Index />} />
-                    <Route path="/blog" element={<Blog />} />
-                    <Route path="/blog/:slug" element={<BlogPost />} />
-                    <Route path="/karriere" element={<Karriere />} />
-                    <Route path="/karriere/:id" element={<JobDetails />} />
-                    <Route path="/pricing" element={<Pricing />} />
-                    <Route path="/live-tests" element={<LiveTests />} />
-                    <Route path="/auth" element={<Auth />} />
-                    <Route 
-                      path="/proposals" 
-                      element={
-                        <ProtectedRoute>
-                          <ProposalGenerator />
-                        </ProtectedRoute>
-                      } 
-                    />
-                    <Route path="/404" element={<NotFound />} />
-                    <Route path="*" element={<Navigate to="/404" replace />} />
-                  </Routes>
-                </Suspense>
-              </AuthProvider>
-            </BrowserRouter>
-          </ErrorBoundary>
-        </ThemeProvider>
+        <ErrorBoundary>
+          <div className="glow-overlay" />
+          <Toaster />
+          <Sonner />
+          <CookieConsent />
+          <CustomChat />
+          
+          <BrowserRouter>
+            <AuthProvider>
+              <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/blog" element={<Blog />} />
+                  <Route path="/blog/:slug" element={<BlogPost />} />
+                  <Route path="/karriere" element={<Karriere />} />
+                  <Route path="/karriere/:id" element={<JobDetails />} />
+                  <Route path="/pricing" element={<Pricing />} />
+                  <Route path="/live-tests" element={<LiveTests />} />
+                  <Route path="/auth" element={<Auth />} />
+                  <Route 
+                    path="/proposals" 
+                    element={
+                      <ProtectedRoute>
+                        <ProposalGenerator />
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="/404" element={<NotFound />} />
+                  <Route path="*" element={<Navigate to="/404" replace />} />
+                </Routes>
+              </Suspense>
+            </AuthProvider>
+          </BrowserRouter>
+        </ErrorBoundary>
       </DialogProvider>
     </TooltipProvider>
   </QueryClientProvider>
