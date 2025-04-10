@@ -50,6 +50,15 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
       overflow: 'hidden'
     }}>
+      {/* Background image layer */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <img 
+          src="/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png" 
+          alt="Background" 
+          className="w-full h-full object-cover opacity-10"
+        />
+      </div>
+      
       {/* Enhanced background layers with more dynamic gradients */}
       <div className="bg-gradient-dark absolute inset-0 bg-gradient-to-b from-blue-50 to-white"></div>
       <div className="bg-gradient-glow absolute inset-0 opacity-20"></div>
@@ -57,6 +66,15 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       
       {/* Page content with better spacing */}
       <div className="a4-content relative z-10 p-10 h-full flex flex-col">
+        {/* NoHype logo fixed on every page */}
+        <div className="absolute top-6 right-6 w-28">
+          <img 
+            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+            alt="NoHype Logo" 
+            className="w-full"
+          />
+        </div>
+        
         {/* Add logo to first page only */}
         {pageIndex === 0 && !isCoverPage && (
           <img 

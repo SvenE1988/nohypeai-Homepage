@@ -7,8 +7,6 @@ import { PrintPreview } from "./preview/PrintPreview";
 import { SinglePagePreview } from "./preview/SinglePagePreview";
 import { PreviewControls } from "./preview/PreviewControls";
 import { StatusMessage } from "./preview/StatusMessage";
-import { generatePDF, printDocument } from "./utils/pdfUtils";
-import { toast } from "sonner";
 
 interface ProposalPreviewProps {
   proposal: Proposal;
@@ -41,46 +39,12 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({
     setCurrentPreviewPage(0);
   }, [proposal.id]);
 
-  const handleExport = async () => {
-    if (setIsGeneratingPDF) {
-      setIsGeneratingPDF(true);
-    }
-    
-    try {
-      if (pdfContentRef.current) {
-        await generatePDF(pdfContentRef.current, proposal.title || 'Angebot', {
-          quality: 'high',
-          includeCoverPage: useCoverPage,
-          includeTableOfContents: false,
-          includePageNumbers: true,
-          includeFooter: true,
-          format: 'a4'
-        });
-      } else {
-        toast.error("PDF-Inhalt konnte nicht gefunden werden");
-      }
-    } catch (error) {
-      console.error("Export error:", error);
-      toast.error("Fehler beim Exportieren");
-    } finally {
-      if (setIsGeneratingPDF) {
-        setIsGeneratingPDF(false);
-      }
-    }
-  };
-
-  const handlePrint = () => {
-    printDocument();
-  };
-
   return (
     <div className={`preview-wrapper ${className}`}>
       <PreviewControls
         title={proposal.title || 'Vorschau'}
         onToggleAllPages={() => setShowAllPages(!showAllPages)}
         showAllPages={showAllPages}
-        onExport={handleExport}
-        onPrint={handlePrint}
       />
 
       <div className="preview-container" id="pdf-content" ref={pdfContentRef}>

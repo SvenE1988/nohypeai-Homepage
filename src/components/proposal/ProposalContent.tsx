@@ -61,8 +61,8 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
       <div className="space-y-6">
         <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'sections' | 'pages')}>
           <TabsList className="mb-4">
-            <TabsTrigger value="pages" className="text-black">Seitenbasierter Editor</TabsTrigger>
-            <TabsTrigger value="sections" className="text-black">Kategoriebasierter Editor</TabsTrigger>
+            <TabsTrigger value="pages" className="text-gray-200">Seitenbasierter Editor</TabsTrigger>
+            <TabsTrigger value="sections" className="text-gray-200">Kategoriebasierter Editor</TabsTrigger>
           </TabsList>
         </Tabs>
         

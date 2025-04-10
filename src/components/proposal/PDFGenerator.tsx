@@ -44,6 +44,39 @@ export const PDFGenerator = () => {
     setSaveTitle(proposal.title || "");
     setShowSaveDialog(true);
   };
+
+  // Direct export without dialog
+  const handleDirectExport = async () => {
+    setIsGeneratingPDF(true);
+    
+    try {
+      const pdfContent = document.getElementById('pdf-content');
+      
+      if (!pdfContent) {
+        toast.error("PDF-Inhalt konnte nicht gefunden werden");
+        return;
+      }
+      
+      await generatePDF(pdfContent, proposal.title || 'Angebot', {
+        quality: 'high',
+        includeCoverPage: proposal.useCoverPage || true,
+        includeTableOfContents: false,
+        includePageNumbers: true,
+        includeFooter: true,
+        format: 'a4'
+      });
+    } catch (error) {
+      console.error("Export error:", error);
+      toast.error("Fehler beim Exportieren");
+    } finally {
+      setIsGeneratingPDF(false);
+    }
+  };
+  
+  // Direct print without dialog
+  const handleDirectPrint = () => {
+    printDocument();
+  };
   
   const handleExportAction = async (type: string, settings: ExportSettings) => {
     setShowExportDialog(false);
@@ -92,7 +125,8 @@ export const PDFGenerator = () => {
           setActiveTab={setActiveTab}
           onSaveClick={handleOpenSaveDialog}
           onResetClick={handleResetProposal}
-          onExportClick={() => setShowExportDialog(true)}
+          onExportClick={handleDirectExport}
+          onPrintClick={handleDirectPrint}
           isGeneratingPDF={isGeneratingPDF}
         />
         
