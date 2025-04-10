@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
-// Typen für die Website-Inhalte
+// Types for website content
 export interface TestimonialData {
   name: string;
   role: string;
@@ -49,9 +49,9 @@ export const useWebsiteContent = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Fallback-Inhalte aus der Komponente extrahieren
+  // Fallback content from the component
   const fetchFallbackContent = () => {
-    // Testimonials aus Testimonials.tsx extrahieren
+    // Testimonials from Testimonials.tsx
     const testimonials = [
       {
         name: "Daniel Müller",
@@ -69,7 +69,7 @@ export const useWebsiteContent = () => {
       },
     ];
 
-    // TechStack-Daten
+    // TechStack data
     const techStack = {
       categories: [
         { name: 'KI-Agenten', icon: 'Bot' },
@@ -80,7 +80,7 @@ export const useWebsiteContent = () => {
       description: "Wir helfen dir, dich im KI-Dschungel zurechtzufinden. Mit tausenden von KI-Softwares und Tools unterstützen wir dich dabei, den richtigen Tech Stack für deine Bedürfnisse und dein Unternehmen zu finden."
     };
 
-    // SavingsCalculator-Daten
+    // SavingsCalculator data
     const savingsCalculator = {
       defaultHours: 20,
       defaultRate: 50
@@ -94,20 +94,22 @@ export const useWebsiteContent = () => {
     };
   };
 
-  // Funktion zum Laden der Inhalte aus Supabase
+  // Load content from Supabase
   const loadContent = async () => {
     setIsLoading(true);
     setError(null);
     
     try {
-      // Versuche, Daten aus der Supabase-Tabelle 'website_content' zu laden
+      // Try to load data from the website_content table
       const { data, error } = await supabase
         .from('website_content')
         .select('*')
+        .order('id', { ascending: false })
+        .limit(1)
         .single();
       
       if (error) {
-        console.warn("Konnte keine Inhalte aus der Datenbank laden, verwende Fallback-Inhalte:", error);
+        console.warn("Could not load content from database, using fallback content:", error);
         const fallbackContent = fetchFallbackContent();
         setContent(fallbackContent);
         return;
@@ -131,8 +133,8 @@ export const useWebsiteContent = () => {
         setContent(fallbackContent);
       }
     } catch (err) {
-      console.error("Fehler beim Laden der Website-Inhalte:", err);
-      setError("Fehler beim Laden der Inhalte");
+      console.error("Error loading website content:", err);
+      setError("Error loading content");
       const fallbackContent = fetchFallbackContent();
       setContent(fallbackContent);
     } finally {
@@ -140,21 +142,32 @@ export const useWebsiteContent = () => {
     }
   };
 
-  // Inhalte aktualisieren
+  // Update content
   const updateContent = async (newContent: Partial<WebsiteContent>) => {
     setIsLoading(true);
     
     try {
-      // Bereite Daten für Supabase vor
+      // Prepare data for Supabase
       const updateData = {
         testimonials: newContent.testimonials || content.testimonials,
         tech_stack: newContent.techStack || content.techStack,
         savings_calculator: newContent.savingsCalculator || content.savingsCalculator,
+        updated_at: new Date()
       };
+      
+      // Get the current record ID or default to 1
+      const { data: existingData } = await supabase
+        .from('website_content')
+        .select('id')
+        .order('id', { ascending: false })
+        .limit(1)
+        .single();
+      
+      const id = existingData?.id || 1;
       
       const { error } = await supabase
         .from('website_content')
-        .upsert({ id: 1, ...updateData });
+        .upsert({ id, ...updateData });
       
       if (error) throw error;
       
@@ -163,16 +176,16 @@ export const useWebsiteContent = () => {
         ...newContent
       });
       
-      toast.success("Inhalte erfolgreich aktualisiert");
+      toast.success("Content updated successfully");
     } catch (err) {
-      console.error("Fehler beim Aktualisieren der Website-Inhalte:", err);
-      toast.error("Fehler beim Aktualisieren der Inhalte");
+      console.error("Error updating website content:", err);
+      toast.error("Error updating content");
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Lade Inhalte beim ersten Laden
+  // Load content on first load
   useEffect(() => {
     loadContent();
   }, []);

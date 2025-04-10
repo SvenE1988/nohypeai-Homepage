@@ -19,12 +19,12 @@ export const TechStackSection: React.FC<TechStackSectionProps> = ({ content }) =
     <div className="mb-6">
       <h3 className="text-2xl font-semibold text-secondary mb-4">{title}</h3>
       
-      {showDescription && (
+      {showDescription && techStack?.description && (
         <p className="text-gray-700 mb-4">{techStack.description}</p>
       )}
       
       <div className="grid grid-cols-2 gap-3">
-        {techStack.categories.map((category, index) => (
+        {techStack?.categories?.map((category, index) => (
           <div key={index} className="flex items-center p-3 border border-gray-200 rounded-lg bg-gray-50">
             <span className="text-gray-700">{category.name}</span>
           </div>
