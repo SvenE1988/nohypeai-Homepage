@@ -11,11 +11,11 @@ const EasterPromoPopup = () => {
   const scrollListenerRef = useRef<((e: Event) => void) | null>(null);
   
   useEffect(() => {
-    // Check if the popup is still valid based on date (only show until April 15)
+    // Check if the popup is still valid based on date (only show until April 30)
     const currentDate = new Date();
-    const endDate = new Date(currentDate.getFullYear(), 3, 15); // April 15th
+    const endDate = new Date(currentDate.getFullYear(), 3, 30); // April 30th
     
-    // Don't show popup if it's past April 15
+    // Don't show popup if it's past April 30
     if (currentDate > endDate) {
       return;
     }
@@ -79,7 +79,7 @@ const EasterPromoPopup = () => {
 
   // Don't render anything if we shouldn't show popup based on date
   const currentDate = new Date();
-  const endDate = new Date(currentDate.getFullYear(), 3, 15); // April 15th
+  const endDate = new Date(currentDate.getFullYear(), 3, 30); // April 30th
   if (currentDate > endDate) {
     return null;
   }
@@ -111,7 +111,7 @@ const EasterPromoPopup = () => {
                   Oster-Aktion
                 </span>
                 <span className="bg-white/10 px-3 py-1 rounded-full text-sm font-medium">
-                  Bis 15. April
+                  Bis 30. April
                 </span>
               </div>
               
@@ -126,7 +126,7 @@ const EasterPromoPopup = () => {
                 </div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-gray-300">Einrichtung:</span>
-                  <span className="text-xl font-bold text-white">1.799 €</span>
+                  <span className="text-xl font-bold text-white">ab 1.799 €</span>
                 </div>
                 <div className="h-px bg-white/10 my-4"></div>
                 <div className="text-center text-sm text-gray-300">
