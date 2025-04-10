@@ -1,3 +1,4 @@
+
 export interface ProposalSection {
   id: string;
   type: 'header' | 'text' | 'image' | 'caseStudy' | 'pricing' | 'contact';
@@ -13,6 +14,7 @@ export interface Proposal {
   createdAt: string;
   updatedAt: string;
   sections: ProposalSection[];
+  useCoverPage?: boolean;
 }
 
 export interface ProposalTemplate {

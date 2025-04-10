@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Tabs } from "@/components/ui/tabs";
 import { Proposal } from "./types";
@@ -38,6 +38,16 @@ export const ExportDialog: React.FC<ExportDialogProps> = ({
     includeFooter: true,
     format: "pdf",
   });
+
+  // Update settings when proposal changes or dialog opens
+  useEffect(() => {
+    if (open) {
+      setSettings(prev => ({
+        ...prev,
+        includeCoverPage: proposal.useCoverPage ?? true
+      }));
+    }
+  }, [proposal.useCoverPage, open]);
 
   const handleSettingChange = (key: keyof ExportSettings, value: any) => {
     setSettings((prev) => ({

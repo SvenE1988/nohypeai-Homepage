@@ -11,6 +11,7 @@ import { PrintPreview } from "./preview/PrintPreview";
 import { SinglePagePreview } from "./preview/SinglePagePreview";
 import { PreviewControls } from "./preview/PreviewControls";
 import { StatusMessage } from "./preview/StatusMessage";
+import { PageRenderer } from "./preview/PageRenderer";
 
 interface ProposalPreviewProps {
   proposal: Proposal;
@@ -22,12 +23,13 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
   const sortedSections = [...proposal.sections].sort((a, b) => a.order - b.order);
   
   // Use custom hook for pagination
-  const { pages } = usePaginatedContent(sortedSections);
+  const { pages, useCoverPage } = usePaginatedContent(sortedSections);
   
   // State for current page in preview mode
   const [currentPreviewPage, setCurrentPreviewPage] = useState(0);
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
   const [showExportDialog, setShowExportDialog] = useState(false);
+  const [showAllPages, setShowAllPages] = useState(false);
   
   // Reference to PDF content element
   const pdfContentRef = useRef<HTMLDivElement>(null);
@@ -69,27 +71,72 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal, clas
         title={proposal.title}
         isGeneratingPDF={isGeneratingPDF}
         onExportClick={() => setShowExportDialog(true)}
+        onToggleAllPages={() => setShowAllPages(!showAllPages)}
+        showAllPages={showAllPages}
       />
 
       <div className="preview-container" id="pdf-content" ref={pdfContentRef}>
         {/* Print mode - render all pages */}
-        <PrintPreview pages={pages} />
+        <PrintPreview pages={pages} useCoverPage={useCoverPage} />
         
-        {/* Preview mode - render only current page */}
-        {pages.length > 0 && currentPreviewPage < pages.length && (
-          <SinglePagePreview
-            sections={pages[currentPreviewPage].sections}
-            pageIndex={currentPreviewPage}
-          />
+        {/* Preview mode - single page or all pages */}
+        {showAllPages ? (
+          // All pages view for preview
+          <div className="all-pages-preview space-y-8 print:hidden">
+            {/* Cover page if enabled */}
+            {useCoverPage && (
+              <div className="mb-8">
+                <PageRenderer
+                  sections={[]}
+                  pageIndex={-1}
+                  scale={0.6}
+                  isCoverPage={true}
+                />
+              </div>
+            )}
+            
+            {/* Regular pages */}
+            {pages.map((page, index) => (
+              <div key={`all-page-${index}`} className="mb-8">
+                <PageRenderer
+                  sections={page.sections}
+                  pageIndex={index}
+                  scale={0.6}
+                />
+              </div>
+            ))}
+          </div>
+        ) : (
+          // Single page view for preview
+          <>
+            {/* If cover page is enabled and current preview page is 0, show cover page */}
+            {useCoverPage && currentPreviewPage === 0 ? (
+              <SinglePagePreview
+                sections={[]}
+                pageIndex={0}
+                isCoverPage={true}
+              />
+            ) : (
+              /* Regular page */
+              pages.length > 0 && (useCoverPage ? currentPreviewPage - 1 : currentPreviewPage) < pages.length && (
+                <SinglePagePreview
+                  sections={pages[useCoverPage ? currentPreviewPage - 1 : currentPreviewPage].sections}
+                  pageIndex={currentPreviewPage}
+                />
+              )
+            )}
+          </>
         )}
       </div>
       
-      {/* Pagination controls - only shown in preview mode */}
-      <PaginationControls
-        currentPage={currentPreviewPage}
-        totalPages={pages.length}
-        onPageChange={setCurrentPreviewPage}
-      />
+      {/* Pagination controls - only shown in preview mode when not showing all pages */}
+      {!showAllPages && (
+        <PaginationControls
+          currentPage={currentPreviewPage}
+          totalPages={useCoverPage ? pages.length + 1 : pages.length}
+          onPageChange={setCurrentPreviewPage}
+        />
+      )}
       
       <StatusMessage isGeneratingPDF={isGeneratingPDF} />
 

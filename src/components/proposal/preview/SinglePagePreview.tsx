@@ -6,17 +6,20 @@ import { ProposalSection } from "../types";
 interface SinglePagePreviewProps {
   sections: ProposalSection[];
   pageIndex: number;
+  isCoverPage?: boolean;
 }
 
 export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({ 
   sections, 
-  pageIndex 
+  pageIndex,
+  isCoverPage = false
 }) => {
   return (
     <div className="print:hidden">
       <PageRenderer
         sections={sections}
         pageIndex={pageIndex}
+        isCoverPage={isCoverPage}
       />
     </div>
   );

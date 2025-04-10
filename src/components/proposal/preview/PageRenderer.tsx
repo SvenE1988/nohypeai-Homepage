@@ -12,12 +12,14 @@ interface PageRendererProps {
   sections: ProposalSection[];
   pageIndex: number;
   scale?: number;
+  isCoverPage?: boolean;
 }
 
 export const PageRenderer: React.FC<PageRendererProps> = ({ 
   sections, 
   pageIndex,
-  scale = 1 
+  scale = 1,
+  isCoverPage = false
 }) => {
   const renderSection = (section: ProposalSection) => {
     switch (section.type) {
@@ -48,7 +50,7 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
       {/* Page content with better spacing */}
       <div className="a4-content">
         {/* Add logo to first page only */}
-        {pageIndex === 0 && (
+        {pageIndex === 0 && !isCoverPage && (
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="NoHype Logo" 
@@ -56,14 +58,27 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
           />
         )}
         
-        {/* Render the sections for this page with improved spacing */}
-        <div className="space-y-6">
-          {sections.map((section) => (
-            <div key={section.id} className="mb-6 proposal-section">
-              {renderSection(section)}
-            </div>
-          ))}
-        </div>
+        {/* Cover page content */}
+        {isCoverPage ? (
+          <div className="cover-page-content">
+            <img 
+              src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+              alt="NoHype Logo" 
+              className="cover-page-logo"
+            />
+            <h1 className="cover-page-title">Deckblatt</h1>
+            <div className="cover-page-overlay"></div>
+          </div>
+        ) : (
+          /* Regular page content */
+          <div className="space-y-6">
+            {sections.map((section) => (
+              <div key={section.id} className="mb-6 proposal-section">
+                {renderSection(section)}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       
       {/* Footer with company info and page number */}

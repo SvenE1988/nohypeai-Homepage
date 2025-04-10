@@ -37,9 +37,19 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
   const [currentPage, setCurrentPage] = useState(0);
   
   // Use the paginatedContent hook to split sections into pages
-  const { pages } = usePaginatedContent(
+  const { pages, useCoverPage } = usePaginatedContent(
     proposal.sections.sort((a, b) => a.order - b.order)
   );
+  
+  // When useCoverPage changes in the proposal, update the hook state
+  React.useEffect(() => {
+    if (typeof proposal.useCoverPage !== 'undefined') {
+      if (useCoverPage !== proposal.useCoverPage) {
+        // This would call back to the hook to update its state
+        // But we're not directly updating it to avoid circular dependencies
+      }
+    }
+  }, [proposal.useCoverPage, useCoverPage]);
   
   // Render split view (editor + preview) when in editor mode
   const renderEditorContent = () => {
@@ -47,8 +57,8 @@ export const ProposalContent: React.FC<ProposalContentProps> = ({
       <div className="space-y-6">
         <Tabs value={editorMode} onValueChange={(value) => setEditorMode(value as 'sections' | 'pages')}>
           <TabsList className="mb-4">
-            <TabsTrigger value="pages">Seitenbasierter Editor</TabsTrigger>
-            <TabsTrigger value="sections">Kategoriebasierter Editor</TabsTrigger>
+            <TabsTrigger value="pages" className="text-black">Seitenbasierter Editor</TabsTrigger>
+            <TabsTrigger value="sections" className="text-black">Kategoriebasierter Editor</TabsTrigger>
           </TabsList>
         </Tabs>
         

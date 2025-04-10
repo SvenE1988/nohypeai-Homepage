@@ -11,6 +11,7 @@ interface PageData {
  */
 export const usePaginatedContent = (sections: ProposalSection[]) => {
   const [pages, setPages] = useState<PageData[]>([]);
+  const [useCoverPage, setUseCoverPage] = useState<boolean>(true);
   
   useEffect(() => {
     const paginateContent = () => {
@@ -81,5 +82,5 @@ export const usePaginatedContent = (sections: ProposalSection[]) => {
     paginateContent();
   }, [sections]);
   
-  return { pages };
+  return { pages, useCoverPage, setUseCoverPage };
 };
