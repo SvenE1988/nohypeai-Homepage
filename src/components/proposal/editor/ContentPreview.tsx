@@ -36,6 +36,8 @@ export const ContentPreview: React.FC<ContentPreviewProps> = ({
           sections={sections} 
           pageIndex={pageIndex}
           scale={scale}
+          title={title}
+          clientName={clientName}
         />
       )}
     </div>

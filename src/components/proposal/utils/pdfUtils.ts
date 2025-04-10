@@ -23,6 +23,13 @@ export const generatePDF = async (
     const allPrintShowElements = clonedElement.querySelectorAll('.print\\:block');
     allPrintShowElements.forEach(el => {
       (el as HTMLElement).style.display = 'block';
+      (el as HTMLElement).style.visibility = 'visible';
+    });
+    
+    // Apply print specific styles to ensure backgrounds are included
+    const allBackgroundElements = clonedElement.querySelectorAll('.bg-gradient-dark, .bg-gradient-glow, .bg-accent-glow');
+    allBackgroundElements.forEach(el => {
+      (el as HTMLElement).classList.add('print-bg-preserve');
     });
     
     // Configure html2pdf options
@@ -38,15 +45,26 @@ export const generatePDF = async (
         scale: settings?.quality === 'high' ? 2 : 
               settings?.quality === 'standard' ? 1.5 : 1, 
         useCORS: true,
-        letterRendering: true
+        letterRendering: true,
+        backgroundColor: null,
+        logging: true,
+        allowTaint: true,
+        removeContainer: true,
       },
       jsPDF: { 
         unit: 'mm', 
         format: 'a4', 
         orientation: 'portrait',
-        compress: true
+        compress: true,
+        hotfixes: ["px_scaling"]
       },
-      pagebreak: { mode: 'css', avoid: '.avoid-break', before: '.page-break-before', after: '.page-break-after' }
+      pagebreak: { 
+        mode: ['avoid-all', 'css', 'legacy'],
+        avoid: '.avoid-break', 
+        before: '.page-break-before', 
+        after: '.page-break-after',
+        afterPage: '.pdf-page'
+      }
     };
     
     // Generate PDF
@@ -72,7 +90,7 @@ export const printDocument = (): void => {
           visibility: hidden;
         }
         .print\\:block, .print\\:block * {
-          visibility: visible;
+          visibility: visible !important;
         }
         .print\\:block {
           position: absolute;
@@ -82,6 +100,18 @@ export const printDocument = (): void => {
         }
         .page-break-after {
           page-break-after: always;
+          break-after: page;
+        }
+        .print\\:hidden {
+          display: none !important;
+        }
+        /* Ensure backgrounds print */
+        .bg-gradient-dark,
+        .bg-gradient-glow,
+        .bg-accent-glow {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          color-adjust: exact !important;
         }
       }
     `;

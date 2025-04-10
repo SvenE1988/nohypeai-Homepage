@@ -20,7 +20,7 @@ export const SinglePagePreview: React.FC<SinglePagePreviewProps> = ({
 }) => {
   return (
     <div className="print:hidden flex justify-center">
-      <div className="transform scale-65 origin-top my-4 shadow-lg rounded-sm hover:shadow-xl transition-shadow">
+      <div className="transform scale-65 origin-top my-4 shadow-lg rounded-sm hover:shadow-xl transition-shadow print-bg-preserve">
         <PageRenderer
           sections={sections}
           pageIndex={pageIndex}

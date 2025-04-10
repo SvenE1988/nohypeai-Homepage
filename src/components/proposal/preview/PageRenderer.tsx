@@ -45,23 +45,25 @@ export const PageRenderer: React.FC<PageRendererProps> = ({
   };
 
   return (
-    <div className="a4-page relative" style={{ 
-      transform: `scale(${scale})`,
+    <div className="a4-page pdf-page print-bg-preserve" style={{ 
+      transform: scale !== 1 ? `scale(${scale})` : undefined,
       width: '210mm',
       height: '297mm',
       margin: '0 auto',
       boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      pageBreakAfter: 'always',
+      breakAfter: 'page'
     }}>
       {/* Main dark background like on the homepage */}
-      <div className="absolute inset-0 bg-gradient-dark" style={{ zIndex: 0 }}></div>
+      <div className="absolute inset-0 bg-gradient-dark print-bg-preserve" style={{ zIndex: 0 }}></div>
       
       {/* Gradient glow overlays */}
-      <div className="absolute inset-0 bg-gradient-glow" style={{ zIndex: 1, opacity: 0.6 }}></div>
-      <div className="absolute inset-0 bg-accent-glow" style={{ zIndex: 2, opacity: 0.4 }}></div>
+      <div className="absolute inset-0 bg-gradient-glow print-bg-preserve" style={{ zIndex: 1, opacity: 0.6 }}></div>
+      <div className="absolute inset-0 bg-accent-glow print-bg-preserve" style={{ zIndex: 2, opacity: 0.4 }}></div>
       
       {/* Page content with proper z-index to be above backgrounds */}
-      <div className="a4-content relative p-10 h-full flex flex-col text-white" style={{ zIndex: 10 }}>
+      <div className="a4-content relative p-10 h-full flex flex-col text-white print-bg-preserve" style={{ zIndex: 10 }}>
         {/* NoHype logo fixed on every page */}
         <div className="absolute top-6 right-6 w-28">
           <img 

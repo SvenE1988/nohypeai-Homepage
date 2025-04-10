@@ -20,7 +20,7 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({
     <div className="print:block hidden">
       {/* Render cover page if enabled */}
       {useCoverPage && (
-        <div className="mb-0 page-break-after">
+        <div className="mb-0 page-break-after pdf-page">
           <PageRenderer
             key="cover-page"
             sections={[]}
@@ -34,10 +34,15 @@ export const PrintPreview: React.FC<PrintPreviewProps> = ({
       
       {/* Render regular pages */}
       {pages.map((page, pageIndex) => (
-        <div key={`page-${pageIndex}`} className={pageIndex < pages.length - 1 ? "page-break-after" : ""}>
+        <div 
+          key={`page-${pageIndex}`} 
+          className={pageIndex < pages.length - 1 ? "page-break-after pdf-page" : "pdf-page"}
+        >
           <PageRenderer
             sections={page.sections}
             pageIndex={useCoverPage ? pageIndex + 1 : pageIndex}
+            title={title}
+            clientName={clientName}
           />
         </div>
       ))}
