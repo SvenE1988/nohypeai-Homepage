@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from "react";
-import { Tabs, TabsContent } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Save, FileDown } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Proposal, SavedBrochure } from "./types";
@@ -11,6 +12,11 @@ import { ProposalTemplates } from "./ProposalTemplates";
 import { SavedBrochuresView } from "./SavedBrochuresView";
 import { SaveBrochureDialog } from "./SaveBrochureDialog";
 import { ProposalTabs } from "./ProposalTabs";
+import { 
+  ResizablePanelGroup, 
+  ResizablePanel, 
+  ResizableHandle 
+} from "@/components/ui/resizable";
 import "./ProposalStyles.css";
 
 export const PDFGenerator = () => {
@@ -134,36 +140,64 @@ export const PDFGenerator = () => {
     toast.success("Broschüre zurückgesetzt");
   };
   
-  return (
-    <div className="bg-black/30 border border-white/10 rounded-lg p-6">
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <ProposalTabs 
-          activeTab={activeTab}
-          onSaveClick={handleOpenSaveDialog}
-          onResetClick={handleResetProposal}
-          onPrintPDF={handlePrintPDF}
-        />
+  // Render split view (editor + preview) when in editor mode
+  const renderEditorContent = () => {
+    return (
+      <ResizablePanelGroup direction="horizontal" className="min-h-[600px] rounded-lg border">
+        <ResizablePanel defaultSize={50} minSize={30}>
+          <div className="p-4 h-full overflow-auto">
+            <ProposalEditor proposal={proposal} onChange={handleProposalChange} />
+          </div>
+        </ResizablePanel>
         
-        <TabsContent value="templates" className="mt-0">
-          <ProposalTemplates onSelect={handleTemplateSelect} />
-        </TabsContent>
+        <ResizableHandle withHandle />
         
-        <TabsContent value="saved" className="mt-0">
+        <ResizablePanel defaultSize={50} minSize={30}>
+          <div className="p-4 h-full overflow-auto bg-black/10">
+            <ProposalPreview proposal={proposal} />
+          </div>
+        </ResizablePanel>
+      </ResizablePanelGroup>
+    );
+  };
+  
+  // Render content based on active tab
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "templates":
+        return <ProposalTemplates onSelect={handleTemplateSelect} />;
+      case "saved":
+        return (
           <SavedBrochuresView 
             savedBrochures={savedBrochures}
             isLoading={isLoading}
             onLoadBrochure={handleLoadBrochure}
           />
-        </TabsContent>
+        );
+      case "editor":
+        return renderEditorContent();
+      case "preview":
+        return <ProposalPreview proposal={proposal} />;
+      default:
+        return null;
+    }
+  };
+  
+  return (
+    <div className="bg-black/30 border border-white/10 rounded-lg p-6">
+      <div className="w-full">
+        <ProposalTabs 
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onSaveClick={handleOpenSaveDialog}
+          onResetClick={handleResetProposal}
+          onPrintPDF={handlePrintPDF}
+        />
         
-        <TabsContent value="editor" className="mt-0">
-          <ProposalEditor proposal={proposal} onChange={handleProposalChange} />
-        </TabsContent>
-        
-        <TabsContent value="preview" className="mt-0">
-          <ProposalPreview proposal={proposal} />
-        </TabsContent>
-      </Tabs>
+        <div className="mt-6">
+          {renderTabContent()}
+        </div>
+      </div>
       
       <SaveBrochureDialog 
         open={showSaveDialog}

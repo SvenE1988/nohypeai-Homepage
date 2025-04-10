@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
@@ -25,8 +24,36 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
   // Don't show pagination if there's only one page
   if (totalPages <= 1) return null;
 
+  // Calculate which page numbers to show (show max 5 page numbers)
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPageButtons = 5;
+    
+    if (totalPages <= maxPageButtons) {
+      // If we have fewer pages than the max, show all of them
+      for (let i = 0; i < totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      // Otherwise, show a subset focused around the current page
+      let startPage = Math.max(0, currentPage - Math.floor(maxPageButtons / 2));
+      const endPage = Math.min(totalPages - 1, startPage + maxPageButtons - 1);
+      
+      // Adjust start page if we're near the end
+      if (endPage - startPage + 1 < maxPageButtons) {
+        startPage = Math.max(0, endPage - maxPageButtons + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+    }
+    
+    return pageNumbers;
+  };
+
   return (
-    <div className="flex justify-center my-6 print:hidden">
+    <div className="flex justify-center my-4 print:hidden">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
@@ -36,7 +63,7 @@ export const PaginationControls: React.FC<PaginationControlsProps> = ({
             />
           </PaginationItem>
           
-          {Array.from({ length: totalPages }).map((_, index) => (
+          {getPageNumbers().map((index) => (
             <PaginationItem key={index}>
               <PaginationLink 
                 isActive={currentPage === index} 

@@ -62,6 +62,45 @@
   padding-bottom: 40px;
 }
 
+/* Split view styles */
+.split-view-container {
+  display: flex;
+  min-height: 600px;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.split-view-panel {
+  overflow: auto;
+  padding: 1rem;
+}
+
+.split-view-handle {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.split-view-handle::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  height: 30px;
+  width: 4px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  transform: translateY(-50%);
+}
+
+/* Scale preview in split view */
+.preview-scale-container {
+  transform-origin: top center;
+  transform: scale(0.8);
+  padding: 1rem;
+}
+
 /* Print styles */
 @media print {
   /* Reset all margins and padding */
@@ -164,4 +203,17 @@
   height: 40px;
   margin-bottom: 40px;
   object-fit: contain;
+}
+
+/* Scale control for preview in split view */
+.scale-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 50;
+  display: flex;
+  gap: 4px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 4px;
+  border-radius: 4px;
 }

@@ -20,7 +20,7 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
   const [currentPreviewPage, setCurrentPreviewPage] = useState(0);
 
   return (
-    <div>
+    <div className="preview-wrapper">
       <div className="preview-container" id="pdf-content">
         {/* In print mode, we render all pages */}
         <div className="print:block">
