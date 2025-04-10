@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserProfile } from "@/components/auth/UserProfile";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export const SocialLinks = () => {
   const { openContactForm } = useCallToAction();
@@ -28,6 +29,8 @@ export const SocialLinks = () => {
       >
         <Mail className="w-5 h-5" />
       </a>
+      
+      <ThemeToggle variant="icon" className="mr-1" />
       
       {user ? (
         <UserProfile />

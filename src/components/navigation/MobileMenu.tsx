@@ -3,6 +3,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface MobileMenuProps {
   isMobileMenuOpen: boolean;
@@ -24,13 +26,18 @@ export const MobileMenu = ({
   navItems,
   handleNavigation,
 }: MobileMenuProps) => {
+  const { theme } = useTheme();
+  const logoSrc = theme === "light" 
+    ? "/lovable-uploads/b4a3ba59-8ec3-4409-8f86-f9e3df143d78.png" 
+    : "/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png";
+
   return (
     <>
       {/* Mobile Menu Top Bar with Logo */}
       <div className="fixed top-4 left-4 z-50 md:hidden flex items-center">
         <Link to="/" onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}>
           <img 
-            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+            src={logoSrc}
             alt="nohype Logo" 
             className="h-8 w-auto"
             style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
@@ -49,6 +56,11 @@ export const MobileMenu = ({
           <Menu className="w-6 h-6 text-white" />
         )}
       </button>
+
+      {/* Theme toggle button */}
+      <div className="fixed top-4 right-4 z-50 md:hidden">
+        <ThemeToggle />
+      </div>
 
       {/* Mobile Menu Overlay */}
       <motion.div 
@@ -70,6 +82,7 @@ export const MobileMenu = ({
               {item.label}
             </a>
           ))}
+          <ThemeToggle variant="default" className="mt-8" />
         </div>
       </motion.div>
     </>

@@ -4,6 +4,8 @@ import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
 import { Link } from "react-router-dom";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface DesktopMenuProps {
   navItems: Array<{
@@ -33,6 +35,11 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
+  const { theme } = useTheme();
+  const logoSrc = theme === "light" 
+    ? "/lovable-uploads/b4a3ba59-8ec3-4409-8f86-f9e3df143d78.png" 
+    : "/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png";
+
   return (
     <motion.ul
       className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
@@ -46,7 +53,7 @@ export const DesktopMenu = ({
         onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}
       >
         <img 
-          src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+          src={logoSrc}
           alt="nohype Logo" 
           className="h-10 w-auto"
           style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
@@ -72,6 +79,11 @@ export const DesktopMenu = ({
         </Tab>
       ))}
       <Cursor position={position} />
+      
+      {/* Theme toggle button */}
+      <div className="ml-2 pr-2">
+        <ThemeToggle />
+      </div>
     </motion.ul>
   );
 };

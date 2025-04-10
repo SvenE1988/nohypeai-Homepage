@@ -9,6 +9,8 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
+import { useTheme } from "@/components/providers/ThemeProvider";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 interface NavItem {
   name: string;
@@ -28,6 +30,11 @@ export const FloatingNav = memo(({
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
   const location = useLocation();
+  const { theme } = useTheme();
+  
+  const logoSrc = theme === "light" 
+    ? "/lovable-uploads/b4a3ba59-8ec3-4409-8f86-f9e3df143d78.png" 
+    : "/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png";
 
   // The animation variants
   const navVariants = {
@@ -112,7 +119,7 @@ export const FloatingNav = memo(({
             className="flex items-center mr-2 pl-3"
           >
             <img 
-              src="/lovable-uploads/0e5efbcf-c84e-4eae-9ea0-48c232b75f91.png" 
+              src={logoSrc}
               alt="nohype Logo" 
               className="h-6 w-auto"
             />
@@ -147,6 +154,9 @@ export const FloatingNav = memo(({
             <span>Login</span>
             <span className="absolute inset-x-0 w-1/2 mx-auto -bottom-px bg-gradient-to-r from-transparent via-blue-500 to-transparent h-px" />
           </button>
+          
+          {/* Theme toggle */}
+          <ThemeToggle />
         </motion.div>
       )}
     </AnimatePresence>
