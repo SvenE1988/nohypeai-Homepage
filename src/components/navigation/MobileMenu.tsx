@@ -24,15 +24,13 @@ export const MobileMenu = ({
   navItems,
   handleNavigation,
 }: MobileMenuProps) => {
-  const logoSrc = "/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png";
-
   return (
     <>
       {/* Mobile Menu Top Bar with Logo */}
       <div className="fixed top-4 left-4 z-50 md:hidden flex items-center">
         <Link to="/" onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}>
           <img 
-            src={logoSrc}
+            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="nohype Logo" 
             className="h-8 w-auto"
             style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
@@ -42,7 +40,7 @@ export const MobileMenu = ({
       
       {/* Mobile Menu Button */}
       <button
-        className="fixed top-4 right-4 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
+        className="fixed top-4 right-16 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         {isMobileMenuOpen ? (

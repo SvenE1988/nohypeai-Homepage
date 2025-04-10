@@ -33,8 +33,6 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
-  const logoSrc = "/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png";
-
   return (
     <motion.ul
       className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
@@ -48,7 +46,7 @@ export const DesktopMenu = ({
         onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}
       >
         <img 
-          src={logoSrc}
+          src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
           alt="nohype Logo" 
           className="h-10 w-auto"
           style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
