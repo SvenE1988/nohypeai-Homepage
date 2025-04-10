@@ -25,7 +25,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "templates" ? "default" : "outline"} 
           onClick={() => setActiveTab("templates")}
-          className="text-white whitespace-nowrap"
+          className={`whitespace-nowrap text-sm ${activeTab === "templates" ? "text-white" : "text-black dark:text-white"}`}
           size="sm"
         >
           <LayoutTemplate className="mr-2 h-4 w-4" />
@@ -34,7 +34,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "saved" ? "default" : "outline"} 
           onClick={() => setActiveTab("saved")}
-          className="text-white whitespace-nowrap"
+          className={`whitespace-nowrap text-sm ${activeTab === "saved" ? "text-white" : "text-black dark:text-white"}`}
           size="sm"
         >
           <BookOpen className="mr-2 h-4 w-4" />
@@ -43,7 +43,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "editor" ? "default" : "outline"} 
           onClick={() => setActiveTab("editor")}
-          className="text-white whitespace-nowrap"
+          className={`whitespace-nowrap text-sm ${activeTab === "editor" ? "text-white" : "text-black dark:text-white"}`}
           size="sm"
         >
           <Pencil className="mr-2 h-4 w-4" />
@@ -52,7 +52,7 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
         <Button 
           variant={activeTab === "preview" ? "default" : "outline"} 
           onClick={() => setActiveTab("preview")}
-          className="text-white whitespace-nowrap"
+          className={`whitespace-nowrap text-sm ${activeTab === "preview" ? "text-white" : "text-black dark:text-white"}`}
           size="sm"
         >
           <Eye className="mr-2 h-4 w-4" />
@@ -62,16 +62,16 @@ export const ProposalTabs: React.FC<ProposalTabsProps> = ({
       
       <div className="flex gap-2">
         {(activeTab === "editor" || activeTab === "preview") && (
-          <Button variant="outline" onClick={onSaveClick} size="sm">
+          <Button variant="outline" onClick={onSaveClick} size="sm" className="text-black dark:text-white text-sm">
             <Save className="mr-2 h-4 w-4" />
             Speichern
           </Button>
         )}
-        <Button variant="outline" onClick={onResetClick} size="sm">
+        <Button variant="outline" onClick={onResetClick} size="sm" className="text-black dark:text-white text-sm">
           Zurücksetzen
         </Button>
         {(activeTab === "editor" || activeTab === "preview") && (
-          <Button onClick={onPrintPDF} size="sm">
+          <Button onClick={onPrintPDF} size="sm" className="text-sm">
             <FileDown className="mr-2 h-4 w-4" />
             PDF herunterladen
           </Button>
