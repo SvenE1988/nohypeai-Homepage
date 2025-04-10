@@ -11,13 +11,16 @@ import SavingsCalculator from "../components/SavingsCalculator";
 import NavHeader from "../components/blocks/nav-header";
 import FAQ from "../components/FAQ";
 import Footer from "../components/Footer";
+import TechStack from "../components/TechStack";
+import EasterPromoPopup from "../components/EasterPromoPopup";
+import Partners from "../components/Partners";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      <Benefits />
+      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />
@@ -32,8 +35,10 @@ const Index = () => {
       <section id="ueber-uns">
         <About />
       </section>
+      <TechStack />
       <FAQ />
       <Footer />
+      <EasterPromoPopup />
     </main>
   );
 };

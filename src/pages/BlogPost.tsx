@@ -1,3 +1,4 @@
+
 import { ArrowLeft, Calendar, Tag, Share2, Clock } from "lucide-react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import NavHeader from "../components/blocks/nav-header";
@@ -28,6 +29,31 @@ const BlogPost = () => {
     navigate("/blog");
     return null;
   }
+  
+  // Bestimme das richtige Logo basierend auf dem Blog-Slug
+  const getLogoInfo = () => {
+    // Die Slugs der Artikel, für die wir Logos anzeigen wollen
+    const puraInvestSlugs = ['chatbots-purainvest-casestudy', 'beraterrechner-immobilien-purainvest'];
+    const wesaSolarSlugs = ['angebotserstellung-wesa-solar', 'voice-agenten-wesa-solar'];
+    
+    if (post.customSlug && puraInvestSlugs.includes(post.customSlug)) {
+      return {
+        url: "/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png",
+        ratio: "3.87/1",
+        alt: "Purainvest Logo"
+      };
+    } else if (post.customSlug && wesaSolarSlugs.includes(post.customSlug)) {
+      return {
+        url: "/lovable-uploads/837bd445-fe20-4f21-b2bb-cf283ab3b0b2.png",
+        ratio: "1.42/1",
+        alt: "Wesa Solar Logo"
+      };
+    }
+    
+    return null;
+  };
+  
+  const logoInfo = getLogoInfo();
   
   // Geschätzte Lesezeit berechnen (ca. 200 Wörter pro Minute)
   const calculateReadTime = (text: string): number => {
@@ -152,9 +178,26 @@ const BlogPost = () => {
             </div>
           </div>
           
-          <h1 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            {post.title}
-          </h1>
+          <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
+            <h1 className="text-3xl md:text-4xl font-bold text-white flex-grow">
+              {post.title}
+            </h1>
+            
+            {logoInfo && (
+              <div className="flex-shrink-0">
+                <img 
+                  src={logoInfo.url} 
+                  alt={logoInfo.alt}
+                  className="h-12 sm:h-14 w-auto"
+                  style={{
+                    aspectRatio: logoInfo.ratio,
+                    display: "block",
+                    objectFit: "contain"
+                  }}
+                />
+              </div>
+            )}
+          </div>
           
           <div className="flex flex-wrap gap-2 mb-8">
             {post.tags.map((tag, tagIndex) => (

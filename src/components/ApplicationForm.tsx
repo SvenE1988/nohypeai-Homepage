@@ -18,7 +18,8 @@ const ApplicationForm = ({
   isUploading,
   setIsUploading
 }: ApplicationFormProps) => {
-  const { webhookUrl } = useDialog();
+  // Aktualisierte Webhook-URL für das Formular
+  const webhookUrl = "https://automatisierung.seserver.nohype-ai.de/form/Anfrage";
 
   return (
     <N8NWebhookForm 

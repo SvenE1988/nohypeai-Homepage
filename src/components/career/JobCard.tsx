@@ -5,12 +5,15 @@ import { Briefcase, Calendar, MapPin } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { JobPosting } from "@/data/jobData";
 import { Button } from "@/components/ui/neon-button";
+import { useCallToAction } from "@/hooks/useCallToAction";
 
 interface JobCardProps {
   job: JobPosting;
 }
 
 const JobCard = ({ job }: JobCardProps) => {
+  const { openApplicationForm } = useCallToAction();
+  
   return (
     <article className="bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border border-white/10 rounded-xl p-6 hover:border-primary/30 transition-all duration-300 flex flex-col h-full">
       <div className="flex justify-between items-center mb-4">
@@ -60,19 +63,14 @@ const JobCard = ({ job }: JobCardProps) => {
           <span className="ml-1 transform group-hover:translate-x-1 transition-transform">→</span>
         </Link>
         
-        <a 
-          href="https://automatisierung.seserver.nohype-ai.de/form/Anfrage"
-          target="_blank" 
-          rel="noopener noreferrer"
+        <Button 
+          onClick={openApplicationForm}
+          variant="ghost" 
+          size="sm"
+          className="text-white"
         >
-          <Button 
-            variant="ghost" 
-            size="sm"
-            className="text-white"
-          >
-            Bewerben
-          </Button>
-        </a>
+          Bewerben
+        </Button>
       </div>
     </article>
   );

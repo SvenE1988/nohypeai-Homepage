@@ -26,19 +26,36 @@ const ProjectCard = ({
       )}
     >
       <div className="p-5 h-full flex flex-col">
-        <div className="flex items-center gap-3 mb-4">
-          <div 
-            className={cn(
-              "flex-shrink-0 rounded-md flex items-center justify-center text-primary border transition-all duration-300",
-              isActive 
-                ? "bg-[#1A1F35]/80 border-primary" 
-                : "bg-[#1A1F35] border-primary/40 group-hover:border-primary",
-              "px-3 py-1.5 text-sm"
-            )}
-          >
-            {project.year}
+        <div className="flex items-center justify-between gap-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div 
+              className={cn(
+                "flex-shrink-0 rounded-md flex items-center justify-center text-primary border transition-all duration-300",
+                isActive 
+                  ? "bg-[#1A1F35]/80 border-primary" 
+                  : "bg-[#1A1F35] border-primary/40 group-hover:border-primary",
+                "px-3 py-1.5 text-sm"
+              )}
+            >
+              {project.year}
+            </div>
+            <div className="text-sm text-gray-400">{project.industry}</div>
           </div>
-          <div className="text-sm text-gray-400">{project.industry}</div>
+          
+          {project.logoUrl && (
+            <div className="flex-shrink-0">
+              <img 
+                src={project.logoUrl} 
+                alt={`${project.company} Logo`}
+                className="h-8 w-auto"
+                style={{
+                  aspectRatio: project.logoAspectRatio,
+                  display: "block",
+                  objectFit: "contain"
+                }}
+              />
+            </div>
+          )}
         </div>
         <h3 className="text-xl font-semibold text-primary mb-3 line-clamp-2">
           {project.title}

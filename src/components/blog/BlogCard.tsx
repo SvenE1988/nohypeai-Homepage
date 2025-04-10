@@ -16,6 +16,31 @@ const BlogCard = ({ post }: BlogCardProps) => {
   const slug = post.customSlug || createSlug(post.title);
   const { toast } = useToast();
   
+  // Bestimme das richtige Logo basierend auf dem Blog-Slug
+  const getLogoInfo = () => {
+    // Die Slugs der Artikel, für die wir Logos anzeigen wollen
+    const puraInvestSlugs = ['chatbots-purainvest-casestudy', 'beraterrechner-immobilien-purainvest'];
+    const wesaSolarSlugs = ['angebotserstellung-wesa-solar', 'voice-agenten-wesa-solar'];
+    
+    if (post.customSlug && puraInvestSlugs.includes(post.customSlug)) {
+      return {
+        url: "/lovable-uploads/46659a8b-1e06-40c5-8e50-3b1b7a5b6a03.png",
+        ratio: "3.87/1",
+        alt: "Purainvest Logo"
+      };
+    } else if (post.customSlug && wesaSolarSlugs.includes(post.customSlug)) {
+      return {
+        url: "/lovable-uploads/837bd445-fe20-4f21-b2bb-cf283ab3b0b2.png",
+        ratio: "1.42/1",
+        alt: "Wesa Solar Logo"
+      };
+    }
+    
+    return null;
+  };
+  
+  const logoInfo = getLogoInfo();
+  
   // Geschätzte Lesezeit berechnen (ca. 200 Wörter pro Minute)
   const calculateReadTime = (text: string): number => {
     const wordsPerMinute = 200;
@@ -61,9 +86,26 @@ const BlogCard = ({ post }: BlogCardProps) => {
         </div>
       </div>
       
-      <h3 className="text-xl font-semibold text-white mb-3 line-clamp-2">
-        {post.title}
-      </h3>
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+        <h3 className="text-xl font-semibold text-white line-clamp-2 flex-grow">
+          {post.title}
+        </h3>
+        
+        {logoInfo && (
+          <div className="flex-shrink-0">
+            <img 
+              src={logoInfo.url} 
+              alt={logoInfo.alt}
+              className="h-8 w-auto"
+              style={{
+                aspectRatio: logoInfo.ratio,
+                display: "block",
+                objectFit: "contain"
+              }}
+            />
+          </div>
+        )}
+      </div>
       
       {/* Kürzere Vorschau mit "Hier erfährst du..." */}
       <p className="text-white/70 text-sm mb-2">
