@@ -34,17 +34,34 @@ export const ProposalPreview: React.FC<ProposalPreviewProps> = ({ proposal }) =>
 
   return (
     <div>
-      <div className="bg-white text-black border border-gray-300 rounded overflow-hidden print:shadow-none print:border-none">
-        <div className="px-8 py-10 m-6 shadow-xl min-h-[842px] w-[595px] mx-auto" id="pdf-content">
-          {/* Proposal Content */}
-          <div className="space-y-6">
-            {proposal.sections
-              .sort((a, b) => a.order - b.order)
-              .map((section) => (
-                <div key={section.id} className="mb-6">
-                  {renderSection(section)}
-                </div>
-              ))}
+      <div className="border border-gray-300 rounded overflow-hidden print:shadow-none print:border-none">
+        <div className="min-h-[842px] w-[595px] mx-auto relative" id="pdf-content">
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-dark">
+            <div className="absolute inset-0 bg-gradient-glow opacity-70"></div>
+            <div className="absolute inset-0 bg-accent-glow opacity-70"></div>
+          </div>
+          
+          {/* Content with padding */}
+          <div className="relative z-10 px-8 py-10 m-6">
+            {/* Proposal Content */}
+            <div className="space-y-6">
+              {proposal.sections
+                .sort((a, b) => a.order - b.order)
+                .map((section) => (
+                  <div key={section.id} className="mb-6 proposal-section">
+                    {renderSection(section)}
+                  </div>
+                ))}
+            </div>
+            
+            {/* Footer with company info */}
+            <div className="mt-12 pt-4 border-t border-white/20">
+              <div className="flex justify-between items-center text-xs text-white/70">
+                <div>NoHype GmbH • Weidenallee 13 • 20357 Hamburg</div>
+                <div>Tel: +49 40 2093 3340 • info@nohype.io</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

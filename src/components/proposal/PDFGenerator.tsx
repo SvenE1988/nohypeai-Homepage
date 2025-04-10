@@ -8,6 +8,7 @@ import { ProposalTemplates } from "./ProposalTemplates";
 import { Proposal, ProposalTemplate } from "./types";
 import { defaultProposal } from "./defaultData";
 import { toast } from "sonner";
+import "./ProposalStyles.css";
 
 export const PDFGenerator = () => {
   const [proposal, setProposal] = useState<Proposal>(defaultProposal);
@@ -31,9 +32,9 @@ export const PDFGenerator = () => {
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="flex items-center justify-between mb-6">
           <TabsList className="bg-black/50">
-            <TabsTrigger value="templates">Templates</TabsTrigger>
-            <TabsTrigger value="editor">Editor</TabsTrigger>
-            <TabsTrigger value="preview">Preview</TabsTrigger>
+            <TabsTrigger value="templates" className="text-white">Templates</TabsTrigger>
+            <TabsTrigger value="editor" className="text-white">Editor</TabsTrigger>
+            <TabsTrigger value="preview" className="text-white">Preview</TabsTrigger>
           </TabsList>
           
           <div className="flex gap-2">
