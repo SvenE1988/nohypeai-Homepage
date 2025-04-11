@@ -1,3 +1,4 @@
+
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
@@ -18,6 +19,12 @@ function NavHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const [previousPath, setPreviousPath] = useState("");
+
+  useEffect(() => {
+    // Store previous path when location changes
+    setPreviousPath(location.pathname);
+  }, [location]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -44,6 +51,14 @@ function NavHeader() {
   const scrollToTop = () => {
     if (location.pathname !== '/') {
       navigate('/');
+      
+      // Force layout recalculation when coming from proposals page
+      if (previousPath === '/proposals') {
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          window.dispatchEvent(new Event('resize'));
+        }, 100);
+      }
     } else {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -51,6 +66,8 @@ function NavHeader() {
 
   const handleNavigation = (item: any, e: React.MouseEvent) => {
     e.preventDefault();
+    
+    const comingFromProposals = location.pathname === '/proposals';
     
     if (item.href === "/blog" || item.href === "/karriere" || item.href === "/pricing") {
       navigate(item.href);
@@ -73,6 +90,13 @@ function NavHeader() {
       }
     } else if (item.href === '/') {
       scrollToTop();
+      
+      // Special handling when coming from proposals page
+      if (comingFromProposals) {
+        setTimeout(() => {
+          window.location.reload();
+        }, 50);
+      }
     } else {
       navigate(item.href);
     }

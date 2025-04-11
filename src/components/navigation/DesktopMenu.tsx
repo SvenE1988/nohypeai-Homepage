@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
@@ -33,6 +33,18 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
+  // Reset scroll position when navigating to home from proposals page
+  useEffect(() => {
+    if (location.pathname === '/' && document.referrer.includes('/proposals')) {
+      window.scrollTo(0, 0);
+      
+      // Force layout recalculation
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+      }, 100);
+    }
+  }, [location.pathname]);
+
   return (
     <motion.ul
       className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
