@@ -29,7 +29,7 @@ const FilterControls = ({
             <TabsTrigger 
               key={category.value} 
               value={category.value}
-              className="flex-1 data-[state=active]:bg-primary/20 data-[state=active]:text-white"
+              className="flex-1 data-[state=active]:bg-primary/20 data-[state=active]:text-white text-gray-400 hover:text-gray-200"
             >
               {category.label}
             </TabsTrigger>
@@ -41,7 +41,7 @@ const FilterControls = ({
         <Input
           type="search"
           placeholder="Suche nach Branchen oder Problemen..."
-          className="w-full bg-black/40 border-gray-800 text-white placeholder:text-gray-400"
+          className="w-full bg-black/40 border-gray-800 text-white placeholder:text-gray-400 focus:border-primary/50"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />

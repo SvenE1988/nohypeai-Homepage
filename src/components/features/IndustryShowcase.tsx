@@ -14,11 +14,11 @@ export default function IndustryShowcase() {
   } = useIndustriesFilter(industries);
 
   return (
-    <section className="py-16 relative">
+    <section className="py-20 relative bg-[#1a1f35]">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
       
       <div className="container mx-auto px-4 relative">
-        <h2 className="text-4xl font-bold text-center mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4">
           <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
             Branchen-Beispiele
           </span>
@@ -35,7 +35,7 @@ export default function IndustryShowcase() {
           setSearchQuery={setSearchQuery}
         />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredIndustries.map((industry, index) => (
             <IndustryCard key={index} {...industry} />
           ))}
