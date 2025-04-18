@@ -11,7 +11,7 @@ export const usePageEditorLogic = (
   pages: Array<{ sections: ProposalSection[] }>
 ) => {
   const { useCoverPage = true } = proposal;
-  const { handleSectionChange, addSection: createSection, removeSection: deleteSection } = useSectionOperations();
+  const { handleSectionChange: processSectionChange, addSection: createSection, removeSection: deleteSection } = useSectionOperations();
   const { duplicatePage: duplicatePageOp, deletePage: deletePageOp, addNewPage: addNewPageOp } = usePageOperations();
   
   // Account for cover page in current page index
@@ -25,7 +25,7 @@ export const usePageEditorLogic = (
     let foundPage = false;
     
     updatedPages = updatedPages.map(page => {
-      const updatedSections = handleSectionChange(page.sections, updatedSection);
+      const updatedSections = processSectionChange(page.sections, updatedSection);
       
       if (updatedSections.some(s => s.id === updatedSection.id)) {
         foundPage = true;

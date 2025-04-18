@@ -36,7 +36,7 @@ export const useSectionOperations = () => {
   const handleSectionChange = (
     sections: ProposalSection[],
     updatedSection: ProposalSection
-  ) => {
+  ): ProposalSection[] => {
     return sections.map(section => 
       section.id === updatedSection.id ? updatedSection : section
     );
