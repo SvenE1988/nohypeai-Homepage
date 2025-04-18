@@ -23,10 +23,10 @@ export function useHeaderNavigation() {
   const location = useLocation();
   const { activeSection, navigateTo, resetScrollPosition } = useNavigation();
 
-  // Updated navigation items with Features
+  // Updated navigation items with Live Tests
   const navItems = [
     { href: "/", label: "Start" },
-    { href: "/features", label: "Features" },
+    { href: "/live-tests", label: "Live Tests" },
     { href: "#nutzen", label: "Nutzen" },
     { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
