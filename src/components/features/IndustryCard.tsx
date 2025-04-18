@@ -76,4 +76,3 @@ const IndustryCard = ({ icon: Icon, title, problem, pain, solutions }: IndustryC
 };
 
 export default IndustryCard;
-

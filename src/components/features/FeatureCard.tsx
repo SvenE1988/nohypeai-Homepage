@@ -71,4 +71,3 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
 };
 
 export default FeatureCard;
-

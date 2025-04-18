@@ -18,4 +18,3 @@ export const tokens = {
     label: "text-primary/80 mb-1"
   }
 } as const;
-
