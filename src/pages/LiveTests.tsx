@@ -8,7 +8,7 @@ const LiveTests = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 pt-24 pb-16">
         <h1 className="text-3xl font-bold text-white text-center mb-8">Live Tests</h1>
         <div className="max-w-4xl mx-auto">
           <VoiceBot />
