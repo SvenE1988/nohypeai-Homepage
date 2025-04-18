@@ -2,6 +2,7 @@
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { categories } from '@/data/industriesData';
+import { tokens } from "@/lib/design-tokens";
 
 interface FilterControlsProps {
   activeCategory: string;
@@ -51,3 +52,4 @@ const FilterControls = ({
 };
 
 export default FilterControls;
+

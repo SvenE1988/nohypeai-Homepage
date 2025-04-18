@@ -5,6 +5,7 @@ import { ChevronDown } from "lucide-react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { tokens } from "@/lib/design-tokens";
 
 interface FeatureCardProps {
   title: string;
@@ -22,10 +23,10 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
-      <Card className="relative w-full h-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/10 hover:to-secondary/10 border border-gray-800 hover:border-primary/50 transition-all duration-300">
-        <CardHeader className="p-6">
-          <h3 className="text-2xl font-semibold text-white mb-2">{title}</h3>
-          <p className="text-gray-300">{subtitle}</p>
+      <Card className={tokens.card.base}>
+        <CardHeader className={tokens.card.header}>
+          <h3 className={tokens.text.title}>{title}</h3>
+          <p className={tokens.text.subtitle}>{subtitle}</p>
           
           <Button
             variant="ghost"
@@ -47,7 +48,7 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
         )}>
           <div className="space-y-4">
             <div>
-              <h4 className="text-lg font-medium text-white mb-2">Vorteile</h4>
+              <h4 className={tokens.text.subtitle}>Vorteile</h4>
               <ul className="space-y-2">
                 {benefits.map((benefit, index) => (
                   <li key={index} className="flex items-start gap-2 text-gray-300">
@@ -59,8 +60,8 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
             </div>
             
             <div>
-              <h4 className="text-lg font-medium text-white mb-2">Für wen?</h4>
-              <p className="text-gray-300">{targetAudience}</p>
+              <h4 className={tokens.text.subtitle}>Für wen?</h4>
+              <p className={tokens.text.body}>{targetAudience}</p>
             </div>
           </div>
         </CardContent>
@@ -70,3 +71,4 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
 };
 
 export default FeatureCard;
+
