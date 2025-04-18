@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Headphones, Mic, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -9,23 +10,36 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
 import VoiceBotLoading from "./voice/VoiceBotLoading";
 import VoiceBotError from "./voice/VoiceBotError";
 import VoiceBotMessages from "./voice/VoiceBotMessages";
 import VoiceBotControls from "./voice/VoiceBotControls";
+import type { CallStatus, CallMessage } from "@/types/voiceBot";
 
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState("immobilienmakler");
   const [voice, setVoice] = useState("pia");
   const [isActive, setIsActive] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [callStatus, setCallStatus] = useState<CallStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<CallMessage[]>([]);
+
+  const addMessage = (text: string, type: CallMessage['type'] = 'status') => {
+    setMessages(prev => [...prev, {
+      text,
+      timestamp: new Date(),
+      type
+    }]);
+  };
 
   const startVoiceTest = async (selectedUseCase: string) => {
     setIsActive(true);
     setIsLoading(true);
+    setCallStatus("connecting");
     setErrorMessage("");
+    addMessage("Verbindung wird aufgebaut...");
 
     try {
       const response = await fetch(
@@ -36,11 +50,24 @@ const VoiceBot = () => {
         }
       );
 
-      console.log("✅ Webhook (no-cors) ausgelöst.");
+      console.log("✅ Webhook ausgelöst.");
+      addMessage("Webhook erfolgreich ausgelöst");
+      setCallStatus("active");
+      addMessage("Sprachassistent ist bereit");
+      toast({
+        title: "Verbindung hergestellt",
+        description: "Der Sprachassistent ist jetzt aktiv.",
+      });
     } catch (error) {
       console.error("❌ Fehler beim Aufruf:", error);
       setErrorMessage("Es gab ein Problem beim Starten des Sprachdialogs.");
-      setIsActive(false);
+      setCallStatus("error");
+      addMessage("Fehler beim Verbindungsaufbau", "error");
+      toast({
+        title: "Fehler",
+        description: "Verbindung konnte nicht hergestellt werden.",
+        variant: "destructive",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -49,7 +76,9 @@ const VoiceBot = () => {
   const stopVoiceTest = () => {
     setIsActive(false);
     setIsLoading(false);
+    setCallStatus("completed");
     setErrorMessage("");
+    addMessage("Sprachdialog beendet");
     setMessages([]);
   };
 
@@ -123,7 +152,8 @@ const VoiceBot = () => {
               <VoiceBotMessages messages={messages} />
               <VoiceBotControls 
                 listening={isActive} 
-                isLoading={isLoading} 
+                isLoading={isLoading}
+                callStatus={callStatus} 
                 onStart={() => startVoiceTest(useCase)} 
                 onStop={stopVoiceTest} 
               />

@@ -1,20 +1,28 @@
 
 import React from "react";
 import { Separator } from "@/components/ui/separator";
-
-interface Message {
-  sender: "user" | "bot";
-  text: string;
-}
+import { AlertCircle, Info, CheckCircle } from "lucide-react";
+import type { CallMessage } from "@/types/voiceBot";
 
 interface VoiceBotMessagesProps {
-  messages: Message[];
+  messages: CallMessage[];
 }
 
 const VoiceBotMessages = ({ messages }: VoiceBotMessagesProps) => {
   if (messages.length === 0) {
     return null;
   }
+
+  const getMessageIcon = (type: CallMessage['type']) => {
+    switch (type) {
+      case 'error':
+        return <AlertCircle className="w-4 h-4 text-red-500" />;
+      case 'info':
+        return <Info className="w-4 h-4 text-blue-500" />;
+      default:
+        return <CheckCircle className="w-4 h-4 text-green-500" />;
+    }
+  };
 
   return (
     <div className="mt-4">
@@ -23,16 +31,19 @@ const VoiceBotMessages = ({ messages }: VoiceBotMessagesProps) => {
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`p-3 rounded-lg max-w-[80%] ${
-              msg.sender === "user" 
-                ? "bg-gray-800/70 self-start mr-auto" 
-                : "bg-primary/20 self-end ml-auto"
+            className={`flex items-start gap-2 p-2 rounded-lg ${
+              msg.type === 'error' 
+                ? 'bg-red-950/30 border border-red-900/50' 
+                : 'bg-gray-800/30'
             }`}
           >
-            <div className="text-xs mb-1 text-gray-400">
-              {msg.sender === "user" ? "Du" : "KI-Assistent"}:
+            {getMessageIcon(msg.type)}
+            <div className="flex-1">
+              <p className="text-sm text-white">{msg.text}</p>
+              <span className="text-xs text-gray-400">
+                {msg.timestamp.toLocaleTimeString()}
+              </span>
             </div>
-            <div className="text-white">{msg.text}</div>
           </div>
         ))}
       </div>

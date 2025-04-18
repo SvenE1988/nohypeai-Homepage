@@ -1,11 +1,13 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Mic, StopCircle } from "lucide-react";
+import { Mic, StopCircle, Loader2 } from "lucide-react";
+import type { CallStatus } from "@/types/voiceBot";
 
 interface VoiceBotControlsProps {
   listening: boolean;
   isLoading: boolean;
+  callStatus: CallStatus;
   onStart: () => void;
   onStop: () => void;
 }
@@ -13,32 +15,46 @@ interface VoiceBotControlsProps {
 const VoiceBotControls = ({ 
   listening, 
   isLoading, 
+  callStatus,
   onStart, 
   onStop 
 }: VoiceBotControlsProps) => {
+  const getButtonContent = () => {
+    if (isLoading) {
+      return (
+        <span className="flex items-center gap-2">
+          <Loader2 className="animate-spin" /> Verbindung wird aufgebaut...
+        </span>
+      );
+    }
+    
+    if (listening) {
+      return (
+        <span className="flex items-center gap-2">
+          <StopCircle className="animate-pulse" /> Sprachdialog beenden
+        </span>
+      );
+    }
+    
+    return (
+      <span className="flex items-center gap-2">
+        <Mic /> Sprachdialog starten
+      </span>
+    );
+  };
+
   return (
-    <>
-      {listening ? (
-        <Button
-          onClick={onStop}
-          className="w-full bg-red-600 hover:bg-red-700 text-white py-6"
-        >
-          <span className="flex items-center gap-2">
-            <StopCircle className="animate-pulse" /> Sprachdialog beenden
-          </span>
-        </Button>
-      ) : (
-        <Button
-          onClick={onStart}
-          disabled={isLoading}
-          className="w-full bg-primary hover:bg-primary/90 text-white py-6 disabled:bg-gray-700 disabled:text-gray-300"
-        >
-          <span className="flex items-center gap-2">
-            <Mic /> Sprachdialog starten
-          </span>
-        </Button>
-      )}
-    </>
+    <Button
+      onClick={listening ? onStop : onStart}
+      disabled={isLoading}
+      className={`w-full py-6 ${
+        listening 
+          ? 'bg-red-600 hover:bg-red-700' 
+          : 'bg-primary hover:bg-primary/90'
+      } text-white disabled:bg-gray-700 disabled:text-gray-300`}
+    >
+      {getButtonContent()}
+    </Button>
   );
 };
 
