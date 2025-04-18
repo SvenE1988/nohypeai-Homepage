@@ -1,24 +1,24 @@
-import { Proposal, ProposalSection } from "../types";
+import { Proposal, ProposalSection, Page } from "@/types/proposal";
 import { useSectionOperations } from "../hooks/useSectionOperations";
 import { usePageOperations } from "../hooks/usePageOperations";
+import { calculateEffectivePageIndex, reorderSections } from "@/utils/proposalUtils";
 
 export const usePageEditorLogic = (
   proposal: Proposal,
   onChange: (proposal: Proposal) => void,
   currentPage: number,
   setCurrentPage: (page: number) => void,
-  pages: Array<{ sections: ProposalSection[] }>
+  pages: Page[]
 ) => {
   const { useCoverPage = true } = proposal;
   const { handleSectionChange: processSectionChange, addSection: createSection, removeSection: deleteSection } = useSectionOperations();
   const { duplicatePage: duplicatePageOp, deletePage: deletePageOp, addNewPage: addNewPageOp } = usePageOperations();
   
-  // Account for cover page in current page index
-  const effectivePageIndex = useCoverPage && currentPage > 0 ? currentPage - 1 : currentPage;
+  const effectivePageIndex = calculateEffectivePageIndex(currentPage, useCoverPage);
   const currentPageSections = effectivePageIndex >= 0 && effectivePageIndex < pages.length 
     ? pages[effectivePageIndex].sections 
     : [];
-  
+
   const updateSectionInPages = (updatedSection: ProposalSection) => {
     let updatedPages = [...pages];
     let foundPage = false;
@@ -38,7 +38,7 @@ export const usePageEditorLogic = (
       updateProposal(updatedPages);
     }
   };
-  
+
   const handleDragEnd = (result: any) => {
     if (!result.destination) return;
     
@@ -46,17 +46,14 @@ export const usePageEditorLogic = (
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     
-    const newSections = items.map((item, index) => ({
-      ...item,
-      order: index
-    }));
-    
     const updatedPages = [...pages];
-    updatedPages[effectivePageIndex] = { sections: newSections };
+    updatedPages[effectivePageIndex] = { 
+      sections: reorderSections(items)
+    };
     
     updateProposal(updatedPages);
   };
-  
+
   const addSection = (type: ProposalSection['type']) => {
     if (useCoverPage && currentPage === 0) return;
     
@@ -73,7 +70,7 @@ export const usePageEditorLogic = (
     
     updateProposal(updatedPages);
   };
-  
+
   const removeSection = (sectionId: string) => {
     if (useCoverPage && currentPage === 0) return;
     
@@ -84,13 +81,13 @@ export const usePageEditorLogic = (
       updateProposal(updatedPages);
     }
   };
-  
+
   const addNewPage = () => {
     const updatedPages = addNewPageOp(pages);
     updateProposal(updatedPages);
     setCurrentPage(useCoverPage ? updatedPages.length : updatedPages.length - 1);
   };
-  
+
   const duplicatePage = () => {
     if (useCoverPage && currentPage === 0) return;
     
@@ -98,7 +95,7 @@ export const usePageEditorLogic = (
     updateProposal(updatedPages);
     setCurrentPage(currentPage + 1);
   };
-  
+
   const deletePage = () => {
     if (useCoverPage && currentPage === 0) return;
     
@@ -106,8 +103,8 @@ export const usePageEditorLogic = (
     updateProposal(updatedPages);
     setCurrentPage(Math.max(useCoverPage ? 1 : 0, currentPage - 1));
   };
-  
-  const updateProposal = (updatedPages: Array<{ sections: ProposalSection[] }>) => {
+
+  const updateProposal = (updatedPages: Page[]) => {
     const allSections = updatedPages.flatMap(page => page.sections);
     onChange({
       ...proposal,
