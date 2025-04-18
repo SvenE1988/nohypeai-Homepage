@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from 'react';
 import { Building, Hotel, Stethoscope, Key, Sun, DoorOpen, Receipt, Briefcase, Building2, GraduationCap, ShoppingBag, UtensilsCrossed, Car, Scale } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -9,7 +8,7 @@ const industries = [
   {
     icon: Building,
     title: "Hausverwaltungen & Immobilienverwalter",
-    problem: "Mieter rufen ständig an – von „Glühbirne kaputt" bis „Rohrbruch".",
+    problem: "Mieter rufen ständig an – von Glühbirne kaputt bis Rohrbruch.",
     pain: "Keine Priorisierung, Erreichbarkeit rund um die Uhr nicht machbar",
     solutions: [
       "Survey Bot filtert Anliegen automatisch & leitet echte Notfälle weiter",
