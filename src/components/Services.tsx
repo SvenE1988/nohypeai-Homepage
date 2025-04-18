@@ -31,7 +31,7 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 overflow-hidden group hover:border-primary/50 transition-all duration-300 hover:scale-[1.03]"
+              className="bg-[#0A0A0A]/90 border border-[#1A1A1A] overflow-hidden group hover:border-primary/50 hover:shadow-[0_0_15px_rgba(255,0,153,0.15)] transition-all duration-300 transform hover:scale-[1.03]"
             >
               <CardContent className="p-8">
                 <div className="flex flex-col items-center text-center gap-6">
