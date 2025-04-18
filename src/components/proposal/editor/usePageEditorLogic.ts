@@ -1,6 +1,7 @@
 
-import { v4 as uuidv4 } from "uuid";
 import { Proposal, ProposalSection } from "../types";
+import { useSectionOperations } from "../hooks/useSectionOperations";
+import { usePageOperations } from "../hooks/usePageOperations";
 
 export const usePageEditorLogic = (
   proposal: Proposal,
@@ -10,6 +11,8 @@ export const usePageEditorLogic = (
   pages: Array<{ sections: ProposalSection[] }>
 ) => {
   const { useCoverPage = true } = proposal;
+  const { handleSectionChange, addSection: createSection, removeSection: deleteSection } = useSectionOperations();
+  const { duplicatePage: duplicatePageOp, deletePage: deletePageOp, addNewPage: addNewPageOp } = usePageOperations();
   
   // Account for cover page in current page index
   const effectivePageIndex = useCoverPage && currentPage > 0 ? currentPage - 1 : currentPage;
@@ -22,9 +25,7 @@ export const usePageEditorLogic = (
     let foundPage = false;
     
     updatedPages = updatedPages.map(page => {
-      const updatedSections = page.sections.map(section => 
-        section.id === updatedSection.id ? updatedSection : section
-      );
+      const updatedSections = handleSectionChange(page.sections, updatedSection);
       
       if (updatedSections.some(s => s.id === updatedSection.id)) {
         foundPage = true;
@@ -35,13 +36,7 @@ export const usePageEditorLogic = (
     });
     
     if (foundPage) {
-      const allSections = updatedPages.flatMap(page => page.sections);
-      
-      onChange({
-        ...proposal,
-        sections: allSections,
-        updatedAt: new Date().toISOString()
-      });
+      updateProposal(updatedPages);
     }
   };
   
@@ -60,159 +55,66 @@ export const usePageEditorLogic = (
     const updatedPages = [...pages];
     updatedPages[effectivePageIndex] = { sections: newSections };
     
-    const allSections = updatedPages.flatMap(page => page.sections);
-    
-    onChange({
-      ...proposal,
-      sections: allSections,
-      updatedAt: new Date().toISOString()
-    });
+    updateProposal(updatedPages);
   };
   
   const addSection = (type: ProposalSection['type']) => {
-    // Don't add sections to cover page
     if (useCoverPage && currentPage === 0) return;
     
-    const newSection: ProposalSection = {
-      id: uuidv4(),
-      type,
-      content: getDefaultContent(type),
-      order: currentPageSections.length
-    };
-    
+    const newSection = createSection(currentPageSections, type);
     const updatedPages = [...pages];
+    
     if (!updatedPages[effectivePageIndex]) {
       updatedPages[effectivePageIndex] = { sections: [] };
     }
+    
     updatedPages[effectivePageIndex] = { 
       sections: [...updatedPages[effectivePageIndex].sections, newSection] 
     };
     
-    const allSections = updatedPages.flatMap(page => page.sections);
-    
-    onChange({
-      ...proposal,
-      sections: allSections,
-      updatedAt: new Date().toISOString()
-    });
+    updateProposal(updatedPages);
   };
   
   const removeSection = (sectionId: string) => {
-    // Don't remove sections from cover page
     if (useCoverPage && currentPage === 0) return;
     
     const updatedPages = [...pages];
     if (updatedPages[effectivePageIndex]) {
-      const filteredSections = updatedPages[effectivePageIndex].sections.filter(
-        section => section.id !== sectionId
-      );
-      
-      updatedPages[effectivePageIndex] = { 
-        sections: filteredSections.map((section, index) => ({
-          ...section,
-          order: index
-        }))
-      };
-      
-      const allSections = updatedPages.flatMap(page => page.sections);
-      
-      onChange({
-        ...proposal,
-        sections: allSections,
-        updatedAt: new Date().toISOString()
-      });
+      const filteredSections = deleteSection(updatedPages[effectivePageIndex].sections, sectionId);
+      updatedPages[effectivePageIndex] = { sections: filteredSections };
+      updateProposal(updatedPages);
     }
   };
   
   const addNewPage = () => {
-    const updatedPages = [...pages, { sections: [] }];
-    
-    const allSections = updatedPages.flatMap(page => page.sections);
-    
-    onChange({
-      ...proposal,
-      sections: allSections,
-      updatedAt: new Date().toISOString()
-    });
-    
+    const updatedPages = addNewPageOp(pages);
+    updateProposal(updatedPages);
     setCurrentPage(useCoverPage ? updatedPages.length : updatedPages.length - 1);
   };
   
   const duplicatePage = () => {
-    // Don't duplicate cover page
     if (useCoverPage && currentPage === 0) return;
     
-    if (effectivePageIndex < 0 || effectivePageIndex >= pages.length) return;
-    
-    const duplicatedSections = pages[effectivePageIndex].sections.map(section => ({
-      ...section,
-      id: uuidv4()
-    }));
-    
-    const updatedPages = [...pages];
-    updatedPages.splice(effectivePageIndex + 1, 0, { sections: duplicatedSections });
-    
-    const allSections = updatedPages.flatMap(page => page.sections);
-    
-    onChange({
-      ...proposal,
-      sections: allSections,
-      updatedAt: new Date().toISOString()
-    });
-    
+    const updatedPages = duplicatePageOp(pages, effectivePageIndex);
+    updateProposal(updatedPages);
     setCurrentPage(currentPage + 1);
   };
   
   const deletePage = () => {
-    // Don't delete cover page
     if (useCoverPage && currentPage === 0) return;
     
-    if (pages.length <= 1) {
-      return;
-    }
-    
-    const updatedPages = [...pages];
-    updatedPages.splice(effectivePageIndex, 1);
-    
+    const updatedPages = deletePageOp(pages, effectivePageIndex);
+    updateProposal(updatedPages);
+    setCurrentPage(Math.max(useCoverPage ? 1 : 0, currentPage - 1));
+  };
+  
+  const updateProposal = (updatedPages: Array<{ sections: ProposalSection[] }>) => {
     const allSections = updatedPages.flatMap(page => page.sections);
-    
     onChange({
       ...proposal,
       sections: allSections,
       updatedAt: new Date().toISOString()
     });
-    
-    setCurrentPage(Math.max(useCoverPage ? 1 : 0, currentPage - 1));
-  };
-
-  const getDefaultContent = (type: ProposalSection['type']) => {
-    switch (type) {
-      case 'header':
-        return { title: "Neuer Titel", subtitle: "Untertitel", date: new Date().toLocaleDateString('de-DE') };
-      case 'text':
-        return { title: "Abschnittstitel", text: "Ihr Text hier..." };
-      case 'image':
-        return { src: "", alt: "Bild Beschreibung", caption: "" };
-      case 'caseStudy':
-        return { caseStudyId: 0 };
-      case 'pricing':
-        return { 
-          title: "Preise", 
-          items: [{ description: "Position", price: 0, unit: "pauschal" }] 
-        };
-      case 'contact':
-        return { 
-          title: "Kontakt",
-          contact: {
-            name: "Name",
-            position: "Position",
-            email: "email@example.com",
-            phone: "+49 123 456789"
-          }
-        };
-      default:
-        return {};
-    }
   };
 
   return {
