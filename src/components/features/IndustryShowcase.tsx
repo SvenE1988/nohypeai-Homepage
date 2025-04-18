@@ -196,20 +196,33 @@ export default function IndustryShowcase() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-white text-center mb-8">
-          Branchen-Beispiele
+    <section className="py-16 relative">
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
+      
+      <div className="container mx-auto px-4 relative">
+        <h2 className="text-4xl font-bold text-center mb-4">
+          <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Branchen-Beispiele
+          </span>
         </h2>
         
+        <p className="text-gray-400 text-center max-w-2xl mx-auto mb-12">
+          Entdecken Sie, wie unsere KI-Lösungen in verschiedenen Branchen eingesetzt werden
+        </p>
+        
         <div className="flex flex-col items-center space-y-6 mb-12">
-          <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory}>
-            <TabsList className="bg-black/40 border border-gray-800">
+          <Tabs 
+            defaultValue="all" 
+            value={activeCategory} 
+            onValueChange={setActiveCategory}
+            className="w-full max-w-3xl"
+          >
+            <TabsList className="w-full bg-black/40 border border-gray-800 p-1 gap-1">
               {categories.map(category => (
                 <TabsTrigger 
                   key={category.value} 
                   value={category.value}
-                  className="data-[state=active]:bg-primary/20"
+                  className="flex-1 data-[state=active]:bg-primary/20 data-[state=active]:text-white"
                 >
                   {category.label}
                 </TabsTrigger>
@@ -217,13 +230,15 @@ export default function IndustryShowcase() {
             </TabsList>
           </Tabs>
 
-          <Input
-            type="search"
-            placeholder="Suche nach Branchen oder Problemen..."
-            className="max-w-md bg-black/40 border-gray-800"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+          <div className="w-full max-w-md relative">
+            <Input
+              type="search"
+              placeholder="Suche nach Branchen oder Problemen..."
+              className="w-full bg-black/40 border-gray-800 text-white placeholder:text-gray-400"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
