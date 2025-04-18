@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { Headphones, Smartphone, MicOff, Mic, Info } from "lucide-react";
+import { Headphones, Mic, MicOff, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -10,27 +10,32 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import VoiceBotLoading from "./voice/VoiceBotLoading";
+import VoiceBotError from "./voice/VoiceBotError";
+import VoiceBotMessages from "./voice/VoiceBotMessages";
+import VoiceBotControls from "./voice/VoiceBotControls";
 
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState("immobilienmakler");
   const [voice, setVoice] = useState("pia");
   const [isActive, setIsActive] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [messages, setMessages] = useState([]);
 
   const startVoiceTest = (selectedUseCase: string) => {
     console.log("Starting voice test for use case:", selectedUseCase);
     setIsActive(true);
-    // This will be implemented with Twilio/UltraVox later
+    setIsLoading(true);
+    // Future Twilio/UltraVox implementation
   };
 
   const stopVoiceTest = () => {
     setIsActive(false);
-    // This will be implemented with Twilio/UltraVox later
+    setIsLoading(false);
+    setErrorMessage("");
+    setMessages([]);
+    // Future Twilio/UltraVox implementation
   };
 
   return (
@@ -41,7 +46,7 @@ const VoiceBot = () => {
           {/* Notch */}
           <div className="absolute top-0 inset-x-0 h-6 bg-black rounded-b-xl" />
           
-          <Card className="border-0 bg-gradient-to-b from-gray-900 to-black min-h-[600px]">
+          <Card className="border-0 bg-gradient-to-b from-[#1A1F35] to-black min-h-[600px]">
             <CardHeader>
               <CardTitle className="text-xl font-semibold text-center text-white flex items-center justify-center gap-2">
                 <Headphones className="w-5 h-5 text-primary" />
@@ -59,10 +64,10 @@ const VoiceBot = () => {
                     onValueChange={setUseCase}
                     disabled={isActive}
                   >
-                    <SelectTrigger className="w-full bg-black/30 border-gray-700 text-white">
+                    <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectValue placeholder="Wählen Sie einen Anwendungsfall" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectItem value="immobilienmakler">Immobilienmakler</SelectItem>
                       <SelectItem value="hausverwaltung">Hausverwaltung</SelectItem>
                       <SelectItem value="support">Technischer Support</SelectItem>
@@ -79,10 +84,10 @@ const VoiceBot = () => {
                     onValueChange={setVoice}
                     disabled={isActive}
                   >
-                    <SelectTrigger className="w-full bg-black/30 border-gray-700 text-white">
+                    <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectValue placeholder="Wählen Sie eine Stimme" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectItem value="pia">🧑‍💼 Pia (freundliche Assistentin)</SelectItem>
                       <SelectItem value="schneider">👨‍🔧 Herr Schneider (Techniker)</SelectItem>
                       <SelectItem value="otto">🤖 Agent Otto (neutral, KI-Stil)</SelectItem>
@@ -92,7 +97,7 @@ const VoiceBot = () => {
               </div>
 
               {/* Privacy notice */}
-              <div className="p-3 bg-gray-900/50 rounded-lg border border-gray-800">
+              <div className="p-3 bg-black/50 rounded-lg border border-gray-800">
                 <div className="flex items-start gap-2 text-xs text-gray-400">
                   <Info className="w-4 h-4 text-primary mt-0.5" />
                   <p>
@@ -102,34 +107,22 @@ const VoiceBot = () => {
                 </div>
               </div>
 
-              {!isActive ? (
-                <Button
-                  onClick={() => startVoiceTest(useCase)}
-                  className="w-full bg-primary hover:bg-primary/90 text-white py-6 gap-2"
-                >
-                  <Mic className="w-5 h-5" />
-                  Live-KI-Anruf starten
-                </Button>
-              ) : (
-                <Button
-                  onClick={stopVoiceTest}
-                  variant="destructive"
-                  className="w-full py-6 gap-2"
-                >
-                  <MicOff className="w-5 h-5" />
-                  Test beenden
-                </Button>
-              )}
+              {/* Loading State */}
+              {isLoading && <VoiceBotLoading />}
 
-              {isActive && (
-                <Button
-                  onClick={stopVoiceTest}
-                  variant="ghost"
-                  className="w-full border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800/50"
-                >
-                  Neustart
-                </Button>
-              )}
+              {/* Error State */}
+              {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
+
+              {/* Messages */}
+              <VoiceBotMessages messages={messages} />
+
+              {/* Controls */}
+              <VoiceBotControls 
+                listening={isActive} 
+                isLoading={isLoading} 
+                onStart={() => startVoiceTest(useCase)} 
+                onStop={stopVoiceTest} 
+              />
             </CardContent>
           </Card>
         </div>
@@ -142,4 +135,3 @@ const VoiceBot = () => {
 };
 
 export default VoiceBot;
-
