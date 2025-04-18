@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Headphones, Mic, MicOff, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,11 +22,34 @@ const VoiceBot = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const startVoiceTest = (selectedUseCase: string) => {
-    console.log("Starting voice test for use case:", selectedUseCase);
+  const startVoiceTest = async (selectedUseCase: string) => {
     setIsActive(true);
     setIsLoading(true);
-    // Future Twilio/UltraVox implementation
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("https://automatisierung.seserver.nohype-ai.de/webhook-test/0c5e538a-90c7-4a40-a201-3a3062a205ed", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-API-Key": "no-hype-demo-2025"
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error("Webhook-Request fehlgeschlagen.");
+      }
+
+      const result = await response.json();
+      console.log("✅ Webhook erfolgreich ausgelöst:", result);
+
+    } catch (error) {
+      console.error("❌ Fehler beim Aufruf:", error);
+      setErrorMessage("Es gab ein Problem beim Starten des Sprachdialogs.");
+      setIsActive(false);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const stopVoiceTest = () => {
@@ -35,7 +57,6 @@ const VoiceBot = () => {
     setIsLoading(false);
     setErrorMessage("");
     setMessages([]);
-    // Future Twilio/UltraVox implementation
   };
 
   return (
