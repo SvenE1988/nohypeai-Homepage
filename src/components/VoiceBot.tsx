@@ -135,7 +135,7 @@ const VoiceBot = () => {
       console.log("Starte Webhook-Aufruf mit URL:", webhookUrl);
       
       const response = await fetch(webhookUrl, {
-        method: "GET", // Die Webhook-Konfiguration in n8n verwendet GET
+        method: "POST", // Die Webhook-Konfiguration in n8n verwendet GET
         headers: {
           'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA'
         }
