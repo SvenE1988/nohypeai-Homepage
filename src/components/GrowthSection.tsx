@@ -1,7 +1,7 @@
 
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import FeatureCard from "./FeatureCard";
+import FeatureCard from "@/components/ui/card/feature-card";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const GrowthSection = () => {
