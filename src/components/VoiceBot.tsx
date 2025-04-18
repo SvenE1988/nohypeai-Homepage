@@ -108,7 +108,7 @@ const VoiceBot = () => {
                   className="w-full bg-primary hover:bg-primary/90 text-white py-6 gap-2"
                 >
                   <Mic className="w-5 h-5" />
-                  Test starten
+                  Live-KI-Anruf starten
                 </Button>
               ) : (
                 <Button
@@ -118,6 +118,16 @@ const VoiceBot = () => {
                 >
                   <MicOff className="w-5 h-5" />
                   Test beenden
+                </Button>
+              )}
+
+              {isActive && (
+                <Button
+                  onClick={stopVoiceTest}
+                  variant="ghost"
+                  className="w-full border border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800/50"
+                >
+                  Neustart
                 </Button>
               )}
             </CardContent>
@@ -132,3 +142,4 @@ const VoiceBot = () => {
 };
 
 export default VoiceBot;
+
