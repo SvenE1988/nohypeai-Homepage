@@ -1,5 +1,6 @@
 
 import { Database } from "@/integrations/supabase/types";
+import { ProposalSection } from "./proposal";
 
 export type DbBrochureTemplate = Database["public"]["Tables"]["brochure_templates"]["Row"];
 export type DbSavedBrochure = Database["public"]["Tables"]["saved_brochures"]["Row"];
