@@ -16,9 +16,9 @@ interface IndustryCardProps {
 const IndustryCard = ({ icon: Icon, title, problem, pain, solutions }: IndustryCardProps) => {
   return (
     <motion.div {...fadeInAnimation} className="w-full">
-      <Card className="h-full bg-black/40 border-gray-800 hover:border-primary/50 transition-all duration-300">
+      <Card className="h-full bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 hover:border-primary/50 transition-all duration-300 hover:scale-[1.02] group">
         <CardHeader className="flex flex-row items-center gap-4 pb-2">
-          <div className="p-2 rounded-full bg-primary/10 text-primary">
+          <div className="p-2 rounded-full bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
             <Icon className="w-6 h-6" />
           </div>
           <h3 className="text-xl font-semibold text-white">{title}</h3>

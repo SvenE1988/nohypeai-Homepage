@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
 import { Info } from "lucide-react";
@@ -17,7 +18,7 @@ const FeatureCard = memo(({ title, benefit, description }: FeatureCardProps) => 
       whileHover={{ scale: 1.02 }}
       style={{ transformStyle: "preserve-3d" }}
     >
-      <div className="absolute top-2 right-2 z-10 text-primary/80 animate-pulse">
+      <div className="absolute top-2 right-2 z-10 text-primary/80">
         <Info size={18} />
       </div>
       
@@ -45,7 +46,7 @@ const FeatureCard = memo(({ title, benefit, description }: FeatureCardProps) => 
           >
             <div className="flex flex-col gap-2">
               <h3 className="text-lg font-medium text-white">{title}</h3>
-              <p className="text-sm text-gray-400">{description}</p>
+              <p className="text-sm text-gray-300">{description}</p>
               <span className="text-xs text-primary mt-2">Hover für mehr Details</span>
             </div>
           </Button>
