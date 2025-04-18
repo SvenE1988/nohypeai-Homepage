@@ -46,7 +46,8 @@ const VoiceBot = () => {
         `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`,
         {
           method: "GET",
-          mode: "no-cors"
+          'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA',
+          'Content-Type': 'application/json'
         }
       );
 
