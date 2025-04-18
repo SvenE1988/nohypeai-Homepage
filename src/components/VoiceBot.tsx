@@ -28,7 +28,7 @@ const VoiceBot = () => {
     setErrorMessage("");
 
     try {
-      const response = await fetch("https://automatisierung.seserver.nohype-ai.de/webhook-test/0c5e538a-90c7-4a40-a201-3a3062a205ed", {
+      const response = await fetch("https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed", {
         method: "GET",
         mode: "no-cors" // 👈 Nur diese Zeile wurde angepasst
       });
