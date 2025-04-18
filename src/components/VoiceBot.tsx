@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Headphones, Mic, MicOff, Info } from "lucide-react";
+import { Headphones, Mic, StopCircle, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -22,29 +22,18 @@ const VoiceBot = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
-  const startVoiceTest = async (selectedUseCase: string) => {
+  const startVoiceTest = async () => {
     setIsActive(true);
     setIsLoading(true);
     setErrorMessage("");
 
     try {
-      const response = await fetch("https://automatisierung.seserver.nohype-ai.de/webhook-test/0c5e538a-90c7-4a40-a201-3a3062a205ed", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-API-Key": "no-hype-demo-2025"
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error("Webhook-Request fehlgeschlagen.");
-      }
-
-      const result = await response.json();
-      console.log("✅ Webhook erfolgreich ausgelöst:", result);
+      // ⛔️ Diesen Teil ersetzt du später durch deine eigene Server-API / Supabase-Funktion
+      const result = await simulateVoiceStart(useCase, voice);
+      console.log("✅ Sprachdialog gestartet:", result);
 
     } catch (error) {
-      console.error("❌ Fehler beim Aufruf:", error);
+      console.error("❌ Fehler beim Start:", error);
       setErrorMessage("Es gab ein Problem beim Starten des Sprachdialogs.");
       setIsActive(false);
     } finally {
@@ -59,12 +48,19 @@ const VoiceBot = () => {
     setMessages([]);
   };
 
+  // Dummy für lokale Tests
+  const simulateVoiceStart = async (useCase: string, voice: string) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ success: true, useCase, voice });
+      }, 1000);
+    });
+  };
+
   return (
     <div className="relative">
       <div className="max-w-sm mx-auto">
-        {/* Smartphone frame */}
         <div className="relative border-[14px] border-gray-900 rounded-[3rem] shadow-xl bg-black overflow-hidden">
-          {/* Notch */}
           <div className="absolute top-0 inset-x-0 h-6 bg-black rounded-b-xl" />
           
           <Card className="border-0 bg-gradient-to-b from-[#1A1F35] to-black min-h-[600px]">
@@ -74,17 +70,12 @@ const VoiceBot = () => {
                 KI-Sprachassistent
               </CardTitle>
             </CardHeader>
+
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300">
-                    Anwendungsfall:
-                  </label>
-                  <Select
-                    value={useCase}
-                    onValueChange={setUseCase}
-                    disabled={isActive}
-                  >
+                  <label className="text-sm text-gray-300">Anwendungsfall:</label>
+                  <Select value={useCase} onValueChange={setUseCase} disabled={isActive}>
                     <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectValue placeholder="Wählen Sie einen Anwendungsfall" />
                     </SelectTrigger>
@@ -97,14 +88,8 @@ const VoiceBot = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm text-gray-300">
-                    KI-Assistent:
-                  </label>
-                  <Select
-                    value={voice}
-                    onValueChange={setVoice}
-                    disabled={isActive}
-                  >
+                  <label className="text-sm text-gray-300">KI-Assistent:</label>
+                  <Select value={voice} onValueChange={setVoice} disabled={isActive}>
                     <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
                       <SelectValue placeholder="Wählen Sie eine Stimme" />
                     </SelectTrigger>
@@ -117,38 +102,29 @@ const VoiceBot = () => {
                 </div>
               </div>
 
-              {/* Privacy notice */}
               <div className="p-3 bg-black/50 rounded-lg border border-gray-800">
                 <div className="flex items-start gap-2 text-xs text-gray-400">
                   <Info className="w-4 h-4 text-primary mt-0.5" />
                   <p>
-                    🔒 Ihre Spracheingabe wird zur Verarbeitung an unsere Server übermittelt. 
+                    🔒 Ihre Spracheingabe wird zur Verarbeitung an unsere Server übermittelt.
                     Es findet keine dauerhafte Speicherung statt.
                   </p>
                 </div>
               </div>
 
-              {/* Loading State */}
               {isLoading && <VoiceBotLoading />}
-
-              {/* Error State */}
               {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
-
-              {/* Messages */}
               <VoiceBotMessages messages={messages} />
 
-              {/* Controls */}
-              <VoiceBotControls 
-                listening={isActive} 
-                isLoading={isLoading} 
-                onStart={() => startVoiceTest(useCase)} 
-                onStop={stopVoiceTest} 
+              <VoiceBotControls
+                listening={isActive}
+                isLoading={isLoading}
+                onStart={startVoiceTest}
+                onStop={stopVoiceTest}
               />
             </CardContent>
           </Card>
         </div>
-
-        {/* Phone bottom indicator */}
         <div className="w-32 h-1.5 bg-gray-900 mx-auto mt-4 rounded-full" />
       </div>
     </div>
