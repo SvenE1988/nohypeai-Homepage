@@ -1,4 +1,3 @@
-
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,6 +20,7 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Lazy-loaded pages for better performance
 const Index = lazy(() => import("./pages/Index"));
+const Features = lazy(() => import("./pages/Features"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Karriere = lazy(() => import("./pages/Karriere"));
@@ -62,6 +62,7 @@ const App = () => (
                 <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
                   <Routes>
                     <Route path="/" element={<Index />} />
+                    <Route path="/features" element={<Features />} />
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogPost />} />
                     <Route path="/karriere" element={<Karriere />} />

@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigation } from '@/contexts/NavigationContext';
@@ -24,9 +23,10 @@ export function useHeaderNavigation() {
   const location = useLocation();
   const { activeSection, navigateTo, resetScrollPosition } = useNavigation();
 
-  // Common navigation items used across components
+  // Updated navigation items with Features
   const navItems = [
     { href: "/", label: "Start" },
+    { href: "/features", label: "Features" },
     { href: "#nutzen", label: "Nutzen" },
     { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
