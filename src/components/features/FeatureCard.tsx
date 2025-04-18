@@ -17,21 +17,21 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
   return (
     <div className="w-full">
       <motion.div 
-        className="relative w-full rounded-xl overflow-hidden bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 hover:border-primary/50 transition-all duration-300 group hover:scale-[1.03]"
+        className="relative w-full rounded-xl overflow-hidden bg-black/60 border border-gray-800 hover:border-primary/50 transition-all duration-300 group hover:scale-[1.03]"
         layout
       >
         {/* Main Card Content */}
         <div className="p-6">
           <h3 className="text-2xl font-semibold text-white mb-2">{title}</h3>
-          <p className="text-gray-300 mb-4">{subtitle}</p>
+          <p className="text-gray-300 text-sm mb-4">{subtitle}</p>
           
           <Button
             variant="ghost"
-            className="w-full justify-between group-hover:bg-primary/10"
+            className="w-full justify-between group-hover:bg-primary/10 text-primary"
             onClick={() => setIsExpanded(!isExpanded)}
             neon={true}
           >
-            <span>Mehr erfahren</span>
+            <span className="text-sm">Mehr Details</span>
             <ChevronDown 
               className={`transition-transform ${isExpanded ? 'rotate-180' : ''}`} 
             />
@@ -48,13 +48,13 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
               transition={{ duration: 0.3 }}
               className="border-t border-gray-800"
             >
-              <div className="p-6 bg-gradient-to-br from-primary/5 to-secondary/5">
+              <div className="p-6 bg-black/70">
                 <div className="space-y-4">
                   <div>
                     <h4 className="text-lg font-medium text-white mb-2">Nutzen</h4>
                     <ul className="space-y-2">
                       {benefits.map((benefit, index) => (
-                        <li key={index} className="flex items-start gap-2 text-gray-300">
+                        <li key={index} className="flex items-start gap-2 text-gray-300 text-sm">
                           <span className="text-primary mt-1">•</span>
                           {benefit}
                         </li>
@@ -64,7 +64,7 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
                   
                   <div>
                     <h4 className="text-lg font-medium text-white mb-2">Für wen?</h4>
-                    <p className="text-gray-300">{targetAudience}</p>
+                    <p className="text-gray-300 text-sm">{targetAudience}</p>
                   </div>
                 </div>
               </div>
