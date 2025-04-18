@@ -1,7 +1,9 @@
+
 import { Clock, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
+import { BaseCard } from "@/components/ui/base-card";
 
 interface BenefitsProps {
   className?: string;
