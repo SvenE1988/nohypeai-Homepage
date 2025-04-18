@@ -124,29 +124,34 @@ const VoiceBot = () => {
     const hasMicPermission = await getMicrophonePermission();
     if (!hasMicPermission) {
       setIsLoading(false);
+      setCallStatus("error");
       return;
     }
 
     try {
-      const response = await fetch(
-        `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed`,
-        {
-          method: "POST",
-          headers: {
-            'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            useCase: selectedUseCase,
-            voice: voice
-          })
+      // Ändere den Aufruf auf GET - entsprechend der n8n-Webhook-Konfiguration
+      const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook-test/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`;
+      
+      console.log("Starte Webhook-Aufruf mit URL:", webhookUrl);
+      
+      const response = await fetch(webhookUrl, {
+        method: "GET", // Die Webhook-Konfiguration in n8n verwendet GET
+        headers: {
+          'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA'
         }
-      );
+      });
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
 
       const data = await response.text();
+      console.log("Webhook response:", data);
+      
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
-      const streamUrl = xmlDoc.querySelector("Stream")?.getAttribute("url");
+      const streamElement = xmlDoc.querySelector("Stream");
+      const streamUrl = streamElement?.getAttribute("url");
 
       if (!streamUrl) {
         throw new Error("Keine Stream-URL in der Antwort gefunden");
@@ -164,9 +169,9 @@ const VoiceBot = () => {
       });
     } catch (error) {
       console.error("❌ Fehler beim Aufruf:", error);
-      setErrorMessage("Es gab ein Problem beim Starten des Sprachdialogs.");
+      setErrorMessage(`Es gab ein Problem beim Starten des Sprachdialogs: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
       setCallStatus("error");
-      addMessage("Fehler beim Verbindungsaufbau", "error");
+      addMessage(`Fehler beim Verbindungsaufbau: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`, "error");
       toast({
         title: "Fehler",
         description: "Verbindung konnte nicht hergestellt werden.",
@@ -180,11 +185,9 @@ const VoiceBot = () => {
   const stopVoiceTest = () => {
     cleanup();
     setIsActive(false);
-    setIsLoading(false);
     setCallStatus("completed");
     setErrorMessage("");
     addMessage("Sprachdialog beendet");
-    setMessages([]);
   };
 
   return (
