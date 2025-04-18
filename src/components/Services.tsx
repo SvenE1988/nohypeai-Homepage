@@ -1,3 +1,4 @@
+
 import { Zap, LockKeyhole, PlayCircle } from "lucide-react";
 import { Card, CardContent } from "./ui/card";
 
@@ -28,10 +29,13 @@ const Services = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card key={index} className="bg-[#0A0A0A] border-[#1A1A1A] overflow-hidden group hover:border-primary/50 transition-all duration-300">
+            <Card 
+              key={index} 
+              className="bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 overflow-hidden group hover:border-primary/50 transition-all duration-300 hover:scale-[1.03]"
+            >
               <CardContent className="p-8">
                 <div className="flex flex-col items-center text-center gap-6">
-                  <div className="w-20 h-20 rounded-full bg-[#1A1F35] flex items-center justify-center group-hover:bg-[#2A2F45] transition-all duration-300">
+                  <div className="w-20 h-20 rounded-full bg-[#6B7CFF33] flex items-center justify-center group-hover:bg-primary/20 transition-all duration-300">
                     <service.icon className="w-10 h-10 text-primary" />
                   </div>
                   <h3 className="text-2xl font-semibold text-white">

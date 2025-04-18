@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Zap, Target, Calendar, TrendingUp } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/neon-button';
 
 interface FeatureCardProps {
@@ -9,7 +9,6 @@ interface FeatureCardProps {
   subtitle: string;
   benefits: string[];
   targetAudience: string;
-  icons?: React.ReactNode[];
 }
 
 const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardProps) => {
@@ -18,7 +17,7 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
   return (
     <div className="w-full">
       <motion.div 
-        className="relative w-full rounded-xl overflow-hidden bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 hover:border-primary/50 transition-all duration-300"
+        className="relative w-full rounded-xl overflow-hidden bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 hover:border-primary/50 transition-all duration-300 group hover:scale-[1.03]"
         layout
       >
         {/* Main Card Content */}
@@ -28,7 +27,7 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
           
           <Button
             variant="ghost"
-            className="w-full justify-between"
+            className="w-full justify-between group-hover:bg-primary/10"
             onClick={() => setIsExpanded(!isExpanded)}
             neon={true}
           >

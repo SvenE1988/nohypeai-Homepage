@@ -1,15 +1,12 @@
-
 import { Clock, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { memo } from "react";
 
-// Benefits-Props mit optionalem className
 interface BenefitsProps {
   className?: string;
 }
 
-// Define benefits data outside the component to prevent recreation on renders
 const benefitsData = [
   {
     icon: Clock,
@@ -31,7 +28,6 @@ const benefitsData = [
   },
 ];
 
-// Animation variants defined outside component to prevent recreation
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -67,7 +63,7 @@ const Benefits = ({ className }: BenefitsProps) => {
             return (
               <motion.div
                 key={index}
-                className="flex flex-col items-center text-center bg-black/20 p-6 md:p-8 rounded-2xl border border-white/10 hover:border-primary/50 transition-all duration-300 h-full"
+                className="flex flex-col items-center text-center bg-gradient-to-br from-black/60 to-black/40 p-6 md:p-8 rounded-xl border border-gray-800 hover:border-primary/50 transition-all duration-300 group h-full"
                 variants={itemVariants}
                 whileHover={{ 
                   scale: 1.03,
