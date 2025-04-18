@@ -19,10 +19,10 @@ const ProjectCard = ({
   return (
     <Card 
       className={cn(
-        "bg-[#0A0A0A]/90 border transition-all duration-300 h-full overflow-hidden group",
+        "bg-gradient-to-br from-[#0A0A0A] to-[#1A1F35] border transition-all duration-300 h-full overflow-hidden group",
         isActive 
           ? "border-primary/60 shadow-[0_0_15px_rgba(255,0,153,0.2)]" 
-          : "border-[#1A1A1A] hover:border-primary/30 hover:shadow-[0_0_15px_rgba(255,0,153,0.15)] hover:scale-[1.03]"
+          : "border-[#1A1A1A] hover:border-primary/30"
       )}
     >
       <div className="p-5 h-full flex flex-col">

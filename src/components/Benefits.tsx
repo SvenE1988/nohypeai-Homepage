@@ -1,4 +1,3 @@
-
 import { Clock, TrendingDown, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
@@ -64,14 +63,14 @@ const Benefits = ({ className }: BenefitsProps) => {
             return (
               <motion.div
                 key={index}
-                className="flex flex-col items-center text-center bg-[#0A0A0A]/90 p-6 md:p-8 rounded-xl border border-[#1A1A1A] hover:border-primary/50 hover:shadow-[0_0_15px_rgba(255,0,153,0.15)] transition-all duration-300 group h-full transform hover:scale-[1.03]"
+                className="flex flex-col items-center text-center bg-gradient-to-br from-black/60 to-black/40 p-6 md:p-8 rounded-xl border border-gray-800 hover:border-primary/50 transition-all duration-300 group h-full"
                 variants={itemVariants}
                 whileHover={{ 
                   scale: 1.03,
                   boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
                 }}
               >
-                <div className="bg-[#6B7CFF33] p-4 rounded-full mb-5 md:mb-6 group-hover:bg-primary/20 transition-colors">
+                <div className="bg-[#6B7CFF33] p-4 rounded-2xl mb-5 md:mb-6 group-hover:bg-primary/20 transition-colors">
                   <Icon className="w-7 h-7 md:w-8 md:h-8 text-primary" aria-hidden="true" />
                 </div>
                 <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">

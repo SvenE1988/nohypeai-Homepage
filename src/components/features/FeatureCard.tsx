@@ -17,7 +17,7 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
   return (
     <div className="w-full">
       <motion.div 
-        className="relative w-full rounded-xl overflow-hidden bg-[#0A0A0A]/90 border border-[#1A1A1A] hover:border-primary/50 hover:shadow-[0_0_15px_rgba(255,0,153,0.15)] transition-all duration-300 group transform hover:scale-[1.03]"
+        className="relative w-full rounded-xl overflow-hidden bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 hover:border-primary/50 transition-all duration-300 group hover:scale-[1.03]"
         layout
       >
         {/* Main Card Content */}

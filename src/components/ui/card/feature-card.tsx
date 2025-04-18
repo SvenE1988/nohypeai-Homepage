@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
 import { Info } from "lucide-react";
@@ -41,7 +40,7 @@ const FeatureCard = memo(({ title, benefit, description }: FeatureCardProps) => 
         >
           <Button
             variant="ghost"
-            className="h-full w-full bg-[#0A0A0A]/90 hover:from-primary/20 hover:to-secondary/20 border border-[#1A1A1A] hover:border-primary/50 hover:shadow-[0_0_15px_rgba(255,0,153,0.15)] transition-all duration-300"
+            className="h-full w-full bg-gradient-to-br from-black/60 to-black/40 hover:from-primary/20 hover:to-secondary/20 border border-gray-800 hover:border-primary/50 transition-all duration-300"
             neon={true}
           >
             <div className="flex flex-col gap-2">
