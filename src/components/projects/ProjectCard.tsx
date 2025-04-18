@@ -1,9 +1,9 @@
-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Project } from "./types";
+import { memo } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -11,7 +11,7 @@ interface ProjectCardProps {
   onViewDetails: (project: Project) => void;
 }
 
-const ProjectCard = ({ 
+const ProjectCard = memo(({ 
   project, 
   isActive = false, 
   onViewDetails 
@@ -74,6 +74,6 @@ const ProjectCard = ({
       </div>
     </Card>
   );
-};
+});
 
 export default ProjectCard;

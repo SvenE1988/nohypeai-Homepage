@@ -1,7 +1,6 @@
-
 import { Badge } from "./ui/badge";
 import { AnimatePresence } from "framer-motion";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, memo } from "react";
 import ProjectDetails from "./projects/ProjectDetails";
 import ProjectCard from "./projects/ProjectCard";
 import { Project } from "./projects/types";
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
-const Projects = () => {
+const Projects = memo(() => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -175,6 +174,6 @@ const Projects = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Projects;

@@ -1,5 +1,4 @@
-
-import { ReactNode, useState } from 'react';
+import { ReactNode, useState, memo } from 'react';
 import { LucideIcon } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { fadeInAnimation } from '@/utils/animation';
@@ -16,7 +15,7 @@ interface IndustryCardProps {
   solutions: string[];
 }
 
-const IndustryCard = ({ icon: Icon, title, problem, pain, solutions }: IndustryCardProps) => {
+const IndustryCard = memo(({ icon: Icon, title, problem, pain, solutions }: IndustryCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -68,6 +67,6 @@ const IndustryCard = ({ icon: Icon, title, problem, pain, solutions }: IndustryC
       </BaseCard>
     </motion.div>
   );
-};
+});
 
 export default IndustryCard;

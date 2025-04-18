@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
 import { Info } from "lucide-react";
@@ -62,6 +61,11 @@ const FeatureCard = memo(({ title, benefit, description }: FeatureCardProps) => 
       </motion.div>
     </motion.div>
   );
+}, 
+(prevProps, nextProps) => {
+  return prevProps.title === nextProps.title && 
+         prevProps.benefit === nextProps.benefit && 
+         prevProps.description === nextProps.description;
 });
 
 export default FeatureCard;
