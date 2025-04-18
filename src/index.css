@@ -35,7 +35,7 @@
 
   body {
     @apply bg-black text-foreground font-sans min-h-screen;
-    background: linear-gradient(135deg, rgba(26,31,53,0.97) 0%, rgba(42,47,69,0.97) 50%, rgba(69,49,95,0.97) 100%);
+    background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

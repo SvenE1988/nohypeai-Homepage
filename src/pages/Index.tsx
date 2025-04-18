@@ -55,10 +55,10 @@ const featureData = [
 
 const Index = () => {
   return (
-    <main className="min-h-screen bg-gradient-to-br from-[#1A1F35] via-[#2A2F45] to-[#45315F]">
+    <main className="min-h-screen bg-black">
       <NavHeader />
       <AIFirstSection />
-      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" />
+      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />
