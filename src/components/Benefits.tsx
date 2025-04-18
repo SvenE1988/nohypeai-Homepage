@@ -63,27 +63,25 @@ const Benefits = ({ className }: BenefitsProps) => {
             return (
               <motion.div
                 key={index}
-                className="flex flex-col items-center text-center bg-gradient-to-br from-black/60 to-black/40 p-6 md:p-8 rounded-xl border border-gray-800 hover:border-primary/50 transition-all duration-300 group h-full"
                 variants={itemVariants}
-                whileHover={{ 
-                  scale: 1.03,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
-                }}
+                className="h-full"
               >
-                <div className="bg-[#6B7CFF33] p-4 rounded-2xl mb-5 md:mb-6 group-hover:bg-primary/20 transition-colors">
-                  <Icon className="w-7 h-7 md:w-8 md:h-8 text-primary" aria-hidden="true" />
-                </div>
-                <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">
-                  {benefit.title}
-                </h3>
-                <p className="text-sm md:text-base text-gray-400 leading-relaxed mb-4">
-                  {benefit.description}
-                </p>
-                <div className="mt-auto">
-                  <span className="text-xl md:text-2xl font-bold text-primary">
-                    {benefit.stat}
-                  </span>
-                </div>
+                <BaseCard className="flex flex-col items-center text-center h-full">
+                  <div className="bg-primary/10 p-4 rounded-2xl mb-5 md:mb-6 group-hover:bg-primary/20 transition-colors">
+                    <Icon className="w-7 h-7 md:w-8 md:h-8 text-primary" aria-hidden="true" />
+                  </div>
+                  <h3 className="text-lg md:text-xl font-semibold text-white mb-2 md:mb-3">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-gray-300 leading-relaxed mb-4">
+                    {benefit.description}
+                  </p>
+                  <div className="mt-auto">
+                    <span className="text-xl md:text-2xl font-bold text-primary">
+                      {benefit.stat}
+                    </span>
+                  </div>
+                </BaseCard>
               </motion.div>
             );
           })}
