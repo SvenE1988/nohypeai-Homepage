@@ -1,4 +1,3 @@
-
 import { Proposal, ProposalSection } from "../types";
 import { useSectionOperations } from "../hooks/useSectionOperations";
 import { usePageOperations } from "../hooks/usePageOperations";
@@ -20,7 +19,7 @@ export const usePageEditorLogic = (
     ? pages[effectivePageIndex].sections 
     : [];
   
-  const handleSectionChange = (updatedSection: ProposalSection) => {
+  const updateSectionInPages = (updatedSection: ProposalSection) => {
     let updatedPages = [...pages];
     let foundPage = false;
     
@@ -121,7 +120,7 @@ export const usePageEditorLogic = (
     useCoverPage,
     effectivePageIndex,
     currentPageSections,
-    handleSectionChange,
+    handleSectionChange: updateSectionInPages,
     handleDragEnd,
     addSection,
     removeSection,
