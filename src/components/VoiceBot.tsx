@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Headphones, Mic, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -9,7 +9,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import VoiceBotLoading from "./voice/VoiceBotLoading";
 import VoiceBotError from "./voice/VoiceBotError";
@@ -25,6 +24,8 @@ const VoiceBot = () => {
   const [callStatus, setCallStatus] = useState<CallStatus>("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [messages, setMessages] = useState<CallMessage[]>([]);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
   const addMessage = (text: string, type: CallMessage['type'] = 'status') => {
     setMessages(prev => [...prev, {
@@ -34,6 +35,84 @@ const VoiceBot = () => {
     }]);
   };
 
+  // Cleanup function for media stream and WebSocket
+  const cleanup = () => {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      setStream(null);
+    }
+    if (wsRef.current) {
+      wsRef.current.close();
+      wsRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => cleanup();
+  }, []);
+
+  const getMicrophonePermission = async () => {
+    try {
+      const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      setStream(mediaStream);
+      addMessage("Mikrofonzugriff erfolgreich");
+      return true;
+    } catch (error) {
+      console.error("Mikrofonzugriff fehlgeschlagen:", error);
+      setErrorMessage("Bitte erlauben Sie den Zugriff auf Ihr Mikrofon.");
+      addMessage("Mikrofonzugriff fehlgeschlagen", "error");
+      toast({
+        title: "Fehler",
+        description: "Mikrofonzugriff wurde verweigert.",
+        variant: "destructive",
+      });
+      return false;
+    }
+  };
+
+  const setupWebSocket = (joinUrl: string) => {
+    if (!stream) return;
+
+    try {
+      wsRef.current = new WebSocket(joinUrl);
+      
+      wsRef.current.onopen = () => {
+        setCallStatus("active");
+        addMessage("WebSocket-Verbindung hergestellt");
+        
+        // Senden des Audiostreams über WebSocket
+        const mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = (event) => {
+          if (wsRef.current?.readyState === WebSocket.OPEN) {
+            wsRef.current.send(event.data);
+          }
+        };
+        mediaRecorder.start(100);
+      };
+
+      wsRef.current.onmessage = (event) => {
+        // Hier können wir die eingehenden Audio-Daten verarbeiten
+        console.log("Audio-Daten empfangen");
+      };
+
+      wsRef.current.onerror = (error) => {
+        console.error("WebSocket Fehler:", error);
+        setErrorMessage("Verbindungsfehler aufgetreten");
+        addMessage("WebSocket-Verbindungsfehler", "error");
+      };
+
+      wsRef.current.onclose = () => {
+        setCallStatus("completed");
+        addMessage("Verbindung beendet");
+      };
+
+    } catch (error) {
+      console.error("WebSocket Setup Fehler:", error);
+      setErrorMessage("Fehler beim Verbindungsaufbau");
+      setCallStatus("error");
+    }
+  };
+
   const startVoiceTest = async (selectedUseCase: string) => {
     setIsActive(true);
     setIsLoading(true);
@@ -41,20 +120,44 @@ const VoiceBot = () => {
     setErrorMessage("");
     addMessage("Verbindung wird aufgebaut...");
 
+    // Erst Mikrofonberechtigung einholen
+    const hasMicPermission = await getMicrophonePermission();
+    if (!hasMicPermission) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
       const response = await fetch(
-        `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`,
+        `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed`,
         {
-          method: "GET",
-          'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA',
-          'Content-Type': 'application/json'
+          method: "POST",
+          headers: {
+            'Authorization': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            useCase: selectedUseCase,
+            voice: voice
+          })
         }
       );
 
-      console.log("✅ Webhook ausgelöst.");
+      const data = await response.text();
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const streamUrl = xmlDoc.querySelector("Stream")?.getAttribute("url");
+
+      if (!streamUrl) {
+        throw new Error("Keine Stream-URL in der Antwort gefunden");
+      }
+
+      console.log("✅ Webhook ausgelöst, Stream URL erhalten:", streamUrl);
       addMessage("Webhook erfolgreich ausgelöst");
-      setCallStatus("active");
-      addMessage("Sprachassistent ist bereit");
+      
+      // WebSocket-Verbindung aufbauen
+      setupWebSocket(streamUrl);
+
       toast({
         title: "Verbindung hergestellt",
         description: "Der Sprachassistent ist jetzt aktiv.",
@@ -75,6 +178,7 @@ const VoiceBot = () => {
   };
 
   const stopVoiceTest = () => {
+    cleanup();
     setIsActive(false);
     setIsLoading(false);
     setCallStatus("completed");
