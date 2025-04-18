@@ -1,50 +1,46 @@
 
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 import { Home } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SocialLinks } from "@/components/navigation/SocialLinks";
 import { MobileMenu } from "@/components/navigation/MobileMenu";
 import { DesktopMenu } from "@/components/navigation/DesktopMenu";
-import { useNavigation } from "@/contexts/NavigationContext";
+import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 
+// Main navigation header component
 function NavHeader() {
-  const [position, setPosition] = useState({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
-  
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const { activeSection, navigateTo } = useNavigation();
+  const {
+    position,
+    setPosition,
+    isMobileMenuOpen, 
+    setIsMobileMenuOpen,
+    location,
+    activeSection,
+    navItems,
+    handleNavigation
+  } = useHeaderNavigation();
 
-  const handleNavigation = (item: any, e: React.MouseEvent) => {
-    e.preventDefault();
-    navigateTo(item.href);
-    setIsMobileMenuOpen(false);
-  };
-
-  const navItems = [
-    { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
-    { href: "#nutzen", label: "Nutzen" },
-    { href: "#einsparungen", label: "Rechner" },
-    { href: "#prozess", label: "Prozess" },
-    { href: "#ueber-uns", label: "Über Uns" },
-    { href: "/blog", label: "Blog" }, 
-    { href: "/karriere", label: "Karriere" },
-  ];
+  // Add Home icon to the first item
+  const navItemsWithIcons = navItems.map((item, index) => 
+    index === 0 ? { ...item, icon: <Home className="w-4 h-4" /> } : item
+  );
 
   return (
     <>
+      {/* Social media links - shown on all device sizes */}
       <SocialLinks />
+      
+      {/* Mobile navigation menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
-        navItems={navItems}
+        navItems={navItemsWithIcons}
         handleNavigation={handleNavigation}
       />
+      
+      {/* Desktop navigation menu */}
       <DesktopMenu
-        navItems={navItems}
+        navItems={navItemsWithIcons}
         position={position}
         setPosition={setPosition}
         activeSection={activeSection}

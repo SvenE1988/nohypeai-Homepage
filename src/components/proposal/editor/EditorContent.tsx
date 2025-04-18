@@ -26,23 +26,30 @@ export const EditorContent: React.FC<EditorContentProps> = ({
   handleSectionChange,
   addSection
 }) => {
+  // Render cover page or regular content based on conditions
+  const renderContent = () => {
+    if (useCoverPage && currentPage === 0) {
+      return <CoverPageInfo proposal={proposal} />;
+    }
+    
+    return (
+      <>
+        <SectionList 
+          sections={currentPageSections} 
+          handleDragEnd={handleDragEnd}
+          removeSection={removeSection}
+          onChange={handleSectionChange}
+        />
+        
+        {/* Section adder */}
+        <SectionAdder addSection={addSection} />
+      </>
+    );
+  };
+
   return (
     <div className="h-full overflow-y-auto pr-3">
-      {useCoverPage && currentPage === 0 ? (
-        <CoverPageInfo proposal={proposal} />
-      ) : (
-        <>
-          <SectionList 
-            sections={currentPageSections} 
-            handleDragEnd={handleDragEnd}
-            removeSection={removeSection}
-            onChange={handleSectionChange}
-          />
-          
-          {/* Section adder */}
-          <SectionAdder addSection={addSection} />
-        </>
-      )}
+      {renderContent()}
     </div>
   );
 };

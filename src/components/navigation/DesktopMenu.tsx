@@ -4,14 +4,10 @@ import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
 import { Link } from "react-router-dom";
-import { useNavigation } from "@/contexts/NavigationContext";
+import { NavItem } from "@/hooks/useHeaderNavigation";
 
 interface DesktopMenuProps {
-  navItems: Array<{
-    href: string;
-    label: string;
-    icon?: React.ReactNode;
-  }>;
+  navItems: Array<NavItem>;
   position: {
     left: number;
     width: number;
@@ -21,7 +17,7 @@ interface DesktopMenuProps {
   activeSection: string;
   location: { pathname: string };
   handleNavigation: (
-    item: { href: string; label: string; icon?: React.ReactNode },
+    item: NavItem,
     e: React.MouseEvent
   ) => void;
 }
@@ -34,9 +30,7 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
-  const { resetScrollPosition } = useNavigation();
-
-  // This will handle the home logo click specifically
+  // Handle logo click
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     handleNavigation({ href: '/', label: 'Start' }, e);
@@ -48,7 +42,7 @@ export const DesktopMenu = ({
       onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
-      {/* Logo auf der linken Seite */}
+      {/* Logo */}
       <Link 
         to="/" 
         className="mr-3 pl-2 flex items-center"
@@ -62,6 +56,7 @@ export const DesktopMenu = ({
         />
       </Link>
       
+      {/* Navigation tabs */}
       {navItems.map((item) => (
         <Tab 
           key={item.label}
@@ -70,7 +65,8 @@ export const DesktopMenu = ({
           isActive={
             (activeSection === item.href.replace('#', '') && item.href.startsWith('#')) || 
             (item.href === '/' && location.pathname === '/') ||
-            (item.href === '/blog' && location.pathname === '/blog')
+            (item.href === '/blog' && location.pathname === '/blog') ||
+            (item.href === '/karriere' && location.pathname === '/karriere')
           }
           onClick={(e) => handleNavigation(item, e)}
         >
@@ -80,6 +76,8 @@ export const DesktopMenu = ({
           </span>
         </Tab>
       ))}
+      
+      {/* Animated cursor */}
       <Cursor position={position} />
     </motion.ul>
   );

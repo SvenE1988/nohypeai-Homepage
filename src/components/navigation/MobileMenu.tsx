@@ -3,17 +3,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
+import { NavItem } from "@/hooks/useHeaderNavigation";
 
 interface MobileMenuProps {
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: (value: boolean) => void;
-  navItems: Array<{
-    href: string;
-    label: string;
-    icon?: React.ReactNode;
-  }>;
+  navItems: Array<NavItem>;
   handleNavigation: (
-    item: { href: string; label: string; icon?: React.ReactNode },
+    item: NavItem,
     e: React.MouseEvent
   ) => void;
 }
@@ -42,6 +39,8 @@ export const MobileMenu = ({
       <button
         className="fixed top-4 right-16 z-50 p-2 rounded-full bg-black/70 backdrop-blur-md border border-white/30 md:hidden"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMobileMenuOpen}
       >
         {isMobileMenuOpen ? (
           <X className="w-6 h-6 text-white" />
@@ -57,6 +56,7 @@ export const MobileMenu = ({
           x: isMobileMenuOpen ? "0%" : "100%",
         }}
         className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg md:hidden"
+        aria-hidden={!isMobileMenuOpen}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8">
           {navItems.map((item) => (
