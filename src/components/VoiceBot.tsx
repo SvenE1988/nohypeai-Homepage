@@ -130,7 +130,7 @@ const VoiceBot = () => {
 
     try {
       // Ändere den Aufruf auf GET - entsprechend der n8n-Webhook-Konfiguration
-      const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook-test/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`;
+      const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`;
       
       console.log("Starte Webhook-Aufruf mit URL:", webhookUrl);
       
