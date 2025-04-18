@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { Building, Hotel, Stethoscope, Key, Sun, DoorOpen, Receipt, Briefcase, Building2, GraduationCap, ShoppingBag, UtensilsCrossed, Car, Scale } from 'lucide-react';
+import { Button } from "@/components/ui/button";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import IndustryCard from './IndustryCard';
@@ -185,6 +186,7 @@ const categories = [
 export default function IndustryShowcase() {
   const [activeCategory, setActiveCategory] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [showAll, setShowAll] = useState(false);
 
   const filteredIndustries = useMemo(() => {
     return industries.filter(industry => {
@@ -194,6 +196,8 @@ export default function IndustryShowcase() {
       return matchesCategory && matchesSearch;
     });
   }, [activeCategory, searchQuery]);
+
+  const visibleIndustries = showAll ? filteredIndustries : filteredIndustries.slice(0, 6);
 
   return (
     <section className="py-16">
@@ -227,10 +231,30 @@ export default function IndustryShowcase() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredIndustries.map((industry, index) => (
+          {visibleIndustries.map((industry, index) => (
             <IndustryCard key={index} {...industry} />
           ))}
         </div>
+
+        {filteredIndustries.length > 6 && (
+          <Button
+            variant="ghost"
+            onClick={() => setShowAll(!showAll)}
+            className="w-full mt-8 border border-gray-800 hover:bg-primary/10 text-primary"
+          >
+            {showAll ? (
+              <>
+                Weniger anzeigen
+                <ChevronUp className="ml-2 h-4 w-4" />
+              </>
+            ) : (
+              <>
+                Mehr Branchen anzeigen
+                <ChevronDown className="ml-2 h-4 w-4" />
+              </>
+            )}
+          </Button>
+        )}
       </div>
     </section>
   );
