@@ -1,9 +1,10 @@
 
-import React, { useEffect } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
 import { Link } from "react-router-dom";
+import { useNavigation } from "@/contexts/NavigationContext";
 
 interface DesktopMenuProps {
   navItems: Array<{
@@ -33,17 +34,13 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
-  // Reset scroll position when navigating to home from proposals page
-  useEffect(() => {
-    if (location.pathname === '/' && document.referrer.includes('/proposals')) {
-      window.scrollTo(0, 0);
-      
-      // Force layout recalculation
-      setTimeout(() => {
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
-    }
-  }, [location.pathname]);
+  const { resetScrollPosition } = useNavigation();
+
+  // This will handle the home logo click specifically
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleNavigation({ href: '/', label: 'Start' }, e);
+  };
 
   return (
     <motion.ul
@@ -55,7 +52,7 @@ export const DesktopMenu = ({
       <Link 
         to="/" 
         className="mr-3 pl-2 flex items-center"
-        onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}
+        onClick={handleLogoClick}
       >
         <img 
           src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 

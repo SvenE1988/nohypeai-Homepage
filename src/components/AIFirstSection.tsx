@@ -1,10 +1,12 @@
 
 import { motion } from "framer-motion";
 import { LampContainer } from "./ui/lamp";
-import { useEffect, useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useNavigation } from "@/contexts/NavigationContext";
 
 const AIFirstSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const { previousPath } = useNavigation();
 
   // Reset section position when component mounts
   useEffect(() => {
@@ -12,7 +14,15 @@ const AIFirstSection = () => {
       sectionRef.current.style.transform = 'none';
       sectionRef.current.style.opacity = '1';
     }
-  }, []);
+    
+    // Special handling for when coming from proposals page
+    if (previousPath === '/proposals') {
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        window.dispatchEvent(new Event('resize'));
+      }, 100);
+    }
+  }, [previousPath]);
 
   return (
     <section 
