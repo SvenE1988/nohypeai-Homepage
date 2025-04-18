@@ -1,6 +1,7 @@
+
 import { useMemo, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Building, Key, Stethoscope, Hotel, Sun, DoorOpen, Receipt, Briefcase, Building2, GraduationCap, ShoppingBag, UtensilsCrossed, Car, Scale } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import IndustryCard from './IndustryCard';
