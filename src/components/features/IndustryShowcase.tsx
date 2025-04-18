@@ -141,13 +141,25 @@ export default function IndustryShowcase() {
         <div className="flex flex-col items-center space-y-6 mb-12">
           <Tabs defaultValue="all" value={activeCategory} onValueChange={setActiveCategory}>
             <TabsList className="bg-black/40 border border-gray-800">
-              {categories.map(category => <TabsTrigger key={category.value} value={category.value} className="data-[state=active]:bg-primary/20">
+              {categories.map(category => (
+                <TabsTrigger 
+                  key={category.value} 
+                  value={category.value} 
+                  className="text-white data-[state=active]:bg-primary/20"
+                >
                   {category.label}
-                </TabsTrigger>)}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </Tabs>
 
-          <Input type="search" placeholder="Suche nach Branchen oder Problemen..." className="max-w-md bg-black/40 border-gray-800" value={searchQuery} onChange={e => setSearchQuery(e.target.value)} />
+          <Input 
+            type="search" 
+            placeholder="Suche nach Branchen oder Problemen..." 
+            className="max-w-md bg-black/40 border-gray-800 text-white placeholder-gray-400" 
+            value={searchQuery} 
+            onChange={e => setSearchQuery(e.target.value)} 
+          />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
