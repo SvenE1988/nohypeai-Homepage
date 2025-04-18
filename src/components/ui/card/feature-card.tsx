@@ -1,7 +1,7 @@
-
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/neon-button";
-import { Info } from "lucide-react"; 
+import { Info } from "lucide-react";
+import { memo } from 'react';
 
 interface FeatureCardProps {
   title: string;
@@ -9,7 +9,7 @@ interface FeatureCardProps {
   description: string;
 }
 
-const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
+const FeatureCard = memo(({ title, benefit, description }: FeatureCardProps) => {
   return (
     <motion.div 
       className="relative w-full h-48 perspective group"
@@ -61,6 +61,6 @@ const FeatureCard = ({ title, benefit, description }: FeatureCardProps) => {
       </motion.div>
     </motion.div>
   );
-};
+});
 
 export default FeatureCard;

@@ -1,12 +1,9 @@
-
-"use client";
-
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Home } from "lucide-react";
-import { SocialLinks } from "../navigation/SocialLinks";
-import { MobileMenu } from "../navigation/MobileMenu";
-import { DesktopMenu } from "../navigation/DesktopMenu";
+import { SocialLinks } from "./SocialLinks";
+import { MobileMenu } from "./MobileMenu";
+import { DesktopMenu } from "./DesktopMenu";
 import { useNavigation } from "@/contexts/NavigationContext";
 
 function NavHeader() {
