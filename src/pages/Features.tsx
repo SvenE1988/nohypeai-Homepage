@@ -1,7 +1,7 @@
-
 import NavHeader from "@/components/blocks/nav-header";
 import Footer from "@/components/Footer";
 import FeatureCard from "@/components/features/FeatureCard";
+import IndustryShowcase from "@/components/features/IndustryShowcase";
 
 const featureData = [
   {
@@ -58,6 +58,8 @@ const Features = () => {
           ))}
         </div>
       </div>
+      
+      <IndustryShowcase />
       <Footer />
     </main>
   );
