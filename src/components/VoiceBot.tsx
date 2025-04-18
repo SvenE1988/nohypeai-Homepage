@@ -1,27 +1,30 @@
 
 import React, { useState } from "react";
 import { Headphones } from "lucide-react";
-import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import useVoiceStream from "@/hooks/useVoiceStream";
-import VoiceBotMessages from "@/components/voice/VoiceBotMessages";
-import VoiceBotLoading from "@/components/voice/VoiceBotLoading";
-import VoiceBotError from "@/components/voice/VoiceBotError";
-import VoiceBotControls from "@/components/voice/VoiceBotControls";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 const VoiceBot = () => {
-  const [prompt, setPrompt] = useState(
-    "Du bist ein hilfsbereiter deutscher Sprachassistent für eine KI-Agentur. Begrüße neue Nutzer freundlich, stelle Fragen zu ihren Bedürfnissen und erkläre, wie Sprach-KI helfen kann."
-  );
+  const [useCase, setUseCase] = useState("immobilienmakler");
+  const [isActive, setIsActive] = useState(false);
 
-  const {
-    listening,
-    messages,
-    isLoading,
-    error,
-    startAudioStreaming,
-    stopAudioStreaming
-  } = useVoiceStream({ prompt });
+  const startVoiceTest = (selectedUseCase: string) => {
+    console.log("Starting voice test for use case:", selectedUseCase);
+    setIsActive(true);
+    // This will be implemented with Twilio/UltraVox later
+  };
+
+  const stopVoiceTest = () => {
+    setIsActive(false);
+    // This will be implemented with Twilio/UltraVox later
+  };
 
   return (
     <Card className="w-full max-w-2xl mx-auto bg-black/40 backdrop-blur-sm border-gray-800 hover:border-gray-700 transition-all duration-300">
@@ -31,31 +34,43 @@ const VoiceBot = () => {
           KI-Sprachassistent testen
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-6">
         <div className="space-y-2">
-          <label className="text-sm text-gray-300">System-Prompt:</label>
-          <Textarea
-            className="w-full bg-black/30 border-gray-700 text-white"
-            rows={3}
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            placeholder="System-Prompt eingeben..."
-            disabled={listening}
-          />
+          <label className="text-sm text-gray-300">
+            Bitte wählen Sie einen Anwendungsfall:
+          </label>
+          <Select
+            value={useCase}
+            onValueChange={setUseCase}
+            disabled={isActive}
+          >
+            <SelectTrigger className="w-full bg-black/30 border-gray-700 text-white">
+              <SelectValue placeholder="Wählen Sie einen Anwendungsfall" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="immobilienmakler">Immobilienmakler</SelectItem>
+              <SelectItem value="hausverwaltung">Hausverwaltung</SelectItem>
+              <SelectItem value="support">Technischer Support</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        
-        {isLoading && <VoiceBotLoading />}
-        
-        {error && <VoiceBotError errorMessage={error} />}
-        
-        <VoiceBotControls 
-          listening={listening}
-          isLoading={isLoading}
-          onStart={startAudioStreaming}
-          onStop={stopAudioStreaming}
-        />
 
-        <VoiceBotMessages messages={messages} />
+        {!isActive ? (
+          <Button
+            onClick={() => startVoiceTest(useCase)}
+            className="w-full bg-primary hover:bg-primary/90 text-white py-6"
+          >
+            Test starten
+          </Button>
+        ) : (
+          <Button
+            onClick={stopVoiceTest}
+            variant="destructive"
+            className="w-full py-6"
+          >
+            Test beenden
+          </Button>
+        )}
       </CardContent>
     </Card>
   );
