@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,6 +9,7 @@ import VoiceBotControls from "./voice/VoiceBotControls";
 import VoiceBotSettings from "./voice/VoiceBotSettings";
 import VoiceBotInfo from "./voice/VoiceBotInfo";
 import { useVoiceBot } from "@/hooks/useVoiceBot";
+import { AudioHandler } from "@/utils/audioHandler";
 
 const VoiceBot = () => {
   const {
