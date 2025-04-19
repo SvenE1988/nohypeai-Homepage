@@ -10,6 +10,7 @@ import VoiceBotSettings from "./voice/VoiceBotSettings";
 import VoiceBotInfo from "./voice/VoiceBotInfo";
 import { useVoiceBot } from "@/hooks/useVoiceBot";
 import { AudioHandler } from "@/utils/audioHandler";
+import { supabase } from "@/integrations/supabase/client";
 
 const VoiceBot = () => {
   const {
@@ -145,23 +146,15 @@ const VoiceBot = () => {
     }
 
     try {
-      const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${selectedUseCase}&voice=${voice}`;
-      
-      console.log("Starte Webhook-Aufruf mit URL:", webhookUrl);
-      
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: {
-          'X-API-Key': '2Xq3cVzb.oh3D0uOWcWmM9tzxRsoaK1P2RPsfV41R'
-        }
+      const { data, error } = await supabase.functions.invoke('voice-bot', {
+        body: { useCase: selectedUseCase, voice }
       });
 
-      if (!response.ok) {
-        throw new Error(`Server responded with status: ${response.status}`);
+      if (error) {
+        throw error;
       }
 
-      const data = await response.text();
-      console.log("Webhook response:", data);
+      console.log("Edge function response:", data);
       
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
@@ -172,8 +165,8 @@ const VoiceBot = () => {
         throw new Error("Keine Stream-URL in der Antwort gefunden");
       }
 
-      console.log("✅ Webhook ausgelöst, Stream URL erhalten:", streamUrl);
-      addMessage("Webhook erfolgreich ausgelöst");
+      console.log("✅ Edge Function ausgelöst, Stream URL erhalten:", streamUrl);
+      addMessage("Edge Function erfolgreich ausgelöst");
       
       setupWebSocket(streamUrl);
 

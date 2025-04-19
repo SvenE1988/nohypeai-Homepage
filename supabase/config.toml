@@ -1,1 +1,5 @@
+
 project_id = "srxbztnlitspvqrzqmvv"
+
+[functions.voice-bot]
+verify_jwt = false
