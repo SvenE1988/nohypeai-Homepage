@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -146,12 +147,19 @@ const VoiceBot = () => {
     }
 
     try {
+      console.log("Calling voice-bot Edge Function with params:", { useCase: selectedUseCase, voice });
+      
       const { data, error } = await supabase.functions.invoke('voice-bot', {
         body: { useCase: selectedUseCase, voice }
       });
 
       if (error) {
-        throw error;
+        console.error("Edge Function error:", error);
+        throw new Error(`Edge Function error: ${error.message}`);
+      }
+
+      if (!data) {
+        throw new Error("No data received from Edge Function");
       }
 
       console.log("Edge function response:", data);
