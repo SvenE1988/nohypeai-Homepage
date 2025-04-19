@@ -1,65 +1,40 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Headphones, Mic, Info } from "lucide-react";
+
+import React from "react";
+import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { toast } from "@/components/ui/use-toast";
 import VoiceBotLoading from "./voice/VoiceBotLoading";
 import VoiceBotError from "./voice/VoiceBotError";
 import VoiceBotMessages from "./voice/VoiceBotMessages";
 import VoiceBotControls from "./voice/VoiceBotControls";
-import type { CallStatus, CallMessage } from "@/types/voiceBot";
-import { AudioHandler } from "@/utils/audioHandler";
-import { AudioQueue } from "@/utils/audioQueueManager";
+import VoiceBotSettings from "./voice/VoiceBotSettings";
+import VoiceBotInfo from "./voice/VoiceBotInfo";
+import { useVoiceBot } from "@/hooks/useVoiceBot";
 
 const VoiceBot = () => {
-  const [useCase, setUseCase] = useState("immobilienmakler");
-  const [voice, setVoice] = useState("pia");
-  const [isActive, setIsActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [callStatus, setCallStatus] = useState<CallStatus>("idle");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [messages, setMessages] = useState<CallMessage[]>([]);
-  const [stream, setStream] = useState<MediaStream | null>(null);
-  const wsRef = useRef<WebSocket | null>(null);
-  const audioHandlerRef = useRef<AudioHandler | null>(null);
-  const audioQueueRef = useRef<AudioQueue | null>(null);
-
-  const addMessage = (text: string, type: CallMessage['type'] = 'status') => {
-    setMessages(prev => [...prev, {
-      text,
-      timestamp: new Date(),
-      type
-    }]);
-  };
-
-  const cleanup = () => {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      setStream(null);
-    }
-    if (wsRef.current) {
-      wsRef.current.close();
-      wsRef.current = null;
-    }
-    if (audioHandlerRef.current) {
-      audioHandlerRef.current.stop();
-      audioHandlerRef.current = null;
-    }
-    if (audioQueueRef.current) {
-      audioQueueRef.current.clear();
-    }
-  };
-
-  useEffect(() => {
-    audioQueueRef.current = new AudioQueue();
-    return () => cleanup();
-  }, []);
+  const {
+    useCase,
+    setUseCase,
+    voice,
+    setVoice,
+    isActive,
+    setIsActive,
+    isLoading,
+    setIsLoading,
+    callStatus,
+    setCallStatus,
+    errorMessage,
+    setErrorMessage,
+    messages,
+    setMessages,
+    stream,
+    setStream,
+    wsRef,
+    audioHandlerRef,
+    audioQueueRef,
+    addMessage,
+    cleanup
+  } = useVoiceBot();
 
   const getMicrophonePermission = async () => {
     try {
@@ -78,6 +53,25 @@ const VoiceBot = () => {
       });
       return false;
     }
+  };
+
+  const encodeAudioForAPI = (float32Array: Float32Array): string => {
+    const int16Array = new Int16Array(float32Array.length);
+    for (let i = 0; i < float32Array.length; i++) {
+      const s = Math.max(-1, Math.min(1, float32Array[i]));
+      int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+    }
+    
+    const uint8Array = new Uint8Array(int16Array.buffer);
+    let binary = '';
+    const chunkSize = 0x8000;
+    
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
+      binary += String.fromCharCode.apply(null, Array.from(chunk));
+    }
+    
+    return btoa(binary);
   };
 
   const setupWebSocket = (joinUrl: string) => {
@@ -210,25 +204,6 @@ const VoiceBot = () => {
     addMessage("Sprachdialog beendet");
   };
 
-  const encodeAudioForAPI = (float32Array: Float32Array): string => {
-    const int16Array = new Int16Array(float32Array.length);
-    for (let i = 0; i < float32Array.length; i++) {
-      const s = Math.max(-1, Math.min(1, float32Array[i]));
-      int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-    }
-    
-    const uint8Array = new Uint8Array(int16Array.buffer);
-    let binary = '';
-    const chunkSize = 0x8000;
-    
-    for (let i = 0; i < uint8Array.length; i += chunkSize) {
-      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
-      binary += String.fromCharCode.apply(null, Array.from(chunk));
-    }
-    
-    return btoa(binary);
-  };
-
   return (
     <div className="relative">
       <div className="max-w-sm mx-auto">
@@ -242,58 +217,14 @@ const VoiceBot = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-300">
-                    Anwendungsfall:
-                  </label>
-                  <Select
-                    value={useCase}
-                    onValueChange={setUseCase}
-                    disabled={isActive}
-                  >
-                    <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
-                      <SelectValue placeholder="Wählen Sie einen Anwendungsfall" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
-                      <SelectItem value="immobilienmakler">Immobilienmakler</SelectItem>
-                      <SelectItem value="hausverwaltung">Hausverwaltung</SelectItem>
-                      <SelectItem value="support">Technischer Support</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="text-sm text-gray-300">
-                    KI-Assistent:
-                  </label>
-                  <Select
-                    value={voice}
-                    onValueChange={setVoice}
-                    disabled={isActive}
-                  >
-                    <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
-                      <SelectValue placeholder="Wählen Sie eine Stimme" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
-                      <SelectItem value="pia">🧑‍💼 Pia (freundliche Assistentin)</SelectItem>
-                      <SelectItem value="schneider">👨‍🔧 Herr Schneider (Techniker)</SelectItem>
-                      <SelectItem value="otto">🤖 Agent Otto (neutral, KI-Stil)</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="p-3 bg-black/50 rounded-lg border border-gray-800">
-                <div className="flex items-start gap-2 text-xs text-gray-400">
-                  <Info className="w-4 h-4 text-primary mt-0.5" />
-                  <p>
-                    🔒 Ihre Spracheingabe wird zur Verarbeitung an unsere Server übermittelt. 
-                    Es findet keine dauerhafte Speicherung statt.
-                  </p>
-                </div>
-              </div>
-
+              <VoiceBotSettings 
+                useCase={useCase}
+                setUseCase={setUseCase}
+                voice={voice}
+                setVoice={setVoice}
+                isActive={isActive}
+              />
+              <VoiceBotInfo />
               {isLoading && <VoiceBotLoading />}
               {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
               <VoiceBotMessages messages={messages} />
