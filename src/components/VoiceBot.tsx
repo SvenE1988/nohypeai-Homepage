@@ -152,7 +152,7 @@ const VoiceBot = () => {
       const response = await fetch(webhookUrl, {
         method: "POST",
         headers: {
-          'X-API-Key': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA'
+          'X-API-Key': 'aBCDef.123456'
         }
       });
 
