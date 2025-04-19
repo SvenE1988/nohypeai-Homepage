@@ -29,11 +29,11 @@ serve(async (req) => {
     const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${useCase}&voice=${voice}`
     console.log("Calling webhook URL:", webhookUrl)
     
-    // Change how we send the API key - testing different header format
+    // Send the API key in the X-API-Key header as described in the API documentation
     const response = await fetch(webhookUrl, {
       method: "POST",
       headers: {
-        'Authorization': `Bearer ${apiKey}`,
+        'X-API-Key': apiKey,
         'Content-Type': 'application/json'
       }
     })
