@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from "react";
 import { Headphones, Mic, Info } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,6 +14,8 @@ import VoiceBotError from "./voice/VoiceBotError";
 import VoiceBotMessages from "./voice/VoiceBotMessages";
 import VoiceBotControls from "./voice/VoiceBotControls";
 import type { CallStatus, CallMessage } from "@/types/voiceBot";
+import { AudioHandler } from "@/utils/audioHandler";
+import { AudioQueue } from "@/utils/audioQueueManager";
 
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState("immobilienmakler");
@@ -26,6 +27,8 @@ const VoiceBot = () => {
   const [messages, setMessages] = useState<CallMessage[]>([]);
   const [stream, setStream] = useState<MediaStream | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
+  const audioHandlerRef = useRef<AudioHandler | null>(null);
+  const audioQueueRef = useRef<AudioQueue | null>(null);
 
   const addMessage = (text: string, type: CallMessage['type'] = 'status') => {
     setMessages(prev => [...prev, {
@@ -35,7 +38,6 @@ const VoiceBot = () => {
     }]);
   };
 
-  // Cleanup function for media stream and WebSocket
   const cleanup = () => {
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
@@ -45,9 +47,17 @@ const VoiceBot = () => {
       wsRef.current.close();
       wsRef.current = null;
     }
+    if (audioHandlerRef.current) {
+      audioHandlerRef.current.stop();
+      audioHandlerRef.current = null;
+    }
+    if (audioQueueRef.current) {
+      audioQueueRef.current.clear();
+    }
   };
 
   useEffect(() => {
+    audioQueueRef.current = new AudioQueue();
     return () => cleanup();
   }, []);
 
@@ -80,19 +90,32 @@ const VoiceBot = () => {
         setCallStatus("active");
         addMessage("WebSocket-Verbindung hergestellt");
         
-        // Senden des Audiostreams über WebSocket
-        const mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = (event) => {
+        audioHandlerRef.current = new AudioHandler((audioData) => {
           if (wsRef.current?.readyState === WebSocket.OPEN) {
-            wsRef.current.send(event.data);
+            const base64Audio = encodeAudioForAPI(audioData);
+            wsRef.current.send(JSON.stringify({
+              type: 'input_audio_buffer.append',
+              audio: base64Audio
+            }));
           }
-        };
-        mediaRecorder.start(100);
+        });
+        
+        audioHandlerRef.current.start();
       };
 
-      wsRef.current.onmessage = (event) => {
-        // Hier können wir die eingehenden Audio-Daten verarbeiten
-        console.log("Audio-Daten empfangen");
+      wsRef.current.onmessage = async (event) => {
+        const data = JSON.parse(event.data);
+        
+        if (data.type === 'response.audio.delta') {
+          const binary = atob(data.delta);
+          const bytes = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          await audioQueueRef.current?.addToQueue(bytes);
+        } else if (data.type === 'response.audio_transcript.delta') {
+          addMessage(data.delta, 'info');
+        }
       };
 
       wsRef.current.onerror = (error) => {
@@ -120,7 +143,6 @@ const VoiceBot = () => {
     setErrorMessage("");
     addMessage("Verbindung wird aufgebaut...");
 
-    // Erst Mikrofonberechtigung einholen
     const hasMicPermission = await getMicrophonePermission();
     if (!hasMicPermission) {
       setIsLoading(false);
@@ -134,7 +156,7 @@ const VoiceBot = () => {
       console.log("Starte Webhook-Aufruf mit URL:", webhookUrl);
       
       const response = await fetch(webhookUrl, {
-        method: "POST", // Die Webhook-Konfiguration in n8n verwendet AUCH Post
+        method: "POST",
         headers: {
           'X-API-Key': 'Zg4t2fQ4.XqbgvIjGmSv7W5Ttn6AwiigO60dscvsA'
         }
@@ -159,7 +181,6 @@ const VoiceBot = () => {
       console.log("✅ Webhook ausgelöst, Stream URL erhalten:", streamUrl);
       addMessage("Webhook erfolgreich ausgelöst");
       
-      // WebSocket-Verbindung aufbauen
       setupWebSocket(streamUrl);
 
       toast({
@@ -187,6 +208,25 @@ const VoiceBot = () => {
     setCallStatus("completed");
     setErrorMessage("");
     addMessage("Sprachdialog beendet");
+  };
+
+  const encodeAudioForAPI = (float32Array: Float32Array): string => {
+    const int16Array = new Int16Array(float32Array.length);
+    for (let i = 0; i < float32Array.length; i++) {
+      const s = Math.max(-1, Math.min(1, float32Array[i]));
+      int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+    }
+    
+    const uint8Array = new Uint8Array(int16Array.buffer);
+    let binary = '';
+    const chunkSize = 0x8000;
+    
+    for (let i = 0; i < uint8Array.length; i += chunkSize) {
+      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
+      binary += String.fromCharCode.apply(null, Array.from(chunk));
+    }
+    
+    return btoa(binary);
   };
 
   return (
