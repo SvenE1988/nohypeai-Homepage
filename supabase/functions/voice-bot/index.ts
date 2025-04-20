@@ -23,32 +23,30 @@ serve(async (req) => {
       throw new Error("API key not configured")
     }
 
-    // Call Ultravox API to create a call
-    const response = await fetch('https://api.ultravox.ai/api/calls', {
+    // Construct the correct webhook URL for n8n
+    const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed`
+    
+    // Forward the parameters to the n8n webhook
+    const response = await fetch(webhookURL, {
       method: 'POST',
       headers: {
-        'X-API-Key': apiKey,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'X-API-Key': apiKey
       },
-      body: JSON.stringify({
-        systemPrompt: `Du bist ein ${useCase} Assistent. Deine Aufgabe ist es, Fragen zu beantworten und zu helfen.`,
-        temperature: 0.7,
-        model: "ultravox-70B",
-        voice: voice
-      })
+      body: JSON.stringify({ useCase, voice })
     });
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`Ultravox API responded with status: ${response.status}, error: ${errorText}`);
-      throw new Error(`Ultravox API responded with status: ${response.status}`);
+      console.error(`n8n webhook responded with status: ${response.status}, error: ${errorText}`);
+      throw new Error(`n8n webhook responded with status: ${response.status}`);
     }
 
-    const data = await response.json();
+    const data = await response.text();
     
-    // Return the join URL in the format expected by the frontend
+    // Return the response from n8n which should contain the XML with Stream URL
     return new Response(
-      `<?xml version="1.0" encoding="UTF-8"?><Stream url="${data.joinUrl}"/>`,
+      data,
       {
         headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
       }
