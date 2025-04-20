@@ -9,7 +9,9 @@ export const useUltravoxSession = () => {
 
   useEffect(() => {
     // Initialize session with debug messages enabled
-    sessionRef.current = new UltravoxSession({ experimentalMessages: ["debug"] });
+    sessionRef.current = new UltravoxSession({ 
+      experimentalMessages: new Set(["debug"]) 
+    });
 
     // Listen for status changes
     sessionRef.current.addEventListener('status', (event) => {

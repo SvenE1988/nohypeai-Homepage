@@ -1,131 +1,42 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/components/ui/use-toast";
 import VoiceBotLoading from "./voice/VoiceBotLoading";
 import VoiceBotError from "./voice/VoiceBotError";
 import VoiceBotMessages from "./voice/VoiceBotMessages";
 import VoiceBotControls from "./voice/VoiceBotControls";
 import VoiceBotSettings from "./voice/VoiceBotSettings";
 import VoiceBotInfo from "./voice/VoiceBotInfo";
-import { useVoiceBot } from "@/hooks/useVoiceBot";
-import { supabase } from "@/integrations/supabase/client";
+import { useVoiceBotLogic } from "@/hooks/useVoiceBotLogic";
 import { useUltravoxSession } from "@/hooks/useUltravoxSession";
 
 const VoiceBot = () => {
-  const {
-    useCase,
-    setUseCase,
-    voice,
-    setVoice,
-    isActive,
-    setIsActive,
-    isLoading,
-    setIsLoading,
-    callStatus,
-    setCallStatus,
-    errorMessage,
-    setErrorMessage,
-    messages,
-    addMessage,
-    cleanup
-  } = useVoiceBot();
+  const [useCase, setUseCase] = useState("immobilienmakler");
+  const [voice, setVoice] = useState("pia");
+  const [isActive, setIsActive] = useState(false);
+  const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active' | 'error' | 'completed'>('idle');
 
-  const { session, status } = useUltravoxSession();
+  const { session } = useUltravoxSession();
+  const { 
+    isLoading, 
+    errorMessage, 
+    messages, 
+    startVoiceTest: startTest, 
+    stopVoiceTest: stopTest 
+  } = useVoiceBotLogic();
 
-  const getMicrophonePermission = async () => {
-    try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      addMessage("Mikrofonzugriff erfolgreich");
-      return true;
-    } catch (error) {
-      console.error("Mikrofonzugriff fehlgeschlagen:", error);
-      setErrorMessage("Bitte erlauben Sie den Zugriff auf Ihr Mikrofon.");
-      addMessage("Mikrofonzugriff fehlgeschlagen", "error");
-      toast({
-        title: "Fehler",
-        description: "Mikrofonzugriff wurde verweigert.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  };
-
-  const startVoiceTest = async (selectedUseCase: string) => {
+  const handleStart = async () => {
     setIsActive(true);
-    setIsLoading(true);
-    setCallStatus("connecting");
-    setErrorMessage("");
-    addMessage("Verbindung wird aufgebaut...");
-
-    const hasMicPermission = await getMicrophonePermission();
-    if (!hasMicPermission) {
-      setIsLoading(false);
-      setCallStatus("error");
-      return;
-    }
-
-    try {
-      console.log("Calling voice-bot Edge Function with params:", { useCase: selectedUseCase, voice });
-      
-      // Call the edge function to create the call
-      const { data, error } = await supabase.functions.invoke('voice-bot', {
-        body: { useCase: selectedUseCase, voice }
-      });
-
-      if (error) {
-        throw new Error(`Edge Function error: ${error.message}`);
-      }
-
-      if (!data || !session) {
-        throw new Error("No data received from Edge Function or session not initialized");
-      }
-
-      // Parse the joinUrl from the response
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
-      const streamElement = xmlDoc.querySelector("Stream");
-      const joinUrl = streamElement?.getAttribute("url");
-
-      if (!joinUrl) {
-        throw new Error("Keine Stream-URL in der Antwort gefunden");
-      }
-
-      console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
-      addMessage("Edge Function erfolgreich ausgelöst");
-
-      // Join the call using the Ultravox SDK
-      session.joinCall(joinUrl);
-      setCallStatus("active");
-
-      toast({
-        title: "Verbindung hergestellt",
-        description: "Der Sprachassistent ist jetzt aktiv.",
-      });
-    } catch (error) {
-      console.error("❌ Fehler beim Aufruf:", error);
-      setErrorMessage(`Es gab ein Problem beim Starten des Sprachdialogs: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
-      setCallStatus("error");
-      addMessage(`Fehler beim Verbindungsaufbau: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`, "error");
-      toast({
-        title: "Fehler",
-        description: "Verbindung konnte nicht hergestellt werden.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
+    setCallStatus('connecting');
+    await startTest(useCase, voice, session);
+    setCallStatus('active');
   };
 
-  const stopVoiceTest = async () => {
-    if (session) {
-      await session.leaveCall();
-    }
-    cleanup();
+  const handleStop = async () => {
+    await stopTest(session);
     setIsActive(false);
-    setCallStatus("completed");
-    setErrorMessage("");
-    addMessage("Sprachdialog beendet");
+    setCallStatus('completed');
   };
 
   return (
@@ -156,8 +67,8 @@ const VoiceBot = () => {
                 listening={isActive} 
                 isLoading={isLoading}
                 callStatus={callStatus} 
-                onStart={() => startVoiceTest(useCase)} 
-                onStop={stopVoiceTest} 
+                onStart={handleStart} 
+                onStop={handleStop} 
               />
             </CardContent>
           </Card>
