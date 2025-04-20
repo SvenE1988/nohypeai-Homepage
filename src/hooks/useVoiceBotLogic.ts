@@ -3,14 +3,19 @@ import { useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { UltravoxSession } from 'ultravox-client';
+import type { CallMessage } from '@/types/voiceBot';
 
 export const useVoiceBotLogic = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  const [messages, setMessages] = useState<{ text: string; type?: 'error' | 'status' | 'info' }[]>([]);
+  const [messages, setMessages] = useState<CallMessage[]>([]);
 
   const addMessage = (text: string, type: 'error' | 'status' | 'info' = 'status') => {
-    setMessages(prev => [...prev, { text, type }]);
+    setMessages(prev => [...prev, { 
+      text, 
+      type, 
+      timestamp: new Date() 
+    }]);
   };
 
   const getMicrophonePermission = async () => {
