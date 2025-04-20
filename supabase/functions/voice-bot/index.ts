@@ -14,8 +14,19 @@ serve(async (req) => {
   try {
     const { useCase, voice } = await req.json()
     
+    // Validate input parameters
+    if (!useCase) {
+      console.error("Missing required parameter: useCase")
+      throw new Error("Missing required parameter: useCase")
+    }
+    
+    if (!voice) {
+      console.error("Missing required parameter: voice")
+      throw new Error("Missing required parameter: voice")
+    }
+    
     // Log the incoming request parameters
-    console.log("Received request with useCase:", useCase, "and voice:", voice)
+    console.log(`Processing request with useCase: "${useCase}" and voice: "${voice}"`)
 
     const apiKey = Deno.env.get('WEBHOOK_API_KEY')
     if (!apiKey) {
@@ -25,6 +36,8 @@ serve(async (req) => {
 
     // Construct the correct webhook URL for n8n with the new webhook ID
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
+    
+    console.log(`Forwarding request to n8n webhook: ${webhookURL}`)
     
     // Forward the parameters to the n8n webhook
     const response = await fetch(webhookURL, {
@@ -43,6 +56,9 @@ serve(async (req) => {
     }
 
     const data = await response.text();
+    
+    // Log successful response (truncated to avoid large logs)
+    console.log(`Received successful response from n8n webhook. First 100 chars: ${data.substring(0, 100)}...`);
     
     // Return the response from n8n which should contain the XML with Stream URL
     return new Response(
