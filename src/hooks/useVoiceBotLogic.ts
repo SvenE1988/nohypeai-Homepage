@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -49,7 +48,7 @@ export const useVoiceBotLogic = () => {
 
     try {
       console.log("Calling voice-bot Edge Function with params:", { useCase: selectedUseCase, voice });
-      
+
       const { data, error } = await supabase.functions.invoke('voice-bot', {
         body: { useCase: selectedUseCase, voice }
       });
@@ -62,13 +61,10 @@ export const useVoiceBotLogic = () => {
         throw new Error("No data received from Edge Function or session not initialized");
       }
 
-      const parser = new DOMParser();
-      const xmlDoc = parser.parseFromString(data, "text/xml");
-      const streamElement = xmlDoc.querySelector("Stream");
-      const joinUrl = streamElement?.getAttribute("url");
+      const joinUrl = data?.joinUrl;
 
       if (!joinUrl) {
-        throw new Error("Keine Stream-URL in der Antwort gefunden");
+        throw new Error("Keine joinUrl in der Antwort enthalten.");
       }
 
       console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
