@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,8 +9,8 @@ import VoiceBotControls from "./voice/VoiceBotControls";
 import VoiceBotSettings from "./voice/VoiceBotSettings";
 import VoiceBotInfo from "./voice/VoiceBotInfo";
 import { useVoiceBot } from "@/hooks/useVoiceBot";
-import { AudioHandler } from "@/utils/audioHandler";
 import { supabase } from "@/integrations/supabase/client";
+import { useUltravoxSession } from "@/hooks/useUltravoxSession";
 
 const VoiceBot = () => {
   const {
@@ -28,20 +27,15 @@ const VoiceBot = () => {
     errorMessage,
     setErrorMessage,
     messages,
-    setMessages,
-    stream,
-    setStream,
-    wsRef,
-    audioHandlerRef,
-    audioQueueRef,
     addMessage,
     cleanup
   } = useVoiceBot();
 
+  const { session, status } = useUltravoxSession();
+
   const getMicrophonePermission = async () => {
     try {
       const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      setStream(mediaStream);
       addMessage("Mikrofonzugriff erfolgreich");
       return true;
     } catch (error) {
@@ -54,81 +48,6 @@ const VoiceBot = () => {
         variant: "destructive",
       });
       return false;
-    }
-  };
-
-  const encodeAudioForAPI = (float32Array: Float32Array): string => {
-    const int16Array = new Int16Array(float32Array.length);
-    for (let i = 0; i < float32Array.length; i++) {
-      const s = Math.max(-1, Math.min(1, float32Array[i]));
-      int16Array[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
-    }
-    
-    const uint8Array = new Uint8Array(int16Array.buffer);
-    let binary = '';
-    const chunkSize = 0x8000;
-    
-    for (let i = 0; i < uint8Array.length; i += chunkSize) {
-      const chunk = uint8Array.subarray(i, Math.min(i + chunkSize, uint8Array.length));
-      binary += String.fromCharCode.apply(null, Array.from(chunk));
-    }
-    
-    return btoa(binary);
-  };
-
-  const setupWebSocket = (joinUrl: string) => {
-    if (!stream) return;
-
-    try {
-      wsRef.current = new WebSocket(joinUrl);
-      
-      wsRef.current.onopen = () => {
-        setCallStatus("active");
-        addMessage("WebSocket-Verbindung hergestellt");
-        
-        audioHandlerRef.current = new AudioHandler((audioData) => {
-          if (wsRef.current?.readyState === WebSocket.OPEN) {
-            const base64Audio = encodeAudioForAPI(audioData);
-            wsRef.current.send(JSON.stringify({
-              type: 'input_audio_buffer.append',
-              audio: base64Audio
-            }));
-          }
-        });
-        
-        audioHandlerRef.current.start();
-      };
-
-      wsRef.current.onmessage = async (event) => {
-        const data = JSON.parse(event.data);
-        
-        if (data.type === 'response.audio.delta') {
-          const binary = atob(data.delta);
-          const bytes = new Uint8Array(binary.length);
-          for (let i = 0; i < binary.length; i++) {
-            bytes[i] = binary.charCodeAt(i);
-          }
-          await audioQueueRef.current?.addToQueue(bytes);
-        } else if (data.type === 'response.audio_transcript.delta') {
-          addMessage(data.delta, 'info');
-        }
-      };
-
-      wsRef.current.onerror = (error) => {
-        console.error("WebSocket Fehler:", error);
-        setErrorMessage("Verbindungsfehler aufgetreten");
-        addMessage("WebSocket-Verbindungsfehler", "error");
-      };
-
-      wsRef.current.onclose = () => {
-        setCallStatus("completed");
-        addMessage("Verbindung beendet");
-      };
-
-    } catch (error) {
-      console.error("WebSocket Setup Fehler:", error);
-      setErrorMessage("Fehler beim Verbindungsaufbau");
-      setCallStatus("error");
     }
   };
 
@@ -149,34 +68,35 @@ const VoiceBot = () => {
     try {
       console.log("Calling voice-bot Edge Function with params:", { useCase: selectedUseCase, voice });
       
+      // Call the edge function to create the call
       const { data, error } = await supabase.functions.invoke('voice-bot', {
         body: { useCase: selectedUseCase, voice }
       });
 
       if (error) {
-        console.error("Edge Function error:", error);
         throw new Error(`Edge Function error: ${error.message}`);
       }
 
-      if (!data) {
-        throw new Error("No data received from Edge Function");
+      if (!data || !session) {
+        throw new Error("No data received from Edge Function or session not initialized");
       }
 
-      console.log("Edge function response:", data);
-      
+      // Parse the joinUrl from the response
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
       const streamElement = xmlDoc.querySelector("Stream");
-      const streamUrl = streamElement?.getAttribute("url");
+      const joinUrl = streamElement?.getAttribute("url");
 
-      if (!streamUrl) {
+      if (!joinUrl) {
         throw new Error("Keine Stream-URL in der Antwort gefunden");
       }
 
-      console.log("✅ Edge Function ausgelöst, Stream URL erhalten:", streamUrl);
+      console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
       addMessage("Edge Function erfolgreich ausgelöst");
-      
-      setupWebSocket(streamUrl);
+
+      // Join the call using the Ultravox SDK
+      session.joinCall(joinUrl);
+      setCallStatus("active");
 
       toast({
         title: "Verbindung hergestellt",
@@ -197,7 +117,10 @@ const VoiceBot = () => {
     }
   };
 
-  const stopVoiceTest = () => {
+  const stopVoiceTest = async () => {
+    if (session) {
+      await session.leaveCall();
+    }
     cleanup();
     setIsActive(false);
     setCallStatus("completed");

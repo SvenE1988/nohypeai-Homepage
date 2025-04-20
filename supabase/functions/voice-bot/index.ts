@@ -7,7 +7,6 @@ const corsHeaders = {
 }
 
 serve(async (req) => {
-  // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -18,46 +17,50 @@ serve(async (req) => {
     // Log the incoming request parameters
     console.log("Received request with useCase:", useCase, "and voice:", voice)
 
-    // Check if we have the API key
     const apiKey = Deno.env.get('WEBHOOK_API_KEY')
     if (!apiKey) {
       console.error("No WEBHOOK_API_KEY found in environment")
       throw new Error("API key not configured")
     }
 
-    // Call the webhook with the API key securely stored in Edge Function
-    const webhookUrl = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed?useCase=${useCase}&voice=${voice}`
-    console.log("Calling webhook URL:", webhookUrl)
-    
-    // Send the API key in the X-API-Key header as described in the API documentation
-    const response = await fetch(webhookUrl, {
-      method: "POST",
+    // Call Ultravox API to create a call
+    const response = await fetch('https://api.ultravox.ai/api/calls', {
+      method: 'POST',
       headers: {
         'X-API-Key': apiKey,
         'Content-Type': 'application/json'
-      }
-    })
+      },
+      body: JSON.stringify({
+        systemPrompt: `Du bist ein ${useCase} Assistent. Deine Aufgabe ist es, Fragen zu beantworten und zu helfen.`,
+        temperature: 0.7,
+        model: "ultravox-70B",
+        voice: voice
+      })
+    });
 
     if (!response.ok) {
-      const errorText = await response.text()
-      console.error(`Webhook responded with status: ${response.status}, error: ${errorText}`)
-      throw new Error(`Webhook responded with status: ${response.status}`)
+      const errorText = await response.text();
+      console.error(`Ultravox API responded with status: ${response.status}, error: ${errorText}`);
+      throw new Error(`Ultravox API responded with status: ${response.status}`);
     }
 
-    const data = await response.text()
-    console.log("Webhook response received successfully")
-
-    return new Response(data, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
-    })
+    const data = await response.json();
+    
+    // Return the join URL in the format expected by the frontend
+    return new Response(
+      `<?xml version="1.0" encoding="UTF-8"?><Stream url="${data.joinUrl}"/>`,
+      {
+        headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
+      }
+    );
   } catch (error) {
-    console.error("Error in Edge Function:", error)
+    console.error("Error in Edge Function:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
-    )
+    );
   }
 })
