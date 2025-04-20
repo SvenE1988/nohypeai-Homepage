@@ -23,8 +23,8 @@ serve(async (req) => {
       throw new Error("API key not configured")
     }
 
-    // Construct the correct webhook URL for n8n
-    const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/0c5e538a-90c7-4a40-a201-3a3062a205ed`
+    // Construct the correct webhook URL for n8n with the new webhook ID
+    const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
     // Forward the parameters to the n8n webhook
     const response = await fetch(webhookURL, {
