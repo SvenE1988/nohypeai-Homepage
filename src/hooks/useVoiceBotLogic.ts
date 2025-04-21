@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -70,6 +71,24 @@ export const useVoiceBotLogic = () => {
       console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
       addMessage("Edge Function erfolgreich ausgelöst");
 
+      // Add session status listener
+      session.addEventListener('status', (event) => {
+        console.log('Session status changed:', session.status);
+        addMessage(`Session Status: ${session.status}`, 'info');
+      });
+
+      // Add transcript listener
+      session.addEventListener('transcripts', () => {
+        if (session) {
+          console.log('Neue Transkripte verfügbar:', session.transcripts);
+        }
+      });
+
+      // Add debug message listener
+      session.addEventListener('experimental_message', (msg) => {
+        console.log('Debug message:', JSON.stringify(msg));
+      });
+
       session.joinCall(joinUrl);
 
       toast({
@@ -92,10 +111,22 @@ export const useVoiceBotLogic = () => {
 
   const stopVoiceTest = async (session: UltravoxSession | null) => {
     if (session) {
-      await session.leaveCall();
+      try {
+        // Mute microphone before leaving
+        session.muteMic();
+        console.log("Mikrofon deaktiviert");
+        
+        // Leave the call
+        await session.leaveCall();
+        console.log("Sprachdialog beendet");
+        
+        addMessage("Sprachdialog beendet");
+        setErrorMessage('');
+      } catch (error) {
+        console.error("Fehler beim Beenden des Sprachdialogs:", error);
+        addMessage("Fehler beim Beenden des Sprachdialogs", "error");
+      }
     }
-    addMessage("Sprachdialog beendet");
-    setErrorMessage('');
   };
 
   return {
