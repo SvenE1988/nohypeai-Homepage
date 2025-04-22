@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
@@ -65,7 +66,7 @@ const ProjectCard = memo(({
         </p>
         <Button 
           variant="ghost" 
-          className="mt-auto self-start group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
+          className="mt-auto self-start text-primary group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
           onClick={() => onViewDetails(project)}
         >
           Details anzeigen
@@ -77,3 +78,4 @@ const ProjectCard = memo(({
 });
 
 export default ProjectCard;
+
