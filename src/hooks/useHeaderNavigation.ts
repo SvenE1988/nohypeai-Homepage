@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigation } from '@/contexts/NavigationContext';
@@ -9,40 +10,37 @@ export type NavItem = {
 };
 
 export function useHeaderNavigation() {
-  // State for the desktop navigation cursor position
+  // State für die Desktop-Navigation
   const [position, setPosition] = useState({
     left: 0,
     width: 0,
     opacity: 0,
   });
   
-  // State for mobile menu
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  
-  // Get current location and navigation context
   const location = useLocation();
   const { activeSection, navigateTo, resetScrollPosition } = useNavigation();
 
-  // Updated navigation items with Live Tests
+  // Neue Navigation inklusive Über Uns & FAQ
   const navItems = [
     { href: "/", label: "Start" },
     { href: "/live-tests", label: "Live Tests" },
     { href: "#nutzen", label: "Nutzen" },
     { href: "#einsparungen", label: "Rechner" },
     { href: "#prozess", label: "Prozess" },
-    { href: "#ueber-uns", label: "Über Uns" },
+    { href: "/ueber-uns", label: "Über uns" },
+    { href: "/faq", label: "FAQ" },
+    { href: "#ueber-uns", label: "Über Uns (alt)" },
     { href: "/blog", label: "Blog" }, 
     { href: "/karriere", label: "Karriere" },
   ];
 
-  // Handle navigation click
   const handleNavigation = (item: NavItem, e: React.MouseEvent) => {
     e.preventDefault();
     navigateTo(item.href);
     setIsMobileMenuOpen(false);
   };
 
-  // Handle logo click
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     handleNavigation({ href: '/', label: 'Start' }, e);

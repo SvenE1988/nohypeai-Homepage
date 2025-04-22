@@ -30,6 +30,8 @@ const LiveTests = lazy(() => import("./pages/LiveTests"));
 const ProposalGenerator = lazy(() => import("./pages/ProposalGenerator"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Archiv = lazy(() => import("./pages/Archiv"));
+const UeberUns = lazy(() => import("./pages/UeberUns"));
+const FAQPage = lazy(() => import("./pages/FAQPage"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -78,6 +80,8 @@ const App = () => (
                       } 
                     />
                     <Route path="/archiv" element={<Archiv />} />
+                    <Route path="/ueber-uns" element={<UeberUns />} />
+                    <Route path="/faq" element={<FAQPage />} />
                     <Route path="/404" element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/404" replace />} />
                   </Routes>
