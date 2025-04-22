@@ -42,7 +42,7 @@ const DigitalizationComparison = () => {
               Das Hindernis
             </h3>
             <p className="text-gray-300 text-base sm:text-lg">
-              In vielen Unternehmen türmen sich Anrufe und E‑Mail‑Anfragen, während Dein Team mit zeitraubenden Routinen kämpft. Leads landen oft unbeantwortet im Postfach oder auf dem Anrufbeantworter, weil niemand sofort reagiert, und wertvolle Chancen gehen verloren. Gleichzeitig binden Standardfragen zu Öffnungszeiten, Preisen oder Verfügbarkeiten täglich mehrere Stunden Support‑Kapazität – Kapazität, die Dir für echtes Wachstum fehlt. Protokolle und Gesprächsnotizen liegen in unterschiedlichen Excel‑Listen oder handschriftlichen Zetteln und lassen sich kaum nachverfolgen. Statt proaktiv zu agieren, reagiert Ihr nur auf akuten Druck, wenn sich verärgerte Kunden melden oder Deadlines verstreichen. Genau hier entsteht der Stress, der Dein Team ausbremst und Deine Kunden frustriert.
+              In kleinen Unternehmen türmen sich Anrufe und E‑Mail‑Anfragen, während Dein Team mit manuellen Routinen kämpft: Leads bleiben unbeantwortet, Standardfragen (Öffnungszeiten, Preise etc.) binden täglich Stunden, und Gesprächsnotizen liegen verstreut in Excel‑Listen oder Zetteln. Proaktive Betreuung bleibt so auf der Strecke und akute Probleme sorgen für Stress und unzufriedene Kunden.
             </p>
           </div>
           {/* Rechte Kachel: Zum Ziel mit Sprachbots & OfficePiloten */}
@@ -58,7 +58,7 @@ const DigitalizationComparison = () => {
               Zum Ziel mit Sprachbots &amp; OfficePiloten
             </h3>
             <p className="text-gray-100 text-base sm:text-lg">
-              Mit unseren Sprachbots nimmst Du jeden Anruf sofort automatisch an und qualifizierst Leads binnen weniger Minuten, indem Du Budget, Bedarf und Terminwünsche abfragst – ohne, dass jemand von Deinem Team ans Telefon muss. Routinethemen wie FAQs zu Öffnungszeiten, Preisen oder Services beantwortet Dein Bot 24/7, während echte Anfragen automatisch als saubere Tickets in Dein System gelangen. Gleichzeitig übernimmt dein OfficePilot einfache Back‑Office‑Aufgaben auf Knopfdruck: Er erstellt passgenaue Angebote, fasst Zoom‑ und Teams‑Meetings in klaren Summaries mit Action‑Items zusammen und liefert kompakte Research‑Guides mit allen relevanten Kundendaten. So sparst Du nicht nur Stunden manueller Nacharbeit, sondern sorgst auch für konsistente, fehlerfreie Abläufe. So wird Dein Unternehmen agiler, effektiver und perfekt vorbereitet, um jeden Kundenkontakt zu einem Erfolgserlebnis zu machen.
+              Sprachbots nehmen 24/7 jeden Anruf an, qualifizieren Leads in wenigen Minuten und filtern Routinefragen automatisch heraus. Dein OfficePilot erstellt per Knopfdruck Angebote, fasst Meetings in klaren Summaries mit Action‑Items zusammen und liefert kompakte Research‑Guides. So sparst Du Stunden manueller Nacharbeit, sorgst für konsistente Abläufe und machst jeden Kundenkontakt zum Erfolgserlebnis.
             </p>
           </div>
         </div>
