@@ -1,3 +1,5 @@
+
+import React, { useEffect } from "react";
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import {
@@ -6,6 +8,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Skeleton } from "@/components/ui/skeleton";
+import { getOptimizedImageProps } from "@/utils/optimizedImage";
+import { Loader2 } from "lucide-react";
 
 const faq = [
   {
@@ -142,32 +147,88 @@ const faq = [
 ];
 
 export default function FAQPage() {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  // Simulate content loaded state
+  useEffect(() => {
+    // Immediate loading state to avoid flash of loading UI in most cases
+    if (document.readyState === 'complete') {
+      setIsLoaded(true);
+    } else {
+      // Add listener for slower connections
+      const handleLoad = () => setIsLoaded(true);
+      window.addEventListener('load', handleLoad);
+      
+      // Set a backup timeout to ensure UI eventually shows
+      const timer = setTimeout(() => setIsLoaded(true), 1000);
+      
+      return () => {
+        window.removeEventListener('load', handleLoad);
+        clearTimeout(timer);
+      };
+    }
+  }, []);
+
+  // Hero image with optimized loading
+  const heroImageProps = getOptimizedImageProps({
+    src: "/placeholder.svg", // This uses the existing placeholder
+    alt: "FAQ section hero image",
+    width: 1200,
+    height: 400,
+    priority: true, // Load with high priority as it's above the fold
+    className: "hidden lg:block absolute -z-10 opacity-5 top-0 right-0 w-2/3"
+  });
+
   return (
     <main className="min-h-screen bg-black w-full overflow-x-hidden">
       <NavHeader />
+      
+      {/* Hero image with low opacity as background decoration */}
+      {isLoaded ? (
+        <img {...heroImageProps} />
+      ) : null}
+      
       <section className="max-w-3xl mx-auto py-20 px-4">
         <h1 className="text-4xl font-bold text-white mb-4 text-center">Häufig gestellte Fragen</h1>
         <p className="text-gray-400 mb-8 text-center">Antworten rund um unsere KI‑Lösungen – kurz, klar, ehrlich.</p>
-        <Accordion
-          type="single"
-          collapsible
-          className="rounded-xl shadow-lg bg-gradient-to-br from-[#1a1f2c] via-[#20243a] to-[#181633] border border-[#232244] space-y-3 p-2"
-        >
-          {faq.map((entry, i) => (
-            <AccordionItem
-              key={i}
-              value={"item" + i}
-              className="rounded-lg bg-black/30 border border-white/10 transition-shadow hover:shadow-md"
-            >
-              <AccordionTrigger className="px-6 py-3 text-lg text-white font-medium hover:text-primary">
-                {entry.question}
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-base text-white">
-                {entry.answer}
-              </AccordionContent>
-            </AccordionItem>
-          ))}
-        </Accordion>
+        
+        {isLoaded ? (
+          <Accordion
+            type="single"
+            collapsible
+            className="rounded-xl shadow-lg bg-gradient-to-br from-[#1a1f2c] via-[#20243a] to-[#181633] border border-[#232244] space-y-3 p-2"
+          >
+            {faq.map((entry, i) => (
+              <AccordionItem
+                key={i}
+                value={"item" + i}
+                className="rounded-lg bg-black/30 border border-white/10 transition-shadow hover:shadow-md"
+              >
+                <AccordionTrigger className="px-6 py-3 text-lg text-white font-medium hover:text-primary">
+                  {entry.question}
+                </AccordionTrigger>
+                <AccordionContent className="px-6 pb-4 text-base text-white">
+                  {entry.answer}
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        ) : (
+          // Skeleton loader for accordion
+          <div className="space-y-3 p-2">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="rounded-lg border border-white/10 p-4">
+                <div className="flex items-center justify-between">
+                  <Skeleton className="h-6 w-3/4 bg-gray-700/30" />
+                  <Skeleton className="h-4 w-4 rounded-full bg-gray-700/30" />
+                </div>
+              </div>
+            ))}
+            <div className="flex justify-center mt-8">
+              <Loader2 className="h-8 w-8 text-primary animate-spin" />
+            </div>
+          </div>
+        )}
       </section>
       <Footer />
     </main>
