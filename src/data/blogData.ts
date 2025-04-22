@@ -1,4 +1,3 @@
-
 export interface BlogPost {
   title: string;
   excerpt: string;
@@ -33,7 +32,20 @@ export const blogPosts: BlogSection[] = [
         date: "5. August 2024",
         category: "Praxistipps",
         tags: ["KI-Projekte", "noHype AI", "Zusammenarbeit", "Insights"],
-        content: "Mein Name ist Sven – ich bin Gründer von noHype.ai. Mein beruflicher Hintergrund liegt in der Versorgungstechnik, wo ich viele Jahre als Projektleiter gearbeitet habe. Parallel dazu habe ich umfangreiche Vertriebserfahrung gesammelt – unter anderem in den Bereichen Finanzen, Coaching und Training. Was mich über all die Jahre begleitet hat, ist ein Thema: Ich habe schon immer nach Wegen gesucht, Prozesse schlanker, effizienter und für Menschen leichter handhabbar zu machen.\n\nDie Entstehung von noHype.ai:\nAls der große Hype um KI losging, vor allem getrieben durch Tools wie ChatGPT, war ich neugierig – aber auch skeptisch. Denn ich hatte schon vor dem KI-Zeitalter Anfragen aus meinem Netzwerk bekommen: \"Sven, kannst du uns helfen, diesen Prozess einfacher zu machen?\" Mein Skill war gefragt – nicht wegen des Hypes, sondern wegen der konkreten Wirkung. Genau deshalb habe ich meine Firma noHype.ai genannt: Ein Statement gegen Buzzwords und Bullshit. Ich will provozieren – aber positiv. Denn KI ist kein Hype – sie ist ein Werkzeug, das, richtig eingesetzt, echten Nutzen bringt.\n\nDer Projektablauf:\nBei noHype.ai legen wir Wert auf klare Kommunikation und realistische Erwartungen. Wir beginnen jedes Projekt mit einem persönlichen Gespräch – oft starte ich mit Fragen wie: \"Was nervt dich an deinen Abläufen?\" Dann bauen wir gemeinsam ein Setup, das wirklich passt.\n\nHerausforderungen und Zusammenarbeit:\nNicht jedes KI-Projekt ist ein Selbstläufer. Es gibt Unsicherheiten, technische Hürden und manchmal auch Angst vor Veränderung. Ich sehe meine Rolle darin, genau hier anzusetzen: Zuhören, erklären – und dann ins Umsetzen kommen. Denn nichts motiviert mehr als das Gefühl: \"Es funktioniert. Und es ist einfacher als vorher.\"",
+        content: `Meine Reise zu NoHypeAI
+
+Schon während meiner Zeit als Projektleiter in einem Ingenieurbüro für Erneuerbare Energien merkte ich, wie viele Stunden sinnlos in Routineaufgaben versickern. Als ich 2017 bei tecis in den B2B‑Vertrieb einstieg, war das nicht anders: Vertriebsprozesse quollen über vor sich wiederholenden Tasks, und ich erwischte mich immer wieder dabei, den Kolleg:innen einfache Software‑Tricks beizubringen, um E‑Mail‑Workflows und CRM‑Manöver zu beschleunigen. Schon damals wurde mir klar: Selbst kleine Automationen sparen im Monat Dutzende Stunden.
+
+Parallel dazu habe ich tief in der Energiebranche Fuß gefasst: Vom Verkauf von Photovoltaik- und Wärmepumpen‑Anlagen bis zur Konzeption von Mieterstrom‑Lösungen bei Solarize in Stuttgart. In über zehn Jahren Sales‑Erfahrung – mehr als 400 gewonnene Kunden und über 1.000 Erstgespräche – habe ich gesehen, wie stark sich Effizienz und Kundenzufriedenheit gegenseitig beflügeln. Dabei war es nie mein Ziel, Menschen durch Technik zu ersetzen, sondern ihnen durch smarte Tools mehr Freiraum für das Wesentliche zu geben.
+
+Mitte 2023 erlebte ich meinen bisher größten Aha‑Moment: Für Wesa Solar automatisierten wir den kompletten Angebotsprozess zur Konfiguration von Photovoltaik‑Anlagen. Statt stundenlanger Datenerfassung genügte ein einziger Klick – und ein Innendienst­mitarbeiter gewann plötzlich 8–15 Stunden pro Woche zurück. Dieses Ergebnis war kein „Nice‑to‑have“, sondern handfeste Entlastung und die perfekte Blaupause für praxisnahe Automatisierung.
+
+Als dann im Frühjahr 2023 die ersten GPT‑Modelle von OpenAI verfügbar wurden, wusste ich: Wir stehen am Beginn einer neuen Ära. Plötzlich ging es nicht mehr nur um Standard‑Routinen, sondern um echte Sprach‑Intelligenz. Ich begann, Chatbots und Voice‑Agents auf Basis dieser Modelle zu entwickeln – vom LeadBooster, der in Sekundenschnelle qualifiziert und Termine bucht, bis zum SurveyBot, der rund um die Uhr Anrufe filtert und transkribiert.
+
+Aus all diesen Erfahrungen ist meine No‑Hype‑Philosophie entstanden: KI muss einfach sein, schnell umsetzbar und wirkungsvoll. Keine Buzzwords, sondern klare Roadmaps und faire Preise. Ob LeadBooster, SurveyBot oder OfficePilot – jede Lösung ist Plug & Play und liefert sofort sichtbare KPI‑Steigerungen.
+
+Privat lebe ich in Karlsruhe mit meiner Frau Valentina und unserem kleinen Sohn Mike. Ich weiß, wie wertvoll jede gewonnene Stunde ist – für Familie und Kreativität.  Genau dieser Tatendrang treibt mich an. Denn am Ende geht es nicht um Technik um ihrer selbst willen, sondern darum, Menschen echte Freiräume zu verschaffen.
+`,
         customSlug: "insights-nohype-gruender-sven"
       },
       {
