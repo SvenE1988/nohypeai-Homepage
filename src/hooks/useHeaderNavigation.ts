@@ -21,17 +21,13 @@ export function useHeaderNavigation() {
   const location = useLocation();
   const { activeSection, navigateTo, resetScrollPosition } = useNavigation();
 
-  // Neue Navigation inklusive Über Uns & FAQ
+  // Neue Navigation laut Anweisung
   const navItems = [
-    { href: "/", label: "Start" },
-    { href: "/live-tests", label: "Live Tests" },
-    { href: "#nutzen", label: "Nutzen" },
-    { href: "#einsparungen", label: "Rechner" },
-    { href: "#prozess", label: "Prozess" },
+    { href: "/live-tests", label: "Sprach-KI" },
+    { href: "/automatisierung", label: "Automatisierung" },
+    { href: "/blog", label: "Blog" }, 
     { href: "/ueber-uns", label: "Über uns" },
     { href: "/faq", label: "FAQ" },
-    { href: "#ueber-uns", label: "Über Uns (alt)" },
-    { href: "/blog", label: "Blog" }, 
     { href: "/karriere", label: "Karriere" },
   ];
 

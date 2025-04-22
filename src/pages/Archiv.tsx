@@ -6,6 +6,10 @@ import FeatureCard from "@/components/features/FeatureCard";
 import IndustryShowcase from "@/components/features/IndustryShowcase";
 import SavingsCalculator from "../components/SavingsCalculator";
 import FAQ from "../components/FAQ";
+import Process from "../components/Process";
+import About from "../components/About";
+import TechStack from "../components/TechStack";
+import Testimonials from "../components/Testimonials";
 
 // Dummy-Daten für den FeatureCard (nur für die Ansicht im Archiv, falls benötigt)
 const featureData = [{
@@ -37,20 +41,21 @@ const Archiv: React.FC = () => {
           Wichtig: Diese Seite erscheint <strong>nicht</strong> im Menü und ist nur über <code className="bg-primary/10 text-primary px-1 rounded">/archiv</code> erreichbar.
         </p>
         <div className="mt-8 pt-8 border-t border-primary/30">
-          {/* Benefits */}
+          {/* Alte Bereiche: */}
+          <Process />
+          <About />
+          <TechStack />
+          <Testimonials />
+          {/* Bisheriger Archiv-Inhalt: */}
           <Benefits />
-          {/* Growth Section */}
           <GrowthSection />
-          {/* Features Content */}
           <div className="container mx-auto px-2 sm:px-4 py-10 sm:py-16">
             <h2 className="text-2xl sm:text-3xl font-bold text-white text-center mb-4">Archiv: Unsere Lösungen</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 max-w-7xl mx-auto">
               {featureData.map((feature, index) => <FeatureCard key={index} {...feature} />)}
             </div>
-            {/* Branchenshowcase als Bonus im Archiv, falls gewünscht */}
             <IndustryShowcase />
           </div>
-          {/* SavingsCalculator & FAQ als Beispiel auch hier archiviert */}
           <SavingsCalculator />
           <FAQ />
         </div>

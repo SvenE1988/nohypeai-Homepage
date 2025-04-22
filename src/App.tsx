@@ -32,6 +32,7 @@ const Auth = lazy(() => import("./pages/Auth"));
 const Archiv = lazy(() => import("./pages/Archiv"));
 const UeberUns = lazy(() => import("./pages/UeberUns"));
 const FAQPage = lazy(() => import("./pages/FAQPage"));
+const Automatisierung = lazy(() => import("./pages/Automatisierung"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -70,6 +71,7 @@ const App = () => (
                     <Route path="/karriere/:id" element={<JobDetails />} />
                     <Route path="/pricing" element={<Pricing />} />
                     <Route path="/live-tests" element={<LiveTests />} />
+                    <Route path="/automatisierung" element={<Automatisierung />} />
                     <Route path="/auth" element={<Auth />} />
                     <Route 
                       path="/proposals" 
