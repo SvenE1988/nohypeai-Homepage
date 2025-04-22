@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MessageCircle } from 'lucide-react';
@@ -9,7 +8,6 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessages from './chat/ChatMessages';
 import ChatInput from './chat/ChatInput';
 import { sendChatMessage, addSystemMessage } from '../services/chatService';
-
 const CustomChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -17,32 +15,28 @@ const CustomChat = () => {
   const [sessionId, setSessionId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const { setCalendarDialogOpen } = useDialog();
+  const {
+    setCalendarDialogOpen
+  } = useDialog();
 
   // Initialize session and chat
   useEffect(() => {
     // Try to get existing session ID from localStorage
     const storedSessionId = localStorage.getItem('chatSessionId');
     const newSessionId = storedSessionId || uuidv4();
-    
     if (!storedSessionId) {
       localStorage.setItem('chatSessionId', newSessionId);
     }
-    
     setSessionId(newSessionId);
-    
+
     // Add initial bot messages if this is a new session
     if (!storedSessionId) {
-      const initialMessages: Message[] = [
-        addSystemMessage("👋 Hallo! Ich bin dein Assistent."),
-        {
-          id: uuidv4(),
-          text: "Du kannst direkt einen Termin buchen oder mir eine Frage stellen!",
-          sender: 'bot',
-          timestamp: new Date(Date.now() + 100)
-        }
-      ];
-      
+      const initialMessages: Message[] = [addSystemMessage("👋 Hallo! Ich bin dein Assistent."), {
+        id: uuidv4(),
+        text: "Du kannst direkt einen Termin buchen oder mir eine Frage stellen!",
+        sender: 'bot',
+        timestamp: new Date(Date.now() + 100)
+      }];
       setMessages(initialMessages);
     }
   }, []);
@@ -72,7 +66,6 @@ const CustomChat = () => {
     console.log("Sprachchat");
     // Placeholder for voice chat functionality
     const voiceMessage = addSystemMessage("Sprachchat ist aktuell noch in Entwicklung. Bitte versuche es später erneut.");
-    
     setMessages(prev => [...prev, voiceMessage]);
   };
 
@@ -80,33 +73,19 @@ const CustomChat = () => {
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
-
-  return (
-    <>
+  return <>
       {/* Floating chat button */}
-      {!isOpen && (
-        <button
-          onClick={toggleChat}
-          className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full px-4 py-3 shadow-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2"
-          aria-label="Open chat"
-        >
-          <span className="text-sm font-medium">Teste unseren Chatbot</span>
+      {!isOpen && <button onClick={toggleChat} className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full px-4 py-3 shadow-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2" aria-label="Open chat">
+          <span className="text-sm font-medium">Chatbot</span>
           <MessageCircle className="w-5 h-5" />
-        </button>
-      )}
+        </button>}
 
       {/* Chat window */}
-      {isOpen && (
-        <div 
-          ref={chatContainerRef}
-          className="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-black/95 border border-gray-800 rounded-2xl shadow-xl flex flex-col overflow-hidden transition-all duration-300"
-          style={{ backdropFilter: 'blur(10px)' }}
-        >
+      {isOpen && <div ref={chatContainerRef} className="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-black/95 border border-gray-800 rounded-2xl shadow-xl flex flex-col overflow-hidden transition-all duration-300" style={{
+      backdropFilter: 'blur(10px)'
+    }}>
           {/* Chat header */}
-          <ChatHeader 
-            handleVoiceChat={handleVoiceChat}
-            toggleChat={toggleChat}
-          />
+          <ChatHeader handleVoiceChat={handleVoiceChat} toggleChat={toggleChat} />
           
           <Separator />
           
@@ -116,17 +95,8 @@ const CustomChat = () => {
           <Separator />
           
           {/* Chat input */}
-          <ChatInput 
-            inputValue={inputValue}
-            setInputValue={setInputValue}
-            handleSubmit={handleSubmit}
-            handleKeyDown={handleKeyDown}
-            isLoading={isLoading}
-          />
-        </div>
-      )}
-    </>
-  );
+          <ChatInput inputValue={inputValue} setInputValue={setInputValue} handleSubmit={handleSubmit} handleKeyDown={handleKeyDown} isLoading={isLoading} />
+        </div>}
+    </>;
 };
-
 export default CustomChat;
