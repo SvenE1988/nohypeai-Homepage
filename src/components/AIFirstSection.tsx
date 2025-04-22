@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
 import { useRef, useEffect } from "react";
@@ -13,13 +14,39 @@ const AIFirstSection = () => {
       sectionRef.current.style.opacity = '1';
     }
     
+    // Only scroll to top when coming from specific routes
     if (previousPath === '/proposals') {
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        window.dispatchEvent(new Event('resize'));
-      }, 100);
+      // Use requestAnimationFrame for smoother scrolling
+      requestAnimationFrame(() => {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+        
+        // Trigger resize event in next frame for better performance
+        requestAnimationFrame(() => {
+          window.dispatchEvent(new Event('resize'));
+        });
+      });
     }
   }, [previousPath]);
+
+  // Content animation with optimized properties
+  const contentAnimation = {
+    initial: {
+      opacity: 0,
+      y: 20,
+      willChange: "opacity, transform" // Hint to browser for optimization
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: [0.25, 0.1, 0.25, 1.0] // Optimized cubic-bezier
+      }
+    }
+  };
 
   return (
     <section 
@@ -34,24 +61,18 @@ const AIFirstSection = () => {
       </div>
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4">
         <motion.div 
-          initial={{
-            opacity: 0,
-            y: 20
-          }} 
-          whileInView={{
-            opacity: 1,
-            y: 0
-          }} 
-          transition={{
-            delay: 0.5,
-            duration: 0.8,
-            ease: "easeInOut"
-          }} 
+          initial="initial"
+          whileInView="animate"
           viewport={{
-            once: false,
+            once: true,
             amount: 0.3
           }}
+          variants={contentAnimation}
           className="text-center z-50"
+          style={{ 
+            willChange: "transform", 
+            backfaceVisibility: "hidden" 
+          }}
           key="ai-first-section-content"
         >
           <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight">

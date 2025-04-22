@@ -1,7 +1,7 @@
 
 import { Badge } from "../ui/badge";
 import { AnimatePresence } from "framer-motion";
-import { useState, useCallback, memo } from "react";
+import { useState, useCallback, memo, useMemo } from "react";
 import ProjectDetails from "./ProjectDetails";
 import ProjectCard from "./ProjectCard";
 import { Project } from "./types";
@@ -24,12 +24,14 @@ const ProjectsSection = memo(() => {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { activeIndex, setApi, getIndicatorProps, indicatorsCount } = useProjectsCarousel();
 
+  // Memoized handler for viewing details
   const handleViewDetails = useCallback((project: Project) => {
     setCurrentProject(project);
     setIsDetailsOpen(true);
   }, []);
 
-  const renderIndicators = () => {
+  // Memoize the indicators to prevent unnecessary re-renders
+  const indicators = useMemo(() => {
     return Array.from({ length: indicatorsCount }).map((_, index) => {
       const { isActive, onClick, ariaLabel } = getIndicatorProps(index);
       return (
@@ -47,7 +49,7 @@ const ProjectsSection = memo(() => {
         />
       );
     });
-  };
+  }, [indicatorsCount, getIndicatorProps]);
 
   return (
     <section id="projekte" className="w-full py-12 sm:py-24 relative overflow-hidden">
@@ -83,6 +85,11 @@ const ProjectsSection = memo(() => {
                         ? "scale-100 opacity-100 z-10"
                         : "scale-[0.92] sm:scale-[0.85] opacity-60 z-0"
                     }`}
+                    style={{ 
+                      willChange: activeIndex === index || activeIndex === index-1 || activeIndex === index+1 
+                        ? "transform, opacity" 
+                        : "auto" 
+                    }}
                   >
                     <ProjectCard
                       project={project}
@@ -97,7 +104,7 @@ const ProjectsSection = memo(() => {
               <CarouselPrevious className="h-10 w-10 rounded-full border border-primary/50 bg-black/60 backdrop-blur-sm text-primary hover:bg-primary/20 static">
                 <ChevronLeft className="h-4 w-4" />
               </CarouselPrevious>
-              <div className="flex gap-1 sm:gap-2">{renderIndicators()}</div>
+              <div className="flex gap-1 sm:gap-2">{indicators}</div>
               <CarouselNext className="h-10 w-10 rounded-full border border-primary/50 bg-black/60 backdrop-blur-sm text-primary hover:bg-primary/20 static">
                 <ChevronRight className="h-4 w-4" />
               </CarouselNext>

@@ -1,6 +1,5 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Project } from "./types";
 import { projectsData } from "./ProjectsData";
 
 export function useProjectsCarousel() {
@@ -38,7 +37,8 @@ export function useProjectsCarousel() {
       }
     };
 
-    document.addEventListener("visibilitychange", handleVisibilityChange);
+    // Use passive event listener for better performance
+    document.addEventListener("visibilitychange", handleVisibilityChange, { passive: true });
 
     // Start autoplay on mount
     startAutoplay();
@@ -46,8 +46,8 @@ export function useProjectsCarousel() {
     // Pause on pointer interaction only inside the projects section
     const root = document.querySelector("#projekte");
     if (root) {
-      root.addEventListener("pointerdown", stopAutoplay);
-      root.addEventListener("pointerup", startAutoplay);
+      root.addEventListener("pointerdown", stopAutoplay, { passive: true });
+      root.addEventListener("pointerup", startAutoplay, { passive: true });
     }
 
     return () => {
@@ -63,10 +63,22 @@ export function useProjectsCarousel() {
   // Track active slide with memoized callback
   useEffect(() => {
     if (!api) return;
-    const onSelect = () => setActiveIndex(api.selectedScrollSnap());
+    
+    // Debounce the select event to avoid too many state updates
+    let timeoutId: NodeJS.Timeout | null = null;
+    
+    const onSelect = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        setActiveIndex(api.selectedScrollSnap());
+      }, 10);
+    };
+    
     api.on("select", onSelect);
     onSelect();
+    
     return () => {
+      if (timeoutId) clearTimeout(timeoutId);
       api.off("select", onSelect);
     };
   }, [api]);

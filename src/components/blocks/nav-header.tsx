@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { memo, useCallback } from "react";
 import { Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SocialLinks } from "@/components/navigation/SocialLinks";
@@ -6,7 +7,8 @@ import { MobileMenu } from "@/components/navigation/MobileMenu";
 import { DesktopMenu } from "@/components/navigation/DesktopMenu";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 
-function NavHeader() {
+// Memoized component to prevent unnecessary re-renders
+const NavHeader = memo(() => {
   const {
     position,
     setPosition,
@@ -18,9 +20,12 @@ function NavHeader() {
     handleNavigation
   } = useHeaderNavigation();
 
-  // Add Home icon to the first item
-  const navItemsWithIcons = navItems.map((item, index) => 
-    index === 0 ? { ...item, icon: <Home className="w-4 h-4" /> } : item
+  // Memoize the navigation items with icons to prevent recreating on each render
+  const navItemsWithIcons = React.useMemo(() => 
+    navItems.map((item, index) => 
+      index === 0 ? { ...item, icon: <Home className="w-4 h-4" /> } : item
+    ), 
+    [navItems]
   );
 
   return (
@@ -50,6 +55,9 @@ function NavHeader() {
       />
     </nav>
   );
-}
+});
+
+// Set displayName for better debugging
+NavHeader.displayName = 'NavHeader';
 
 export default NavHeader;

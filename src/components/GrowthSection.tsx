@@ -1,9 +1,12 @@
+
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileAccordion from "./growth/MobileAccordion";
 import DesktopTabs from "./growth/DesktopTabs";
 import { growthCategories } from "./growth/growthData";
+import { memo } from "react";
 
-const GrowthSection = () => {
+// Memoize component to prevent unnecessary re-renders
+const GrowthSection = memo(() => {
   const isMobile = useIsMobile();
 
   return (
@@ -16,6 +19,7 @@ const GrowthSection = () => {
             Ohne Zusätzliches Personal
           </span>
         </h2>
+        {/* Conditionally render based on screen size for better performance */}
         {isMobile ? (
           <MobileAccordion categories={growthCategories} />
         ) : (
@@ -24,6 +28,9 @@ const GrowthSection = () => {
       </div>
     </section>
   );
-};
+});
+
+// Set displayName for better debugging
+GrowthSection.displayName = 'GrowthSection';
 
 export default GrowthSection;

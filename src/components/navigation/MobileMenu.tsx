@@ -1,4 +1,5 @@
-import React from "react";
+
+import React, { memo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -14,12 +15,39 @@ interface MobileMenuProps {
   ) => void;
 }
 
-export const MobileMenu = ({
+// Animation variants with will-change for better GPU utilization
+const menuVariants = {
+  open: { 
+    x: "0%", 
+    transition: { 
+      type: "spring", 
+      stiffness: 300, 
+      damping: 30 
+    }
+  },
+  closed: { 
+    x: "100%", 
+    transition: { 
+      type: "spring", 
+      stiffness: 300, 
+      damping: 30 
+    }
+  }
+};
+
+// Memoized component to prevent unnecessary re-renders
+export const MobileMenu = memo(({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
   navItems,
   handleNavigation,
 }: MobileMenuProps) => {
+  
+  // Memoized toggle handler
+  const toggleMenu = useCallback(() => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  }, [isMobileMenuOpen, setIsMobileMenuOpen]);
+
   return (
     <>
       {/* Mobile Menu Top Bar with Logo */}
@@ -29,17 +57,28 @@ export const MobileMenu = ({
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="nohype Logo" 
             className="h-7 w-auto sm:h-8"
-            style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
+            style={{ 
+              aspectRatio: "4.19/1", 
+              display: "block", 
+              objectFit: "contain",
+              width: "auto", 
+              height: "auto",
+              maxHeight: "2rem"
+            }}
+            width={84} 
+            height={20}
+            loading="eager"
           />
         </Link>
       </div>
       
-      {/* Mobile Menu Button */}
+      {/* Mobile Menu Button with improved accessibility */}
       <button
         className="fixed top-2 right-4 z-50 p-2 rounded-full bg-black/80 backdrop-blur-md border border-white/30 md:hidden"
-        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        onClick={toggleMenu}
         aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-menu"
       >
         {isMobileMenuOpen ? (
           <X className="w-6 h-6 text-white" />
@@ -48,14 +87,15 @@ export const MobileMenu = ({
         )}
       </button>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Overlay with optimized animation */}
       <motion.div 
+        id="mobile-menu"
         initial={false}
-        animate={{
-          x: isMobileMenuOpen ? "0%" : "100%",
-        }}
+        animate={isMobileMenuOpen ? "open" : "closed"}
+        variants={menuVariants}
         className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg md:hidden"
         aria-hidden={!isMobileMenuOpen}
+        style={{ willChange: "transform" }}
       >
         <div className="flex flex-col items-center justify-center h-full space-y-8 px-4">
           {navItems.map((item) => (
@@ -64,7 +104,11 @@ export const MobileMenu = ({
               href={item.href}
               className="text-lg sm:text-xl text-white hover:text-primary transition-colors flex items-center gap-2 px-2 py-2"
               style={{ minWidth: 120 }}
-              onClick={(e) => handleNavigation(item, e)}
+              onClick={(e) => {
+                handleNavigation(item, e);
+                // Close menu after navigation on mobile
+                setIsMobileMenuOpen(false);
+              }}
             >
               {item.icon}
               {item.label}
@@ -74,4 +118,7 @@ export const MobileMenu = ({
       </motion.div>
     </>
   );
-};
+});
+
+// Set displayName for better debugging
+MobileMenu.displayName = 'MobileMenu';
