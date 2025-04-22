@@ -1,16 +1,16 @@
-
-import React, { useEffect } from "react";
+import React from "react";
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import {
   Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { getOptimizedImageProps } from "@/utils/optimizedImage";
 import { Loader2 } from "lucide-react";
+import OptimizedAccordionItem from "../components/faq/OptimizedAccordionItem";
+import { useDeferredLoading } from "@/hooks/useDeferredLoading";
+import { OptimizedFAQImage } from "@/components/faq/OptimizedFAQImage";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 const faq = [
   {
@@ -147,31 +147,13 @@ const faq = [
 ];
 
 export default function FAQPage() {
-  const [isLoaded, setIsLoaded] = React.useState(false);
+  const isLoaded = useDeferredLoading({ 
+    delay: 300,  // Slight delay to ensure critical content loads first
+    priority: false // Not highest priority content
+  });
 
-  // Simulate content loaded state
-  useEffect(() => {
-    // Immediate loading state to avoid flash of loading UI in most cases
-    if (document.readyState === 'complete') {
-      setIsLoaded(true);
-    } else {
-      // Add listener for slower connections
-      const handleLoad = () => setIsLoaded(true);
-      window.addEventListener('load', handleLoad);
-      
-      // Set a backup timeout to ensure UI eventually shows
-      const timer = setTimeout(() => setIsLoaded(true), 1000);
-      
-      return () => {
-        window.removeEventListener('load', handleLoad);
-        clearTimeout(timer);
-      };
-    }
-  }, []);
-
-  // Hero image with optimized loading
   const heroImageProps = getOptimizedImageProps({
-    src: "/placeholder.svg", // This uses the existing placeholder
+    src: "/placeholder.svg", 
     alt: "FAQ section hero image",
     width: 1200,
     height: 400,
@@ -185,7 +167,14 @@ export default function FAQPage() {
       
       {/* Hero image with low opacity as background decoration */}
       {isLoaded ? (
-        <img {...heroImageProps} />
+        <OptimizedFAQImage
+          src={heroImageProps.src}
+          alt={heroImageProps.alt}
+          priority={true}
+          className={heroImageProps.className}
+          width={heroImageProps.width}
+          height={heroImageProps.height}
+        />
       ) : null}
       
       <section className="max-w-3xl mx-auto py-20 px-4">
@@ -199,23 +188,16 @@ export default function FAQPage() {
             className="rounded-xl shadow-lg bg-gradient-to-br from-[#1a1f2c] via-[#20243a] to-[#181633] border border-[#232244] space-y-3 p-2"
           >
             {faq.map((entry, i) => (
-              <AccordionItem
+              <OptimizedAccordionItem
                 key={i}
                 value={"item" + i}
-                className="rounded-lg bg-black/30 border border-white/10 transition-shadow hover:shadow-md"
-              >
-                <AccordionTrigger className="px-6 py-3 text-lg text-white font-medium hover:text-primary">
-                  {entry.question}
-                </AccordionTrigger>
-                <AccordionContent className="px-6 pb-4 text-base text-white">
-                  {entry.answer}
-                </AccordionContent>
-              </AccordionItem>
+                question={entry.question}
+                answer={entry.answer}
+              />
             ))}
           </Accordion>
         ) : (
-          // Skeleton loader for accordion
-          <div className="space-y-3 p-2">
+          <div className="space-y-3 p-2 rounded-xl shadow-lg bg-gradient-to-br from-[#1a1f2c]/50 via-[#20243a]/50 to-[#181633]/50 border border-[#232244]/50">
             {[1, 2, 3, 4].map((i) => (
               <div key={i} className="rounded-lg border border-white/10 p-4">
                 <div className="flex items-center justify-between">
@@ -225,7 +207,7 @@ export default function FAQPage() {
               </div>
             ))}
             <div className="flex justify-center mt-8">
-              <Loader2 className="h-8 w-8 text-primary animate-spin" />
+              <LoadingSpinner size="md" text="Inhalte werden geladen..." />
             </div>
           </div>
         )}

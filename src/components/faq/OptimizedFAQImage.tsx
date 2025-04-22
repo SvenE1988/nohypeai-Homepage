@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { memo } from "react";
 import { getImageLoadingStrategy, getSizesAttribute, getAspectRatioStyles } from "@/utils/imageUtils";
 
 interface OptimizedFAQImageProps {
@@ -7,14 +7,19 @@ interface OptimizedFAQImageProps {
   alt: string;
   priority?: boolean;
   className?: string;
+  width?: number;
+  height?: number;
 }
 
-export const OptimizedFAQImage: React.FC<OptimizedFAQImageProps> = ({
+// Using memo to prevent unnecessary re-renders
+export const OptimizedFAQImage = memo(({
   src,
   alt,
   priority = false,
   className = "",
-}) => {
+  width,
+  height
+}: OptimizedFAQImageProps) => {
   // Configure optimal loading strategy based on image position
   const loadingStrategy = getImageLoadingStrategy(priority);
   
@@ -38,8 +43,12 @@ export const OptimizedFAQImage: React.FC<OptimizedFAQImageProps> = ({
       className={`w-full ${className}`}
       fetchPriority={priority ? "high" : "auto"}
       decoding="async"
+      width={width}
+      height={height}
     />
   );
-};
+});
+
+OptimizedFAQImage.displayName = "OptimizedFAQImage";
 
 export default OptimizedFAQImage;

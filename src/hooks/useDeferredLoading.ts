@@ -1,9 +1,10 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface DeferredLoadingOptions {
   delay?: number;
   priority?: boolean;
+  onLoad?: () => void;
 }
 
 /**
@@ -13,13 +14,19 @@ interface DeferredLoadingOptions {
  */
 export function useDeferredLoading({
   delay = 200,
-  priority = false
+  priority = false,
+  onLoad
 }: DeferredLoadingOptions = {}) {
   const [isLoaded, setIsLoaded] = useState(priority);
+  const onLoadCalled = useRef(false);
 
   useEffect(() => {
     if (priority) {
       setIsLoaded(true);
+      if (onLoad && !onLoadCalled.current) {
+        onLoad();
+        onLoadCalled.current = true;
+      }
       return;
     }
 
@@ -27,16 +34,26 @@ export function useDeferredLoading({
     const timer = setTimeout(() => {
       if (document.readyState === "complete") {
         setIsLoaded(true);
+        if (onLoad && !onLoadCalled.current) {
+          onLoad();
+          onLoadCalled.current = true;
+        }
       } else {
         // If document not fully loaded, wait for it
-        const handleLoad = () => setIsLoaded(true);
-        window.addEventListener("load", handleLoad);
+        const handleLoad = () => {
+          setIsLoaded(true);
+          if (onLoad && !onLoadCalled.current) {
+            onLoad();
+            onLoadCalled.current = true;
+          }
+        };
+        window.addEventListener("load", handleLoad, { passive: true });
         return () => window.removeEventListener("load", handleLoad);
       }
     }, delay);
 
     return () => clearTimeout(timer);
-  }, [delay, priority]);
+  }, [delay, priority, onLoad]);
 
   return isLoaded;
 }
