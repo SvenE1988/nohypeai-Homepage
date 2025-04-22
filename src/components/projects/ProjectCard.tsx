@@ -84,9 +84,11 @@ const ProjectCard = memo(({
   );
 }, (prevProps, nextProps) => {
   // Custom comparison function to prevent unnecessary re-renders
+  // Use the title as a stable identifier if id is not available
   return (
     prevProps.isActive === nextProps.isActive &&
-    prevProps.project.id === nextProps.project.id
+    ((prevProps.project.id && nextProps.project.id && prevProps.project.id === nextProps.project.id) ||
+    (prevProps.project.title === nextProps.project.title))
   );
 });
 
