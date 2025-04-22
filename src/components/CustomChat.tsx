@@ -8,6 +8,7 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessages from './chat/ChatMessages';
 import ChatInput from './chat/ChatInput';
 import { sendChatMessage, addSystemMessage } from '../services/chatService';
+
 const CustomChat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -19,9 +20,7 @@ const CustomChat = () => {
     setCalendarDialogOpen
   } = useDialog();
 
-  // Initialize session and chat
   useEffect(() => {
-    // Try to get existing session ID from localStorage
     const storedSessionId = localStorage.getItem('chatSessionId');
     const newSessionId = storedSessionId || uuidv4();
     if (!storedSessionId) {
@@ -29,7 +28,6 @@ const CustomChat = () => {
     }
     setSessionId(newSessionId);
 
-    // Add initial bot messages if this is a new session
     if (!storedSessionId) {
       const initialMessages: Message[] = [addSystemMessage("👋 Hallo! Ich bin dein Assistent."), {
         id: uuidv4(),
@@ -41,19 +39,16 @@ const CustomChat = () => {
     }
   }, []);
 
-  // Handle sending messages
   const handleSendMessage = async (text: string) => {
     await sendChatMessage(text, sessionId, setMessages, setIsLoading);
     setInputValue('');
   };
 
-  // Handle input submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSendMessage(inputValue);
   };
 
-  // Handle keyboard shortcut (Enter to send)
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -61,42 +56,36 @@ const CustomChat = () => {
     }
   };
 
-  // Handle voice chat (placeholder)
   const handleVoiceChat = () => {
     console.log("Sprachchat");
-    // Placeholder for voice chat functionality
     const voiceMessage = addSystemMessage("Sprachchat ist aktuell noch in Entwicklung. Bitte versuche es später erneut.");
     setMessages(prev => [...prev, voiceMessage]);
   };
 
-  // Toggle chat window
   const toggleChat = () => {
     setIsOpen(!isOpen);
   };
+
   return <>
-      {/* Floating chat button */}
-      {!isOpen && <button onClick={toggleChat} className="fixed bottom-6 right-6 z-50 bg-primary text-white rounded-full px-4 py-3 shadow-lg hover:bg-primary/90 transition-all duration-300 flex items-center gap-2" aria-label="Open chat">
+      {!isOpen && <button onClick={toggleChat} className="fixed bottom-6 right-6 z-50 bg-primary/20 backdrop-blur-lg text-white rounded-full px-4 py-3 shadow-lg hover:bg-primary/30 transition-all duration-300 flex items-center gap-2" aria-label="Open chat">
           <span className="text-sm font-medium">Chatbot</span>
           <MessageCircle className="w-5 h-5" />
         </button>}
 
-      {/* Chat window */}
       {isOpen && <div ref={chatContainerRef} className="fixed bottom-6 right-6 z-50 w-[350px] md:w-[400px] h-[500px] bg-black/95 border border-gray-800 rounded-2xl shadow-xl flex flex-col overflow-hidden transition-all duration-300" style={{
       backdropFilter: 'blur(10px)'
     }}>
-          {/* Chat header */}
           <ChatHeader handleVoiceChat={handleVoiceChat} toggleChat={toggleChat} />
           
           <Separator />
           
-          {/* Messages container */}
           <ChatMessages messages={messages} isLoading={isLoading} />
           
           <Separator />
           
-          {/* Chat input */}
           <ChatInput inputValue={inputValue} setInputValue={setInputValue} handleSubmit={handleSubmit} handleKeyDown={handleKeyDown} isLoading={isLoading} />
         </div>}
     </>;
 };
+
 export default CustomChat;
