@@ -5,8 +5,7 @@ import Projects from "../components/Projects";
 import Footer from "../components/Footer";
 import EasterPromoPopup from "../components/EasterPromoPopup";
 import NavHeader from "../components/blocks/nav-header";
-import SavingsCalculator from "../components/SavingsCalculator";
-import MainCtaSection from "../components/MainCtaSection";
+import SavingsCalculator from "../components/SavingsCalculator"; // <-- hinzugefügt
 
 const Index = () => {
   return (
@@ -14,9 +13,8 @@ const Index = () => {
       <NavHeader />
       <AIFirstSection />
       <AIHereSection />
-      <SavingsCalculator />
+      <SavingsCalculator /> {/* NEU eingefügt, Position vor Projects, anpassbar */}
       <Projects />
-      <MainCtaSection />
       <Footer />
       <EasterPromoPopup />
     </main>
@@ -24,3 +22,4 @@ const Index = () => {
 };
 
 export default Index;
+
