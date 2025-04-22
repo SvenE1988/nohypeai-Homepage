@@ -4,7 +4,7 @@ import Benefits from "../components/Benefits";
 import GrowthSection from "../components/GrowthSection";
 import FeatureCard from "@/components/features/FeatureCard";
 import IndustryShowcase from "@/components/features/IndustryShowcase";
-import SavingsCalculator from "../components/SavingsCalculator";
+// SavingsCalculator entfernt
 import FAQ from "../components/FAQ";
 import Process from "../components/Process";
 import About from "../components/About";
@@ -56,7 +56,7 @@ const Archiv: React.FC = () => {
             </div>
             <IndustryShowcase />
           </div>
-          <SavingsCalculator />
+          {/* SavingsCalculator entfernt */}
           <FAQ />
         </div>
       </div>
@@ -65,3 +65,4 @@ const Archiv: React.FC = () => {
 };
 
 export default Archiv;
+
