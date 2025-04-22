@@ -20,7 +20,7 @@ const DigitalizationComparison = () => {
         </h2>
         <Divider />
         <p className="text-gray-400 text-base sm:text-lg mb-2">
-          Spürst du, wie die Konkurrenz immer mehr interne Abläufe automatisiert, Entscheidungen auf Basis von Datentriffs und künstlichen Legenden nutzt?
+          Spürst du, wie die Konkurrenz immer mehr interne Abläufe automatisiert, Entscheidungen auf Basis von Daten trifft und Künstliche Intelligenz nutzt, um schneller und effizienter zu agieren? Während andere bereits auf smarte Technologien setzen, kann es passieren, dass du den Anschluss verlierst – und das spürbar in Umsatz und Kundenbindung.
         </p>
         <Divider />
 
