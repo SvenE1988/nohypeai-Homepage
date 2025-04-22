@@ -42,7 +42,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
                 ref={ref}
                 {...props}
             >
-                <span className={cn("absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-xl hidden", neon && "block")} />
+                {neon && <span className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out bg-gradient-to-r from-primary/20 via-secondary/20 to-primary/20 rounded-xl" />}
                 {children}
             </Comp>
         );
