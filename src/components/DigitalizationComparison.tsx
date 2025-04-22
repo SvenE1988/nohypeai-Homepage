@@ -42,10 +42,10 @@ const DigitalizationComparison = () => {
               Das Hindernis
             </h3>
             <p className="text-gray-300 text-base sm:text-lg">
-              Viele Betriebe stecken in langsamen, veralteten Prozessen fest, die Personal und Budget binden. Jeder manuelle Schritt erhöht das Risiko für Fehler, führt zu Frust im Team und sorgt für unzufriedene Kunden, weil Entscheidungen ohne valide Daten getroffen werden. Obwohl viele glauben, digital gut aufgestellt zu sein, merken sie oft zu spät, dass ihre Systeme den Fortschritt ausbremsen und sie den Takt am Markt nicht halten können.
+              In vielen Unternehmen türmen sich Anrufe und E‑Mail‑Anfragen, während Dein Team mit zeitraubenden Routinen kämpft. Leads landen oft unbeantwortet im Postfach oder auf dem Anrufbeantworter, weil niemand sofort reagiert, und wertvolle Chancen gehen verloren. Gleichzeitig binden Standardfragen zu Öffnungszeiten, Preisen oder Verfügbarkeiten täglich mehrere Stunden Support‑Kapazität – Kapazität, die Dir für echtes Wachstum fehlt. Protokolle und Gesprächsnotizen liegen in unterschiedlichen Excel‑Listen oder handschriftlichen Zetteln und lassen sich kaum nachverfolgen. Statt proaktiv zu agieren, reagiert Ihr nur auf akuten Druck, wenn sich verärgerte Kunden melden oder Deadlines verstreichen. Genau hier entsteht der Stress, der Dein Team ausbremst und Deine Kunden frustriert.
             </p>
           </div>
-          {/* Rechte Kachel: Dein Sprung nach vorn mit KI */}
+          {/* Rechte Kachel: Zum Ziel mit Sprachbots & OfficePiloten */}
           <div className="bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary rounded-xl p-6 md:p-8 flex flex-col shadow-xl">
             <img
               src={JUMP_FORWARD_IMG}
@@ -55,11 +55,10 @@ const DigitalizationComparison = () => {
               style={{ aspectRatio: "4/3" }}
             />
             <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">
-              Dein Sprung nach vorn mit KI
+              Zum Ziel mit Sprachbots &amp; OfficePiloten
             </h3>
             <p className="text-gray-100 text-base sm:text-lg">
-              Künstliche Intelligenz eröffnet dir Wege zu völlig neuen Arbeitsweisen. Routinetätigkeiten werden automatisiert, Abläufe beschleunigt und Fehlerquellen minimiert. Dank datenbasierter Analysen triffst du Entscheidungen mit sicherem Blick – und verschaffst dir so einen nachhaltigen Wettbewerbsvorteil. Personalisiere dein Angebot, steigere die Servicequalität und schaffe Erlebnisse, die deine Kunden begeistern.<br /><br />
-              Mit dem richtigen KI‑Partner machst du dein Unternehmen agiler, effektiver und bereit für die kommenden Herausforderungen. So hebst du dein volles Potenzial, sicherst dir Marktanteile und gestaltest die Zukunft aktiv mit.
+              Mit unseren Sprachbots nimmst Du jeden Anruf sofort automatisch an und qualifizierst Leads binnen weniger Minuten, indem Du Budget, Bedarf und Terminwünsche abfragst – ohne, dass jemand von Deinem Team ans Telefon muss. Routinethemen wie FAQs zu Öffnungszeiten, Preisen oder Services beantwortet Dein Bot 24/7, während echte Anfragen automatisch als saubere Tickets in Dein System gelangen. Gleichzeitig übernimmt dein OfficePilot einfache Back‑Office‑Aufgaben auf Knopfdruck: Er erstellt passgenaue Angebote, fasst Zoom‑ und Teams‑Meetings in klaren Summaries mit Action‑Items zusammen und liefert kompakte Research‑Guides mit allen relevanten Kundendaten. So sparst Du nicht nur Stunden manueller Nacharbeit, sondern sorgst auch für konsistente, fehlerfreie Abläufe. So wird Dein Unternehmen agiler, effektiver und perfekt vorbereitet, um jeden Kundenkontakt zu einem Erfolgserlebnis zu machen.
             </p>
           </div>
         </div>
