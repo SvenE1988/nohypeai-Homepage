@@ -1,4 +1,3 @@
-
 import NavHeader from "../components/blocks/nav-header";
 import Footer from "../components/Footer";
 import {
@@ -12,15 +11,15 @@ const faq = [
   {
     question: "Wie lange dauert eine Implementierung?",
     answer: (
-      <div className="space-y-2">
+      <div className="space-y-2 text-white">
         <p>
-          Je nach Projektumfang und Komplexität rechnen wir mit <strong>4–8 Wochen</strong> von der ersten Bedarfsaufnahme bis zum Go‑Live:
+          Je nach Projektumfang und Komplexität rechnen wir mit <strong className="text-white">4–8 Wochen</strong> von der ersten Bedarfsaufnahme bis zum Go‑Live:
         </p>
-        <ul className="list-disc list-inside text-gray-300 space-y-1">
-          <li><b>Woche 1–2</b>: Kick‑off, Zieldefinition und Daten‑/Systemanalyse</li>
-          <li><b>Woche 3–4</b>: Proof‑of‑Concept (PoC) und erste Pilotphase</li>
-          <li><b>Woche 5–6</b>: Skalierung, Feintuning und Testing</li>
-          <li><b>Woche 7–8</b>: Go‑Live, Schulung und Übergabe ins laufende Monitoring</li>
+        <ul className="list-disc list-inside text-white space-y-1">
+          <li><b className="text-white">Woche 1–2</b>: Kick‑off, Zieldefinition und Daten‑/Systemanalyse</li>
+          <li><b className="text-white">Woche 3–4</b>: Proof‑of‑Concept (PoC) und erste Pilotphase</li>
+          <li><b className="text-white">Woche 5–6</b>: Skalierung, Feintuning und Testing</li>
+          <li><b className="text-white">Woche 7–8</b>: Go‑Live, Schulung und Übergabe ins laufende Monitoring</li>
         </ul>
       </div>
     ),
@@ -95,9 +94,9 @@ const faq = [
   {
     question: "Kann ich das System selbst anpassen?",
     answer: (
-      <div>
+      <div className="text-white">
         Ja. Über unser Admin‑Dashboard kannst Du:
-        <ul className="list-disc list-inside mt-1 text-gray-300">
+        <ul className="list-disc list-inside mt-1 text-white">
           <li>Quali‑Skripte und FAQ‑Blöcke bearbeiten</li>
           <li>Terminfenster und Kalenderregeln anpassen</li>
           <li>E‑Mail‑Templates und Textbausteine individualisieren</li>
@@ -163,7 +162,7 @@ export default function FAQPage() {
               <AccordionTrigger className="px-6 py-3 text-lg text-white font-medium hover:text-primary">
                 {entry.question}
               </AccordionTrigger>
-              <AccordionContent className="px-6 pb-4 text-base">
+              <AccordionContent className="px-6 pb-4 text-base text-white">
                 {entry.answer}
               </AccordionContent>
             </AccordionItem>
@@ -174,4 +173,3 @@ export default function FAQPage() {
     </main>
   );
 }
-
