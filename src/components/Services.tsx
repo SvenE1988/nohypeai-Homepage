@@ -1,6 +1,7 @@
 
 import { Zap, LockKeyhole, PlayCircle } from "lucide-react";
-import { Card, CardContent } from "./ui/card";
+import { BaseCard } from "./ui/base-card";
+import { CardContent } from "./ui/card";
 
 const Services = () => {
   const services = [
@@ -29,9 +30,9 @@ const Services = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {services.map((service, index) => (
-            <Card 
-              key={index} 
-              className="bg-gradient-to-br from-black/60 to-black/40 border border-gray-800 overflow-hidden group hover:border-primary/50 transition-all duration-300 hover:scale-[1.02]"
+            <BaseCard
+              key={index}
+              className="overflow-hidden"
             >
               <CardContent className="p-8">
                 <div className="flex flex-col items-center text-center gap-6">
@@ -46,7 +47,7 @@ const Services = () => {
                   </p>
                 </div>
               </CardContent>
-            </Card>
+            </BaseCard>
           ))}
         </div>
       </div>

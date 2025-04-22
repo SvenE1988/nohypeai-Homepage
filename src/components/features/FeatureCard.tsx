@@ -16,14 +16,14 @@ const FeatureCard = ({ title, subtitle, benefits, targetAudience }: FeatureCardP
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <BaseCard className="w-full">
+    <BaseCard className="w-full" active={isExpanded}>
       <div className="p-6">
         <h3 className="text-2xl font-semibold text-white mb-2">{title}</h3>
         <p className="text-gray-300 text-sm mb-4">{subtitle}</p>
         
         <Button
           variant="ghost"
-          className="w-full justify-between group-hover:bg-primary/10 text-primary border border-[#3A3F55] bg-[#252A40]"
+          className="w-full justify-between group-hover:bg-primary/10 text-primary border border-[#3A3F55] bg-[#252A40] transition-all duration-300"
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <span className="text-sm">Mehr Details</span>

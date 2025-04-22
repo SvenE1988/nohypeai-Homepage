@@ -2,6 +2,7 @@
 import { Avatar } from "./ui/avatar";
 import { Linkedin, Mail } from "lucide-react";
 import { useCallToAction } from "@/hooks/useCallToAction";
+import { BaseCard } from "@/components/ui/base-card";
 
 const About = () => {
   const { openContactForm } = useCallToAction();
@@ -35,7 +36,7 @@ const About = () => {
           
           {/* Gründer Profil */}
           <div className="order-1 md:order-2 flex justify-center md:justify-center">
-            <div className="bg-[#0D0F1A] rounded-2xl p-6 max-w-md">
+            <BaseCard className="bg-[#0D0F1A] rounded-2xl p-6 max-w-md flex flex-col items-center">
               <Avatar className="w-full h-[300px] rounded-xl mb-6">
                 <img src={team[0].image} alt={team[0].name} className="object-cover w-full h-full" />
               </Avatar>
@@ -51,7 +52,7 @@ const About = () => {
                   <Mail className="w-5 h-5" />
                 </a>
               </div>
-            </div>
+            </BaseCard>
           </div>
         </div>
       </div>
