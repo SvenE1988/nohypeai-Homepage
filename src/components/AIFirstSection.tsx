@@ -1,6 +1,5 @@
 
 import { motion } from "framer-motion";
-import { LampContainer } from "@/components/ui/lamp";
 import { useRef, useEffect } from "react";
 import { useNavigation } from "@/contexts/NavigationContext";
 
@@ -45,16 +44,9 @@ const AIFirstSection = () => {
   return (
     <section 
       ref={sectionRef}
-      // Reduzierte min-h und weniger vertical padding
-      className="min-h-[50vh] sm:min-h-[65vh] flex flex-col items-center justify-center bg-transparent text-white py-8 sm:py-12 relative overflow-hidden"
+      className="min-h-[40vh] sm:min-h-[55vh] flex flex-col items-center justify-center bg-transparent text-white py-8 sm:py-12 relative overflow-hidden"
       id="hero"
     >
-      {/* Lamp-Container sitzt dichter (translate-y-[6rem] statt 8/10rem) */}
-      <div className="absolute inset-0 z-0 translate-y-[6rem] sm:translate-y-[8rem]">
-        <LampContainer>
-          <div></div>
-        </LampContainer>
-      </div>
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4">
         <motion.div 
           initial="initial"
@@ -77,7 +69,6 @@ const AIFirstSection = () => {
             </span><br className="sm:hidden" />
             <span className="block text-white">ohne Hype</span>
           </h2>
-          {/* Weniger Abstand zur nächsten Überschrift */}
           <p className="text-base sm:text-xl text-gray-300 mt-3 sm:mt-5 max-w-2xl sm:max-w-3xl mx-auto">
             Wir helfen Unternehmen mit praktischen KI-Lösungen zu wachsen – ohne Buzzwords, ohne Komplexität.
           </p>
