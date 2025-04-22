@@ -7,6 +7,10 @@ const Divider = () => (
   </div>
 );
 
+// Bildpfade für die Kacheln
+const OBSTACLE_IMG = "/lovable-uploads/012c5469-041d-42fd-b912-3c8314d1e178.png";
+const JUMP_FORWARD_IMG = "/lovable-uploads/867ea91a-ecb7-4b90-aa07-c6674b5acc7f.png";
+
 const DigitalizationComparison = () => {
   return (
     <section className="w-full py-16 sm:py-24 bg-transparent" id="digital-comparison">
@@ -25,14 +29,34 @@ const DigitalizationComparison = () => {
         <Divider />
 
         <div className="w-full mt-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
+          {/* Linke Kachel: Das Hindernis */}
           <div className="bg-black/60 border border-gray-700 rounded-xl p-6 md:p-8 flex flex-col shadow-xl">
-            <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-2">Das Hindernis</h3>
+            <img
+              src={OBSTACLE_IMG}
+              alt="Visualisierung von Hindernissen für die Digitalisierung"
+              className="w-full rounded-xl mb-5 object-cover max-h-56 border border-gray-800"
+              loading="lazy"
+              style={{ aspectRatio: "4/3" }}
+            />
+            <h3 className="text-xl sm:text-2xl font-semibold text-primary mb-2">
+              Das Hindernis
+            </h3>
             <p className="text-gray-300 text-base sm:text-lg">
               Viele Betriebe stecken in langsamen, veralteten Prozessen fest, die Personal und Budget binden. Jeder manuelle Schritt erhöht das Risiko für Fehler, führt zu Frust im Team und sorgt für unzufriedene Kunden, weil Entscheidungen ohne valide Daten getroffen werden. Obwohl viele glauben, digital gut aufgestellt zu sein, merken sie oft zu spät, dass ihre Systeme den Fortschritt ausbremsen und sie den Takt am Markt nicht halten können.
             </p>
           </div>
+          {/* Rechte Kachel: Dein Sprung nach vorn mit KI */}
           <div className="bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary rounded-xl p-6 md:p-8 flex flex-col shadow-xl">
-            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">Dein Sprung nach vorn mit KI</h3>
+            <img
+              src={JUMP_FORWARD_IMG}
+              alt="Ein Mensch schreitet energisch ins Licht – symbolisch für den KI-Sprung"
+              className="w-full rounded-xl mb-5 object-cover max-h-56 border border-primary/30"
+              loading="lazy"
+              style={{ aspectRatio: "4/3" }}
+            />
+            <h3 className="text-xl sm:text-2xl font-semibold text-white mb-2">
+              Dein Sprung nach vorn mit KI
+            </h3>
             <p className="text-gray-100 text-base sm:text-lg">
               Künstliche Intelligenz eröffnet dir Wege zu völlig neuen Arbeitsweisen. Routinetätigkeiten werden automatisiert, Abläufe beschleunigt und Fehlerquellen minimiert. Dank datenbasierter Analysen triffst du Entscheidungen mit sicherem Blick – und verschaffst dir so einen nachhaltigen Wettbewerbsvorteil. Personalisiere dein Angebot, steigere die Servicequalität und schaffe Erlebnisse, die deine Kunden begeistern.<br /><br />
               Mit dem richtigen KI‑Partner machst du dein Unternehmen agiler, effektiver und bereit für die kommenden Herausforderungen. So hebst du dein volles Potenzial, sicherst dir Marktanteile und gestaltest die Zukunft aktiv mit.
