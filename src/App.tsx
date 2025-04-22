@@ -1,4 +1,3 @@
-
 import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -21,7 +20,6 @@ import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Lazy-loaded pages for better performance
 const Index = lazy(() => import("./pages/Index"));
-// Removing Features import
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const Karriere = lazy(() => import("./pages/Karriere"));
@@ -31,6 +29,7 @@ const NotFound = lazy(() => import("./pages/NotFound"));
 const LiveTests = lazy(() => import("./pages/LiveTests"));
 const ProposalGenerator = lazy(() => import("./pages/ProposalGenerator"));
 const Auth = lazy(() => import("./pages/Auth"));
+const Archiv = lazy(() => import("./pages/Archiv"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -63,7 +62,6 @@ const App = () => (
                 <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
                   <Routes>
                     <Route path="/" element={<Index />} />
-                    {/* Removing Features route */}
                     <Route path="/blog" element={<Blog />} />
                     <Route path="/blog/:slug" element={<BlogPost />} />
                     <Route path="/karriere" element={<Karriere />} />
@@ -79,6 +77,7 @@ const App = () => (
                         </ProtectedRoute>
                       } 
                     />
+                    <Route path="/archiv" element={<Archiv />} />
                     <Route path="/404" element={<NotFound />} />
                     <Route path="*" element={<Navigate to="/404" replace />} />
                   </Routes>
