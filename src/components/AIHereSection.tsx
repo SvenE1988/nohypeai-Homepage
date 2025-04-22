@@ -21,7 +21,6 @@ const AIHereSection = () => {
           {/* Sprach-KI-Kachel */}
           <div className="bg-[#0A0A0A] p-6 sm:p-8 rounded-2xl border border-[#1A1A1A] hover:border-primary/50 transition-colors flex flex-col">
             <div className="bg-[#1A1F35] w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-4 sm:mb-6">
-              {/* Icon kann optional angepasst werden */}
               <span className="text-primary font-bold text-lg">🎤</span>
             </div>
             <h3 className="text-lg sm:text-2xl font-bold mb-2 sm:mb-4 text-white">Sprach-KI</h3>
@@ -29,9 +28,10 @@ const AIHereSection = () => {
               Intelligente Voice-Agenten, die Kundenanfragen entgegennehmen, Termine vereinbaren und qualifizieren – rund um die Uhr.
             </p>
             <Button
-              variant="secondary"
-              className="mt-6 w-full group"
+              className="w-full py-4 md:py-6 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all duration-300 flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md mt-6 group"
               onClick={() => navigate("/live-tests")}
+              variant={undefined}
+              size={undefined}
             >
               Mehr erfahren
               <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -48,9 +48,10 @@ const AIHereSection = () => {
               Wiederholende Aufgaben automatisieren, manuelle Prozesse digitalisieren und dein Team entlasten.
             </p>
             <Button
-              variant="secondary"
-              className="mt-6 w-full group"
+              className="w-full py-4 md:py-6 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all duration-300 flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md mt-6 group"
               onClick={() => navigate("/automatisierung")}
+              variant={undefined}
+              size={undefined}
             >
               Mehr erfahren
               <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -67,9 +68,10 @@ const AIHereSection = () => {
               Individuelle Beratung, wie du KI sinnvoll in deinem Unternehmen einsetzen kannst – ohne IT-Abteilung.
             </p>
             <Button
-              variant="secondary"
-              className="mt-6 w-full group"
+              className="w-full py-4 md:py-6 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all duration-300 flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md mt-6 group"
               onClick={() => navigate("/blog")}
+              variant={undefined}
+              size={undefined}
             >
               Mehr erfahren
               <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
@@ -82,3 +84,4 @@ const AIHereSection = () => {
 };
 
 export default AIHereSection;
+
