@@ -12,11 +12,9 @@ const DigitalizationComparison = () => {
     <section className="w-full py-16 sm:py-24 bg-transparent" id="digital-comparison">
       <div className="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-5">
-          Wie zukunftsfit ist dein Unternehmen?
+          Wo stehst du auf dem Weg zur Digitalisierung?
         </h2>
-        <p className="text-base sm:text-lg text-gray-300 max-w-2xl mb-4 sm:mb-8">
-          <span className="font-medium">Unter &quot;Wo stehst du auf dem Weg zur Digitalisierung?&quot;</span>
-        </p>
+        <Divider />
         <p className="text-gray-400 text-base sm:text-lg mb-2">
           Spürst du, wie die Konkurrenz immer mehr interne Abläufe automatisiert, Entscheidungen auf Basis von Daten trifft und Künstliche Intelligenz nutzt, um schneller und effizienter zu agieren? Während andere bereits auf smarte Technologien setzen, kann es passieren, dass du den Anschluss verlierst – und das spürbar in Umsatz und Kundenbindung.
         </p>
