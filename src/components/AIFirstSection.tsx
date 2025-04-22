@@ -45,10 +45,12 @@ const AIFirstSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-[70vh] sm:min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-12 sm:py-16 relative overflow-hidden"
+      // Reduzierte min-h und weniger vertical padding
+      className="min-h-[50vh] sm:min-h-[65vh] flex flex-col items-center justify-center bg-transparent text-white py-8 sm:py-12 relative overflow-hidden"
       id="hero"
     >
-      <div className="absolute inset-0 z-0 translate-y-[8rem] sm:translate-y-[10rem]">
+      {/* Lamp-Container sitzt dichter (translate-y-[6rem] statt 8/10rem) */}
+      <div className="absolute inset-0 z-0 translate-y-[6rem] sm:translate-y-[8rem]">
         <LampContainer>
           <div></div>
         </LampContainer>
@@ -69,13 +71,14 @@ const AIFirstSection = () => {
           }}
           key="ai-no-hype-section-content"
         >
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-2 sm:mb-4">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-1 sm:mb-3">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
               KI-Lösungen
             </span><br className="sm:hidden" />
             <span className="block text-white">ohne Hype</span>
           </h2>
-          <p className="text-base sm:text-xl text-gray-300 mt-5 sm:mt-8 max-w-2xl sm:max-w-3xl mx-auto">
+          {/* Weniger Abstand zur nächsten Überschrift */}
+          <p className="text-base sm:text-xl text-gray-300 mt-3 sm:mt-5 max-w-2xl sm:max-w-3xl mx-auto">
             Wir helfen Unternehmen mit praktischen KI-Lösungen zu wachsen – ohne Buzzwords, ohne Komplexität.
           </p>
         </motion.div>
