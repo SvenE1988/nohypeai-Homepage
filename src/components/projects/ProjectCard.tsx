@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Project } from "./types";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 interface ProjectCardProps {
   project: Project;
@@ -12,11 +12,17 @@ interface ProjectCardProps {
   onViewDetails: (project: Project) => void;
 }
 
+// Memoized ProjectCard to prevent unnecessary re-renders
 const ProjectCard = memo(({ 
   project, 
   isActive = false, 
   onViewDetails 
 }: ProjectCardProps) => {
+  // Memoize the click handler to prevent recreation on each render
+  const handleViewDetails = useCallback(() => {
+    onViewDetails(project);
+  }, [project, onViewDetails]);
+
   return (
     <Card 
       className={cn(
@@ -49,6 +55,7 @@ const ProjectCard = memo(({
                 src={project.logoUrl} 
                 alt={`${project.company} Logo`}
                 className="h-8 w-auto"
+                loading="lazy"
                 style={{
                   aspectRatio: project.logoAspectRatio,
                   display: "block",
@@ -67,7 +74,7 @@ const ProjectCard = memo(({
         <Button 
           variant="ghost" 
           className="mt-auto self-start text-primary group-hover:text-primary hover:bg-primary/10 transition-all duration-300"
-          onClick={() => onViewDetails(project)}
+          onClick={handleViewDetails}
         >
           Details anzeigen
           <ExternalLink size={16} className="ml-1" />
@@ -75,7 +82,14 @@ const ProjectCard = memo(({
       </div>
     </Card>
   );
+}, (prevProps, nextProps) => {
+  // Custom comparison function to prevent unnecessary re-renders
+  return (
+    prevProps.isActive === nextProps.isActive &&
+    prevProps.project.id === nextProps.project.id
+  );
 });
 
-export default ProjectCard;
+ProjectCard.displayName = 'ProjectCard';
 
+export default ProjectCard;

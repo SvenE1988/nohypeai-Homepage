@@ -1,27 +1,28 @@
 
+import { memo } from "react";
 import { Zap, LockKeyhole, PlayCircle } from "lucide-react";
 import { BaseCard } from "./ui/base-card";
 import { CardContent } from "./ui/card";
 
-const Services = () => {
-  const services = [
-    {
-      icon: Zap,
-      title: "Blitzschnelle Umsetzung",
-      description: "Erhalten Sie fertige Projekte in Wochen statt Monaten.",
-    },
-    {
-      icon: LockKeyhole,
-      title: "Festpreis-Garantie",
-      description: "Keine bösen Überraschungen. Sie zahlen genau den vereinbarten Preis.",
-    },
-    {
-      icon: PlayCircle,
-      title: "Flexibel und skalierbar",
-      description: "Skalieren Sie nach Bedarf hoch oder runter und pausieren Sie jederzeit. Keine versteckten Bindungen.",
-    },
-  ];
+const serviceItems = [
+  {
+    icon: Zap,
+    title: "Blitzschnelle Umsetzung",
+    description: "Erhalten Sie fertige Projekte in Wochen statt Monaten.",
+  },
+  {
+    icon: LockKeyhole,
+    title: "Festpreis-Garantie",
+    description: "Keine bösen Überraschungen. Sie zahlen genau den vereinbarten Preis.",
+  },
+  {
+    icon: PlayCircle,
+    title: "Flexibel und skalierbar",
+    description: "Skalieren Sie nach Bedarf hoch oder runter und pausieren Sie jederzeit. Keine versteckten Bindungen.",
+  },
+];
 
+const Services = memo(() => {
   return (
     <section className="w-full bg-black py-24">
       <div className="container mx-auto px-4">
@@ -29,7 +30,7 @@ const Services = () => {
           Innovative KI-Lösungen für Ihren Erfolg
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {serviceItems.map((service, index) => (
             <BaseCard
               key={index}
               className="overflow-hidden"
@@ -53,6 +54,6 @@ const Services = () => {
       </div>
     </section>
   );
-};
+});
 
 export default Services;

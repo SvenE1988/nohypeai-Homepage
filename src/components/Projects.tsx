@@ -1,3 +1,4 @@
+
 import { Badge } from "./ui/badge";
 import { AnimatePresence } from "framer-motion";
 import { useState, useEffect, useCallback, useRef, memo } from "react";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/carousel";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
+// Enhanced Project section with performance optimizations
 const Projects = memo(() => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
@@ -21,23 +23,27 @@ const Projects = memo(() => {
   const [api, setApi] = useState<any>(null);
   const autoplayIntervalRef = useRef<NodeJS.Timeout | null>(null);
   
+  // Memoized handler for opening project details
   const handleViewDetails = useCallback((project: Project) => {
     setCurrentProject(project);
     setIsDetailsOpen(true);
   }, []);
   
-  // Optimized autoplay logic
+  // Optimized autoplay with proper cleanup
   useEffect(() => {
     if (!api) return;
     
     const startAutoplay = () => {
-      if (autoplayIntervalRef.current) {
-        clearInterval(autoplayIntervalRef.current);
-      }
+      stopAutoplay();
       
-      autoplayIntervalRef.current = setInterval(() => {
-        api.scrollNext();
-      }, 5000);
+      // Only start autoplay if document is visible
+      if (document.visibilityState === 'visible') {
+        autoplayIntervalRef.current = setInterval(() => {
+          if (document.visibilityState === 'visible') {
+            api.scrollNext();
+          }
+        }, 5000);
+      }
     };
     
     const stopAutoplay = () => {
@@ -47,7 +53,19 @@ const Projects = memo(() => {
       }
     };
     
-    // Start autoplay
+    // Handle visibility changes
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        startAutoplay();
+      } else {
+        stopAutoplay();
+      }
+    };
+    
+    // Set up event listeners
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    
+    // Start autoplay initially
     startAutoplay();
     
     // Pause on user interaction
@@ -55,18 +73,15 @@ const Projects = memo(() => {
     if (root) {
       root.addEventListener('pointerdown', stopAutoplay);
       root.addEventListener('pointerup', startAutoplay);
-      root.addEventListener('touchstart', stopAutoplay);
-      root.addEventListener('touchend', startAutoplay);
     }
     
     // Clean up on unmount
     return () => {
       stopAutoplay();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       if (root) {
         root.removeEventListener('pointerdown', stopAutoplay);
         root.removeEventListener('pointerup', startAutoplay);
-        root.removeEventListener('touchstart', stopAutoplay);
-        root.removeEventListener('touchend', startAutoplay);
       }
     };
   }, [api]);
@@ -80,13 +95,30 @@ const Projects = memo(() => {
     };
     
     api.on('select', onSelect);
-    api.on('reInit', onSelect);
+    
+    // Initial selection
+    onSelect();
     
     return () => {
       api.off('select', onSelect);
-      api.off('reInit', onSelect);
     };
   }, [api]);
+
+  // Memoized carousel indicator buttons
+  const renderIndicators = useCallback(() => {
+    return projectsData.map((_, index) => (
+      <button
+        key={index}
+        onClick={() => api?.scrollTo(index)}
+        className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+          activeIndex === index 
+            ? "bg-primary scale-125" 
+            : "bg-gray-600 hover:bg-primary/50"
+        }`}
+        aria-label={`Go to slide ${index + 1}`}
+      />
+    ));
+  }, [activeIndex, api]);
 
   return (
     <section id="projekte" className="w-full py-24 relative overflow-hidden">
@@ -117,10 +149,11 @@ const Projects = memo(() => {
                   key={index} 
                   className="pl-4 basis-full sm:basis-3/5 md:basis-2/5 transition-opacity duration-500 ease-out"
                 >
-                  <div className={`h-full transition-all duration-500 ease-out transform ${
-                    activeIndex === index 
-                      ? "scale-100 opacity-100 z-10" 
-                      : "scale-[0.85] opacity-60 z-0"
+                  <div 
+                    className={`h-full transition-all duration-500 ease-out transform ${
+                      activeIndex === index 
+                        ? "scale-100 opacity-100 z-10" 
+                        : "scale-[0.85] opacity-60 z-0"
                     }`}
                   >
                     <ProjectCard
@@ -140,18 +173,7 @@ const Projects = memo(() => {
                 <ChevronLeft className="h-4 w-4" />
               </CarouselPrevious>
               <div className="flex gap-2">
-                {projectsData.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => api?.scrollTo(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                      activeIndex === index 
-                        ? "bg-primary scale-125" 
-                        : "bg-gray-600 hover:bg-primary/50"
-                    }`}
-                    aria-label={`Go to slide ${index + 1}`}
-                  />
-                ))}
+                {renderIndicators()}
               </div>
               <CarouselNext 
                 className="h-10 w-10 rounded-full border border-primary/50 bg-black/50 backdrop-blur-sm text-primary hover:bg-primary/20 static" 
