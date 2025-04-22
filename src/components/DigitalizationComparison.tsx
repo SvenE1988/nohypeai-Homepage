@@ -20,11 +20,7 @@ const DigitalizationComparison = () => {
         </h2>
         <Divider />
         <p className="text-gray-400 text-base sm:text-lg mb-2">
-          Spürst du, wie die Konkurrenz immer mehr interne Abläufe automatisiert, Entscheidungen auf Basis von Daten trifft und Künstliche Intelligenz nutzt, um schneller und effizienter zu agieren? Während andere bereits auf smarte Technologien setzen, kann es passieren, dass du den Anschluss verlierst – und das spürbar in Umsatz und Kundenbindung.
-        </p>
-        <Divider />
-        <p className="text-gray-400 text-base sm:text-lg mb-2">
-          In einer Welt, die sich immer schneller digitalisiert, entscheidet deine technologische Schlagkraft über Erfolg oder Stillstand. Wenn dein Betrieb weiterhin auf manuelle Abläufe und alte Systeme setzt, riskierst du nicht nur, im Tagesgeschäft kostbare Zeit zu verlieren, sondern auch, deine Kunden nicht mehr zufriedenstellen zu können. Sie erwarten heute sofortige Reaktionen, individuell zugeschnittene Services und einen reibungslosen Prozess.
+          Spürst du, wie die Konkurrenz immer mehr interne Abläufe automatisiert, Entscheidungen auf Basis von Datentriffs und künstlichen Legenden nutzt?
         </p>
         <Divider />
 
