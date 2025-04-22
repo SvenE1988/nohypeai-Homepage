@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { cn } from '@/lib/utils'
 import { VariantProps, cva } from "class-variance-authority";
@@ -8,8 +9,9 @@ const buttonVariants = cva(
         variants: {
             variant: {
                 default: "bg-blue-500/5 hover:bg-blue-500/0 border-blue-500/20",
-                solid: "bg-blue-500 hover:bg-blue-600 text-white border-transparent hover:border-foreground/50 transition-all duration-200",
+                solid: "bg-primary hover:bg-primary/90 text-white border-transparent hover:border-foreground/50 transition-all duration-200",
                 ghost: "border-transparent bg-transparent hover:border-zinc-600",
+                secondary: "bg-secondary hover:bg-secondary/90 text-white border-transparent hover:border-foreground/50 transition-all duration-200",
             },
             size: {
                 default: "px-7 py-1.5",
