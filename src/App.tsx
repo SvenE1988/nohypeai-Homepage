@@ -27,7 +27,6 @@ const JobDetails = lazy(() => import("./pages/JobDetails"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LiveTests = lazy(() => import("./pages/LiveTests"));
-const ProposalGenerator = lazy(() => import("./pages/ProposalGenerator"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Archiv = lazy(() => import("./pages/Archiv"));
 const UeberUns = lazy(() => import("./pages/UeberUns"));
@@ -73,14 +72,6 @@ const App = () => (
                     <Route path="/live-tests" element={<LiveTests />} />
                     <Route path="/automatisierung" element={<Automatisierung />} />
                     <Route path="/auth" element={<Auth />} />
-                    <Route 
-                      path="/proposals" 
-                      element={
-                        <ProtectedRoute>
-                          <ProposalGenerator />
-                        </ProtectedRoute>
-                      } 
-                    />
                     <Route path="/archiv" element={<Archiv />} />
                     <Route path="/ueber-uns" element={<UeberUns />} />
                     <Route path="/faq" element={<FAQPage />} />
