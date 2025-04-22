@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { useNavigation } from "@/contexts/NavigationContext";
+import { GoogleGeminiEffectDemo } from "./ui/google-gemini-effect-demo";
 
 const AIFirstSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -73,9 +74,14 @@ const AIFirstSection = () => {
             Wir helfen Unternehmen mit praktischen KI-Lösungen zu wachsen – ohne Buzzwords, ohne Komplexität.
           </p>
         </motion.div>
+        {/* Gemini-Effekt Demo zwischen Hauptheadline und Digitalisierung */}
+        <div className="w-full mt-4 mb-4">
+          <GoogleGeminiEffectDemo />
+        </div>
       </div>
     </section>
   );
 };
 
 export default AIFirstSection;
+
