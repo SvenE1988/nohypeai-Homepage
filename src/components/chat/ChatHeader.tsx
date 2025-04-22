@@ -2,6 +2,7 @@
 import { Calendar, Mic } from 'lucide-react';
 import { Button } from '../ui/button';
 import { useCallToAction } from '@/hooks/useCallToAction';
+import { useNavigate } from 'react-router-dom';
 
 interface ChatHeaderProps {
   handleVoiceChat: () => void;
@@ -13,13 +14,23 @@ const ChatHeader = ({
   toggleChat 
 }: ChatHeaderProps) => {
   const { openCalendarBooking } = useCallToAction();
-  
+  const navigate = useNavigate();
+
   return (
     <div className="flex items-center justify-between p-4 bg-gradient-to-r from-secondary/80 to-primary/80">
       <div className="flex items-center space-x-2">
         <div className="text-white font-bold">AI Assistent</div>
       </div>
       <div className="flex flex-col space-y-2">
+        {/* "Zur Sprach-KI" Button */}
+        <Button
+          className="w-full py-4 md:py-6 bg-[#1A1F35] text-primary hover:bg-[#252A40] transition-all duration-300 flex items-center justify-center gap-2 border border-[#3A3F55] rounded-md"
+          onClick={() => navigate('/live-tests')}
+          variant={undefined}
+          size={undefined}
+        >
+          Sprach-KI entdecken
+        </Button>
         <Button 
           onClick={openCalendarBooking}
           size="sm" 
@@ -50,3 +61,4 @@ const ChatHeader = ({
 };
 
 export default ChatHeader;
+
