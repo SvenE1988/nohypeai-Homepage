@@ -13,17 +13,12 @@ const AIFirstSection = () => {
       sectionRef.current.style.transform = 'none';
       sectionRef.current.style.opacity = '1';
     }
-    
-    // Only scroll to top when coming from specific routes
     if (previousPath === '/proposals') {
-      // Use requestAnimationFrame for smoother scrolling
       requestAnimationFrame(() => {
         window.scrollTo({
           top: 0,
           behavior: "smooth"
         });
-        
-        // Trigger resize event in next frame for better performance
         requestAnimationFrame(() => {
           window.dispatchEvent(new Event('resize'));
         });
@@ -31,19 +26,18 @@ const AIFirstSection = () => {
     }
   }, [previousPath]);
 
-  // Content animation with optimized properties
   const contentAnimation = {
     initial: {
       opacity: 0,
       y: 20,
-      willChange: "opacity, transform" // Hint to browser for optimization
+      willChange: "opacity, transform" 
     },
     animate: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1.0] // Optimized cubic-bezier
+        ease: [0.25, 0.1, 0.25, 1.0]
       }
     }
   };
@@ -73,17 +67,16 @@ const AIFirstSection = () => {
             willChange: "transform", 
             backfaceVisibility: "hidden" 
           }}
-          key="ai-first-section-content"
+          key="ai-no-hype-section-content"
         >
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-2 sm:mb-4">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-              KI-First
-            </span>: <br className="hidden sm:block" />
-            Was steckt dahinter?
+              KI-Lösungen
+            </span><br className="sm:hidden" />
+            <span className="block text-white">ohne Hype</span>
           </h2>
           <p className="text-base sm:text-xl text-gray-300 mt-5 sm:mt-8 max-w-2xl sm:max-w-3xl mx-auto">
-            Unser KI-First Ansatz stellt künstliche Intelligenz in den Mittelpunkt jeder Unternehmenslösung. 
-            Dies ermöglicht maximale Effizienz und Zukunftssicherheit für Ihr Unternehmen.
+            Wir helfen Unternehmen mit praktischen KI-Lösungen zu wachsen – ohne Buzzwords, ohne Komplexität.
           </p>
         </motion.div>
       </div>
