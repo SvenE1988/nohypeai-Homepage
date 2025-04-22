@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Tab } from "./Tab";
@@ -38,20 +37,20 @@ export const DesktopMenu = ({
 
   return (
     <motion.ul
-      className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
+      className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-2 sm:top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
       onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
       {/* Logo */}
       <Link 
         to="/" 
-        className="mr-3 pl-2 flex items-center"
+        className="mr-2 sm:mr-3 pl-2 flex items-center"
         onClick={handleLogoClick}
       >
         <img 
           src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
           alt="nohype Logo" 
-          className="h-10 w-auto"
+          className="h-8 sm:h-10 w-auto"
           style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
         />
       </Link>
@@ -70,7 +69,7 @@ export const DesktopMenu = ({
           }
           onClick={(e) => handleNavigation(item, e)}
         >
-          <span className="flex items-center gap-2">
+          <span className="flex items-center gap-2 text-sm sm:text-base">
             {item.icon}
             {item.label}
           </span>

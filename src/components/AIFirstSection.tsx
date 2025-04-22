@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { LampContainer } from "@/components/ui/lamp";
 import { useRef, useEffect } from "react";
@@ -8,14 +7,12 @@ const AIFirstSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const { previousPath } = useNavigation();
 
-  // Reset section position when component mounts
   useEffect(() => {
     if (sectionRef.current) {
       sectionRef.current.style.transform = 'none';
       sectionRef.current.style.opacity = '1';
     }
     
-    // Special handling for when coming from proposals page
     if (previousPath === '/proposals') {
       setTimeout(() => {
         window.scrollTo(0, 0);
@@ -27,19 +24,15 @@ const AIFirstSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-16 relative overflow-hidden"
+      className="min-h-[70vh] sm:min-h-screen flex flex-col items-center justify-center bg-transparent text-white py-12 sm:py-16 relative overflow-hidden"
       id="hero"
     >
-      {/* Lamp container in background */}
-      <div className="absolute inset-0 z-0 translate-y-[10rem]">
+      <div className="absolute inset-0 z-0 translate-y-[8rem] sm:translate-y-[10rem]">
         <LampContainer>
-          {/* Empty div as children for the LampContainer */}
           <div></div>
         </LampContainer>
       </div>
-      
-      {/* Text content overlaid on top */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+      <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4">
         <motion.div 
           initial={{
             opacity: 0,
@@ -61,14 +54,13 @@ const AIFirstSection = () => {
           className="text-center z-50"
           key="ai-first-section-content"
         >
-          <h2 className="text-5xl md:text-6xl font-bold leading-tight">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
               KI-First
-            </span>: <br />
+            </span>: <br className="hidden sm:block" />
             Was steckt dahinter?
           </h2>
-          
-          <p className="text-xl text-gray-300 mt-8 max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-300 mt-5 sm:mt-8 max-w-2xl sm:max-w-3xl mx-auto">
             Unser KI-First Ansatz stellt künstliche Intelligenz in den Mittelpunkt jeder Unternehmenslösung. 
             Dies ermöglicht maximale Effizienz und Zukunftssicherheit für Ihr Unternehmen.
           </p>

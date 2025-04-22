@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Home } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -7,7 +6,6 @@ import { MobileMenu } from "@/components/navigation/MobileMenu";
 import { DesktopMenu } from "@/components/navigation/DesktopMenu";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 
-// Main navigation header component
 function NavHeader() {
   const {
     position,
@@ -26,10 +24,14 @@ function NavHeader() {
   );
 
   return (
-    <>
+    <nav className="w-full">
       {/* Social media links - shown on all device sizes */}
-      <SocialLinks />
-      
+      <div className="hidden sm:block">
+        <SocialLinks />
+      </div>
+      <div className="block sm:hidden fixed top-0 left-0 right-0 z-40">
+        <SocialLinks />
+      </div>
       {/* Mobile navigation menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
@@ -37,7 +39,6 @@ function NavHeader() {
         navItems={navItemsWithIcons}
         handleNavigation={handleNavigation}
       />
-      
       {/* Desktop navigation menu */}
       <DesktopMenu
         navItems={navItemsWithIcons}
@@ -47,7 +48,7 @@ function NavHeader() {
         location={location}
         handleNavigation={handleNavigation}
       />
-    </>
+    </nav>
   );
 }
 

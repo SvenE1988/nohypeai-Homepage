@@ -15,6 +15,7 @@ import EasterPromoPopup from "../components/EasterPromoPopup";
 import Partners from "../components/Partners";
 import FeatureCard from "@/components/features/FeatureCard";
 import IndustryShowcase from "@/components/features/IndustryShowcase";
+
 const featureData = [{
   title: "LeadBooster",
   subtitle: "Nie mehr Leads verpassen: Sofortige Quali & Booking in einem Schritt",
@@ -31,11 +32,13 @@ const featureData = [{
   benefits: ["Automatische Transkripte & Summaries von Zoom/Teams", "Angebots-Generator statt Word-Vorlagen-Basteln", "Research-Playbooks: Firmeninfos + E-Mail-Templates on demand", "KPI-Dashboards: Zeiteinsparung, Reporting, Batch-Transkription"],
   targetAudience: "Berater & Solo-Selbständige, Marketing-/Projekt-Teams, Agenturen und Professional Services"
 }];
+
 const Index = () => {
-  return <main className="min-h-screen bg-black">
+  return (
+    <main className="min-h-screen bg-black w-full overflow-x-hidden">
       <NavHeader />
       <AIFirstSection />
-      <Benefits className="-mt-20 sm:-mt-24 md:-mt-28" /> 
+      <Benefits className="-mt-10 sm:-mt-20 md:-mt-28" />
       <AIHereSection />
       <section id="nutzen">
         <GrowthSection />
@@ -43,21 +46,18 @@ const Index = () => {
       <section id="einsparungen">
         <SavingsCalculator />
       </section>
-      
+
       {/* Features Content */}
-      <div className="container mx-auto px-4 py-16">
-        <h1 className="text-4xl font-bold text-white text-center mb-4">Unsere Lösungen</h1>
-        <p className="text-gray-300 text-center mb-12 max-w-2xl mx-auto">
+      <div className="container mx-auto px-2 sm:px-4 py-10 sm:py-16">
+        <h1 className="text-3xl sm:text-4xl font-bold text-white text-center mb-4">Unsere Lösungen</h1>
+        <p className="text-gray-300 text-center mb-8 sm:mb-12 max-w-2xl mx-auto text-sm sm:text-base">
           Entdecken Sie unsere innovativen Lösungen für verschiedene Geschäftsbereiche
         </p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-8 max-w-7xl mx-auto">
           {featureData.map((feature, index) => <FeatureCard key={index} {...feature} />)}
         </div>
       </div>
-      
       <IndustryShowcase />
-      
       <Projects />
       <section id="prozess">
         <Process />
@@ -69,6 +69,8 @@ const Index = () => {
       <FAQ />
       <Footer />
       <EasterPromoPopup />
-    </main>;
+    </main>
+  );
 };
+
 export default Index;
