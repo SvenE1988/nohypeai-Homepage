@@ -1,3 +1,4 @@
+
 import { Avatar } from "./ui/avatar";
 import { Linkedin, Mail } from "lucide-react";
 import { useCallToAction } from "@/hooks/useCallToAction";
@@ -25,8 +26,8 @@ const About = () => {
               <p className="text-gray-400 leading-relaxed">
                 Wir sind eine Automatisierungs- und KI-Agentur aus Karlsruhe und haben uns darauf spezialisiert, Unternehmen den Einstieg in die Welt der Künstlichen Intelligenz zu erleichtern. Mit smarten Tools wie n8n, Gemini &amp; Co. zeigen wir, wie schon kleine Automatisierungen große Wirkung entfalten können – im Vertrieb, im Support oder in internen Prozessen.
               </p>
-              <p className="text-gray-400 leading-relaxed mt-4">Ich saß im 20. Kundencall und dachte: Das muss doch smarter gehen.“
-KI – bodenständig, verständlich und messbar.</p>
+              <p className="text-gray-400 leading-relaxed mt-4">Ich saß im 20. Kundencall und dachte: Das muss doch smarter gehen."
+KI – bodenständig, verständlich und messbar.</p>
             </div>
           </div>
           
@@ -39,7 +40,7 @@ KI – bodenständig, verständlich und messbar.</p>
               <h3 className="text-2xl font-semibold text-white mb-2">
                 {team[0].name}
               </h3>
-              <p className="text-gray-400d mb-4">{team[0].role}</p>
+              <p className="text-gray-400 mb-4">{team[0].role}</p>
               <div className="flex gap-4 justify-center">
                 <a href={team[0].linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-primary">
                   <Linkedin className="w-5 h-5" />
