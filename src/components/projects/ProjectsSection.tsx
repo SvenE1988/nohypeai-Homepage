@@ -22,12 +22,30 @@ import { useProjectsCarousel } from "./useProjectsCarousel";
 const ProjectsSection = memo(() => {
   const [currentProject, setCurrentProject] = useState<Project | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
-  const { activeIndex, setApi, renderIndicators } = useProjectsCarousel();
+  const { activeIndex, setApi, getIndicatorProps, indicatorsCount } = useProjectsCarousel();
 
   const handleViewDetails = useCallback((project: Project) => {
     setCurrentProject(project);
     setIsDetailsOpen(true);
   }, []);
+
+  const renderIndicators = () => {
+    return Array.from({ length: indicatorsCount }).map((_, index) => {
+      const { isActive, onClick, ariaLabel } = getIndicatorProps(index);
+      return (
+        <button
+          key={index}
+          onClick={onClick}
+          className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+            isActive
+              ? "bg-primary scale-125"
+              : "bg-gray-600 hover:bg-primary/50"
+          }`}
+          aria-label={ariaLabel}
+        />
+      );
+    });
+  };
 
   return (
     <section id="projekte" className="w-full py-24 relative overflow-hidden">

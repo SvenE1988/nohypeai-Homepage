@@ -71,20 +71,16 @@ export function useProjectsCarousel() {
     };
   }, [api]);
 
-  const renderIndicators = useCallback(
-    () =>
-      projectsData.map((_, index) => (
-        <button
-          key={index}
-          onClick={() => api?.scrollTo(index)}
-          className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-            activeIndex === index
-              ? "bg-primary scale-125"
-              : "bg-gray-600 hover:bg-primary/50"
-          }`}
-          aria-label={`Go to slide ${index + 1}`}
-        />
-      )),
+  // Instead of returning JSX, return the data needed to render indicators
+  const getIndicatorProps = useCallback(
+    (index: number) => {
+      return {
+        key: index,
+        isActive: activeIndex === index,
+        onClick: () => api?.scrollTo(index),
+        ariaLabel: `Go to slide ${index + 1}`
+      };
+    },
     [activeIndex, api]
   );
 
@@ -92,6 +88,7 @@ export function useProjectsCarousel() {
     activeIndex,
     setApi,
     api,
-    renderIndicators,
+    getIndicatorProps,
+    indicatorsCount: projectsData.length
   };
 }
