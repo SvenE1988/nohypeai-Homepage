@@ -35,7 +35,6 @@ const menuVariants = {
   }
 };
 
-// Memoized component to prevent unnecessary re-renders
 export const MobileMenu = memo(({
   isMobileMenuOpen,
   setIsMobileMenuOpen,
@@ -50,24 +49,25 @@ export const MobileMenu = memo(({
 
   return (
     <>
-      {/* Mobile Menu Top Bar with Logo */}
+      {/* Mobile Menu Top Bar with Logo - always visible */}
       <div className="fixed top-2 left-2 z-50 md:hidden flex items-center">
         <Link to="/" onClick={(e) => handleNavigation({ href: '/', label: 'Start' }, e)}>
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="nohype Logo" 
-            className="h-7 w-auto sm:h-8"
+            className="h-9 w-auto sm:h-10"
             style={{ 
               aspectRatio: "4.19/1", 
               display: "block", 
               objectFit: "contain",
               width: "auto", 
               height: "auto",
-              maxHeight: "2rem"
+              maxHeight: "2.5rem"
             }}
-            width={84} 
-            height={20}
+            width={110} 
+            height={26}
             loading="eager"
+            draggable={false}
           />
         </Link>
       </div>
@@ -110,7 +110,7 @@ export const MobileMenu = memo(({
                 setIsMobileMenuOpen(false);
               }}
             >
-              {item.icon}
+              {/* No item.icon */}
               {item.label}
             </a>
           ))}
@@ -120,5 +120,4 @@ export const MobileMenu = memo(({
   );
 });
 
-// Set displayName for better debugging
 MobileMenu.displayName = 'MobileMenu';
