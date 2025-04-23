@@ -1,10 +1,11 @@
 
-import React, { memo } from "react";
+import React, { memo, useCallback } from "react";
+import { Home } from "lucide-react";
+import { Link } from "react-router-dom";
 import { SocialLinks } from "@/components/navigation/SocialLinks";
 import { MobileMenu } from "@/components/navigation/MobileMenu";
 import { DesktopMenu } from "@/components/navigation/DesktopMenu";
 import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
-import { Link } from "react-router-dom";
 
 // Memoized component to prevent unnecessary re-renders
 const NavHeader = memo(() => {
@@ -16,13 +17,14 @@ const NavHeader = memo(() => {
     location,
     activeSection,
     navItems,
-    handleNavigation,
-    handleLogoClick,
+    handleNavigation
   } = useHeaderNavigation();
 
-  // Remove any icons (such as Home) from navItems since the logo stands alone
-  const pureNavItems = React.useMemo(() => 
-    navItems.map((item) => ({ ...item, icon: undefined })), 
+  // Memoize the navigation items with icons to prevent recreating on each render
+  const navItemsWithIcons = React.useMemo(() => 
+    navItems.map((item, index) => 
+      index === 0 ? { ...item, icon: <Home className="w-4 h-4" /> } : item
+    ), 
     [navItems]
   );
 
@@ -35,28 +37,16 @@ const NavHeader = memo(() => {
       <div className="block sm:hidden fixed top-0 left-0 right-0 z-40">
         <SocialLinks />
       </div>
-      {/* Always show logo, not inside navigation items */}
-      <div className="fixed z-50 left-1/2 top-2 sm:top-4 -translate-x-1/2 flex items-center justify-center pointer-events-none select-none mb-2">
-        <Link to="/" onClick={handleLogoClick} className="pointer-events-auto outline-none border-none bg-transparent p-0 m-0">
-          <img 
-            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
-            alt="nohype Logo" 
-            className="h-9 sm:h-11 w-auto"
-            style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
-            draggable={false}
-          />
-        </Link>
-      </div>
       {/* Mobile navigation menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
-        navItems={pureNavItems}
+        navItems={navItemsWithIcons}
         handleNavigation={handleNavigation}
       />
       {/* Desktop navigation menu */}
       <DesktopMenu
-        navItems={pureNavItems}
+        navItems={navItemsWithIcons}
         position={position}
         setPosition={setPosition}
         activeSection={activeSection}
@@ -67,6 +57,7 @@ const NavHeader = memo(() => {
   );
 });
 
+// Set displayName for better debugging
 NavHeader.displayName = 'NavHeader';
 
 export default NavHeader;

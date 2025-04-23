@@ -1,11 +1,10 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 import { Tab } from "./Tab";
 import { Cursor } from "./Cursor";
+import { Link } from "react-router-dom";
 import { NavItem } from "@/hooks/useHeaderNavigation";
 
-// Removed logo from route items and Home icon from nav
 interface DesktopMenuProps {
   navItems: Array<NavItem>;
   position: {
@@ -30,15 +29,33 @@ export const DesktopMenu = ({
   location,
   handleNavigation,
 }: DesktopMenuProps) => {
-  // No logo or home icon inside here: logo is shown above nav bar in NavHeader
+  // Handle logo click
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    handleNavigation({ href: '/', label: 'Start' }, e);
+  };
 
   return (
     <motion.ul
-      className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-16 sm:top-20 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
+      className="relative mx-auto hidden md:flex items-center w-auto max-w-2xl rounded-full border-2 border-white/30 bg-black/70 backdrop-blur-md p-1 fixed top-2 sm:top-4 left-1/2 -translate-x-1/2 z-50 justify-center shadow-lg"
       onMouseLeave={() => setPosition({ ...position, opacity: 0 })}
       style={{ position: 'fixed' }}
     >
-      {/* Navigation tabs only, no logo or Home icon */}
+      {/* Logo */}
+      <Link 
+        to="/" 
+        className="mr-2 sm:mr-3 pl-2 flex items-center"
+        onClick={handleLogoClick}
+      >
+        <img 
+          src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+          alt="nohype Logo" 
+          className="h-8 sm:h-10 w-auto"
+          style={{ aspectRatio: "4.19/1", display: "block", objectFit: "contain" }}
+        />
+      </Link>
+      
+      {/* Navigation tabs */}
       {navItems.map((item) => (
         <Tab 
           key={item.label}
@@ -53,7 +70,7 @@ export const DesktopMenu = ({
           onClick={(e) => handleNavigation(item, e)}
         >
           <span className="flex items-center gap-2 text-sm sm:text-base">
-            {/* No item.icon */}
+            {item.icon}
             {item.label}
           </span>
         </Tab>
