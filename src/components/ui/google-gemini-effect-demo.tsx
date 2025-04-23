@@ -19,7 +19,7 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      className="h-[100vh] bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-hidden"
+      className="h-[420px] flex items-center justify-center bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-hidden"
       ref={ref}
       style={{ position: 'relative' }}
     >
