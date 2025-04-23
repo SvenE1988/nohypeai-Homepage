@@ -4,6 +4,12 @@ import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
 import React from "react";
 
+interface GoogleGeminiEffectProps {
+  pathLengths: MotionValue[];
+  className?: string;
+  scale?: number; // New scale prop
+}
+
 const transition = {
   duration: 0,
   ease: "linear",
@@ -12,23 +18,33 @@ const transition = {
 export const GoogleGeminiEffect = ({
   pathLengths,
   className,
-}: {
-  pathLengths: MotionValue[];
-  className?: string;
-}) => {
+  scale = 1, // Default scale is 1
+}: GoogleGeminiEffectProps) => {
+  // Calculate dynamic padding based on scale
+  const buttonPadding = `${Math.max(8 * scale, 4)}px`;
+  const baseFontSize = 16 * scale; // Base font size for scaling
+
   return (
     <div className={cn("w-full h-full flex flex-col items-center justify-center bg-transparent relative", className)}>
       {/* Centered button with fixed positioning */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
-          className="font-bold bg-black bg-opacity-80 rounded-lg md:px-8 md:py-4 px-6 py-3 flex items-center justify-center w-28 h-16 md:w-36 md:h-20 opacity-90 pointer-events-none select-none"
+          className="font-bold bg-black bg-opacity-80 rounded-lg flex items-center justify-center opacity-90 pointer-events-none select-none"
+          style={{
+            padding: buttonPadding,
+            fontSize: `${baseFontSize}px`,
+          }}
           tabIndex={-1}
           aria-hidden="true"
         >
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
-            alt="NoHype Logo" 
-            className="w-[300%] h-[300%] object-contain"
+            alt="NoHype Logo"
+            style={{
+              width: `${300 * scale}px`,
+              height: 'auto',
+              objectFit: 'contain',
+            }}
           />
         </button>
       </div>
@@ -141,3 +157,4 @@ export const GoogleGeminiEffect = ({
     </div>
   );
 };
+
