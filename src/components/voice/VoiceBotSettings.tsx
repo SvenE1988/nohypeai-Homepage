@@ -7,20 +7,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Info } from "lucide-react";
 
 interface VoiceBotSettingsProps {
   useCase: string;
   setUseCase: (value: string) => void;
-  voice: string;
-  setVoice: (value: string) => void;
   isActive: boolean;
 }
+
+const useCaseInfo = {
+  immobilienmakler: "Ein KI-Assistent spezialisiert auf Immobilienanfragen. Beantwortet Fragen zu Immobilien, Besichtigungen und Preisen.",
+  hausverwaltung: "Ein KI-Assistent für Hausverwaltungsthemen. Hilft bei Anliegen zu Wartung, Reparaturen und Verwaltungsaufgaben.",
+  support: "Ein technischer Support-Assistent. Unterstützt bei technischen Problemen und Produktfragen."
+};
 
 const VoiceBotSettings = ({
   useCase,
   setUseCase,
-  voice,
-  setVoice,
   isActive
 }: VoiceBotSettingsProps) => {
   return (
@@ -45,25 +48,16 @@ const VoiceBotSettings = ({
         </Select>
       </div>
 
-      <div className="space-y-2">
-        <label className="text-sm text-gray-300">
-          KI-Assistent:
-        </label>
-        <Select
-          value={voice}
-          onValueChange={setVoice}
-          disabled={isActive}
-        >
-          <SelectTrigger className="w-full bg-[#2D2F3F] border-gray-700 text-white">
-            <SelectValue placeholder="Wählen Sie eine Stimme" />
-          </SelectTrigger>
-          <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
-            <SelectItem value="pia">🧑‍💼 Pia (freundliche Assistentin)</SelectItem>
-            <SelectItem value="schneider">👨‍🔧 Herr Schneider (Techniker)</SelectItem>
-            <SelectItem value="otto">🤖 Agent Otto (neutral, KI-Stil)</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+      {useCase && (
+        <div className="p-4 bg-[#2D2F3F]/50 rounded-lg border border-gray-700">
+          <div className="flex gap-3">
+            <Info className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-gray-300">
+              {useCaseInfo[useCase as keyof typeof useCaseInfo]}
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

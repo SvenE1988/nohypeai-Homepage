@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useState } from 'react';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Lock } from 'lucide-react';
 
 interface VoiceBotEmailDialogProps {
   isOpen: boolean;
@@ -15,6 +17,7 @@ interface VoiceBotEmailDialogProps {
 
 const VoiceBotEmailDialog = ({ isOpen, onClose, onStartCall, isLoading }: VoiceBotEmailDialogProps) => {
   const [email, setEmail] = useState('');
+  const [privacyAccepted, setPrivacyAccepted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +30,7 @@ const VoiceBotEmailDialog = ({ isOpen, onClose, onStartCall, isLoading }: VoiceB
         <DialogHeader>
           <DialogTitle>Sprachdialog starten</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-2">
             <Input
               type="email"
@@ -38,10 +41,28 @@ const VoiceBotEmailDialog = ({ isOpen, onClose, onStartCall, isLoading }: VoiceB
               className="bg-transparent border-gray-700"
             />
           </div>
+          
+          <div className="flex items-start space-x-3">
+            <Checkbox
+              id="privacy"
+              checked={privacyAccepted}
+              onCheckedChange={(checked) => setPrivacyAccepted(checked as boolean)}
+              className="mt-1"
+            />
+            <label htmlFor="privacy" className="text-sm text-gray-300">
+              Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. Meine Daten werden ausschließlich zur Bereitstellung des KI-Assistenten verwendet.
+            </label>
+          </div>
+
+          <div className="flex items-center gap-2 p-3 bg-gray-900/50 rounded-lg text-xs text-gray-400">
+            <Lock className="w-4 h-4 text-primary" />
+            <p>Ihre E-Mail-Adresse wird vertraulich behandelt und nur für diesen Service verwendet.</p>
+          </div>
+          
           <Button 
             type="submit" 
             className="w-full" 
-            disabled={isLoading || !email}
+            disabled={isLoading || !email || !privacyAccepted}
           >
             {isLoading ? (
               <LoadingSpinner size="sm" />

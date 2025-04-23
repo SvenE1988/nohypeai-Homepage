@@ -69,6 +69,27 @@ export type Database = {
         }
         Relationships: []
       }
+      voice_bot_sessions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          use_case: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          use_case: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          use_case?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,5 +1,6 @@
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.3"
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -12,34 +13,41 @@ serve(async (req) => {
   }
 
   try {
-    const { useCase, voice } = await req.json()
+    const { useCase, email } = await req.json()
     
-    // Validate input parameters
-    if (!useCase) {
-      console.error("Missing required parameter: useCase")
-      throw new Error("Missing required parameter: useCase")
+    if (!useCase || !email) {
+      throw new Error("Missing required parameters: useCase and email")
     }
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')
+    const supabase = createClient(supabaseUrl!, supabaseAnonKey!)
     
-    if (!voice) {
-      console.error("Missing required parameter: voice")
-      throw new Error("Missing required parameter: voice")
+    // Log session data
+    const { error: insertError } = await supabase
+      .from('voice_bot_sessions')
+      .insert([{ email, use_case: useCase }])
+
+    if (insertError) {
+      console.error("Error logging session:", insertError)
     }
     
     // Log the incoming request parameters
-    console.log(`Processing request with useCase: "${useCase}" and voice: "${voice}"`)
+    console.log(`Processing request for email: "${email}" with useCase: "${useCase}"`)
 
     const apiKey = Deno.env.get('WEBHOOK_API_KEY')
     if (!apiKey) {
-      console.error("No WEBHOOK_API_KEY found in environment")
       throw new Error("API key not configured")
     }
 
-    // Construct the correct webhook URL for n8n with the new webhook ID
+    // Construct webhook URL
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
-    console.log(`Forwarding request to n8n webhook: ${webhookURL}`)
+    console.log(`Forwarding request to webhook: ${webhookURL}`)
     
-    // Forward the parameters to the n8n webhook
+    // Forward to webhook with predefined voice based on use case
+    const voice = "pia" // Using default voice for all use cases
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: {
@@ -50,31 +58,21 @@ serve(async (req) => {
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`n8n webhook responded with status: ${response.status}, error: ${errorText}`);
-      throw new Error(`n8n webhook responded with status: ${response.status}`);
+      throw new Error(`Webhook responded with status: ${response.status}`)
     }
 
-    const data = await response.text();
-    
-    // Log successful response (truncated to avoid large logs)
-    console.log(`Received successful response from n8n webhook. First 100 chars: ${data.substring(0, 100)}...`);
-    
-    // Return the response from n8n which should contain the XML with Stream URL
-    return new Response(
-      data,
-      {
-        headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
-      }
-    );
+    const data = await response.text()
+    return new Response(data, {
+      headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
+    })
   } catch (error) {
-    console.error("Error in Edge Function:", error);
+    console.error("Error in Edge Function:", error)
     return new Response(
       JSON.stringify({ error: error.message }),
       {
         status: 500,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' }
       }
-    );
+    )
   }
 })
