@@ -9,7 +9,6 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessages from './chat/ChatMessages';
 import ChatInput from './chat/ChatInput';
 import { sendChatMessage, addSystemMessage } from '../services/chatService';
-import { useNavigate } from 'react-router-dom';
 
 const CustomChat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +17,6 @@ const CustomChat = () => {
   const [sessionId, setSessionId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
-  const navigate = useNavigate();
   const {
     setCalendarDialogOpen
   } = useDialog();
@@ -61,7 +59,8 @@ const CustomChat = () => {
 
   const handleVoiceChat = () => {
     setIsOpen(false);
-    navigate('/live-tests');
+    // Use window.location instead of useNavigate
+    window.location.href = '/live-tests';
   };
 
   const toggleChat = () => {
