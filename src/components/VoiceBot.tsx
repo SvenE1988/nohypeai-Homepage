@@ -14,7 +14,6 @@ import { useUltravoxSession } from "@/hooks/useUltravoxSession";
 
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState("immobilienmakler");
-  const [voice, setVoice] = useState("pia");
   const [isActive, setIsActive] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active' | 'error' | 'completed'>('idle');
@@ -28,6 +27,9 @@ const VoiceBot = () => {
     stopVoiceTest: stopTest,
     addMessage 
   } = useVoiceBotLogic();
+
+  // Default voice is now hardcoded
+  const voice = "pia";
 
   const handleStartDialog = () => {
     setShowEmailDialog(true);
@@ -75,8 +77,6 @@ const VoiceBot = () => {
               <VoiceBotSettings 
                 useCase={useCase}
                 setUseCase={setUseCase}
-                voice={voice}
-                setVoice={setVoice}
                 isActive={isActive}
               />
               <VoiceBotInfo />
