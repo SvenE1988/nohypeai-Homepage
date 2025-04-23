@@ -43,6 +43,7 @@ export const useVoiceBotLogic = () => {
           break;
         case 'disconnected':
           addMessage('Verbindung getrennt', 'info');
+          setIsLoading(false);
           break;
       }
     });
@@ -54,7 +55,7 @@ export const useVoiceBotLogic = () => {
       }
     });
 
-    // Debug message listener
+    // Debug message listener for better troubleshooting
     session.addEventListener('experimental_message', (msg) => {
       console.log('Debug message:', JSON.stringify(msg));
     });
@@ -81,7 +82,7 @@ export const useVoiceBotLogic = () => {
   const startVoiceTest = async (useCase: string, email: string, session: UltravoxSession | null) => {
     setIsLoading(true);
     setErrorMessage('');
-    addMessage("Verbindung wird aufgebaut...");
+    addMessage("Initialisiere Sprachdialog...");
 
     if (!session) {
       setErrorMessage("Keine Session initialisiert");
@@ -108,15 +109,16 @@ export const useVoiceBotLogic = () => {
         throw new Error(`Edge Function error: ${error.message}`);
       }
 
-      if (!data?.joinUrl) {
-        throw new Error('Keine Join URL erhalten');
+      const responseData = Array.isArray(data) ? data[0] : data;
+      if (!responseData?.joinUrl) {
+        throw new Error('Keine gültige Join URL erhalten');
       }
 
       // Join call with the received URL
-      console.log("✅ Join URL erfolgreich erhalten, trete Call bei...");
+      console.log("✅ Join URL erfolgreich erhalten:", responseData.joinUrl);
       addMessage("Join URL erfolgreich empfangen");
       
-      session.joinCall(data.joinUrl);
+      session.joinCall(responseData.joinUrl);
       addMessage("Dem Sprachdialog beigetreten");
 
       toast({
