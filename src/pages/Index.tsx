@@ -1,4 +1,3 @@
-
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
 import Projects from "../components/Projects";
@@ -26,4 +25,3 @@ const Index = () => {
 };
 
 export default Index;
-

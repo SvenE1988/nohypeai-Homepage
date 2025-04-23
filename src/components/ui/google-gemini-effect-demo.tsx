@@ -1,7 +1,7 @@
 
 "use client";
 import { useScroll, useTransform } from "framer-motion";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
 export function GoogleGeminiEffectDemo() {
@@ -11,7 +11,6 @@ export function GoogleGeminiEffectDemo() {
     offset: ["start start", "end start"],
   });
 
-  // Adjusted transform values to complete the animation within the viewport height
   const pathLengthFirst = useTransform(scrollYProgress, [0, 0.5], [0.2, 1.2]);
   const pathLengthSecond = useTransform(scrollYProgress, [0, 0.5], [0.15, 1.2]);
   const pathLengthThird = useTransform(scrollYProgress, [0, 0.5], [0.1, 1.2]);
@@ -22,7 +21,7 @@ export function GoogleGeminiEffectDemo() {
     <div
       className="h-[100vh] bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-hidden"
       ref={ref}
-      style={{ position: 'relative' }} // Explicitly set position to fix the warning
+      style={{ position: 'relative' }}
     >
       <GoogleGeminiEffect
         pathLengths={[
@@ -32,8 +31,6 @@ export function GoogleGeminiEffectDemo() {
           pathLengthFourth,
           pathLengthFifth,
         ]}
-        title="Gemini Animation"
-        description="Scrolle hier, um die Animation zu sehen"
       />
     </div>
   );
