@@ -50,13 +50,16 @@ const VoiceBotEmailDialog = ({ isOpen, onClose, onStartCall, isLoading }: VoiceB
               className="mt-1"
             />
             <label htmlFor="privacy" className="text-sm text-gray-300">
-              Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. Meine Daten werden ausschließlich zur Bereitstellung des KI-Assistenten verwendet.
+              Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. 
+              Meine E-Mail-Adresse und der gewählte Anwendungsfall werden zu Analyse-Zwecken 
+              gespeichert und dienen der Verbesserung des KI-Assistenten.
             </label>
           </div>
 
           <div className="flex items-center gap-2 p-3 bg-gray-900/50 rounded-lg text-xs text-gray-400">
             <Lock className="w-4 h-4 text-primary" />
-            <p>Ihre E-Mail-Adresse wird vertraulich behandelt und nur für diesen Service verwendet.</p>
+            <p>Ihre Daten werden vertraulich behandelt und ausschließlich zur Verbesserung 
+              unseres KI-Assistenten verwendet.</p>
           </div>
           
           <Button 
