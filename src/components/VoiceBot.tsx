@@ -46,16 +46,25 @@ const VoiceBot = () => {
     setErrorMessage('');
     
     try {
+      console.log("Starting call with useCase:", useCase, "and email:", email);
+      
       const { data, error } = await supabase.functions.invoke('voice-bot', {
         body: { useCase, email }
       });
 
-      if (error) throw error;
+      if (error) {
+        console.error("Supabase function error:", error);
+        throw error;
+      }
+      
+      console.log("Received data from voice-bot function:", data);
       
       if (!data?.joinUrl) {
+        console.error("No joinUrl in response:", data);
         throw new Error('Keine gültige Join URL erhalten');
       }
 
+      console.log("Joining call with URL:", data.joinUrl);
       joinCall(data.joinUrl);
       
       toast({
@@ -63,6 +72,7 @@ const VoiceBot = () => {
         description: "Sprachassistent wird initialisiert...",
       });
     } catch (error) {
+      console.error("Error starting call:", error);
       setErrorMessage(error instanceof Error ? error.message : 'Unbekannter Fehler');
       setIsActive(false);
       

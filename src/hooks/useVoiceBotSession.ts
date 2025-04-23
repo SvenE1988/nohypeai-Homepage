@@ -11,12 +11,14 @@ export const useVoiceBotSession = () => {
 
   useEffect(() => {
     // Initialize session with debug messages
+    console.log("Initializing Ultravox session");
     const newSession = new UltravoxSession({
       experimentalMessages: new Set(['debug'])
     });
 
     // Set up event listeners
     newSession.addEventListener('status', () => {
+      console.log("Status changed:", newSession.status);
       setStatus(newSession.status as CallStatus);
       if (newSession.status === 'idle') {
         setIsReady(true);
@@ -24,6 +26,7 @@ export const useVoiceBotSession = () => {
     });
 
     newSession.addEventListener('transcripts', () => {
+      console.log("Transcripts updated:", newSession.transcripts);
       setTranscripts(newSession.transcripts as Transcript[]);
     });
 
@@ -32,6 +35,7 @@ export const useVoiceBotSession = () => {
     });
 
     setSession(newSession);
+    setIsReady(true); // Mark as ready immediately to show the start button
 
     return () => {
       if (newSession) {
@@ -51,7 +55,10 @@ export const useVoiceBotSession = () => {
     unmuteMic: () => session?.unmuteMic(),
     muteSpeaker: () => session?.muteSpeaker(),
     unmuteSpeaker: () => session?.unmuteSpeaker(),
-    joinCall: (joinUrl: string) => session?.joinCall(joinUrl),
+    joinCall: (joinUrl: string) => {
+      console.log("Joining call with URL:", joinUrl);
+      return session?.joinCall(joinUrl);
+    },
     leaveCall: () => session?.leaveCall(),
   };
 };

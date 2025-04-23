@@ -38,6 +38,7 @@ serve(async (req) => {
       throw new Error("API key not configured")
     }
 
+    console.log("Calling webhook with useCase:", useCase)
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
     const response = await fetch(webhookURL, {
@@ -55,8 +56,9 @@ serve(async (req) => {
 
     // Parse response
     const webhookData = await response.json()
+    console.log("Webhook response:", webhookData)
     
-    // Direkt die joinUrl zurückgeben
+    // Return the joinUrl directly
     return new Response(
       JSON.stringify({ joinUrl: webhookData.joinUrl }),
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
