@@ -19,9 +19,15 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      className="h-[420px] flex items-center justify-center bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative overflow-hidden"
       ref={ref}
-      style={{ position: 'relative' }}
+      className="w-screen max-w-none h-[420px] flex items-center justify-center bg-black relative overflow-hidden"
+      style={{
+        left: '50%',
+        right: '50%',
+        marginLeft: '-50vw',
+        marginRight: '-50vw',
+        position: 'relative',
+      }}
     >
       <GoogleGeminiEffect
         pathLengths={[
@@ -31,6 +37,7 @@ export function GoogleGeminiEffectDemo() {
           pathLengthFourth,
           pathLengthFifth,
         ]}
+        className="w-full h-full"
       />
     </div>
   );
