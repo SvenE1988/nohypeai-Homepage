@@ -11,26 +11,15 @@ const transition = {
 
 export const GoogleGeminiEffect = ({
   pathLengths,
-  title,
-  description,
   className,
 }: {
   pathLengths: MotionValue[];
-  title?: string;
-  description?: string;
   className?: string;
 }) => {
   return (
     <div className={cn("w-full h-full flex flex-col items-center justify-center bg-transparent relative", className)}>
-      <p className="text-lg md:text-7xl font-normal pb-4 text-center bg-clip-text text-transparent bg-gradient-to-b from-neutral-100 to-neutral-300">
-        {title || "KI, die wirklich Nutzen schafft"}
-      </p>
-      <p className="text-xs md:text-xl font-normal text-center text-neutral-400 mt-4 max-w-lg mx-auto">
-        {description ||
-          "Sieh, wie moderne KI-Lösungen echte Wirkung entfalten – einfach scrollen und erleben!"}
-      </p>
+      {/* Animation only – no title or description */}
       <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute pointer-events-none">
-        {/* Demo-Button entfernt / Button bleibt, aber un-klickbar */}
         <button
           className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 md:mt-24 mt-8 z-30 md:text-base text-black text-xs w-fit mx-auto opacity-90 pointer-events-none select-none"
           tabIndex={-1}
