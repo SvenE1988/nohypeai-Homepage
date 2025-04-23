@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useRef, useEffect } from "react";
 import { useNavigation } from "@/contexts/NavigationContext";
@@ -44,10 +43,10 @@ const AIFirstSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-[40vh] sm:min-h-[55vh] flex flex-col items-center justify-center text-white py-8 sm:py-12 relative"
+      className="hero-section min-h-[40vh] sm:min-h-[55vh] flex flex-col items-center justify-center text-white py-8 sm:py-12"
       id="hero"
     >
-      <div className="relative flex flex-col items-center justify-center text-center px-3 sm:px-4">
+      <div className="flex flex-col items-center justify-center text-center px-3 sm:px-4">
         <motion.div 
           initial="initial"
           whileInView="animate"
