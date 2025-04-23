@@ -107,10 +107,10 @@ const VoiceBot = () => {
               )}
               <VoiceBotControls 
                 status={status}
-                isMicMuted={isMicMuted()}
-                isSpeakerMuted={isSpeakerMuted()}
-                onMicToggle={() => isMicMuted() ? unmuteMic() : muteMic()}
-                onSpeakerToggle={() => isSpeakerMuted() ? unmuteSpeaker() : muteSpeaker()}
+                isMicMuted={isMicMuted}
+                isSpeakerMuted={isSpeakerMuted}
+                onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}
+                onSpeakerToggle={() => isSpeakerMuted ? unmuteSpeaker() : muteSpeaker()}
                 onStop={handleStop}
               />
             </CardContent>

@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Mic, MicOff, Speaker, SpeakerOff } from 'lucide-react';
+import { Mic, MicOff, Volume, VolumeX } from 'lucide-react';
 import type { CallStatus } from '@/types/voiceBot';
 
 interface VoiceBotControlsProps {
@@ -39,7 +39,7 @@ const VoiceBotControls = ({
         disabled={!isActive}
         className={isSpeakerMuted ? 'bg-red-500/10' : ''}
       >
-        {isSpeakerMuted ? <SpeakerOff /> : <Speaker />}
+        {isSpeakerMuted ? <VolumeX /> : <Volume />}
       </Button>
       <Button
         onClick={onStop}
