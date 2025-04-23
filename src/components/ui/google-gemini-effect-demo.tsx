@@ -19,19 +19,21 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      className="h-[100vh] bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-hidden"
+      className="w-full bg-black dark:border dark:border-white/[0.1] rounded-md relative overflow-hidden flex justify-center items-center"
       ref={ref}
-      style={{ position: 'relative' }}
+      style={{ minHeight: "400px", height: "auto", padding: 0 }}
     >
-      <GoogleGeminiEffect
-        pathLengths={[
-          pathLengthFirst,
-          pathLengthSecond,
-          pathLengthThird,
-          pathLengthFourth,
-          pathLengthFifth,
-        ]}
-      />
+      <div className="w-full max-w-[1100px]">
+        <GoogleGeminiEffect
+          pathLengths={[
+            pathLengthFirst,
+            pathLengthSecond,
+            pathLengthThird,
+            pathLengthFourth,
+            pathLengthFifth,
+          ]}
+        />
+      </div>
     </div>
   );
 }
