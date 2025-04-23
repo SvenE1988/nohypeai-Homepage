@@ -15,6 +15,7 @@ const Index = () => {
       <NavHeader />
       <AIFirstSection />
       <GoogleGeminiEffectDemo />
+      <div className="h-[30vh]"></div> {/* Spacer to ensure content flows after the animation */}
       <DigitalizationComparison />
       <AIHereSection />
       <SavingsCalculator />
@@ -26,4 +27,3 @@ const Index = () => {
 };
 
 export default Index;
-
