@@ -11,7 +11,7 @@ const JUMP_FORWARD_IMG = "/lovable-uploads/867ea91a-ecb7-4b90-aa07-c6674b5acc7f.
 
 const DigitalizationComparison = () => {
   return (
-    <section className="w-full py-8 sm:py-12 bg-transparent -mt-24 md:-mt-36" id="digital-comparison">
+    <section className="w-full py-8 sm:py-12 bg-transparent -mt-28 md:-mt-36" id="digital-comparison">
       <div className="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-5">
           Wo stehst du auf dem Weg zur Digitalisierung?
