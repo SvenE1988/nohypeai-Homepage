@@ -18,22 +18,23 @@ export const GoogleGeminiEffect = ({
 }) => {
   return (
     <div className={cn("w-full h-full flex flex-col items-center justify-center bg-transparent relative", className)}>
-      {/* Animation only – no title or description */}
-      <div className="w-full h-[890px] -top-60 md:-top-40 flex items-center justify-center absolute pointer-events-none">
+      {/* Centered button with fixed positioning */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
-          className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 md:mt-24 mt-8 z-30 md:text-base text-black text-xs w-fit mx-auto opacity-90 pointer-events-none select-none"
+          className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 text-black text-xs md:text-base w-fit opacity-90 pointer-events-none select-none"
           tabIndex={-1}
           aria-hidden="true"
         >
           ui.aceternity.com
         </button>
       </div>
+
       <svg
         width="1440"
         height="890"
         viewBox="0 0 1440 890"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute -top-60 md:-top-40 w-full pointer-events-none"
+        className="absolute w-full pointer-events-none"
         aria-hidden="true"
         style={{ background: "transparent" }}
       >
