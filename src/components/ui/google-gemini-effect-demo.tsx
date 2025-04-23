@@ -16,15 +16,17 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      className="w-full h-[420px] flex items-center justify-center relative overflow-hidden"
-      // Entferne bg-black, damit keine eigene dunkle BG mehr,
-      // nutzt den Website-Hintergrund
+      className="flex items-center justify-center w-full h-[420px] relative overflow-hidden"
       style={{
-        width: '100vw',
-        marginLeft: 'calc(-50vw + 50%)',
-        marginRight: 'calc(-50vw + 50%)',
-        position: 'relative',
-        background: 'transparent'
+        width: "100vw",
+        height: "420px", // Exakt gleiche Höhe wie SVG
+        minHeight: "420px",
+        maxHeight: "420px",
+        marginLeft: "calc(-50vw + 50%)",
+        marginRight: "calc(-50vw + 50%)",
+        position: "relative",
+        background: "transparent",
+        padding: "0" // Kein zusätzlicher Platz oben/unten
       }}
     >
       <GoogleGeminiEffect
