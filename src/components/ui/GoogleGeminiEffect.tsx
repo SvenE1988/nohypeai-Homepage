@@ -21,7 +21,7 @@ export const GoogleGeminiEffect = ({
       {/* Centered button with fixed positioning */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
-          className="font-bold bg-black rounded-lg md:px-8 md:py-4 px-6 py-3 flex items-center justify-center w-28 h-20 md:w-36 md:h-24 opacity-90 pointer-events-none select-none"
+          className="font-bold bg-black bg-opacity-80 rounded-lg md:px-8 md:py-4 px-6 py-3 flex items-center justify-center w-28 h-16 md:w-36 md:h-20 opacity-90 pointer-events-none select-none"
           tabIndex={-1}
           aria-hidden="true"
         >
