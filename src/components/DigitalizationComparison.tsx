@@ -1,4 +1,3 @@
-
 import React from "react";
 
 const Divider = () => (
@@ -7,13 +6,12 @@ const Divider = () => (
   </div>
 );
 
-// Bildpfade für die Kacheln
 const OBSTACLE_IMG = "/lovable-uploads/012c5469-041d-42fd-b912-3c8314d1e178.png";
 const JUMP_FORWARD_IMG = "/lovable-uploads/867ea91a-ecb7-4b90-aa07-c6674b5acc7f.png";
 
 const DigitalizationComparison = () => {
   return (
-    <section className="w-full py-16 sm:py-24 bg-transparent" id="digital-comparison">
+    <section className="w-full py-8 sm:py-12 bg-transparent -mt-24 md:-mt-36" id="digital-comparison">
       <div className="max-w-4xl mx-auto px-4 flex flex-col items-center text-center">
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-3 sm:mb-5">
           Wo stehst du auf dem Weg zur Digitalisierung?
