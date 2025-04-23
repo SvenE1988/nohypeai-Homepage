@@ -1,7 +1,6 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import VoiceBot from "../VoiceBot";
 import { Headphones } from "lucide-react";
 
 const VoiceHeroSection = () => {
@@ -24,10 +23,6 @@ const VoiceHeroSection = () => {
           rund um die Uhr, ohne Wartezeiten.
         </p>
       </motion.div>
-      
-      <div className="max-w-4xl mx-auto">
-        <VoiceBot />
-      </div>
     </div>
   );
 };
