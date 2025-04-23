@@ -20,12 +20,11 @@ export function GoogleGeminiEffectDemo() {
   return (
     <div
       ref={ref}
-      className="w-screen max-w-none h-[420px] flex items-center justify-center bg-black relative overflow-hidden"
+      className="w-full h-[420px] flex items-center justify-center bg-black relative overflow-hidden"
       style={{
-        left: '50%',
-        right: '50%',
-        marginLeft: '-50vw',
-        marginRight: '-50vw',
+        width: '100vw',
+        marginLeft: 'calc(-50vw + 50%)',
+        marginRight: 'calc(-50vw + 50%)',
         position: 'relative',
       }}
     >
