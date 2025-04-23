@@ -5,7 +5,7 @@ import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
 export function GoogleGeminiEffectDemo() {
-  // Entfernt ref und Target, nutzt window-scrollYProgress für globale Seite
+  // Nutzt window-scrollYProgress für globale Seite
   const { scrollYProgress } = useScroll();
 
   const pathLengthFirst = useTransform(scrollYProgress, [0, 0.5], [0.2, 1.2]);
@@ -16,12 +16,15 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      className="w-full h-[420px] flex items-center justify-center bg-black relative overflow-hidden"
+      className="w-full h-[420px] flex items-center justify-center relative overflow-hidden"
+      // Entferne bg-black, damit keine eigene dunkle BG mehr,
+      // nutzt den Website-Hintergrund
       style={{
         width: '100vw',
         marginLeft: 'calc(-50vw + 50%)',
         marginRight: 'calc(-50vw + 50%)',
         position: 'relative',
+        background: 'transparent'
       }}
     >
       <GoogleGeminiEffect

@@ -44,7 +44,7 @@ const AIFirstSection = () => {
   return (
     <section 
       ref={sectionRef}
-      className="min-h-[40vh] sm:min-h-[55vh] flex flex-col items-center justify-center bg-transparent text-white py-8 sm:py-12 relative overflow-hidden"
+      className="min-h-[36vh] sm:min-h-[44vh] flex flex-col items-center justify-center bg-transparent text-white py-4 sm:py-7 relative overflow-hidden"
       id="hero"
     >
       <div className="relative z-10 flex flex-col items-center justify-center text-center px-3 sm:px-4">
@@ -63,13 +63,13 @@ const AIFirstSection = () => {
           }}
           key="ai-no-hype-section-content"
         >
-          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-1 sm:mb-3">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-bold leading-tight mb-0.5 sm:mb-0.5">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
               KI-Lösungen
             </span><br className="sm:hidden" />
             <span className="block text-white">ohne Hype</span>
           </h2>
-          <p className="text-base sm:text-xl text-gray-300 mt-3 sm:mt-5 max-w-2xl sm:max-w-3xl mx-auto">
+          <p className="text-base sm:text-xl text-gray-300 mt-2 sm:mt-2 max-w-2xl sm:max-w-3xl mx-auto">
             Wir helfen Unternehmen mit praktischen KI-Lösungen zu wachsen – ohne Buzzwords, ohne Komplexität.
           </p>
         </motion.div>
