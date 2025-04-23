@@ -28,7 +28,7 @@ export const GoogleGeminiEffect = ({
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="NoHype Logo" 
-            className="w-[200%] h-[200%] object-contain"
+            className="w-[300%] h-[300%] object-contain"
           />
         </button>
       </div>
