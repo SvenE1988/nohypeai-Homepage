@@ -1,8 +1,12 @@
-import { useState } from 'react';
+
+import { useState, useCallback } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { UltravoxSession } from 'ultravox-client';
 import type { CallMessage } from '@/types/voiceBot';
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 2000; // 2 seconds
 
 export const useVoiceBotLogic = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,6 +19,82 @@ export const useVoiceBotLogic = () => {
       type, 
       timestamp: new Date() 
     }]);
+  };
+
+  const setupSessionListeners = (session: UltravoxSession) => {
+    // Status listener
+    session.addEventListener('status', (event) => {
+      const status = session.status;
+      console.log('Session status changed:', status);
+      addMessage(`Session Status: ${status}`, 'info');
+      
+      // Spezifische Status-Meldungen
+      switch(status) {
+        case 'connecting':
+          addMessage('Verbindung wird hergestellt...', 'info');
+          break;
+        case 'idle':
+          addMessage('Bereit für den Sprachdialog', 'info');
+          break;
+        case 'listening':
+          addMessage('Höre zu...', 'info');
+          break;
+        case 'thinking':
+          addMessage('Verarbeite Eingabe...', 'info');
+          break;
+        case 'speaking':
+          addMessage('KI spricht...', 'info');
+          break;
+      }
+    });
+
+    // Transcript listener
+    session.addEventListener('transcripts', () => {
+      if (session) {
+        console.log('Neue Transkripte verfügbar:', session.transcripts);
+      }
+    });
+
+    // Debug message listener
+    session.addEventListener('experimental_message', (msg) => {
+      console.log('Debug message:', JSON.stringify(msg));
+    });
+  };
+
+  const waitForJoinUrl = async (
+    retryCount: number,
+    useCase: string,
+    email: string
+  ): Promise<string> => {
+    try {
+      console.log(`Versuch ${retryCount + 1} von ${MAX_RETRIES}, Edge Function wird aufgerufen...`);
+      
+      const { data, error } = await supabase.functions.invoke('voice-bot', {
+        body: { useCase, email }
+      });
+
+      if (error) {
+        throw new Error(`Edge Function error: ${error.message}`);
+      }
+
+      if (!data?.joinUrl) {
+        if (retryCount < MAX_RETRIES - 1) {
+          console.log(`Keine joinUrl erhalten, warte ${RETRY_DELAY/1000} Sekunden...`);
+          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+          return waitForJoinUrl(retryCount + 1, useCase, email);
+        }
+        throw new Error('Keine joinUrl nach maximalen Versuchen erhalten');
+      }
+
+      return data.joinUrl;
+    } catch (error) {
+      if (retryCount < MAX_RETRIES - 1) {
+        console.log(`Fehler beim Versuch ${retryCount + 1}, neuer Versuch in ${RETRY_DELAY/1000} Sekunden...`);
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+        return waitForJoinUrl(retryCount + 1, useCase, email);
+      }
+      throw error;
+    }
   };
 
   const getMicrophonePermission = async () => {
@@ -40,6 +120,12 @@ export const useVoiceBotLogic = () => {
     setErrorMessage('');
     addMessage("Verbindung wird aufgebaut...");
 
+    if (!session) {
+      setErrorMessage("Keine Session initialisiert");
+      setIsLoading(false);
+      return;
+    }
+
     const hasMicPermission = await getMicrophonePermission();
     if (!hasMicPermission) {
       setIsLoading(false);
@@ -47,45 +133,17 @@ export const useVoiceBotLogic = () => {
     }
 
     try {
-      console.log("Calling voice-bot Edge Function with params:", { useCase, email });
+      // Event Listener VOR dem Edge Function Call registrieren
+      setupSessionListeners(session);
+      
+      // Retry-Mechanismus für Join URL
+      const joinUrl = await waitForJoinUrl(0, useCase, email);
+      console.log("✅ Join URL erfolgreich erhalten:", joinUrl);
+      addMessage("Join URL erfolgreich empfangen");
 
-      const { data, error } = await supabase.functions.invoke('voice-bot', {
-        body: { useCase, email }
-      });
-
-      if (error) {
-        throw new Error(`Edge Function error: ${error.message}`);
-      }
-
-      if (!data || !session) {
-        throw new Error("No data received from Edge Function or session not initialized");
-      }
-
-      const joinUrl = data?.joinUrl;
-
-      if (!joinUrl) {
-        throw new Error("Keine joinUrl in der Antwort enthalten.");
-      }
-
-      console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
-      addMessage("Edge Function erfolgreich ausgelöst");
-
-      session.addEventListener('status', (event) => {
-        console.log('Session status changed:', session.status);
-        addMessage(`Session Status: ${session.status}`, 'info');
-      });
-
-      session.addEventListener('transcripts', () => {
-        if (session) {
-          console.log('Neue Transkripte verfügbar:', session.transcripts);
-        }
-      });
-
-      session.addEventListener('experimental_message', (msg) => {
-        console.log('Debug message:', JSON.stringify(msg));
-      });
-
+      // Call beitreten
       session.joinCall(joinUrl);
+      addMessage("Dem Sprachdialog beigetreten");
 
       toast({
         title: "Verbindung hergestellt",
