@@ -1,3 +1,4 @@
+
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
@@ -28,14 +29,15 @@ export const GoogleGeminiEffect = ({
         </button>
       </div>
 
-      {/* SVG container with centering */}
+      {/* SVG container with absolute positioning and centering */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <svg
           width="1440"
           height="890"
           viewBox="0 0 1440 890"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-full pointer-events-none"
+          className="w-full h-auto pointer-events-none"
+          preserveAspectRatio="xMidYMid meet"
           aria-hidden="true"
           style={{ background: "transparent" }}
         >
