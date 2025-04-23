@@ -5,11 +5,8 @@ import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
 
 export function GoogleGeminiEffectDemo() {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start start", "end start"],
-  });
+  // Entfernt ref und Target, nutzt window-scrollYProgress für globale Seite
+  const { scrollYProgress } = useScroll();
 
   const pathLengthFirst = useTransform(scrollYProgress, [0, 0.5], [0.2, 1.2]);
   const pathLengthSecond = useTransform(scrollYProgress, [0, 0.5], [0.15, 1.2]);
@@ -19,7 +16,6 @@ export function GoogleGeminiEffectDemo() {
 
   return (
     <div
-      ref={ref}
       className="w-full h-[420px] flex items-center justify-center bg-black relative overflow-hidden"
       style={{
         width: '100vw',
