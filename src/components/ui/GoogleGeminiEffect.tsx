@@ -19,7 +19,7 @@ export const GoogleGeminiEffect = ({
   return (
     <div className={cn("w-full h-full flex flex-col items-center justify-center bg-transparent relative", className)}>
       {/* Centered button with fixed positioning */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30" style={{ transform: 'translateY(-8%)' }}>
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
           className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 text-black text-xs md:text-base w-fit opacity-90 pointer-events-none select-none"
           tabIndex={-1}
