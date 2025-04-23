@@ -33,7 +33,6 @@ serve(async (req) => {
       console.error("Error logging session:", insertError)
     }
     
-    // Log the incoming request parameters
     console.log(`Processing request for email: "${email}" with useCase: "${useCase}"`)
 
     const apiKey = Deno.env.get('WEBHOOK_API_KEY')
@@ -41,30 +40,47 @@ serve(async (req) => {
       throw new Error("API key not configured")
     }
 
-    // Construct webhook URL
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
-    console.log(`Forwarding request to webhook: ${webhookURL}`)
+    console.log(`Sending request to webhook: ${webhookURL}`)
     
-    // Forward to webhook with predefined voice based on use case
-    const voice = "pia" // Using default voice for all use cases
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': apiKey
       },
-      body: JSON.stringify({ useCase, voice })
-    });
+      body: JSON.stringify({ useCase, voice: 'pia' })
+    })
 
     if (!response.ok) {
       throw new Error(`Webhook responded with status: ${response.status}`)
     }
 
-    const data = await response.text()
-    return new Response(data, {
-      headers: { ...corsHeaders, 'Content-Type': 'text/xml' }
-    })
+    // Parse response and ensure it's in the correct format
+    const responseText = await response.text()
+    console.log('Webhook raw response:', responseText)
+
+    try {
+      // Attempt to parse as JSON first
+      const jsonData = JSON.parse(responseText)
+      return new Response(
+        JSON.stringify(jsonData),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    } catch (e) {
+      // If JSON parsing fails, assume it's XML and return the joinUrl in the expected format
+      const joinUrlMatch = responseText.match(/joinUrl="([^"]*)"/)
+      if (!joinUrlMatch) {
+        throw new Error('No joinUrl found in response')
+      }
+
+      const joinUrl = joinUrlMatch[1]
+      return new Response(
+        JSON.stringify([{ joinUrl }]),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      )
+    }
   } catch (error) {
     console.error("Error in Edge Function:", error)
     return new Response(

@@ -30,10 +30,10 @@ export const useVoiceBotLogic = () => {
           break;
         case 'idle':
           addMessage('Bereit für den Sprachdialog', 'info');
+          setIsLoading(false);
           break;
         case 'listening':
           addMessage('Höre zu...', 'info');
-          setIsLoading(false); // Connection is fully established
           break;
         case 'thinking':
           addMessage('Verarbeite Eingabe...', 'info');
@@ -48,14 +48,14 @@ export const useVoiceBotLogic = () => {
       }
     });
 
-    // Transcript listener
+    // Transcript listener for debugging
     session.addEventListener('transcripts', () => {
-      if (session) {
-        console.log('Neue Transkripte verfügbar:', session.transcripts);
+      if (session.transcripts.length > 0) {
+        console.log('Neue Transkripte:', session.transcripts);
       }
     });
 
-    // Debug message listener for better troubleshooting
+    // Debug message listener
     session.addEventListener('experimental_message', (msg) => {
       console.log('Debug message:', JSON.stringify(msg));
     });
@@ -63,7 +63,7 @@ export const useVoiceBotLogic = () => {
 
   const getMicrophonePermission = async () => {
     try {
-      const mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      await navigator.mediaDevices.getUserMedia({ audio: true });
       addMessage("Mikrofonzugriff erfolgreich");
       return true;
     } catch (error) {
@@ -97,10 +97,8 @@ export const useVoiceBotLogic = () => {
     }
 
     try {
-      // Set up event listeners before making the webhook call
       setupSessionListeners(session);
       
-      // Single webhook call to get the join URL
       const { data, error } = await supabase.functions.invoke('voice-bot', {
         body: { useCase, email }
       });
@@ -109,16 +107,20 @@ export const useVoiceBotLogic = () => {
         throw new Error(`Edge Function error: ${error.message}`);
       }
 
+      console.log('Webhook response:', data); // Debug log
+
       const responseData = Array.isArray(data) ? data[0] : data;
+      
       if (!responseData?.joinUrl) {
+        console.error('Invalid response data:', responseData); // Debug log
         throw new Error('Keine gültige Join URL erhalten');
       }
 
-      // Join call with the received URL
-      console.log("✅ Join URL erfolgreich erhalten:", responseData.joinUrl);
+      console.log("✅ Join URL erhalten:", responseData.joinUrl);
       addMessage("Join URL erfolgreich empfangen");
       
-      session.joinCall(responseData.joinUrl);
+      // Join the call using the SDK method
+      await session.joinCall(responseData.joinUrl);
       addMessage("Dem Sprachdialog beigetreten");
 
       toast({
@@ -142,12 +144,8 @@ export const useVoiceBotLogic = () => {
   const stopVoiceTest = async (session: UltravoxSession | null) => {
     if (session) {
       try {
-        session.muteMic();
-        console.log("Mikrofon deaktiviert");
-        
         await session.leaveCall();
         console.log("Sprachdialog beendet");
-        
         addMessage("Sprachdialog beendet");
         setErrorMessage('');
         setIsLoading(false);
