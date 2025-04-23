@@ -33,16 +33,12 @@ serve(async (req) => {
       console.error("Error logging session:", insertError)
     }
     
-    console.log(`Processing request for email: "${email}" with useCase: "${useCase}"`)
-
     const apiKey = Deno.env.get('WEBHOOK_API_KEY')
     if (!apiKey) {
       throw new Error("API key not configured")
     }
 
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
-    
-    console.log(`Sending request to webhook: ${webhookURL}`)
     
     const response = await fetch(webhookURL, {
       method: 'POST',
@@ -57,30 +53,14 @@ serve(async (req) => {
       throw new Error(`Webhook responded with status: ${response.status}`)
     }
 
-    // Parse response and ensure it's in the correct format
-    const responseText = await response.text()
-    console.log('Webhook raw response:', responseText)
-
-    try {
-      // Attempt to parse as JSON first
-      const jsonData = JSON.parse(responseText)
-      return new Response(
-        JSON.stringify(jsonData),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    } catch (e) {
-      // If JSON parsing fails, assume it's XML and return the joinUrl in the expected format
-      const joinUrlMatch = responseText.match(/joinUrl="([^"]*)"/)
-      if (!joinUrlMatch) {
-        throw new Error('No joinUrl found in response')
-      }
-
-      const joinUrl = joinUrlMatch[1]
-      return new Response(
-        JSON.stringify([{ joinUrl }]),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+    // Parse response
+    const webhookData = await response.json()
+    
+    // Direkt die joinUrl zurückgeben
+    return new Response(
+      JSON.stringify({ joinUrl: webhookData.joinUrl }),
+      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
   } catch (error) {
     console.error("Error in Edge Function:", error)
     return new Response(

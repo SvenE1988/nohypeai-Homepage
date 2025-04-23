@@ -45,7 +45,6 @@ export const useVoiceBotSession = () => {
     status,
     transcripts,
     isReady,
-    // Fix the getter methods to not use parentheses
     isMicMuted: session ? session.isMicMuted : false,
     isSpeakerMuted: session ? session.isSpeakerMuted : false,
     muteMic: () => session?.muteMic(),

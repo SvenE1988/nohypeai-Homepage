@@ -12,6 +12,7 @@ import VoiceBotLoading from './voice/VoiceBotLoading';
 import VoiceBotInfo from './voice/VoiceBotInfo';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { Button } from '@/components/ui/button';
 
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState('immobilienmakler');
@@ -34,13 +35,15 @@ const VoiceBot = () => {
     leaveCall
   } = useVoiceBotSession();
 
-  const handleStartDialog = () => {
+  const handleStartClick = () => {
+    if (isActive) return;
     setShowEmailDialog(true);
   };
 
   const handleStartCall = async (email: string) => {
     setShowEmailDialog(false);
     setIsActive(true);
+    setErrorMessage('');
     
     try {
       const { data, error } = await supabase.functions.invoke('voice-bot', {
@@ -49,12 +52,11 @@ const VoiceBot = () => {
 
       if (error) throw error;
       
-      const responseData = Array.isArray(data) ? data[0] : data;
-      if (!responseData?.joinUrl) {
+      if (!data?.joinUrl) {
         throw new Error('Keine gültige Join URL erhalten');
       }
 
-      joinCall(responseData.joinUrl);
+      joinCall(data.joinUrl);
       
       toast({
         title: "Verbindung wird hergestellt",
@@ -76,6 +78,10 @@ const VoiceBot = () => {
     try {
       await leaveCall();
       setIsActive(false);
+      toast({
+        title: "Gespräch beendet",
+        description: "Vielen Dank für das Testen unseres KI-Sprachassistenten.",
+      });
     } catch (error) {
       console.error('Error stopping call:', error);
     }
@@ -99,25 +105,41 @@ const VoiceBot = () => {
                 setUseCase={setUseCase}
                 isActive={isActive}
               />
+              
+              {!isActive && isReady && (
+                <Button 
+                  onClick={handleStartClick}
+                  className="w-full bg-gradient-to-r from-primary to-purple-700"
+                >
+                  Sprachdialog starten
+                </Button>
+              )}
+              
               <VoiceBotInfo />
+              
               {status === 'connecting' && <VoiceBotLoading />}
               {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
-              {transcripts.length > 0 && (
-                <VoiceBotMessages transcripts={transcripts} />
+              
+              {isActive && (
+                <>
+                  <VoiceBotControls 
+                    status={status}
+                    isMicMuted={isMicMuted}
+                    isSpeakerMuted={isSpeakerMuted}
+                    onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}
+                    onSpeakerToggle={() => isSpeakerMuted ? unmuteSpeaker() : muteSpeaker()}
+                    onStop={handleStop}
+                  />
+                  
+                  <VoiceBotMessages transcripts={transcripts} status={status} />
+                </>
               )}
-              <VoiceBotControls 
-                status={status}
-                isMicMuted={isMicMuted}
-                isSpeakerMuted={isSpeakerMuted}
-                onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}
-                onSpeakerToggle={() => isSpeakerMuted ? unmuteSpeaker() : muteSpeaker()}
-                onStop={handleStop}
-              />
             </CardContent>
           </Card>
         </div>
         <div className="w-32 h-1.5 bg-gray-900 mx-auto mt-4 rounded-full" />
       </div>
+      
       <VoiceBotEmailDialog 
         isOpen={showEmailDialog}
         onClose={() => setShowEmailDialog(false)}
