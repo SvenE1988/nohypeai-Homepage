@@ -1,31 +1,38 @@
-import React, { useState } from "react";
-import { Headphones } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import VoiceBotLoading from "./voice/VoiceBotLoading";
-import VoiceBotError from "./voice/VoiceBotError";
-import VoiceBotMessages from "./voice/VoiceBotMessages";
-import VoiceBotControls from "./voice/VoiceBotControls";
-import VoiceBotSettings from "./voice/VoiceBotSettings";
-import VoiceBotInfo from "./voice/VoiceBotInfo";
-import VoiceBotEmailDialog from "./voice/VoiceBotEmailDialog";
-import { useVoiceBotLogic } from "@/hooks/useVoiceBotLogic";
-import { useUltravoxSession } from "@/hooks/useUltravoxSession";
+
+import React, { useState } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Headphones } from 'lucide-react';
+import { useVoiceBotSession } from '@/hooks/useVoiceBotSession';
+import VoiceBotSettings from './voice/VoiceBotSettings';
+import VoiceBotControls from './voice/VoiceBotControls';
+import VoiceBotMessages from './voice/VoiceBotMessages';
+import VoiceBotEmailDialog from './voice/VoiceBotEmailDialog';
+import VoiceBotError from './voice/VoiceBotError';
+import VoiceBotLoading from './voice/VoiceBotLoading';
+import VoiceBotInfo from './voice/VoiceBotInfo';
+import { toast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const VoiceBot = () => {
-  const [useCase, setUseCase] = useState("immobilienmakler");
+  const [useCase, setUseCase] = useState('immobilienmakler');
   const [isActive, setIsActive] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [callStatus, setCallStatus] = useState<'idle' | 'connecting' | 'active' | 'error' | 'completed'>('idle');
-
-  const { session } = useUltravoxSession();
-  const { 
-    isLoading, 
-    errorMessage, 
-    messages,
-    startVoiceTest: startTest, 
-    stopVoiceTest: stopTest,
-    addMessage 
-  } = useVoiceBotLogic();
+  const [errorMessage, setErrorMessage] = useState('');
+  
+  const {
+    session,
+    status,
+    transcripts,
+    isReady,
+    isMicMuted,
+    isSpeakerMuted,
+    muteMic,
+    unmuteMic,
+    muteSpeaker,
+    unmuteSpeaker,
+    joinCall,
+    leaveCall
+  } = useVoiceBotSession();
 
   const handleStartDialog = () => {
     setShowEmailDialog(true);
@@ -34,25 +41,43 @@ const VoiceBot = () => {
   const handleStartCall = async (email: string) => {
     setShowEmailDialog(false);
     setIsActive(true);
-    setCallStatus('connecting');
     
-    addMessage(`Starte Sprachdialog für ${email}...`);
-    await startTest(useCase, email, session);
-    setCallStatus('active');
+    try {
+      const { data, error } = await supabase.functions.invoke('voice-bot', {
+        body: { useCase, email }
+      });
+
+      if (error) throw error;
+      
+      const responseData = Array.isArray(data) ? data[0] : data;
+      if (!responseData?.joinUrl) {
+        throw new Error('Keine gültige Join URL erhalten');
+      }
+
+      joinCall(responseData.joinUrl);
+      
+      toast({
+        title: "Verbindung wird hergestellt",
+        description: "Sprachassistent wird initialisiert...",
+      });
+    } catch (error) {
+      setErrorMessage(error instanceof Error ? error.message : 'Unbekannter Fehler');
+      setIsActive(false);
+      
+      toast({
+        title: "Fehler",
+        description: "Verbindung konnte nicht hergestellt werden.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleStop = async () => {
-    setCallStatus('completed');
-    await stopTest(session);
-    setIsActive(false);
-    
-    if (session) {
-      try {
-        session.muteMic();
-        addMessage("Mikrofon wurde deaktiviert");
-      } catch (error) {
-        console.error("Fehler beim Deaktivieren des Mikrofons:", error);
-      }
+    try {
+      await leaveCall();
+      setIsActive(false);
+    } catch (error) {
+      console.error('Error stopping call:', error);
     }
   };
 
@@ -75,15 +100,18 @@ const VoiceBot = () => {
                 isActive={isActive}
               />
               <VoiceBotInfo />
-              {isLoading && <VoiceBotLoading />}
+              {status === 'connecting' && <VoiceBotLoading />}
               {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
-              <VoiceBotMessages messages={messages} />
+              {transcripts.length > 0 && (
+                <VoiceBotMessages transcripts={transcripts} />
+              )}
               <VoiceBotControls 
-                listening={isActive} 
-                isLoading={isLoading}
-                callStatus={callStatus} 
-                onStart={handleStartDialog} 
-                onStop={handleStop} 
+                status={status}
+                isMicMuted={isMicMuted()}
+                isSpeakerMuted={isSpeakerMuted()}
+                onMicToggle={() => isMicMuted() ? unmuteMic() : muteMic()}
+                onSpeakerToggle={() => isSpeakerMuted() ? unmuteSpeaker() : muteSpeaker()}
+                onStop={handleStop}
               />
             </CardContent>
           </Card>
@@ -94,7 +122,7 @@ const VoiceBot = () => {
         isOpen={showEmailDialog}
         onClose={() => setShowEmailDialog(false)}
         onStartCall={handleStartCall}
-        isLoading={isLoading}
+        isLoading={status === 'connecting'}
       />
     </div>
   );

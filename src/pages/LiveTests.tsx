@@ -8,6 +8,7 @@ import VoiceUseCases from "../components/voice/VoiceUseCases";
 import VoiceBenefits from "../components/voice/VoiceBenefits";
 import VoiceCTA from "../components/voice/VoiceCTA";
 import { BaseCard } from "../components/ui/base-card";
+import VoiceBot from "../components/VoiceBot";
 
 const LiveTests = () => {
   return (
@@ -16,8 +17,9 @@ const LiveTests = () => {
       <div className="container mx-auto px-4 pt-24 pb-16">
         <VoiceHeroSection />
         <BaseCard className="max-w-4xl mx-auto mb-16">
-          <VoiceFeatures />
+          <VoiceBot />
         </BaseCard>
+        <VoiceFeatures />
         <VoiceUseCases />
         <VoiceBenefits />
         <VoiceCTA />

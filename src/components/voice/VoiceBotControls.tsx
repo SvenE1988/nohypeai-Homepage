@@ -1,60 +1,54 @@
 
-import React from "react";
-import { Button } from "@/components/ui/button";
-import { Mic, StopCircle, Loader2 } from "lucide-react";
-import type { CallStatus } from "@/types/voiceBot";
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import { Mic, MicOff, Speaker, SpeakerOff } from 'lucide-react';
+import type { CallStatus } from '@/types/voiceBot';
 
 interface VoiceBotControlsProps {
-  listening: boolean;
-  isLoading: boolean;
-  callStatus: CallStatus;
-  onStart: () => void;
+  status: CallStatus;
+  isMicMuted: boolean;
+  isSpeakerMuted: boolean;
+  onMicToggle: () => void;
+  onSpeakerToggle: () => void;
   onStop: () => void;
 }
 
-const VoiceBotControls = ({ 
-  listening, 
-  isLoading, 
-  callStatus,
-  onStart, 
-  onStop 
+const VoiceBotControls = ({
+  status,
+  isMicMuted,
+  isSpeakerMuted,
+  onMicToggle,
+  onSpeakerToggle,
+  onStop,
 }: VoiceBotControlsProps) => {
-  const getButtonContent = () => {
-    if (isLoading) {
-      return (
-        <span className="flex items-center gap-2">
-          <Loader2 className="animate-spin" /> Verbindung wird aufgebaut...
-        </span>
-      );
-    }
-    
-    if (listening) {
-      return (
-        <span className="flex items-center gap-2">
-          <StopCircle className="animate-pulse" /> Sprachdialog beenden
-        </span>
-      );
-    }
-    
-    return (
-      <span className="flex items-center gap-2">
-        <Mic /> Sprachdialog starten
-      </span>
-    );
-  };
+  const isActive = status !== 'idle' && status !== 'disconnected';
 
   return (
-    <Button
-      onClick={listening ? onStop : onStart}
-      disabled={isLoading}
-      className={`w-full py-6 ${
-        listening 
-          ? 'bg-red-600 hover:bg-red-700' 
-          : 'bg-primary hover:bg-primary/90'
-      } text-white disabled:bg-gray-700 disabled:text-gray-300`}
-    >
-      {getButtonContent()}
-    </Button>
+    <div className="flex items-center justify-center gap-4">
+      <Button
+        onClick={onMicToggle}
+        variant="outline"
+        disabled={!isActive}
+        className={isMicMuted ? 'bg-red-500/10' : ''}
+      >
+        {isMicMuted ? <MicOff /> : <Mic />}
+      </Button>
+      <Button
+        onClick={onSpeakerToggle}
+        variant="outline"
+        disabled={!isActive}
+        className={isSpeakerMuted ? 'bg-red-500/10' : ''}
+      >
+        {isSpeakerMuted ? <SpeakerOff /> : <Speaker />}
+      </Button>
+      <Button
+        onClick={onStop}
+        variant="destructive"
+        disabled={!isActive}
+      >
+        Beenden
+      </Button>
+    </div>
   );
 };
 
