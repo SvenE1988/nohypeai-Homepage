@@ -14,6 +14,11 @@ import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 
+interface EdgeFunctionResponse {
+  joinUrl: string;
+  error?: string;
+}
+
 const VoiceBot = () => {
   const [useCase, setUseCase] = useState('immobilienmakler');
   const [isActive, setIsActive] = useState(false);
@@ -46,26 +51,21 @@ const VoiceBot = () => {
     setErrorMessage('');
     
     try {
-      console.log("Starting call with useCase:", useCase, "and email:", email);
-      
-      const { data, error } = await supabase.functions.invoke('voice-bot', {
+      const { data, error } = await supabase.functions.invoke<EdgeFunctionResponse>('voice-bot', {
         body: { useCase, email }
       });
 
-      if (error) {
+      if (error || !data) {
         console.error("Supabase function error:", error);
-        throw error;
+        throw new Error(error?.message || 'Fehler beim Aufrufen der Funktion');
       }
       
-      console.log("Received data from voice-bot function:", data);
-      
-      if (!data?.joinUrl) {
+      if (!data.joinUrl) {
         console.error("No joinUrl in response:", data);
         throw new Error('Keine gültige Join URL erhalten');
       }
 
-      console.log("Joining call with URL:", data.joinUrl);
-      joinCall(data.joinUrl);
+      await joinCall(data.joinUrl);
       
       toast({
         title: "Verbindung wird hergestellt",

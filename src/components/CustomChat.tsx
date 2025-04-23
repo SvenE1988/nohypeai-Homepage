@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { MessageCircle } from 'lucide-react';
@@ -8,6 +9,7 @@ import ChatHeader from './chat/ChatHeader';
 import ChatMessages from './chat/ChatMessages';
 import ChatInput from './chat/ChatInput';
 import { sendChatMessage, addSystemMessage } from '../services/chatService';
+import { useNavigate } from 'react-router-dom';
 
 const CustomChat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,6 +18,7 @@ const CustomChat = () => {
   const [sessionId, setSessionId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
   const {
     setCalendarDialogOpen
   } = useDialog();
@@ -57,9 +60,8 @@ const CustomChat = () => {
   };
 
   const handleVoiceChat = () => {
-    console.log("Sprachchat");
-    const voiceMessage = addSystemMessage("Sprachchat ist aktuell noch in Entwicklung. Bitte versuche es später erneut.");
-    setMessages(prev => [...prev, voiceMessage]);
+    setIsOpen(false);
+    navigate('/live-tests');
   };
 
   const toggleChat = () => {

@@ -16,10 +16,9 @@ export const useVoiceBotSession = () => {
       experimentalMessages: new Set(['debug'])
     });
 
-    // Enhanced status event listener with proper state handling
+    // Status event listener with proper state handling
     newSession.addEventListener('status', () => {
       const currentStatus = newSession.status as CallStatus;
-      console.log("Status changed:", currentStatus);
       setStatus(currentStatus);
       
       // Show appropriate toast messages based on status
@@ -45,9 +44,8 @@ export const useVoiceBotSession = () => {
       }
     });
 
-    // Enhanced transcript event listener
+    // Transcript event listener
     newSession.addEventListener('transcripts', () => {
-      console.log("Transcripts updated:", newSession.transcripts);
       const newTranscripts = newSession.transcripts as Transcript[];
       setTranscripts(newTranscripts);
     });
@@ -62,7 +60,6 @@ export const useVoiceBotSession = () => {
 
     return () => {
       if (newSession) {
-        console.log("Cleaning up session");
         newSession.leaveCall().catch(console.error);
       }
     };
@@ -76,28 +73,24 @@ export const useVoiceBotSession = () => {
     isMicMuted: session ? session.isMicMuted : false,
     isSpeakerMuted: session ? session.isSpeakerMuted : false,
     muteMic: () => {
-      console.log("Muting microphone");
-      session?.muteMic();
+      if (session) session.muteMic();
     },
     unmuteMic: () => {
-      console.log("Unmuting microphone");
-      session?.unmuteMic();
+      if (session) session.unmuteMic();
     },
     muteSpeaker: () => {
-      console.log("Muting speaker");
-      session?.muteSpeaker();
+      if (session) session.muteSpeaker();
     },
     unmuteSpeaker: () => {
-      console.log("Unmuting speaker");
-      session?.unmuteSpeaker();
+      if (session) session.unmuteSpeaker();
     },
     joinCall: (joinUrl: string) => {
-      console.log("Joining call with URL:", joinUrl);
-      return session?.joinCall(joinUrl);
+      if (!session) return Promise.reject(new Error("Session not initialized"));
+      return session.joinCall(joinUrl);
     },
     leaveCall: () => {
-      console.log("Leaving call");
-      return session?.leaveCall();
+      if (!session) return Promise.reject(new Error("Session not initialized"));
+      return session.leaveCall();
     },
   };
 };
