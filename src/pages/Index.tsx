@@ -1,4 +1,3 @@
-
 import AIFirstSection from "../components/AIFirstSection";
 import AIHereSection from "../components/AIHereSection";
 import Projects from "../components/Projects";
@@ -7,15 +6,12 @@ import EasterPromoPopup from "../components/EasterPromoPopup";
 import NavHeader from "../components/blocks/nav-header";
 import SavingsCalculator from "../components/SavingsCalculator";
 import DigitalizationComparison from "../components/DigitalizationComparison";
-import { GoogleGeminiEffectDemo } from "../components/ui/google-gemini-effect-demo";
 
 const Index = () => {
   return (
     <main className="min-h-screen bg-black w-full overflow-x-hidden">
       <NavHeader />
       <AIFirstSection />
-      <GoogleGeminiEffectDemo />
-      <div className="h-[30vh]"></div> {/* Spacer to ensure content flows after the animation */}
       <DigitalizationComparison />
       <AIHereSection />
       <SavingsCalculator />
