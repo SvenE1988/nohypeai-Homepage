@@ -1,4 +1,3 @@
-
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
@@ -7,7 +6,6 @@ import React from "react";
 interface GoogleGeminiEffectProps {
   pathLengths: MotionValue[];
   className?: string;
-  scale?: number; // New scale prop
 }
 
 const transition = {
@@ -18,33 +16,20 @@ const transition = {
 export const GoogleGeminiEffect = ({
   pathLengths,
   className,
-  scale = 0.9, // Default scale is 1
 }: GoogleGeminiEffectProps) => {
-  // Calculate dynamic padding based on scale
-  const buttonPadding = `${Math.max(8 * scale, 4)}px`;
-  const baseFontSize = 16 * scale; // Base font size for scaling
-
   return (
     <div className={cn("w-full h-full flex flex-col items-center justify-center bg-transparent relative", className)}>
-      {/* Centered button with fixed positioning */}
+      {/* Centered button with responsive sizing */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
-          className="font-bold bg-black bg-opacity-80 rounded-lg flex items-center justify-center opacity-90 pointer-events-none select-none"
-          style={{
-            padding: buttonPadding,
-            fontSize: `${baseFontSize}px`,
-          }}
+          className="font-bold bg-black bg-opacity-80 rounded-lg flex items-center justify-center opacity-90 pointer-events-none select-none p-[clamp(4px,1vw,12px)]"
           tabIndex={-1}
           aria-hidden="true"
         >
           <img 
             src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
             alt="NoHype Logo"
-            style={{
-              width: `${300 * scale}px`,
-              height: 'auto',
-              objectFit: 'contain',
-            }}
+            className="w-[clamp(150px,20vw,300px)] h-auto object-contain"
           />
         </button>
       </div>
@@ -157,4 +142,3 @@ export const GoogleGeminiEffect = ({
     </div>
   );
 };
-
