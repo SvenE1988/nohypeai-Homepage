@@ -29,7 +29,7 @@ export const GoogleGeminiEffect = ({
         </button>
       </div>
 
-      {/* SVG container with absolute positioning and centering */}
+      {/* SVG container with exact same centering approach as button */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
         <svg
           width="1440"
@@ -137,3 +137,4 @@ export const GoogleGeminiEffect = ({
     </div>
   );
 };
+
