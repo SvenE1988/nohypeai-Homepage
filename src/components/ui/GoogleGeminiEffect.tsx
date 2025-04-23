@@ -1,4 +1,3 @@
-
 "use client";
 import { cn } from "@/lib/utils";
 import { motion, MotionValue } from "framer-motion";
@@ -21,11 +20,15 @@ export const GoogleGeminiEffect = ({
       {/* Centered button with fixed positioning */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-30">
         <button
-          className="font-bold bg-white rounded-full md:px-4 md:py-2 px-2 py-1 text-black text-xs md:text-base w-fit opacity-90 pointer-events-none select-none"
+          className="font-bold bg-black rounded-full md:px-4 md:py-2 px-2 py-1 flex items-center justify-center w-16 h-16 md:w-20 md:h-20 opacity-90 pointer-events-none select-none"
           tabIndex={-1}
           aria-hidden="true"
         >
-          ui.aceternity.com
+          <img 
+            src="/lovable-uploads/4ffd568e-264d-468e-9e61-0e0df2de32c0.png" 
+            alt="NoHype Logo" 
+            className="w-full h-full object-contain"
+          />
         </button>
       </div>
 
@@ -137,4 +140,3 @@ export const GoogleGeminiEffect = ({
     </div>
   );
 };
-
