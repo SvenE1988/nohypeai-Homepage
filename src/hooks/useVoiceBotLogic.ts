@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -36,7 +35,7 @@ export const useVoiceBotLogic = () => {
     }
   };
 
-  const startVoiceTest = async (selectedUseCase: string, voice: string, session: UltravoxSession | null) => {
+  const startVoiceTest = async (useCase: string, email: string, session: UltravoxSession | null) => {
     setIsLoading(true);
     setErrorMessage('');
     addMessage("Verbindung wird aufgebaut...");
@@ -48,10 +47,10 @@ export const useVoiceBotLogic = () => {
     }
 
     try {
-      console.log("Calling voice-bot Edge Function with params:", { useCase: selectedUseCase, voice });
+      console.log("Calling voice-bot Edge Function with params:", { useCase, email });
 
       const { data, error } = await supabase.functions.invoke('voice-bot', {
-        body: { useCase: selectedUseCase, voice }
+        body: { useCase, email }
       });
 
       if (error) {
@@ -71,20 +70,17 @@ export const useVoiceBotLogic = () => {
       console.log("✅ Edge Function ausgelöst, Join URL erhalten:", joinUrl);
       addMessage("Edge Function erfolgreich ausgelöst");
 
-      // Add session status listener
       session.addEventListener('status', (event) => {
         console.log('Session status changed:', session.status);
         addMessage(`Session Status: ${session.status}`, 'info');
       });
 
-      // Add transcript listener
       session.addEventListener('transcripts', () => {
         if (session) {
           console.log('Neue Transkripte verfügbar:', session.transcripts);
         }
       });
 
-      // Add debug message listener
       session.addEventListener('experimental_message', (msg) => {
         console.log('Debug message:', JSON.stringify(msg));
       });
@@ -112,11 +108,9 @@ export const useVoiceBotLogic = () => {
   const stopVoiceTest = async (session: UltravoxSession | null) => {
     if (session) {
       try {
-        // Mute microphone before leaving
         session.muteMic();
         console.log("Mikrofon deaktiviert");
         
-        // Leave the call
         await session.leaveCall();
         console.log("Sprachdialog beendet");
         

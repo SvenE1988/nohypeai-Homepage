@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Headphones } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -38,8 +37,7 @@ const VoiceBot = () => {
     setCallStatus('connecting');
     
     addMessage(`Starte Sprachdialog für ${email}...`);
-    // Using fixed voice "pia"
-    await startTest(useCase, "pia", session);
+    await startTest(useCase, email, session);
     setCallStatus('active');
   };
 
