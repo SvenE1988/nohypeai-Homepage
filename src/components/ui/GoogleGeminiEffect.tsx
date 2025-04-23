@@ -18,7 +18,7 @@ const transition = {
 export const GoogleGeminiEffect = ({
   pathLengths,
   className,
-  scale = 1, // Default scale is 1
+  scale = 0.9, // Default scale is 1
 }: GoogleGeminiEffectProps) => {
   // Calculate dynamic padding based on scale
   const buttonPadding = `${Math.max(8 * scale, 4)}px`;
