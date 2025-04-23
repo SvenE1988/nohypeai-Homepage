@@ -1,12 +1,9 @@
 
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { UltravoxSession } from 'ultravox-client';
 import type { CallMessage } from '@/types/voiceBot';
-
-const MAX_RETRIES = 3;
-const RETRY_DELAY = 2000; // 2 seconds
 
 export const useVoiceBotLogic = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,13 +19,11 @@ export const useVoiceBotLogic = () => {
   };
 
   const setupSessionListeners = (session: UltravoxSession) => {
-    // Status listener
+    // Status listener with proper state handling
     session.addEventListener('status', (event) => {
       const status = session.status;
       console.log('Session status changed:', status);
-      addMessage(`Session Status: ${status}`, 'info');
       
-      // Spezifische Status-Meldungen
       switch(status) {
         case 'connecting':
           addMessage('Verbindung wird hergestellt...', 'info');
@@ -38,12 +33,16 @@ export const useVoiceBotLogic = () => {
           break;
         case 'listening':
           addMessage('Höre zu...', 'info');
+          setIsLoading(false); // Connection is fully established
           break;
         case 'thinking':
           addMessage('Verarbeite Eingabe...', 'info');
           break;
         case 'speaking':
           addMessage('KI spricht...', 'info');
+          break;
+        case 'disconnected':
+          addMessage('Verbindung getrennt', 'info');
           break;
       }
     });
@@ -59,42 +58,6 @@ export const useVoiceBotLogic = () => {
     session.addEventListener('experimental_message', (msg) => {
       console.log('Debug message:', JSON.stringify(msg));
     });
-  };
-
-  const waitForJoinUrl = async (
-    retryCount: number,
-    useCase: string,
-    email: string
-  ): Promise<string> => {
-    try {
-      console.log(`Versuch ${retryCount + 1} von ${MAX_RETRIES}, Edge Function wird aufgerufen...`);
-      
-      const { data, error } = await supabase.functions.invoke('voice-bot', {
-        body: { useCase, email }
-      });
-
-      if (error) {
-        throw new Error(`Edge Function error: ${error.message}`);
-      }
-
-      if (!data?.joinUrl) {
-        if (retryCount < MAX_RETRIES - 1) {
-          console.log(`Keine joinUrl erhalten, warte ${RETRY_DELAY/1000} Sekunden...`);
-          await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-          return waitForJoinUrl(retryCount + 1, useCase, email);
-        }
-        throw new Error('Keine joinUrl nach maximalen Versuchen erhalten');
-      }
-
-      return data.joinUrl;
-    } catch (error) {
-      if (retryCount < MAX_RETRIES - 1) {
-        console.log(`Fehler beim Versuch ${retryCount + 1}, neuer Versuch in ${RETRY_DELAY/1000} Sekunden...`);
-        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
-        return waitForJoinUrl(retryCount + 1, useCase, email);
-      }
-      throw error;
-    }
   };
 
   const getMicrophonePermission = async () => {
@@ -133,33 +96,44 @@ export const useVoiceBotLogic = () => {
     }
 
     try {
-      // Event Listener VOR dem Edge Function Call registrieren
+      // Set up event listeners before making the webhook call
       setupSessionListeners(session);
       
-      // Retry-Mechanismus für Join URL
-      const joinUrl = await waitForJoinUrl(0, useCase, email);
-      console.log("✅ Join URL erfolgreich erhalten:", joinUrl);
-      addMessage("Join URL erfolgreich empfangen");
+      // Single webhook call to get the join URL
+      const { data, error } = await supabase.functions.invoke('voice-bot', {
+        body: { useCase, email }
+      });
 
-      // Call beitreten
-      session.joinCall(joinUrl);
+      if (error) {
+        throw new Error(`Edge Function error: ${error.message}`);
+      }
+
+      if (!data?.joinUrl) {
+        throw new Error('Keine Join URL erhalten');
+      }
+
+      // Join call with the received URL
+      console.log("✅ Join URL erfolgreich erhalten, trete Call bei...");
+      addMessage("Join URL erfolgreich empfangen");
+      
+      session.joinCall(data.joinUrl);
       addMessage("Dem Sprachdialog beigetreten");
 
       toast({
-        title: "Verbindung hergestellt",
-        description: "Der Sprachassistent ist jetzt aktiv.",
+        title: "Verbindung wird hergestellt",
+        description: "Sprachassistent wird initialisiert...",
       });
     } catch (error) {
       console.error("❌ Fehler beim Aufruf:", error);
       setErrorMessage(`Es gab ein Problem beim Starten des Sprachdialogs: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`);
       addMessage(`Fehler beim Verbindungsaufbau: ${error instanceof Error ? error.message : 'Unbekannter Fehler'}`, "error");
+      setIsLoading(false);
+      
       toast({
         title: "Fehler",
         description: "Verbindung konnte nicht hergestellt werden.",
         variant: "destructive",
       });
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -174,6 +148,7 @@ export const useVoiceBotLogic = () => {
         
         addMessage("Sprachdialog beendet");
         setErrorMessage('');
+        setIsLoading(false);
       } catch (error) {
         console.error("Fehler beim Beenden des Sprachdialogs:", error);
         addMessage("Fehler beim Beenden des Sprachdialogs", "error");
