@@ -122,15 +122,15 @@ const EasterPromoPopup = () => {
               <div className="space-y-2 mb-6">
                 <div className="flex items-baseline justify-between">
                   <span className="text-gray-300">Monatlich:</span>
-                  <span className="text-xl font-bold text-white">ab 499 €</span>
+                  <span className="text-xl font-bold text-white">ab 249 €</span>
                 </div>
                 <div className="flex items-baseline justify-between">
                   <span className="text-gray-300">Einrichtung:</span>
-                  <span className="text-xl font-bold text-white">ab 1.799 €</span>
+                  <span className="text-xl font-bold text-white">ab 499 €</span>
                 </div>
                 <div className="h-px bg-white/10 my-4"></div>
                 <div className="text-center text-sm text-gray-300">
-                  Jetzt Erstgespräch vereinbaren und von unserem
+                  Jetzt Erst-Analyse vereinbaren und von unserem
                   Oster-Rabatt profitieren!
                 </div>
               </div>
