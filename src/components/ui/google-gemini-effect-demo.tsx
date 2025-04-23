@@ -1,47 +1,37 @@
 
 "use client";
+import { useScroll, useTransform } from "framer-motion";
 import React from "react";
 import { GoogleGeminiEffect } from "@/components/ui/google-gemini-effect";
-import { useSequentialPathAnimation } from "./useSequentialPathAnimation";
 
-/**
- * GoogleGeminiEffectDemo
- * - Section uses scroll-snap so it sticks in the viewport while animating
- * - Animations (SVG paths) animate sequentially when effect enters viewport
- * - While animating: scrolling is locked, unlocks after animation completes
- */
 export function GoogleGeminiEffectDemo() {
-  const sectionRef = React.useRef<HTMLDivElement>(null);
-
-  // Path sequence animation: returns framer-motion values for paths and a 'locked' scroll state
-  const { pathLengths, isLocked } = useSequentialPathAnimation({
-    pathCount: 5,
-    duration: 700, // ms per path
+  const ref = React.useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
   });
 
-  // Lock/unlock scroll on body during animation
-  React.useEffect(() => {
-    if (isLocked) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isLocked]);
+  const pathLengthFirst = useTransform(scrollYProgress, [0, 0.8], [0.2, 1.2]);
+  const pathLengthSecond = useTransform(scrollYProgress, [0, 0.8], [0.15, 1.2]);
+  const pathLengthThird = useTransform(scrollYProgress, [0, 0.8], [0.1, 1.2]);
+  const pathLengthFourth = useTransform(scrollYProgress, [0, 0.8], [0.05, 1.2]);
+  const pathLengthFifth = useTransform(scrollYProgress, [0, 0.8], [0, 1.2]);
 
   return (
-    <section
-      ref={sectionRef}
-      className="h-[120vh] w-full relative py-40 flex flex-col scroll-snap-align-center scroll-snap-stop bg-black"
-      style={{ scrollSnapAlign: "center", scrollSnapStop: "always", scrollSnapType: "y mandatory" }}
+    <div
+      className="h-[400vh] bg-black w-full dark:border dark:border-white/[0.1] rounded-md relative pt-40 overflow-clip"
+      ref={ref}
     >
-      <div className="h-[400vh] w-full relative overflow-clip flex items-stretch" style={{ scrollSnapType: "y mandatory" }}>
-        <div className="w-full flex-1 flex flex-col scroll-snap-align-center" style={{ scrollSnapAlign: "center" }}>
-          <GoogleGeminiEffect pathLengths={pathLengths} />
-        </div>
-      </div>
-    </section>
+      <GoogleGeminiEffect
+        pathLengths={[
+          pathLengthFirst,
+          pathLengthSecond,
+          pathLengthThird,
+          pathLengthFourth,
+          pathLengthFifth,
+        ]}
+      />
+    </div>
   );
 }
+
