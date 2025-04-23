@@ -1,7 +1,6 @@
 
-import { useState, useEffect } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
-import { useInView } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, useMotionValue, animate, useInView } from "framer-motion";
 
 /** 
  * useSequentialPathAnimation
@@ -18,8 +17,11 @@ export function useSequentialPathAnimation(
   const { pathCount, duration = 700 } = opts;
   const [hasAnimated, setHasAnimated] = useState(false);
   const [isLocked, setIsLocked] = useState(false); // lock scroll while animating
-  const wrapperRef = useInView({ once: true, margin: "-10% 0px -10% 0px" }); // returns [ref, inView]
-  const inView = wrapperRef[1];
+  
+  // Create a ref for inView detection
+  const ref = React.useRef<HTMLDivElement>(null);
+  // Use the useInView hook correctly
+  const inView = useInView(ref, { once: true, margin: "-10% 0px -10% 0px" });
 
   // Array of pathLength motion values for SVG
   const [pathLengths] = useState(() =>
@@ -53,6 +55,6 @@ export function useSequentialPathAnimation(
   return {
     pathLengths,
     isLocked,
-    ref: wrapperRef[0], // attach to effect section if needed
+    ref, // Return the ref to be attached to the section
   };
 }
