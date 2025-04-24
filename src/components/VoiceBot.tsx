@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Headphones } from 'lucide-react';
@@ -12,6 +13,7 @@ import VoiceBotInfo from './voice/VoiceBotInfo';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
+import { Iphone15Pro } from '@/components/ui/iphone-15-pro';
 
 interface EdgeFunctionResponse {
   joinUrl: string;
@@ -104,10 +106,9 @@ const VoiceBot = () => {
 
   return (
     <div className="relative">
-      <div className="max-w-sm mx-auto">
-        <div className="relative border-[14px] border-gray-900 rounded-[3rem] shadow-xl bg-black overflow-hidden">
-          <div className="absolute top-0 inset-x-0 h-6 bg-black rounded-b-xl" />
-          <Card className="border-0 bg-gradient-to-b from-[#1A1F35] to-black min-h-[600px]">
+      <div className="max-w-md mx-auto">
+        <Iphone15Pro className="w-full h-auto">
+          <Card className="border-0 bg-gradient-to-b from-[#1A1F35] to-black h-full">
             <CardHeader>
               <CardTitle className="text-xl font-semibold text-center text-white flex items-center justify-center gap-2">
                 <Headphones className="w-5 h-5 text-primary" />
@@ -151,8 +152,7 @@ const VoiceBot = () => {
               )}
             </CardContent>
           </Card>
-        </div>
-        <div className="w-32 h-1.5 bg-gray-900 mx-auto mt-4 rounded-full" />
+        </Iphone15Pro>
       </div>
       
       <VoiceBotEmailDialog 
