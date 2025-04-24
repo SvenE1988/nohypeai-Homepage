@@ -1,8 +1,7 @@
+
 import { Database } from "@/integrations/supabase/types";
 
-export type DbBrochureTemplate = Database["public"]["Tables"]["brochure_templates"]["Row"];
-export type DbSavedBrochure = Database["public"]["Tables"]["saved_brochures"]["Row"];
-
+// Define types directly instead of referencing non-existent tables
 export type BrochureContent = {
   title: string;
   clientName: string;
@@ -23,3 +22,6 @@ export type SavedBrochureWithMeta = {
   user_id?: string | null;
   content: BrochureContent;
 };
+
+// Export the voice bot session type from the actual database
+export type DbVoiceBotSession = Database["public"]["Tables"]["voice_bot_sessions"]["Row"];
