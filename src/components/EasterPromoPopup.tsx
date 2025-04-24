@@ -1,4 +1,3 @@
-
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Calendar } from "lucide-react";
@@ -11,47 +10,36 @@ const EasterPromoPopup = () => {
   const scrollListenerRef = useRef<((e: Event) => void) | null>(null);
   
   useEffect(() => {
-    // Check if the popup is still valid based on date (only show until April 30)
     const currentDate = new Date();
     const endDate = new Date(currentDate.getFullYear(), 3, 30); // April 30th
     
-    // Don't show popup if it's past April 30
     if (currentDate > endDate) {
       return;
     }
     
-    // Check if the popup has been shown recently
     const lastPopupTime = localStorage.getItem('lastEasterPromoTime');
     const currentTime = Date.now();
     const hasRecentlyDismissed = lastPopupTime && (currentTime - parseInt(lastPopupTime)) < 120000; // 2 minutes in milliseconds
     
-    // If user has recently dismissed, don't add scroll listener
     if (hasRecentlyDismissed) {
       return;
     }
     
-    // Create the scroll handler
     const handleScroll = () => {
-      // Only show popup after scrolling 300px and if it hasn't been recently dismissed
       if (window.scrollY > 300 && !isVisible && !hasRecentlyDismissed) {
         setIsVisible(true);
         
-        // Remove the scroll listener once popup is shown
         if (scrollListenerRef.current) {
           window.removeEventListener("scroll", scrollListenerRef.current);
         }
       }
     };
     
-    // Store the handler reference for cleanup
     scrollListenerRef.current = handleScroll;
     
-    // Set up the scroll listener
     window.addEventListener("scroll", handleScroll, { passive: true });
     
-    // Show popup on initial load if conditions are met
     if (window.scrollY > 300 && !hasRecentlyDismissed) {
-      // Small delay for initial popup to make it less jarring
       const initialTimer = setTimeout(() => {
         setIsVisible(true);
       }, 1500);
@@ -73,11 +61,9 @@ const EasterPromoPopup = () => {
 
   const handleDismiss = () => {
     setIsVisible(false);
-    // Store the current timestamp when the popup is dismissed
     localStorage.setItem('lastEasterPromoTime', Date.now().toString());
   };
 
-  // Don't render anything if we shouldn't show popup based on date
   const currentDate = new Date();
   const endDate = new Date(currentDate.getFullYear(), 3, 30); // April 30th
   if (currentDate > endDate) {
@@ -93,8 +79,7 @@ const EasterPromoPopup = () => {
           exit={{ opacity: 0, x: 100 }}
           className="fixed bottom-8 right-8 z-50 max-w-sm"
         >
-          <div className="bg-gradient-to-br from-primary/20 to-secondary/20 p-6 rounded-2xl border border-white/10 backdrop-blur-sm relative overflow-hidden shadow-xl">
-            {/* Easter decoration elements */}
+          <div className="bg-gradient-to-br from-primary/50 to-secondary/50 p-6 rounded-2xl border border-white/10 backdrop-blur-sm relative overflow-hidden shadow-xl">
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-[#FFEB3B]/30 to-[#FFC107]/30 rounded-full blur-2xl"></div>
             <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-[#E1BEE7]/30 to-[#CE93D8]/30 rounded-full blur-xl"></div>
             
