@@ -30,8 +30,9 @@ export const useVoiceBotSession = () => {
 
   const updateMuteStates = useCallback(() => {
     if (sessionRef.current) {
-      setIsMicMuted(sessionRef.current.isMicMuted());
-      setIsSpeakerMuted(sessionRef.current.isSpeakerMuted());
+      // Fix: Access isMicMuted and isSpeakerMuted as properties, not methods
+      setIsMicMuted(sessionRef.current.isMicMuted);
+      setIsSpeakerMuted(sessionRef.current.isSpeakerMuted);
     }
   }, []);
 
