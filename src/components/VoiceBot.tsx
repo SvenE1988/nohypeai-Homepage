@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Headphones } from 'lucide-react';
@@ -24,7 +23,8 @@ const VoiceBot = () => {
   const [isActive, setIsActive] = useState(false);
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-  
+  const [sessionEmail, setSessionEmail] = useState('');
+
   const {
     session,
     status,
@@ -42,14 +42,19 @@ const VoiceBot = () => {
 
   const handleStartClick = () => {
     if (isActive) return;
-    setShowEmailDialog(true);
+    if (sessionEmail) {
+      handleStartCall(sessionEmail);
+    } else {
+      setShowEmailDialog(true);
+    }
   };
 
   const handleStartCall = async (email: string) => {
     setShowEmailDialog(false);
     setIsActive(true);
     setErrorMessage('');
-    
+    setSessionEmail(email);
+
     try {
       const { data, error } = await supabase.functions.invoke<EdgeFunctionResponse>('voice-bot', {
         body: { useCase, email }
