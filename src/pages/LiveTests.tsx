@@ -17,7 +17,7 @@ const LiveTests = () => {
   return (
     <main className="min-h-screen bg-black">
       <NavHeader />
-      <div className="container mx-auto px-4 pt-24 pb-16">
+      <div className="container mx-auto px-4 pt-12 pb-16">
         <VoiceHeroSection />
         <div className="relative max-w-4xl mx-auto mb-16">
           <BaseCard>
