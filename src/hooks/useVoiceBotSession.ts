@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { UltravoxSession } from 'ultravox-client';
 import type { CallStatus, Transcript } from '@/types/voiceBot';
 import { toast } from '@/components/ui/use-toast';
@@ -9,88 +9,107 @@ export const useVoiceBotSession = () => {
   const [status, setStatus] = useState<CallStatus>('idle');
   const [transcripts, setTranscripts] = useState<Transcript[]>([]);
   const [isReady, setIsReady] = useState(false);
+  
+  // Ref to track if event listeners are already set
+  const listenersSetRef = useRef(false);
+  // Ref to track the actual session object
+  const sessionRef = useRef<UltravoxSession | null>(null);
 
   useEffect(() => {
     console.log("Initializing Ultravox session");
-    const newSession = new UltravoxSession({
-      experimentalMessages: new Set(['debug'])
-    });
-
-    // Status event listener with proper state handling
-    newSession.addEventListener('status', () => {
-      const currentStatus = newSession.status as CallStatus;
-      setStatus(currentStatus);
+    
+    // Only create a new session if one doesn't exist yet
+    if (!sessionRef.current) {
+      const newSession = new UltravoxSession({
+        experimentalMessages: new Set(['debug'])
+      });
       
-      // Show appropriate toast messages based on status
-      switch(currentStatus) {
-        case 'connecting':
-          toast({ description: "Verbindung wird hergestellt..." });
-          break;
-        case 'idle':
-          setIsReady(true);
-          break;
-        case 'listening':
-          toast({ description: "Ich höre zu..." });
-          break;
-        case 'thinking':
-          toast({ description: "Verarbeite Eingabe..." });
-          break;
-        case 'speaking':
-          toast({ description: "KI spricht..." });
-          break;
-        case 'disconnected':
-          toast({ description: "Verbindung getrennt" });
-          break;
+      sessionRef.current = newSession;
+      setSession(newSession);
+      
+      // Only set up event listeners once
+      if (!listenersSetRef.current) {
+        // Status event listener with proper state handling
+        newSession.addEventListener('status', () => {
+          const currentStatus = newSession.status as CallStatus;
+          setStatus(currentStatus);
+          
+          // Show appropriate toast messages based on status
+          switch(currentStatus) {
+            case 'connecting':
+              toast({ description: "Verbindung wird hergestellt..." });
+              break;
+            case 'idle':
+              setIsReady(true);
+              break;
+            case 'listening':
+              toast({ description: "Ich höre zu..." });
+              break;
+            case 'thinking':
+              toast({ description: "Verarbeite Eingabe..." });
+              break;
+            case 'speaking':
+              toast({ description: "KI spricht..." });
+              break;
+            case 'disconnected':
+              toast({ description: "Verbindung getrennt" });
+              break;
+          }
+        });
+
+        // Transcript event listener
+        newSession.addEventListener('transcripts', () => {
+          const newTranscripts = newSession.transcripts as Transcript[];
+          setTranscripts(newTranscripts);
+        });
+
+        // Debug event listener
+        newSession.addEventListener('experimental_message', (msg) => {
+          console.log('Debug message:', JSON.stringify(msg));
+        });
+        
+        listenersSetRef.current = true;
       }
-    });
-
-    // Transcript event listener
-    newSession.addEventListener('transcripts', () => {
-      const newTranscripts = newSession.transcripts as Transcript[];
-      setTranscripts(newTranscripts);
-    });
-
-    // Debug event listener
-    newSession.addEventListener('experimental_message', (msg) => {
-      console.log('Debug message:', JSON.stringify(msg));
-    });
-
-    setSession(newSession);
-    setIsReady(true);
+      
+      setIsReady(true);
+    }
 
     return () => {
-      if (newSession) {
-        newSession.leaveCall().catch(console.error);
+      // Cleanup function should only disconnect the session, not destroy it
+      // This prevents creating a new session on re-renders
+      if (sessionRef.current) {
+        // Leave call but don't reset sessionRef to allow reuse
+        sessionRef.current.leaveCall().catch(console.error);
       }
     };
-  }, []);
+  }, []); // Empty dependency array ensures this runs only once
 
   return {
-    session,
+    session: sessionRef.current,
     status,
     transcripts,
     isReady,
-    isMicMuted: session ? session.isMicMuted : false,
-    isSpeakerMuted: session ? session.isSpeakerMuted : false,
+    isMicMuted: sessionRef.current ? sessionRef.current.isMicMuted : false,
+    isSpeakerMuted: sessionRef.current ? sessionRef.current.isSpeakerMuted : false,
     muteMic: () => {
-      if (session) session.muteMic();
+      if (sessionRef.current) sessionRef.current.muteMic();
     },
     unmuteMic: () => {
-      if (session) session.unmuteMic();
+      if (sessionRef.current) sessionRef.current.unmuteMic();
     },
     muteSpeaker: () => {
-      if (session) session.muteSpeaker();
+      if (sessionRef.current) sessionRef.current.muteSpeaker();
     },
     unmuteSpeaker: () => {
-      if (session) session.unmuteSpeaker();
+      if (sessionRef.current) sessionRef.current.unmuteSpeaker();
     },
     joinCall: (joinUrl: string) => {
-      if (!session) return Promise.reject(new Error("Session not initialized"));
-      return session.joinCall(joinUrl);
+      if (!sessionRef.current) return Promise.reject(new Error("Session not initialized"));
+      return sessionRef.current.joinCall(joinUrl);
     },
     leaveCall: () => {
-      if (!session) return Promise.reject(new Error("Session not initialized"));
-      return session.leaveCall();
+      if (!sessionRef.current) return Promise.reject(new Error("Session not initialized"));
+      return sessionRef.current.leaveCall();
     },
   };
 };
