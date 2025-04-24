@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigation } from '@/contexts/NavigationContext';
@@ -6,7 +5,6 @@ import { useNavigation } from '@/contexts/NavigationContext';
 export type NavItem = {
   href: string;
   label: string;
-  icon?: React.ReactNode;
 };
 
 export function useHeaderNavigation() {
