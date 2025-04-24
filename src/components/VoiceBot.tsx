@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Headphones, Star } from 'lucide-react';
 import { useVoiceBotSession } from '@/hooks/useVoiceBotSession';
@@ -26,6 +26,7 @@ const VoiceBot = () => {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [sessionEmail, setSessionEmail] = useState('');
+  const initRef = useRef(false);
 
   const {
     session,
@@ -42,8 +43,14 @@ const VoiceBot = () => {
     leaveCall
   } = useVoiceBotSession();
 
+  useEffect(() => {
+    return () => {
+      initRef.current = false;
+    };
+  }, []);
+
   const handleStartClick = () => {
-    if (isActive) return;
+    if (isActive || initRef.current) return;
     if (sessionEmail) {
       handleStartCall(sessionEmail);
     } else {
@@ -52,10 +59,13 @@ const VoiceBot = () => {
   };
 
   const handleStartCall = async (email: string) => {
+    if (initRef.current) return;
+    
     setShowEmailDialog(false);
     setIsActive(true);
     setErrorMessage('');
     setSessionEmail(email);
+    initRef.current = true;
 
     try {
       const { data, error } = await supabase.functions.invoke<EdgeFunctionResponse>('voice-bot', {
@@ -82,6 +92,7 @@ const VoiceBot = () => {
       console.error("Error starting call:", error);
       setErrorMessage(error instanceof Error ? error.message : 'Unbekannter Fehler');
       setIsActive(false);
+      initRef.current = false;
       
       toast({
         title: "Fehler",
@@ -95,6 +106,7 @@ const VoiceBot = () => {
     try {
       await leaveCall();
       setIsActive(false);
+      initRef.current = false;
       toast({
         title: "Gespräch beendet",
         description: "Vielen Dank für das Testen unseres KI-Sprachassistenten.",

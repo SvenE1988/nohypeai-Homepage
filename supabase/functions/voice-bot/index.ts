@@ -24,10 +24,50 @@ serve(async (req) => {
     const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')
     const supabase = createClient(supabaseUrl!, supabaseAnonKey!)
     
+    // Check for recent sessions in the last 30 minutes
+    const thirtyMinutesAgo = new Date(Date.now() - 30 * 60 * 1000).toISOString();
+    const { data: existingSessions } = await supabase
+      .from('voice_bot_sessions')
+      .select()
+      .eq('email', email)
+      .gte('created_at', thirtyMinutesAgo);
+
+    if (existingSessions && existingSessions.length > 0) {
+      console.log(`Duplicate session attempt from ${email}`);
+      return new Response(
+        JSON.stringify({ 
+          message: "Session already initiated recently",
+          joinUrl: existingSessions[0].join_url
+        }), 
+        { 
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 200 
+        }
+      );
+    }
+
+    // Extract IP address from request headers
+    const clientIP = req.headers.get("x-forwarded-for") || "unknown";
+    const sessionUUID = crypto.randomUUID();
+
+    // Log session data
+    console.log({
+      timestamp: new Date().toISOString(),
+      sessionUUID,
+      clientIP,
+      email,
+      useCase
+    });
+    
     // Log session data
     const { error: insertError } = await supabase
       .from('voice_bot_sessions')
-      .insert([{ email, use_case: useCase }])
+      .insert([{ 
+        email, 
+        use_case: useCase,
+        session_uuid: sessionUUID,
+        client_ip: clientIP
+      }])
 
     if (insertError) {
       console.error("Error logging session:", insertError)
@@ -40,24 +80,21 @@ serve(async (req) => {
 
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
-    // Modified webhook body to include email instead of voice
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': apiKey
       },
-      body: JSON.stringify({ useCase, email }) // Changed from { useCase, voice: 'pia' }
+      body: JSON.stringify({ useCase, email })
     })
 
     if (!response.ok) {
       throw new Error(`Webhook responded with status: ${response.status}`)
     }
 
-    // Parse response
     const webhookData = await response.json()
     
-    // Return the joinUrl directly - ensure it's a string
     if (!webhookData.joinUrl || typeof webhookData.joinUrl !== 'string') {
       throw new Error("Invalid joinUrl in webhook response")
     }
@@ -77,4 +114,3 @@ serve(async (req) => {
     )
   }
 })
-
