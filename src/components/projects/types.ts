@@ -1,5 +1,6 @@
 
 export interface Project {
+  id?: string; // Add optional id property
   year: string;
   industry: string;
   title: string;

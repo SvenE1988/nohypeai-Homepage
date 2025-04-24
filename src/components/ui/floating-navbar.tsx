@@ -9,6 +9,7 @@ import {
 } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigation } from "@/contexts/NavigationContext";
 
 interface NavItem {
   name: string;
@@ -28,6 +29,7 @@ export const FloatingNav = memo(({
   const { scrollYProgress } = useScroll();
   const [visible, setVisible] = useState(false);
   const location = useLocation();
+  const { navigateTo } = useNavigation();
 
   // The animation variants
   const navVariants = {
@@ -65,15 +67,9 @@ export const FloatingNav = memo(({
 
   // Memoize link click handler for better performance
   const handleLinkClick = useCallback((e: React.MouseEvent, link: string) => {
-    // Handle internal links with smooth scrolling
-    if (link.startsWith('#')) {
-      e.preventDefault();
-      const element = document.querySelector(link);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  }, []);
+    e.preventDefault();
+    navigateTo(link, { smooth: true });
+  }, [navigateTo]);
 
   // Make navbar appear immediately when navigating to a new page
   useEffect(() => {

@@ -2,18 +2,17 @@
 import { Avatar } from "./ui/avatar";
 import { Linkedin, Mail } from "lucide-react";
 import { useCallToAction } from "@/hooks/useCallToAction";
-
 const About = () => {
-  const { openContactForm } = useCallToAction();
+  const {
+    openContactForm
+  } = useCallToAction();
   const team = [{
     name: "Sven",
     role: "Gründer & Inhaber",
     image: "/lovable-uploads/53242408-166e-4bd6-89db-0295c8e032ca.png",
-    linkedin: "https://www.linkedin.com/in/svenerkens",
+    linkedin: "https://www.linkedin.com/in/svenerkens"
   }];
-  
-  return (
-    <section id="ueber-uns" className="py-20 bg-gradient-dark">
+  return <section id="ueber-uns" className="py-20 bg-gradient-dark">
       <div className="container mx-auto px-4">
         <span className="text-primary mb-4 block text-center">Über Uns</span>
         
@@ -27,9 +26,8 @@ const About = () => {
               <p className="text-gray-400 leading-relaxed">
                 Wir sind eine Automatisierungs- und KI-Agentur aus Karlsruhe und haben uns darauf spezialisiert, Unternehmen den Einstieg in die Welt der Künstlichen Intelligenz zu erleichtern. Mit smarten Tools wie n8n, Gemini &amp; Co. zeigen wir, wie schon kleine Automatisierungen große Wirkung entfalten können – im Vertrieb, im Support oder in internen Prozessen.
               </p>
-              <p className="text-gray-400 leading-relaxed mt-4">
-                Seit Juli 2024 entwickeln wir Lösungen, die nicht nur Zeit sparen, sondern echten Mehrwert schaffen. Gemeinsam finden wir heraus, wo in deinem Unternehmen Potenzial steckt – und wie wir es mit cleveren Automationen und KI effizient heben können.
-              </p>
+              <p className="text-gray-400 leading-relaxed mt-4">Ich saß im 20. Kundencall und dachte: Das muss doch smarter gehen."
+KI – bodenständig, verständlich und messbar.</p>
             </div>
           </div>
           
@@ -55,8 +53,6 @@ const About = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default About;

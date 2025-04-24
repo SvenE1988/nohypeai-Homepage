@@ -1,114 +1,63 @@
-"use client";
 
-import React, { useState, useEffect, useCallback } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { memo, useCallback } from "react";
 import { Home } from "lucide-react";
-import { SocialLinks } from "../navigation/SocialLinks";
-import { MobileMenu } from "../navigation/MobileMenu";
-import { DesktopMenu } from "../navigation/DesktopMenu";
+import { Link } from "react-router-dom";
+import { SocialLinks } from "@/components/navigation/SocialLinks";
+import { MobileMenu } from "@/components/navigation/MobileMenu";
+import { DesktopMenu } from "@/components/navigation/DesktopMenu";
+import { useHeaderNavigation } from "@/hooks/useHeaderNavigation";
 
-function NavHeader() {
-  const [position, setPosition] = useState({
-    left: 0,
-    width: 0,
-    opacity: 0,
-  });
-  
-  const [activeSection, setActiveSection] = useState("");
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+// Memoized component to prevent unnecessary re-renders
+const NavHeader = memo(() => {
+  const {
+    position,
+    setPosition,
+    isMobileMenuOpen, 
+    setIsMobileMenuOpen,
+    location,
+    activeSection,
+    navItems,
+    handleNavigation
+  } = useHeaderNavigation();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (location.pathname !== '/') return;
-      
-      const sections = document.querySelectorAll('section[id]');
-      const scrollPosition = window.scrollY + 100;
-
-      sections.forEach(section => {
-        const sectionTop = (section as HTMLElement).offsetTop;
-        const sectionHeight = (section as HTMLElement).offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          setActiveSection(section.id);
-        }
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial check when component mounts
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [location]);
-
-  const scrollToTop = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-  };
-
-  const handleNavigation = (item: any, e: React.MouseEvent) => {
-    e.preventDefault();
-    
-    if (item.href === "/blog" || item.href === "/karriere" || item.href === "/pricing") {
-      navigate(item.href);
-      setIsMobileMenuOpen(false);
-      return;
-    }
-    
-    if (location.pathname !== '/' && item.href.startsWith('#')) {
-      navigate('/');
-      setTimeout(() => {
-        const element = document.querySelector(item.href);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    } else if (item.href.startsWith('#') && location.pathname === '/') {
-      const element = document.querySelector(item.href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    } else if (item.href === '/') {
-      scrollToTop();
-    } else {
-      navigate(item.href);
-    }
-    
-    setIsMobileMenuOpen(false);
-  };
-
-  const navItems = [
-    { href: "/", label: "Start", icon: <Home className="w-4 h-4" /> },
-    { href: "#nutzen", label: "Nutzen" },
-    { href: "#einsparungen", label: "Rechner" },
-    { href: "#prozess", label: "Prozess" },
-    { href: "#ueber-uns", label: "Über Uns" },
-    { href: "/blog", label: "Blog" }, 
-    { href: "/karriere", label: "Karriere" },
-  ];
+  // Memoize the navigation items with icons to prevent recreating on each render
+  const navItemsWithIcons = React.useMemo(() => 
+    navItems.map((item, index) => 
+      index === 0 ? { ...item, icon: <Home className="w-4 h-4" /> } : item
+    ), 
+    [navItems]
+  );
 
   return (
-    <>
-      <SocialLinks />
+    <nav className="w-full">
+      {/* Social media links - shown on all device sizes */}
+      <div className="hidden sm:block">
+        <SocialLinks />
+      </div>
+      <div className="block sm:hidden fixed top-0 left-0 right-0 z-40">
+        <SocialLinks />
+      </div>
+      {/* Mobile navigation menu */}
       <MobileMenu
         isMobileMenuOpen={isMobileMenuOpen}
         setIsMobileMenuOpen={setIsMobileMenuOpen}
-        navItems={navItems}
+        navItems={navItemsWithIcons}
         handleNavigation={handleNavigation}
       />
+      {/* Desktop navigation menu */}
       <DesktopMenu
-        navItems={navItems}
+        navItems={navItemsWithIcons}
         position={position}
         setPosition={setPosition}
         activeSection={activeSection}
         location={location}
         handleNavigation={handleNavigation}
       />
-    </>
+    </nav>
   );
-}
+});
+
+// Set displayName for better debugging
+NavHeader.displayName = 'NavHeader';
 
 export default NavHeader;

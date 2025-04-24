@@ -4,14 +4,14 @@ import { createRoot } from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
 
-// Global error handler for uncaught JavaScript errors
+// Global error handler for uncaught JavaScript errors with improved reporting
 window.addEventListener('error', (event) => {
   console.error('Uncaught error:', event.error);
   // In production, could send to error tracking service
   
   // Prevent default browser error handling
   event.preventDefault();
-});
+}, { passive: true });
 
 // Global error handler for unhandled promise rejections
 window.addEventListener('unhandledrejection', (event) => {
@@ -20,7 +20,7 @@ window.addEventListener('unhandledrejection', (event) => {
   
   // Prevent default browser error handling
   event.preventDefault();
-});
+}, { passive: true });
 
 // Get the root element and ensure it exists
 const rootElement = document.getElementById("root");
@@ -28,6 +28,27 @@ const rootElement = document.getElementById("root");
 if (!rootElement) {
   throw new Error("Failed to find the root element. The app cannot be initialized.");
 }
+
+// Performance monitoring for development
+const reportPerformance = () => {
+  if (process.env.NODE_ENV !== 'production') {
+    // Report performance metrics
+    setTimeout(() => {
+      if ('performance' in window) {
+        const metrics = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+        if (metrics) {
+          console.log('Page load performance:', {
+            loadTime: metrics.loadEventEnd - metrics.startTime,
+            domContentLoaded: metrics.domContentLoadedEventEnd - metrics.startTime,
+            firstContentfulPaint: performance.getEntriesByName('first-contentful-paint')[0]?.startTime,
+            domInteractive: metrics.domInteractive - metrics.startTime,
+            domComplete: metrics.domComplete - metrics.startTime
+          });
+        }
+      }
+    }, 3000);
+  }
+};
 
 // Wrap initialization in try/catch for safety
 try {
@@ -41,6 +62,7 @@ try {
   );
   
   console.log("Application successfully initialized");
+  reportPerformance();
 } catch (error) {
   console.error("Failed to initialize the application:", error);
   

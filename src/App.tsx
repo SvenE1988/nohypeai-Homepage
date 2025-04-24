@@ -1,5 +1,4 @@
-
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,11 +9,14 @@ import { LoadingScreen } from "./components/ui/loading-spinner";
 
 // Providers
 import { DialogProvider } from "./components/providers/DialogProvider";
+import { AuthProvider } from "./contexts/AuthContext";
+import { NavigationProvider } from "./contexts/NavigationContext";
 
 // Components that are always needed
 import CookieConsent from "./components/CookieConsent";
 import CustomChat from "./components/CustomChat";
 import LegalDialog from "./components/legal/LegalDialog";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Lazy-loaded pages for better performance
 const Index = lazy(() => import("./pages/Index"));
@@ -25,6 +27,11 @@ const JobDetails = lazy(() => import("./pages/JobDetails"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const LiveTests = lazy(() => import("./pages/LiveTests"));
+const Auth = lazy(() => import("./pages/Auth"));
+const Archiv = lazy(() => import("./pages/Archiv"));
+const UeberUns = lazy(() => import("./pages/UeberUns"));
+const FAQPage = lazy(() => import("./pages/FAQPage"));
+const Automatisierung = lazy(() => import("./pages/Automatisierung"));
 
 // Create query client instance outside component to prevent recreation on renders
 const queryClient = new QueryClient({
@@ -52,19 +59,28 @@ const App = () => (
           <CustomChat />
           
           <BrowserRouter>
-            <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/blog/:slug" element={<BlogPost />} />
-                <Route path="/karriere" element={<Karriere />} />
-                <Route path="/karriere/:id" element={<JobDetails />} />
-                <Route path="/pricing" element={<Pricing />} />
-                <Route path="/live-tests" element={<LiveTests />} />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="*" element={<Navigate to="/404" replace />} />
-              </Routes>
-            </Suspense>
+            <AuthProvider>
+              <NavigationProvider>
+                <Suspense fallback={<LoadingScreen text="Wird geladen..." />}>
+                  <Routes>
+                    <Route path="/" element={<Index />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/blog/:slug" element={<BlogPost />} />
+                    <Route path="/karriere" element={<Karriere />} />
+                    <Route path="/karriere/:id" element={<JobDetails />} />
+                    <Route path="/pricing" element={<Pricing />} />
+                    <Route path="/live-tests" element={<LiveTests />} />
+                    <Route path="/automatisierung" element={<Automatisierung />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/archiv" element={<Archiv />} />
+                    <Route path="/ueber-uns" element={<UeberUns />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                    <Route path="/404" element={<NotFound />} />
+                    <Route path="*" element={<Navigate to="/404" replace />} />
+                  </Routes>
+                </Suspense>
+              </NavigationProvider>
+            </AuthProvider>
           </BrowserRouter>
         </ErrorBoundary>
       </DialogProvider>

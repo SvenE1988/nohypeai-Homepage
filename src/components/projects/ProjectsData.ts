@@ -3,6 +3,7 @@ import { Project } from "./types";
 
 export const projectsData: Project[] = [
   {
+    id: "project-1",
     year: "Sep 2024",
     industry: "Case Study",
     title: "Dynamische Chatbots für eine bessere Kundeninteraktion",
@@ -19,6 +20,7 @@ export const projectsData: Project[] = [
     company: "Purainvest",
   },
   {
+    id: "project-2",
     year: "Nov 2024",
     industry: "Case Study",
     title: "Integration von Beraterrechnern für effiziente Immobilienfinanzierung",
@@ -35,6 +37,7 @@ export const projectsData: Project[] = [
     company: "Purainvest",
   },
   {
+    id: "project-3",
     year: "Jan 2025",
     industry: "Case Study",
     title: "Automatisierte Angebotserstellung mit SEVDESK",
@@ -51,6 +54,7 @@ export const projectsData: Project[] = [
     company: "Wesa Solar",
   },
   {
+    id: "project-4",
     year: "Feb 2025",
     industry: "Case Study",
     title: "Voice-Agenten im Vertrieb: Automatische Qualifizierung",
