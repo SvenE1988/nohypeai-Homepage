@@ -16,9 +16,9 @@ interface VoiceBotSettingsProps {
 }
 
 const useCaseInfo = {
-  immobilienmakler: "Ein KI-Assistent spezialisiert für den Innendienst. Beantwortet Fragen, vereinbart Termine, leitet weiter.",
-  hausverwaltung: "Ein KI-Assistent für Hausverwaltungsthemen. Hilft bei Anliegen zu Wartung, Reparaturen und Verwaltungsaufgaben.",
-  support: "Ein KI-Assistent für Schlüsseldienste unterstützen bei der Abwicklung und hält Nachts unnötige Anfragen ab."
+  immobilienmakler: "Max, ein KI-Assistent spezialisiert für den Innendienst. Beantwortet Fragen, vereinbart Termine, leitet weiter.",
+  hausverwaltung: "Lisa, eine KI-Assistentin für Hausverwaltungsthemen. Hilft bei Anliegen zu Wartung, Reparaturen und Verwaltungsaufgaben.",
+  support: "Anna, eine KI-Assistentin für Schlüsseldienste unterstützen bei der Abwicklung und hält Nachts unnötige Anfragen ab."
 };
 
 const VoiceBotSettings = ({
@@ -41,9 +41,9 @@ const VoiceBotSettings = ({
             <SelectValue placeholder="Wählen Sie einen Anwendungsfall" />
           </SelectTrigger>
           <SelectContent className="bg-[#2D2F3F] border-gray-700 text-white">
-            <SelectItem value="immobilienmakler">Immobilienmakler</SelectItem>
-            <SelectItem value="hausverwaltung">Hausverwaltung</SelectItem>
-            <SelectItem value="support">Technischer Support</SelectItem>
+            <SelectItem value="immobilienmakler">Immobilienmakler - Max</SelectItem>
+            <SelectItem value="hausverwaltung">Hausverwalter - Lisa</SelectItem>
+            <SelectItem value="support">Schlüsseldienst - Anna</SelectItem>
           </SelectContent>
         </Select>
       </div>
