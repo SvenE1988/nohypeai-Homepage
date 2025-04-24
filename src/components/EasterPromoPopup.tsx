@@ -4,6 +4,7 @@ import { X, Calendar } from "lucide-react";
 import { Button } from "./ui/button";
 import { useCallToAction } from "@/hooks/useCallToAction";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { cn } from "@/lib/utils";
 
 const EasterPromoPopup = () => {
   const [isVisible, setIsVisible] = useState(false);
