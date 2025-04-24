@@ -110,7 +110,7 @@ export const MobileMenu = memo(({
                 setIsMobileMenuOpen(false);
               }}
             >
-              {item.icon}
+              {/* Removed the reference to item.icon */}
               {item.label}
             </a>
           ))}
