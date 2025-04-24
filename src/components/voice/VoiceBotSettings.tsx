@@ -16,9 +16,9 @@ interface VoiceBotSettingsProps {
 }
 
 const useCaseInfo = {
-  immobilienmakler: "Ein KI-Assistent spezialisiert auf Immobilienanfragen. Beantwortet Fragen zu Immobilien, Besichtigungen und Preisen.",
+  immobilienmakler: "Ein KI-Assistent spezialisiert für den Innendienst. Beantwortet Fragen, vereinbart Termine, leitet weiter.",
   hausverwaltung: "Ein KI-Assistent für Hausverwaltungsthemen. Hilft bei Anliegen zu Wartung, Reparaturen und Verwaltungsaufgaben.",
-  support: "Ein technischer Support-Assistent. Unterstützt bei technischen Problemen und Produktfragen."
+  support: "Ein KI-Assistent für Schlüsseldienste unterstützen bei der Abwicklung und hält Nachts unnötige Anfragen ab."
 };
 
 const VoiceBotSettings = ({
