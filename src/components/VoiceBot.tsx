@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Headphones, Star } from 'lucide-react';
+
+import React, { useState, useRef } from 'react';
 import { useVoiceBotSession } from '@/hooks/useVoiceBotSession';
 import VoiceBotSettings from './voice/VoiceBotSettings';
 import VoiceBotControls from './voice/VoiceBotControls';
@@ -9,11 +8,11 @@ import VoiceBotEmailDialog from './voice/VoiceBotEmailDialog';
 import VoiceBotError from './voice/VoiceBotError';
 import VoiceBotLoading from './voice/VoiceBotLoading';
 import VoiceBotInfo from './voice/VoiceBotInfo';
+import MobileVoiceCTA from './voice/MobileVoiceCTA';
+import VoiceBotFrame from './voice/VoiceBotFrame';
+import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import { Button } from '@/components/ui/button';
-import { Iphone15Pro } from '@/components/ui/iphone-15-pro';
-import { motion } from 'framer-motion';
 
 interface EdgeFunctionResponse {
   joinUrl: string;
@@ -29,7 +28,6 @@ const VoiceBot = () => {
   const initRef = useRef(false);
 
   const {
-    session,
     status,
     transcripts,
     isReady,
@@ -42,12 +40,6 @@ const VoiceBot = () => {
     joinCall,
     leaveCall
   } = useVoiceBotSession();
-
-  useEffect(() => {
-    return () => {
-      initRef.current = false;
-    };
-  }, []);
 
   const handleStartClick = () => {
     if (isActive || initRef.current) return;
@@ -73,12 +65,10 @@ const VoiceBot = () => {
       });
 
       if (error || !data) {
-        console.error("Supabase function error:", error);
         throw new Error(error?.message || 'Fehler beim Aufrufen der Funktion');
       }
       
       if (!data.joinUrl) {
-        console.error("No joinUrl in response:", data);
         throw new Error('Keine gültige Join URL erhalten');
       }
 
@@ -118,75 +108,44 @@ const VoiceBot = () => {
 
   return (
     <div className="relative">
-      <motion.div 
-        className="absolute -left-16 top-0 z-10 hidden lg:block"
-        animate={{
-          scale: [1, 1.05, 1],
-        }}
-        transition={{
-          duration: 2,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      >
-        <Button
-          className="bg-gradient-to-r from-primary to-secondary text-white font-semibold px-4 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-          size="sm"
-          onClick={handleStartClick}
-        >
-          <Star className="w-4 h-4 mr-2 animate-pulse" />
-          Jetzt KI testen!
-        </Button>
-      </motion.div>
+      <MobileVoiceCTA onClick={handleStartClick} />
 
-      <div className="max-w-md mx-auto">
-        <Iphone15Pro className="w-full h-auto">
-          <Card className="border-0 bg-gradient-to-b from-[#1A1F35] to-black h-full px-4 py-6 space-y-4">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xl font-semibold text-center text-white flex items-center justify-center gap-2">
-                <Headphones className="w-5 h-5 text-primary" />
-                KI-Sprachassistent
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4 pt-0">
-              <VoiceBotSettings 
-                useCase={useCase}
-                setUseCase={setUseCase}
-                isActive={isActive}
-              />
-              
-              {!isActive && isReady && (
-                <Button 
-                  onClick={handleStartClick}
-                  className="w-full bg-gradient-to-r from-primary to-purple-700"
-                >
-                  Sprachdialog starten
-                </Button>
-              )}
-              
-              <VoiceBotInfo />
-              
-              {status === 'connecting' && <VoiceBotLoading />}
-              {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
-              
-              {isActive && (
-                <>
-                  <VoiceBotControls 
-                    status={status}
-                    isMicMuted={isMicMuted}
-                    isSpeakerMuted={isSpeakerMuted}
-                    onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}
-                    onSpeakerToggle={() => isSpeakerMuted ? unmuteSpeaker() : muteSpeaker()}
-                    onStop={handleStop}
-                  />
-                  
-                  <VoiceBotMessages transcripts={transcripts} status={status} />
-                </>
-              )}
-            </CardContent>
-          </Card>
-        </Iphone15Pro>
-      </div>
+      <VoiceBotFrame>
+        <VoiceBotSettings 
+          useCase={useCase}
+          setUseCase={setUseCase}
+          isActive={isActive}
+        />
+        
+        {!isActive && isReady && (
+          <Button 
+            onClick={handleStartClick}
+            className="w-full bg-gradient-to-r from-primary to-purple-700"
+          >
+            Sprachdialog starten
+          </Button>
+        )}
+        
+        <VoiceBotInfo />
+        
+        {status === 'connecting' && <VoiceBotLoading />}
+        {errorMessage && <VoiceBotError errorMessage={errorMessage} />}
+        
+        {isActive && (
+          <>
+            <VoiceBotControls 
+              status={status}
+              isMicMuted={isMicMuted}
+              isSpeakerMuted={isSpeakerMuted}
+              onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}
+              onSpeakerToggle={() => isSpeakerMuted ? unmuteSpeaker() : muteSpeaker()}
+              onStop={handleStop}
+            />
+            
+            <VoiceBotMessages transcripts={transcripts} status={status} />
+          </>
+        )}
+      </VoiceBotFrame>
       
       <VoiceBotEmailDialog 
         isOpen={showEmailDialog}
