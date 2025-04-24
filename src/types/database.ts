@@ -1,4 +1,3 @@
-
 import { Database } from "@/integrations/supabase/types";
 
 export type DbBrochureTemplate = Database["public"]["Tables"]["brochure_templates"]["Row"];
@@ -14,6 +13,13 @@ export type BrochureContent = {
   documentType: 'proposal' | 'brochure';
 };
 
-export type SavedBrochureWithMeta = DbSavedBrochure & {
+export type SavedBrochureWithMeta = {
+  id: string;
+  title: string;
+  description?: string | null;
+  thumbnail?: string | null;
+  created_at: string;
+  updated_at: string;
+  user_id?: string | null;
   content: BrochureContent;
 };
