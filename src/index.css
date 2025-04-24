@@ -30,10 +30,16 @@
 
   * {
     @apply border-border;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 
   body {
-    @apply bg-black text-foreground font-sans min-h-screen;
+    @apply bg-black text-foreground font-sans min-h-screen overscroll-none;
     background: linear-gradient(135deg, rgba(0,0,0,0.97) 0%, rgba(26,31,53,0.97) 50%, rgba(45,31,53,0.97) 100%);
     background-attachment: fixed;
     -webkit-font-smoothing: antialiased;
@@ -124,6 +130,35 @@
   select {
     -webkit-appearance: none;
     border-radius: 0;
+  }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px;
+    }
+
+    .touch-manipulation {
+      touch-action: manipulation;
+    }
+
+    input, 
+    textarea, 
+    button,
+    select {
+      font-size: 16px; /* Prevents iOS zoom */
+    }
+  }
+
+  /* Improved mobile scrolling */
+  .smooth-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  /* Better tap targets for mobile */
+  .mobile-tap-target {
+    @apply min-h-[44px] min-w-[44px] flex items-center justify-center;
   }
 }
 
