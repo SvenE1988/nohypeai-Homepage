@@ -40,13 +40,14 @@ serve(async (req) => {
 
     const webhookURL = `https://automatisierung.seserver.nohype-ai.de/webhook/ultra3550-90c7-4a40-a201-3a3062a205ed`
     
+    // Modified webhook body to include email instead of voice
     const response = await fetch(webhookURL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-API-Key': apiKey
       },
-      body: JSON.stringify({ useCase, voice: 'pia' })
+      body: JSON.stringify({ useCase, email }) // Changed from { useCase, voice: 'pia' }
     })
 
     if (!response.ok) {
@@ -76,3 +77,4 @@ serve(async (req) => {
     )
   }
 })
+

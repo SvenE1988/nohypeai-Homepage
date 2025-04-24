@@ -9,66 +9,6 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      brochure_templates: {
-        Row: {
-          created_at: string
-          description: string | null
-          id: string
-          name: string
-          sections: Json
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          name: string
-          sections: Json
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          description?: string | null
-          id?: string
-          name?: string
-          sections?: Json
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      saved_brochures: {
-        Row: {
-          content: Json
-          created_at: string
-          description: string | null
-          id: string
-          thumbnail: string | null
-          title: string
-          updated_at: string
-          user_id: string | null
-        }
-        Insert: {
-          content: Json
-          created_at?: string
-          description?: string | null
-          id?: string
-          thumbnail?: string | null
-          title: string
-          updated_at?: string
-          user_id?: string | null
-        }
-        Update: {
-          content?: Json
-          created_at?: string
-          description?: string | null
-          id?: string
-          thumbnail?: string | null
-          title?: string
-          updated_at?: string
-          user_id?: string | null
-        }
-        Relationships: []
-      }
       voice_bot_sessions: {
         Row: {
           created_at: string
