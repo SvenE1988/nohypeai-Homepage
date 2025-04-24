@@ -16,8 +16,10 @@ export const useVoiceBotSession = () => {
   // Cleanup function to properly remove event listeners
   const cleanupSession = useCallback(() => {
     if (sessionRef.current) {
-      // Remove all event listeners
-      sessionRef.current.removeAllEventListeners();
+      // Explicitly remove each type of event listener
+      sessionRef.current.removeEventListener('status', handleStatusEvent);
+      sessionRef.current.removeEventListener('transcripts', handleTranscriptsEvent);
+      sessionRef.current.removeEventListener('experimental_message', handleDebugEvent);
       
       // Leave call if active
       if (status !== 'disconnected' && status !== 'idle') {
@@ -25,6 +27,47 @@ export const useVoiceBotSession = () => {
       }
     }
   }, [status]);
+
+  // Define event handler functions to be used in addEventListener and removeEventListener
+  const handleStatusEvent = useCallback(() => {
+    if (sessionRef.current) {
+      const currentStatus = sessionRef.current.status as CallStatus;
+      setStatus(currentStatus);
+      
+      switch(currentStatus) {
+        case 'connecting':
+          toast({ description: "Verbindung wird hergestellt..." });
+          break;
+        case 'idle':
+          setIsReady(true);
+          break;
+        case 'listening':
+          toast({ description: "Ich höre zu..." });
+          break;
+        case 'thinking':
+          toast({ description: "Verarbeite Eingabe..." });
+          break;
+        case 'speaking':
+          toast({ description: "KI spricht..." });
+          break;
+        case 'disconnected':
+          toast({ description: "Verbindung getrennt" });
+          setIsReady(true);
+          break;
+      }
+    }
+  }, []);
+
+  const handleTranscriptsEvent = useCallback(() => {
+    if (sessionRef.current) {
+      const newTranscripts = sessionRef.current.transcripts as Transcript[];
+      setTranscripts(newTranscripts);
+    }
+  }, []);
+
+  const handleDebugEvent = useCallback((msg) => {
+    console.log('Debug message:', JSON.stringify(msg));
+  }, []);
 
   useEffect(() => {
     // Only initialize once
@@ -38,46 +81,10 @@ export const useVoiceBotSession = () => {
       sessionRef.current = session;
       isInitializedRef.current = true;
 
-      // Status event listener
-      session.addEventListener('status', () => {
-        const currentStatus = session.status as CallStatus;
-        setStatus(currentStatus);
-        
-        switch(currentStatus) {
-          case 'connecting':
-            toast({ description: "Verbindung wird hergestellt..." });
-            break;
-          case 'idle':
-            setIsReady(true);
-            break;
-          case 'listening':
-            toast({ description: "Ich höre zu..." });
-            break;
-          case 'thinking':
-            toast({ description: "Verarbeite Eingabe..." });
-            break;
-          case 'speaking':
-            toast({ description: "KI spricht..." });
-            break;
-          case 'disconnected':
-            toast({ description: "Verbindung getrennt" });
-            setIsReady(true);
-            break;
-        }
-      });
-
-      // Transcript event listener
-      session.addEventListener('transcripts', () => {
-        if (sessionRef.current) {
-          const newTranscripts = sessionRef.current.transcripts as Transcript[];
-          setTranscripts(newTranscripts);
-        }
-      });
-
-      // Debug event listener
-      session.addEventListener('experimental_message', (msg) => {
-        console.log('Debug message:', JSON.stringify(msg));
-      });
+      // Add event listeners
+      session.addEventListener('status', handleStatusEvent);
+      session.addEventListener('transcripts', handleTranscriptsEvent);
+      session.addEventListener('experimental_message', handleDebugEvent);
 
       setIsReady(true);
     }
