@@ -11,6 +11,7 @@ import VoiceBotInfo from './VoiceBotInfo';
 import MobileVoiceCTA from './MobileVoiceCTA';
 import VoiceBotFrame from './VoiceBotFrame';
 import { Button } from '@/components/ui/button';
+import type { CallStatus } from '@/types/voiceBot';
 
 const VoiceBotContent = () => {
   const {
@@ -62,7 +63,7 @@ const VoiceBotContent = () => {
         {isActive && (
           <>
             <VoiceBotControls 
-              status={status}
+              status={status as CallStatus}
               isMicMuted={isMicMuted}
               isSpeakerMuted={isSpeakerMuted}
               onMicToggle={() => isMicMuted ? unmuteMic() : muteMic()}

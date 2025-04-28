@@ -1,8 +1,8 @@
-
 import React, { createContext, useContext, useState, useRef } from 'react';
 import { useVoiceBotSession } from '@/hooks/useVoiceBotSession';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/components/ui/use-toast';
+import type { CallStatus, Transcript } from '@/types/voiceBot';
 
 interface EdgeFunctionResponse {
   joinUrl: string;
@@ -17,8 +17,8 @@ interface VoiceBotContextType {
   setShowEmailDialog: (show: boolean) => void;
   errorMessage: string;
   sessionEmail: string;
-  status: string;
-  transcripts: any[];
+  status: CallStatus;
+  transcripts: Transcript[];
   isReady: boolean;
   isMicMuted: boolean;
   isSpeakerMuted: boolean;
